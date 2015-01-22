@@ -19,10 +19,10 @@ public class ServerPoller {
 	}
 	
 	/**
-	 * @pre Nothing, the function is private.
+	 * @pre Nothing.
 	 * @post Asks the server to update the current Model state. The server checks to see if anything actually needs to be updated.
 	 */
-	private void updateModel() {
+	public void updateModel() {
 		
 	}
 }
