@@ -7,14 +7,13 @@ public class ServerPoller {
 	
 	private Timer timer;
 	private int versionID;
-	private ServerFacade facade;
 	
 	public ServerPoller() {
 		
 	}
 	
 	public boolean isDifferent() {
-		
+		return false;
 	}
 	
 	public void updateModel() {
