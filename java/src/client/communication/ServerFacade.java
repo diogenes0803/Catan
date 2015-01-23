@@ -17,13 +17,13 @@ public class ServerFacade {
 	/**
 	 * @pre username is not null, password is not null
 	 * 
-	 * @post If the passed­in (username, password) pair is valid,
-	 * 	1. The server returns an HTTP 200 success response with “Success” in the body.
+	 * @post If the passedÂ­in (username, password) pair is valid,
+	 * 	1. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 	2. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * 	logged­in player. The cookie uses ”Path=/”, and its value contains a url­encoded JSON object of
-	 * 	the following form: { “name”: STRING, “password”: STRING, “playerID”: INTEGER }. For
-	 * 	example, { “name”: “Rick”, “password”: “secret”, “playerID”: 14 }.
-	 * 	If the passed­in (username, password) pair is not valid, or the operation fails for any other
+	 * 	loggedÂ­in player. The cookie uses â€�Path=/â€�, and its value contains a urlÂ­encoded JSON object of
+	 * 	the following form: { â€œnameâ€�: STRING, â€œpasswordâ€�: STRING, â€œplayerIDâ€�: INTEGER }. For
+	 * 	example, { â€œnameâ€�: â€œRickâ€�, â€œpasswordâ€�: â€œsecretâ€�, â€œplayerIDâ€�: 14 }.
+	 * 	If the passedÂ­in (username, password) pair is not valid, or the operation fails for any other
 	 * 	reason,
 	 * 	1. The server returns an HTTP 400 error response, and the body contains an error
 	 * 	message.
@@ -37,11 +37,11 @@ public class ServerFacade {
 	 * 
 	 * @post If there is no existing user with the specified username,
 	 * 1. A new user account has been created with the specified username and password.
-	 * 2. The server returns an HTTP 200 success response with “Success” in the body.
+	 * 2. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 3. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * logged­in player. The cookie uses ”Path=/”, and its value contains a url­encoded JSON object of
-	 * the following form: { “name”: STRING, “password”: STRING, “playerID”: INTEGER }. For
-	 * example, { “name”: “Rick”, “password”: “secret”, “playerID”: 14 }.
+	 * loggedÂ­in player. The cookie uses â€�Path=/â€�, and its value contains a urlÂ­encoded JSON object of
+	 * the following form: { â€œnameâ€�: STRING, â€œpasswordâ€�: STRING, â€œplayerIDâ€�: INTEGER }. For
+	 * example, { â€œnameâ€�: â€œRickâ€�, â€œpasswordâ€�: â€œsecretâ€�, â€œplayerIDâ€�: 14 }.
 	 * If there is already an existing user with the specified name, or the operation fails for any other
 	 * reason,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
@@ -57,7 +57,7 @@ public class ServerFacade {
 	 * @post If the operation succeeds,
 	 * 1. The server returns an HTTP 200 success response.
 	 * 2. The body contains a JSON array containing a list of objects that contain information
-	 * about the server’s games
+	 * about the serverâ€™s games
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -92,10 +92,10 @@ public class ServerFacade {
 	 * orange)
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The server returns an HTTP 200 success response with “Success” in the body.
+	 * 1. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 2. The player is in the game with the specified color (i.e. calls to /games/list method will
 	 * show the player in the game with the chosen color).
-	 * 3. The server response includes the “Set­cookie” response header setting the catan.game
+	 * 3. The server response includes the â€œSetÂ­cookieâ€� response header setting the catan.game
 	 * HTTP cookie
 	 * If the operation fails,1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -109,9 +109,9 @@ public class ServerFacade {
 	 * 2. The specified file name is valid (i.e., not null or empty)
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The server returns an HTTP 200 success response with “Success” in the body.
+	 * 1. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 2. The current state of the specified game (including its ID) has been saved to the
-	 * specified file name in the server’s saves/ directory
+	 * specified file name in the serverâ€™s saves/ directory
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -121,9 +121,9 @@ public class ServerFacade {
 	}
 	
 	/**
-	 * @pre 1. A previously saved game file with the specified name exists in the server’s saves/directory.
+	 * @pre 1. A previously saved game file with the specified name exists in the serverâ€™s saves/directory.
 	 * 
-	 * @post If the operation succeeds,1. The server returns an HTTP 200 success response with “Success” in the body.
+	 * @post If the operation succeeds,1. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 2. The game in the specified file has been loaded into the server and its state restored
 	 * (including its ID).
 	 * If the operation fails,
@@ -136,7 +136,7 @@ public class ServerFacade {
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
 	 * valid catan.user and catan.game HTTP cookies).
-	 * 2. If specified, the version number is included as the “version” query parameter in the
+	 * 2. If specified, the version number is included as the â€œversionâ€� query parameter in the
 	 * request URL, and its value is a valid integer.
 	 * 
 	 * @post If the operation succeeds,
@@ -144,7 +144,7 @@ public class ServerFacade {
 	 * 2. The response body contains JSON data
 	 * a. The full client model JSON is returned if the caller does not provide a version
 	 * number, or the provide version number does not match the version on the server
-	 * b. “true” (true in double quotes) is returned if the caller provided a version number,
+	 * b. â€œtrueâ€� (true in double quotes) is returned if the caller provided a version number,
 	 * and the version number matched the version number on the server
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
@@ -159,10 +159,10 @@ public class ServerFacade {
 	 * valid catan.user and catan.game HTTP cookies).
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The game’s command history has been cleared out
-	 * 2. The game’s players have NOT been cleared out
+	 * 1. The gameâ€™s command history has been cleared out
+	 * 2. The gameâ€™s players have NOT been cleared out
 	 * 3. The server returns an HTTP 200 success response.
-	 * 4. The body contains the game’s updated client model JSON
+	 * 4. The body contains the gameâ€™s updated client model JSON
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -193,9 +193,9 @@ public class ServerFacade {
 	 * valid catan.user and catan.game HTTP cookies).
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The passed­in command list has been applied to the game.
+	 * 1. The passedÂ­in command list has been applied to the game.
 	 * 2. The server returns an HTTP 200 success response.
-	 * 3. The body contains the game’s updated client model JSON
+	 * 3. The body contains the gameâ€™s updated client model JSON
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -220,7 +220,7 @@ public class ServerFacade {
 	 * @pre 1.The caller specifies a valid logging level. Valid values include: SEVERE, WARNING,
 	 * INFO, CONFIG, FINE, FINER, FINEST
 	 * @post If the operation succeeds,
-	 * 1. The server returns an HTTP 200 success response with “Success” in the body.
+	 * 1. The server returns an HTTP 200 success response with â€œSuccessâ€� in the body.
 	 * 2. The Server is using the specified logging level
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
@@ -234,8 +234,8 @@ public class ServerFacade {
 	
 	/*
 	 * Universal Pre-Conditions:
-	 * All /move/* methods also have a common pre­condition in that they assume that the caller has
-	 * already logged in to the server and joined a game. This pre­condition is not repeated on each
+	 * All /move/* methods also have a common preÂ­condition in that they assume that the caller has
+	 * already logged in to the server and joined a game. This preÂ­condition is not repeated on each
 	 * move type, but should be assumed.
 	 */
 	
@@ -247,7 +247,7 @@ public class ServerFacade {
 	 * @pre None.
 	 * @post The chat contains your message at the end.
 	 */
-	public MoveResults sendChat() {
+	public MoveResults sendChat(MoveParams params) {
 		return null;
 	}
 	
@@ -260,7 +260,7 @@ public class ServerFacade {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	public MoveResults acceptTrade() {
+	public MoveResults acceptTrade(MoveParams params) {
 		return null;
 	}
 	
@@ -271,7 +271,7 @@ public class ServerFacade {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	public MoveResults discardCards() {
+	public MoveResults discardCards(MoveParams params) {
 		return null;
 	}
 	
@@ -280,10 +280,10 @@ public class ServerFacade {
 	
 	/**
 	 * @pre It is your turn
-	 * The client model’s status is ‘Rolling’
-	 * @post The client model’s status is now in ‘Discarding’ or ‘Robbing’ or ‘Playing’
+	 * The client modelâ€™s status is â€˜Rollingâ€™
+	 * @post The client modelâ€™s status is now in â€˜Discardingâ€™ or â€˜Robbingâ€™ or â€˜Playingâ€™
 	 */
-	public MoveResults rollNumber() {
+	public MoveResults rollNumber(MoveParams params) {
 		return null;
 	}
 	
@@ -292,21 +292,21 @@ public class ServerFacade {
 	/*
 	 * Playing Command Pre-Conditions:
 	 * It is your turn
-	 * The client model’s status is 'Playing'
+	 * The client modelâ€™s status is 'Playing'
 	 */
 	
 	/**
 	 * @pre The road location is open
 	 * The road location is connected to another road owned by the player
 	 * The road location is not on water
-	 * You have the required resources (1 wood, 1 brick; 1 road)
+	 * You have the required resources (1 wood, 1 brickÍ¾ 1 road)
 	 * Setup round: Must be placed by settlement owned by the player with no adjacent
 	 * road
-	 * @post You lost the resources required to build a road (1 wood, 1 brick; 1 road)
+	 * @post You lost the resources required to build a road (1 wood, 1 brickÍ¾ 1 road)
 	 * The road is on the map at the specified location
-	 * If applicable, “longest road” has been awarded to the player with the longest road
+	 * If applicable, â€œlongest roadâ€� has been awarded to the player with the longest road
 	 */
-	public MoveResults buildRoad() {
+	public MoveResults buildRoad(MoveParams params) {
 		return null;
 	}
 	
@@ -315,24 +315,24 @@ public class ServerFacade {
 	 * @pre The settlement location is open 
 	 * The settlement location is not on water
 	 * The settlement location is connected to one of your roads except during setup
-	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheep; 1 settlement)
+	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
 	 * The settlement cannot be placed adjacent to another settlement
-	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep; 1 settlement)
+	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
-	public MoveResults buildSettlement() {
+	public MoveResults buildSettlement(MoveParams params) {
 		return null;
 	}
 	
 	
 	/**
 	 * @pre The city location is where you currently have a settlement
-	 * You have the required resources (2 wheat, 3 ore; 1 city)
-	 * @post You lost the resources required to build a city (2 wheat, 3 ore; 1 city)
+	 * You have the required resources (2 wheat, 3 oreÍ¾ 1 city)
+	 * @post You lost the resources required to build a city (2 wheat, 3 oreÍ¾ 1 city)
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
-	public MoveResults buildCity() {
+	public MoveResults buildCity(MoveParams params) {
 		return null;
 	}
 	
@@ -340,7 +340,7 @@ public class ServerFacade {
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	public MoveResults offerTrade() {
+	public MoveResults offerTrade(MoveParams params) {
 		return null;
 	}
 	
@@ -350,26 +350,26 @@ public class ServerFacade {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	public MoveResults maritimeTrade() {
+	public MoveResults maritimeTrade(MoveParams params) {
 		return null;
 	}
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != Â­1), the player being robbed has resource cards
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
-	public MoveResults robPlayer() {
+	public MoveResults robPlayer(MoveParams params) {
 		return null;
 	}
 	
 	/**
 	 * @pre None (except the preconditions for all Playing Commands)
 	 * @post The cards in your new dev card hand have been transferred to your old dev card hand
-	 * It is the next player’s turn
+	 * It is the next playerâ€™s turn
 	 */
-	public MoveResults finishTurn() {
+	public MoveResults finishTurn(MoveParams params) {
 		return null;
 	}
 	
@@ -378,9 +378,9 @@ public class ServerFacade {
 	 * There are dev cards left in the deck
 	 * @post You have a new card
 	 * If it is a monument card, it has been added to your old devcard hand
-	 * If it is a non­monument card, it has been added to your new devcard hand (unplayable this turn)
+	 * If it is a nonÂ­monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
-	public MoveResults buyDevCard() {
+	public MoveResults buyDevCard(MoveParams params) {
 		return null;
 	}
 	
@@ -391,19 +391,19 @@ public class ServerFacade {
 	 * It is your turn
 	 * The client model status is 'Playing'
 	 * You have the specific card you want to play in your old dev card hand
-	 * You have not yet played a non­monument dev card this turn
+	 * You have not yet played a nonÂ­monument dev card this turn
 	 */
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != Â­1), the player being robbed has resource cards
 	 * @post The robber is in the new location.
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected).
-	 * If applicable, “largest army” has been awarded to the player who has played the most soldier cards.
+	 * If applicable, â€œlargest armyâ€� has been awarded to the player who has played the most soldier cards.
 	 * You are not allowed to play other development cards during this turn (except for
 	 * monument cards, which may still be played).
 	 */
-	public MoveResults playSoldier() {
+	public MoveResults playSoldier(MoveParams params) {
 		return null;
 	}
 	
@@ -411,7 +411,7 @@ public class ServerFacade {
 	 * @pre The two specified resources are in the bank.
 	 * @post You gained the two specified resources.
 	 */
-	public MoveResults yearOfPlenty() {
+	public MoveResults yearOfPlenty(MoveParams params) {
 		return null;
 	}
 	
@@ -423,9 +423,9 @@ public class ServerFacade {
 	 * You have at least two unused roads.
 	 * @post You have two fewer unused roads.
 	 * Two new roads appear on the map at the specified locations.
-	 * If applicable, “longest road” has been awarded to the player with the longest road.
+	 * If applicable, â€œlongest roadâ€� has been awarded to the player with the longest road.
 	 */
-	public MoveResults roadBuilding() {
+	public MoveResults roadBuilding(MoveParams params) {
 		return null;
 	}
 	
@@ -433,7 +433,7 @@ public class ServerFacade {
 	 * @pre None (except the general preconditions for this section).
 	 * @post All of the other players have given you all of their resource cards of the specified type.
 	 */
-	public MoveResults monopoly() {
+	public MoveResults monopoly(MoveParams params) {
 		return null;
 	}
 	
@@ -441,7 +441,7 @@ public class ServerFacade {
 	 * @pre You have enough monument cards to win the game (i.e., reach 10 victory points).
 	 * @post You gained a victory point.
 	 */
-	public MoveResults monument() {
+	public MoveResults monument(MoveParams params) {
 		return null;
 	}
 }
