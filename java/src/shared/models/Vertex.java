@@ -2,6 +2,12 @@ package shared.models;
 
 import shared.locations.VertexLocation;
 
+/**
+ * Model for HexTile's Vertices
+ * @author HojuneYoo
+ *
+ */
+
 public class Vertex {
 	
 	private VertexLocation Location;

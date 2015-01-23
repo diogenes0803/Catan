@@ -1,5 +1,11 @@
 package shared.models;
 
+/**
+ * Model that contains User informations
+ * @author HojuneYoo
+ *
+ */
+
 public class User {
 	
 	private int userId;

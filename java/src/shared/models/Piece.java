@@ -2,6 +2,12 @@ package shared.models;
 
 import shared.definitions.PieceType;
 
+/**
+ * Model for Pieces
+ * @author HojuneYoo
+ *
+ */
+
 public class Piece {
 	
 	private PieceType type;

@@ -1,5 +1,11 @@
 package shared.models;
 
+/**
+ * 
+ * @author HojuneYoo
+ * CatanModel is a big chunk of Class that holds everything about game and users
+ */
+
 public class CatanModel {
 	
 	private GameManager gameManager;

@@ -2,6 +2,12 @@ package shared.models;
 
 import java.util.List;
 
+/**
+ * Model for on going game
+ * @author HojuneYoo
+ *
+ */
+
 public class Game {
 	
 	private int gameId;
@@ -12,18 +18,38 @@ public class Game {
 	private Bank bank;
 	private Dice[] dices = new Dice[2];
 	
+	/**
+	 * Start a game
+	 * @pre Game must have 4 players and game must not been started yet.
+	 * @post Game must have started
+	 */
 	public void startGame(){
 		return;
 	}
 	
+	/**
+	 * Allow user to leave a game
+	 * @pre User must be in a game
+	 * @post Game has to be stopped and user must be out of game
+	 */
 	public void leaveGame(){
 		return;
 	}
 	
+	/**
+	 * Save current game
+	 * @pre User must be in a game
+	 * @post Game has to be saved in server
+	 */
 	public void SaveGame(){
 		
 	}
 	
+	/**
+	 * Load previous game
+	 * @pre Server must have information about saved game, All users who played before should be joined
+	 * @post Game must be loaded and started
+	 */
 	public void LoadGame(){
 		
 	}

@@ -1,7 +1,11 @@
 package shared.models;
 
 import shared.locations.EdgeLocation;
-
+/**
+ * 
+ * @author HojuneYoo
+ * HexTile's Edge Model
+ */
 public class Edge {
 	
 	private EdgeLocation location;

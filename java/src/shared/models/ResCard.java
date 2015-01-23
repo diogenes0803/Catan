@@ -2,6 +2,11 @@ package shared.models;
 
 import shared.definitions.ResourceType;
 
+/**
+ * Model for Resource Cards
+ * @author HojuneYoo
+ *
+ */
 public class ResCard {
 	
 	private ResourceType type;

@@ -1,10 +1,15 @@
 package shared.models;
 
 import java.util.List;
-
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 
+/**
+ * 
+ * @author HojuneYoo
+ * Model for HexTile, HexTile contains Edges and Vertexes. It can also has robber piece
+ * 
+ */
 public class HexTile {
 	
 	private HexLocation location;
@@ -14,7 +19,6 @@ public class HexTile {
 	private int token;
 	private Piece robber;
 	private boolean hasRobber;
-	
 	
 	public HexLocation getLocation() {
 		return location;

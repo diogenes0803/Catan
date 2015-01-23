@@ -1,5 +1,10 @@
 package shared.models;
 
+/**
+ * 
+ * @author HojuneYoo
+ * Model of Dice
+ */
 public class Dice {
 	
 	private int diceId;
@@ -30,7 +35,9 @@ public class Dice {
 	}
 
 
-
+/**
+ * Set random number between 1-6 in result
+ */
 	public void RollDice(){
 		return;
 	}

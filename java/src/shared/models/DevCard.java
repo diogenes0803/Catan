@@ -2,6 +2,12 @@ package shared.models;
 
 import shared.definitions.DevCardType;
 
+/**
+ * 
+ * @author HojuneYoo
+ * Model of Development Card
+ */
+
 public class DevCard {
 	
 	private DevCardType type;
