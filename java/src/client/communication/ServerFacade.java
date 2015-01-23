@@ -1,38 +1,16 @@
 package client.communication;
 
-import shared.communicator.ChangeLogLevelParams;
-import shared.communicator.ChangeLogLevelResults;
-import shared.communicator.CreatGameResults;
-import shared.communicator.CreateGameParams;
-import shared.communicator.ExecuteCommandsParams;
-import shared.communicator.ExecuteCommandsResults;
-import shared.communicator.GetCommandsParams;
-import shared.communicator.GetCommandsResults;
-import shared.communicator.GetModelParams;
-import shared.communicator.GetModelResults;
-import shared.communicator.JoinGameParams;
-import shared.communicator.JoinGameResults;
-import shared.communicator.ListAIParams;
-import shared.communicator.ListAIResults;
-import shared.communicator.ListGamesParams;
-import shared.communicator.ListGamesResults;
-import shared.communicator.LoadGameParams;
-import shared.communicator.LoadGameResults;
-import shared.communicator.MoveResults;
-import shared.communicator.RegisterUserParams;
-import shared.communicator.RegisterUserResults;
-import shared.communicator.ResetGameParams;
-import shared.communicator.ResetGameResults;
-import shared.communicator.SaveGameParams;
-import shared.communicator.SaveGameResults;
-import shared.communicator.UserLoginParams;
-import shared.communicator.UserLoginResults;
+import shared.communicator.*;
 
 /**
  * Description: The Server Facade takes in parameter objects for the commands that the server is able to perform,
  * passes them to the client communicator and then receives a results objects back containing the server's response 
  * @author oxbor
  *
+ */
+/**
+ * @author Nate Campbell
+ * @author Jonathan Oxborrow
  */
 public class ServerFacade {
 	
@@ -252,12 +230,218 @@ public class ServerFacade {
 		return null;
 	}
 	
-	/**
-	 * 
-	 * @post
+	/* Move Commands */
+	
+	/*
+	 * Universal Pre-Conditions:
+	 * All /move/* methods also have a common pre­condition in that they assume that the caller has
+	 * already logged in to the server and joined a game. This pre­condition is not repeated on each
+	 * move type, but should be assumed.
 	 */
-	public MoveResults move(Object o){
+	
+	
+	
+	/* Anytime Commands */
+	
+	/**
+	 * @pre None.
+	 * @post The chat contains your message at the end.
+	 */
+	public MoveResults sendChat() {
 		return null;
 	}
+	
+	/* Miscellaneous Commands */
 
+	/**
+	 * @pre You have been offered a domestic trade
+	 * To accept the offered trade, you have the required resources
+	 * @post If you accepted, you and the player who offered swap the specified resources
+	 * If you declined no resources are exchanged
+	 * The trade offer is removed
+	 */
+	public MoveResults acceptTrade() {
+		return null;
+	}
+	
+	/**
+	 * @pre The status of the client model is 'Discarding'
+	 * You have over 7 cards
+	 * You have the cards you're choosing to discard.
+	 * @post You gave up the specified resources
+	 * If you're the last one to discard, the client model status changes to 'Robbing
+	 */
+	public MoveResults discardCards() {
+		return null;
+	}
+	
+	/* Rolling Commands */
+	
+	
+	/**
+	 * @pre It is your turn
+	 * The client model’s status is ‘Rolling’
+	 * @post The client model’s status is now in ‘Discarding’ or ‘Robbing’ or ‘Playing’
+	 */
+	public MoveResults rollNumber() {
+		return null;
+	}
+	
+	/* Playing Commands */
+	
+	/*
+	 * Playing Command Pre-Conditions:
+	 * It is your turn
+	 * The client model’s status is 'Playing'
+	 */
+	
+	/**
+	 * @pre The road location is open
+	 * The road location is connected to another road owned by the player
+	 * The road location is not on water
+	 * You have the required resources (1 wood, 1 brick; 1 road)
+	 * Setup round: Must be placed by settlement owned by the player with no adjacent
+	 * road
+	 * @post You lost the resources required to build a road (1 wood, 1 brick; 1 road)
+	 * The road is on the map at the specified location
+	 * If applicable, “longest road” has been awarded to the player with the longest road
+	 */
+	public MoveResults buildRoad() {
+		return null;
+	}
+	
+	
+	/**
+	 * @pre The settlement location is open 
+	 * The settlement location is not on water
+	 * The settlement location is connected to one of your roads except during setup
+	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheep; 1 settlement)
+	 * The settlement cannot be placed adjacent to another settlement
+	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep; 1 settlement)
+	 * The settlement is on the map at the specified location
+	 */
+	public MoveResults buildSettlement() {
+		return null;
+	}
+	
+	
+	/**
+	 * @pre The city location is where you currently have a settlement
+	 * You have the required resources (2 wheat, 3 ore; 1 city)
+	 * @post You lost the resources required to build a city (2 wheat, 3 ore; 1 city)
+	 * The city is on the map at the specified location
+	 * You got a settlement back
+	 */
+	public MoveResults buildCity() {
+		return null;
+	}
+	
+	/**
+	 * @pre You have the resources you are offering
+	 * @post The trade is offered to the other player (stored in the server model)
+	 */
+	public MoveResults offerTrade() {
+		return null;
+	}
+	
+	/**
+	 * @pre You have the resources you are giving
+	 * For ratios less than 4, you have the correct port for the trade
+	 * @post The trade has been executed (the offered resources are in the bank, and the
+	 * requested resource has been received)
+	 */
+	public MoveResults maritimeTrade() {
+		return null;
+	}
+	
+	/**
+	 * @pre The robber is not being kept in the same location
+	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * @post The robber is in the new location
+	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
+	 */
+	public MoveResults robPlayer() {
+		return null;
+	}
+	
+	/**
+	 * @pre None (except the preconditions for all Playing Commands)
+	 * @post The cards in your new dev card hand have been transferred to your old dev card hand
+	 * It is the next player’s turn
+	 */
+	public MoveResults finishTurn() {
+		return null;
+	}
+	
+	/**
+	 * @pre You have the required resources (1 ore, 1 wheat, 1 sheep)
+	 * There are dev cards left in the deck
+	 * @post You have a new card
+	 * If it is a monument card, it has been added to your old devcard hand
+	 * If it is a non­monument card, it has been added to your new devcard hand (unplayable this turn)
+	 */
+	public MoveResults buyDevCard() {
+		return null;
+	}
+	
+	/* Dev Card Commands */
+	
+	/*
+	 * Dev Card Command Pre-Conditions:
+	 * It is your turn
+	 * The client model status is 'Playing'
+	 * You have the specific card you want to play in your old dev card hand
+	 * You have not yet played a non­monument dev card this turn
+	 */
+	
+	/**
+	 * @pre The robber is not being kept in the same location
+	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * @post The robber is in the new location.
+	 * The player being robbed (if any) gave you one of his resource cards (randomly selected).
+	 * If applicable, “largest army” has been awarded to the player who has played the most soldier cards.
+	 * You are not allowed to play other development cards during this turn (except for
+	 * monument cards, which may still be played).
+	 */
+	public MoveResults playSoldier() {
+		return null;
+	}
+	
+	/**
+	 * @pre The two specified resources are in the bank.
+	 * @post You gained the two specified resources.
+	 */
+	public MoveResults yearOfPlenty() {
+		return null;
+	}
+	
+	/**
+	 * @pre The first road location (spot1) is connected to one of your roads.
+	 * The second road location (spot2) is connected to one of your roads or to the first
+	 * road location (spot1).
+	 * Neither road location is on water.
+	 * You have at least two unused roads.
+	 * @post You have two fewer unused roads.
+	 * Two new roads appear on the map at the specified locations.
+	 * If applicable, “longest road” has been awarded to the player with the longest road.
+	 */
+	public MoveResults roadBuilding() {
+		return null;
+	}
+	
+	/**
+	 * @pre None (except the general preconditions for this section).
+	 * @post All of the other players have given you all of their resource cards of the specified type.
+	 */
+	public MoveResults monopoly() {
+		return null;
+	}
+	
+	/**
+	 * @pre You have enough monument cards to win the game (i.e., reach 10 victory points).
+	 * @post You gained a victory point.
+	 */
+	public MoveResults monument() {
+		return null;
+	}
 }
