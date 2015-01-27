@@ -1,6 +1,7 @@
 package client.communication;
 
 import shared.communicator.*;
+import shared.definitions.ResourceType;
 
 /**
  * Description: The Server Facade takes in parameter objects for the commands that the server is able to perform,
@@ -444,4 +445,41 @@ public class ServerFacade {
 	public MoveResults monument(MoveParams params) {
 		return null;
 	}
+	
+	/**
+	 * @pre You must be in your turn
+	 * @post Roll two dices and sum result
+	 */
+	public MoveResults rollDice(MoveParams params) {
+		return null;
+	}
+	
+	/**
+	 * Bank Distribute Resource Cards to users who are qualified 
+	 * @pre Dices needs to be thrown on that turn before bank can distribute a card
+	 * @post Remove resource cards that has been distributed
+	 * @param diceSum
+	 */
+	public void distributeCards(int diceSum){
+		return;
+	}
+	
+	/**
+	 * Start a game
+	 * @pre Game must have 4 players and game must not been started yet.
+	 * @post Game must have started
+	 */
+	public void startGame(){
+		return;
+	}
+	
+	/**
+	 * Allow user to leave a game
+	 * @pre User must be in a game
+	 * @post Game has to be stopped and user must be out of game
+	 */
+	public void leaveGame(){
+		return;
+	}
+	
 }

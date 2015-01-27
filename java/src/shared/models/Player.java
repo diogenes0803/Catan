@@ -85,69 +85,6 @@ public class Player {
 	public boolean canUseDevCard(){
 		return false;
 	}
-	
-	/**
-	 * Build a road on map
-	 * @pre Players must on their turn and must have enough resources and pieces
-	 * @post Players must on their turn and must lost resources and pieces
-	 */
-	public void buildRoad(){
-		return;
-	}
-	
-	/**
-	 * Build a settlement on map
-	 * @pre Player must have enough resources and pieces
-	 * @post Player must lost resources and pieces
-	 */
-	public void buildSettlement(){
-		return;
-	}
-	
-	/**
-	 * Upgrade settlement to city
-	 * @pre Players must on their turn and must have enough resources and pieces
-	 * @post Players must on their turn and must lost resources and pieces
-	 */
-	public void buildCity(){
-		return;
-	}
-	
-	/**
-	 * Buy DevCard from Bank
-	 * @pre Players must on their turn and must have enough resources and bank must have DevCard left
-	 * @post Players must on their turn and must lost resources and bank must lost a DevCard
-	 */
-	public void buyDevCard(){
-		return;
-	}
-	
-	/**
-	 * Trade Resources with other player or bank or harbor
-	 * @pre Players must on their turn and have enough resources to trade
-	 * @post Players must gain and lost different kind of resources
-	 */
-	public void tarde(){
-		return;
-	}
-	
-	/**
-	 * Roll dices
-	 * @pre Players must on their turn
-	 * @post Dices must have new values
-	 */
-	public void rollDice(){
-		return;
-	}
-	
-	/**
-	 * User Development Card
-	 * @pre Players must on their turn
-	 * @post Players must have lost their card that's been used. DevCard effect must been applied in game
-	 */
-	public void useDevCard(){
-		return;
-	}
 
 	public int getUserId() {
 		return userId;
