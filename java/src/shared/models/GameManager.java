@@ -12,7 +12,6 @@ public class GameManager {
 	 * Update available Game List into availableGmaes
 	 * @pre None
 	 * @post Information of games that are waiting for players should be in availableGames List
-	 * @param none
 	 */
 	public void RefreshGameList(){
 		return;
@@ -22,7 +21,7 @@ public class GameManager {
 	 * Create New Game and store in to game variable
 	 * @pre User should not be in any game
 	 * @post User should be in game and cannot create or join to the other game until left
-	 * @param String gameTitle
+	 * @param gameTitle
 	 */
 	public void CreateNewGame(String gameTitle){
 		return;
@@ -32,7 +31,7 @@ public class GameManager {
 	 * Join selected game
 	 * @pre User should not be in any game, Selected game must not be full or started
 	 * @post User should be in game and cannot create or join to the other game until left
-	 * @param int gameId
+	 * @param gameId
 	 */
 	public void JoinGame(int gameId){
 		return;
@@ -42,8 +41,6 @@ public class GameManager {
 	 * Leave currently joined game
 	 * @pre User must be in game
 	 * @post User must not be in game
-	 * @param none
-	 * 
 	 */
 	public void LeaveGame(){
 		return;
@@ -63,6 +60,18 @@ public class GameManager {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public List<GameInfo> getAvailableGames() {
+		return availableGames;
+	}
+
+	public void setAvailableGames(List<GameInfo> availableGames) {
+		this.availableGames = availableGames;
+	}
+
+	public void setJoinedGame(boolean isJoinedGame) {
+		this.isJoinedGame = isJoinedGame;
 	}
 	
 	

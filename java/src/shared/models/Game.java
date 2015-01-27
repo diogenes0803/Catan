@@ -16,7 +16,6 @@ public class Game {
 	private boolean isStarted;
 	private Map map;
 	private Bank bank;
-	private Dice[] dices = new Dice[2];
 	
 	/**
 	 * Start a game
@@ -100,14 +99,6 @@ public class Game {
 
 	public void setBank(Bank bank) {
 		this.bank = bank;
-	}
-
-	public Dice[] getDices() {
-		return dices;
-	}
-
-	public void setDices(Dice[] dices) {
-		this.dices = dices;
 	}
 	
 	
