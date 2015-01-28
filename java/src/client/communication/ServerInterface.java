@@ -1,18 +1,15 @@
+/**
+ * 
+ */
 package client.communication;
 
 import shared.communicator.*;
 
 /**
- * Description: The Server Facade takes in parameter objects for the commands that the server is able to perform,
- * passes them to the client communicator and then receives a results objects back containing the server's response 
- * @author oxbor
+ * @author campbeln
  *
  */
-/**
- * @author Nate Campbell
- * @author Jonathan Oxborrow
- */
-public class ServerFacade implements ServerInterface {
+public interface ServerInterface {
 	
 	/**
 	 * @pre username is not null, password is not null
@@ -28,9 +25,7 @@ public class ServerFacade implements ServerInterface {
 	 * 	1. The server returns an HTTP 400 error response, and the body contains an error
 	 * 	message.
 	 */
-	public UserLoginResults userLogin(UserLoginParams params){
-		return null;
-	}
+	UserLoginResults userLogin(UserLoginParams params);
 	
 	/**
 	 * @pre username is not null, password is not null, The specified username is not already in use.
@@ -47,9 +42,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public RegisterUserResults registerUser(RegisterUserParams params){
-		return null;
-	}
+	RegisterUserResults registerUser(RegisterUserParams params);
 	
 	/**
 	 * @pre None.
@@ -62,9 +55,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ListGamesResults listGames(ListGamesParams params){
-		return null;
-	}
+	ListGamesResults listGames(ListGamesParams params);
 	
 	/**
 	 * @pre name != null 
@@ -78,9 +69,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public CreatGameResults createGame(CreateGameParams params){
-		return null;
-	}
+	CreatGameResults createGame(CreateGameParams params);
 	
 	/**
 	 * @pre 1. The user has previously logged in to the server (i.e., they have a valid catan.user HTTP cookie).
@@ -100,9 +89,7 @@ public class ServerFacade implements ServerInterface {
 	 * If the operation fails,1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public JoinGameResults joinGame(JoinGameParams params){
-		return null;
-	}
+	JoinGameResults joinGame(JoinGameParams params);
 	
 	/**
 	 * @pre 1. The specified game ID is valid
@@ -116,9 +103,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public SaveGameResults saveGame(SaveGameParams params){
-		return null;
-	}
+	SaveGameResults saveGame(SaveGameParams params);
 	
 	/**
 	 * @pre 1. A previously saved game file with the specified name exists in the server's saves/directory.
@@ -129,9 +114,7 @@ public class ServerFacade implements ServerInterface {
 	 * If the operation fails,
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error message.
 	 */
-	public LoadGameResults loadGame(LoadGameParams params){
-		return null;
-	}
+	LoadGameResults loadGame(LoadGameParams params);
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -150,9 +133,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public GetModelResults getModel(GetModelParams params){
-		return null;
-	}
+	GetModelResults getModel(GetModelParams params);
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -167,9 +148,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ResetGameResults resetGame(ResetGameParams params){
-		return null;
-	}
+	ResetGameResults resetGame(ResetGameParams params);
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -184,9 +163,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public GetCommandsResults getCommands(GetCommandsParams params){
-		return null;
-	}
+	GetCommandsResults getCommands(GetCommandsParams params);
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -200,9 +177,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ExecuteCommandsResults executeCommands(ExecuteCommandsParams params){
-		return null;
-	}
+	ExecuteCommandsResults executeCommands(ExecuteCommandsParams params);
 	
 	/**
 	 * @pre None.
@@ -212,9 +187,7 @@ public class ServerFacade implements ServerInterface {
 	 * 2. The body contains a JSON string array enumerating the different types of AI players.
 	 * These are the values that may be passed to the /game/addAI method.
 	 */
-	public ListAIResults listAI(ListAIParams params){
-		return null;
-	}
+	ListAIResults listAI(ListAIParams params);
 	
 	/**
 	 * @pre 1.The caller specifies a valid logging level. Valid values include: SEVERE, WARNING,
@@ -226,9 +199,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params){
-		return null;
-	}
+	ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params);
 	
 	/* Move Commands */
 	
@@ -247,12 +218,10 @@ public class ServerFacade implements ServerInterface {
 	 * @pre None.
 	 * @post The chat contains your message at the end.
 	 */
-	public MoveResults sendChat(MoveParams params) {
-		return null;
-	}
+	MoveResults sendChat(MoveParams params);
 	
 	/* Miscellaneous Commands */
-
+	
 	/**
 	 * @pre You have been offered a domestic trade
 	 * To accept the offered trade, you have the required resources
@@ -260,9 +229,7 @@ public class ServerFacade implements ServerInterface {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	public MoveResults acceptTrade(MoveParams params) {
-		return null;
-	}
+	MoveResults acceptTrade(MoveParams params);
 	
 	/**
 	 * @pre The status of the client model is 'Discarding'
@@ -271,21 +238,16 @@ public class ServerFacade implements ServerInterface {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	public MoveResults discardCards(MoveParams params) {
-		return null;
-	}
+	MoveResults discardCards(MoveParams params);
 	
 	/* Rolling Commands */
-	
 	
 	/**
 	 * @pre It is your turn
 	 * The client model's status is -€˜Rolling'
 	 * @post The client model's status is now in -€˜Discarding' or -€˜Robbing' or -€˜Playing'
 	 */
-	public MoveResults rollNumber(MoveParams params) {
-		return null;
-	}
+	MoveResults rollNumber(MoveParams params);
 	
 	/* Playing Commands */
 	
@@ -306,10 +268,7 @@ public class ServerFacade implements ServerInterface {
 	 * The road is on the map at the specified location
 	 * If applicable, "longest road" has been awarded to the player with the longest road
 	 */
-	public MoveResults buildRoad(MoveParams params) {
-		return null;
-	}
-	
+	MoveResults buildRoad(MoveParams params);
 	
 	/**
 	 * @pre The settlement location is open 
@@ -320,10 +279,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
-	public MoveResults buildSettlement(MoveParams params) {
-		return null;
-	}
-	
+	MoveResults buildSettlement(MoveParams params);
 	
 	/**
 	 * @pre The city location is where you currently have a settlement
@@ -332,17 +288,13 @@ public class ServerFacade implements ServerInterface {
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
-	public MoveResults buildCity(MoveParams params) {
-		return null;
-	}
+	MoveResults buildCity(MoveParams params);
 	
 	/**
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	public MoveResults offerTrade(MoveParams params) {
-		return null;
-	}
+	MoveResults offerTrade(MoveParams params);
 	
 	/**
 	 * @pre You have the resources you are giving
@@ -350,9 +302,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	public MoveResults maritimeTrade(MoveParams params) {
-		return null;
-	}
+	MoveResults maritimeTrade(MoveParams params);
 	
 	/**
 	 * @pre The robber is not being kept in the same location
@@ -360,18 +310,14 @@ public class ServerFacade implements ServerInterface {
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
-	public MoveResults robPlayer(MoveParams params) {
-		return null;
-	}
+	MoveResults robPlayer(MoveParams params);
 	
 	/**
 	 * @pre None (except the preconditions for all Playing Commands)
 	 * @post The cards in your new dev card hand have been transferred to your old dev card hand
 	 * It is the next player's turn
 	 */
-	public MoveResults finishTurn(MoveParams params) {
-		return null;
-	}
+	MoveResults finishTurn(MoveParams params);
 	
 	/**
 	 * @pre You have the required resources (1 ore, 1 wheat, 1 sheep)
@@ -380,9 +326,7 @@ public class ServerFacade implements ServerInterface {
 	 * If it is a monument card, it has been added to your old devcard hand
 	 * If it is a non-­monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
-	public MoveResults buyDevCard(MoveParams params) {
-		return null;
-	}
+	MoveResults buyDevCard(MoveParams params);
 	
 	/* Dev Card Commands */
 	
@@ -403,17 +347,13 @@ public class ServerFacade implements ServerInterface {
 	 * You are not allowed to play other development cards during this turn (except for
 	 * monument cards, which may still be played).
 	 */
-	public MoveResults playSoldier(MoveParams params) {
-		return null;
-	}
+	MoveResults playSoldier(MoveParams params);
 	
 	/**
 	 * @pre The two specified resources are in the bank.
 	 * @post You gained the two specified resources.
 	 */
-	public MoveResults yearOfPlenty(MoveParams params) {
-		return null;
-	}
+	MoveResults yearOfPlenty(MoveParams params);
 	
 	/**
 	 * @pre The first road location (spot1) is connected to one of your roads.
@@ -425,33 +365,25 @@ public class ServerFacade implements ServerInterface {
 	 * Two new roads appear on the map at the specified locations.
 	 * If applicable, "longest road" has been awarded to the player with the longest road.
 	 */
-	public MoveResults roadBuilding(MoveParams params) {
-		return null;
-	}
+	MoveResults roadBuilding(MoveParams params);
 	
 	/**
 	 * @pre None (except the general preconditions for this section).
 	 * @post All of the other players have given you all of their resource cards of the specified type.
 	 */
-	public MoveResults monopoly(MoveParams params) {
-		return null;
-	}
+	MoveResults monopoly(MoveParams params);
 	
 	/**
 	 * @pre You have enough monument cards to win the game (i.e., reach 10 victory points).
 	 * @post You gained a victory point.
 	 */
-	public MoveResults monument(MoveParams params) {
-		return null;
-	}
+	MoveResults monument(MoveParams params);
 	
 	/**
 	 * @pre You must be in your turn
 	 * @post Roll two dices and sum result
 	 */
-	public MoveResults rollDice(MoveParams params) {
-		return null;
-	}
+	MoveResults rollDice(MoveParams params);
 	
 	/**
 	 * Bank Distribute Resource Cards to users who are qualified 
@@ -459,26 +391,19 @@ public class ServerFacade implements ServerInterface {
 	 * @post Remove resource cards that has been distributed
 	 * @param diceSum
 	 */
-	public void distributeCards(int diceSum){
-		return;
-	}
+	void distributeCards(int diceSum);
 	
 	/**
 	 * Start a game
 	 * @pre Game must have 4 players and game must not been started yet.
 	 * @post Game must have started
 	 */
-	public void startGame(){
-		return;
-	}
+	void startGame();
 	
 	/**
 	 * Allow user to leave a game
 	 * @pre User must be in a game
 	 * @post Game has to be stopped and user must be out of game
 	 */
-	public void leaveGame(){
-		return;
-	}
-	
+	void leaveGame();
 }
