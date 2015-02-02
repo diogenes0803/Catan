@@ -23,7 +23,22 @@ public class Map {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoadAt(EdgeLocation edgeLocation){
-		return false;
+		HexTile thisTile = hexTiles.get(edgeLocation.getHexLoc().getX()).get(edgeLocation.getHexLoc().getY());
+		Edge thisEdge = thisTile.getEdges().get(edgeLocation.getDir());
+		if(thisEdge.getHasRoad()){
+			return false;
+		}
+		else{
+			List<EdgeLocation> edgeLocations = thisEdge.getLocations();
+			for(EdgeLocation thisLocation : edgeLocations)
+			{
+				if(!edgeLocation.equals(thisLocation))
+				{
+					
+				}
+			}
+			return true;
+		}
 	}
 	
 	/**

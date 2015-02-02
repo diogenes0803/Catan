@@ -1,8 +1,12 @@
 package shared.models;
 
+import java.util.HashMap;
 import java.util.List;
+
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 /**
  * 
@@ -13,12 +17,13 @@ import shared.locations.HexLocation;
 public class HexTile {
 	
 	private HexLocation location;
-	private List<Vertex> vertices;
-	private List<Edge> edges;
+	private HashMap<EdgeLocation, Edge> edges;
+	private HashMap<VertexLocation, Vertex> vertices;
 	private ResourceType hexType;
 	private int token;
 	private Piece robber;
 	private boolean hasRobber;
+	
 	
 	public HexLocation getLocation() {
 		return location;
@@ -26,17 +31,17 @@ public class HexTile {
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
-	public List<Vertex> getVertices() {
-		return vertices;
-	}
-	public void setVertices(List<Vertex> vertices) {
-		this.vertices = vertices;
-	}
-	public List<Edge> getEdges() {
+	public HashMap<EdgeLocation, Edge> getEdges() {
 		return edges;
 	}
-	public void setEdges(List<Edge> edges) {
+	public void setEdges(HashMap<EdgeLocation, Edge> edges) {
 		this.edges = edges;
+	}
+	public HashMap<VertexLocation, Vertex> getVertices() {
+		return vertices;
+	}
+	public void setVertices(HashMap<VertexLocation, Vertex> vertices) {
+		this.vertices = vertices;
 	}
 	public ResourceType getHexType() {
 		return hexType;
@@ -56,7 +61,7 @@ public class HexTile {
 	public void setRobber(Piece robber) {
 		this.robber = robber;
 	}
-	public boolean hasRobber() {
+	public boolean isHasRobber() {
 		return hasRobber;
 	}
 	public void setHasRobber(boolean hasRobber) {

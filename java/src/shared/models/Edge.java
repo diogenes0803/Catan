@@ -1,5 +1,7 @@
 package shared.models;
 
+import java.util.List;
+
 import shared.locations.EdgeLocation;
 /**
  * 
@@ -8,16 +10,17 @@ import shared.locations.EdgeLocation;
  */
 public class Edge {
 	
-	private EdgeLocation location;
+	private List<EdgeLocation> locations;
 	private Piece road;
 	private boolean hasRoad;
 	
 	
-	public EdgeLocation getLocation() {
-		return location;
+	
+	public List<EdgeLocation> getLocations() {
+		return locations;
 	}
-	public void setLocation(EdgeLocation location) {
-		this.location = location;
+	public void setLocations(List<EdgeLocation> locations) {
+		this.locations = locations;
 	}
 	public Piece getRoad() {
 		return road;
@@ -25,7 +28,7 @@ public class Edge {
 	public void setRoad(Piece road) {
 		this.road = road;
 	}
-	public boolean isHasRoad() {
+	public boolean getHasRoad() {
 		return hasRoad;
 	}
 	public void setHasRoad(boolean hasRoad) {

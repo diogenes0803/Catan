@@ -11,7 +11,7 @@ import shared.definitions.DevCardType;
 public class DevCard {
 	
 	private DevCardType type;
-	private boolean canUse;
+	private boolean usable;
 	
 	public DevCardType getType() {
 		return type;
@@ -19,11 +19,11 @@ public class DevCard {
 	public void setType(DevCardType type) {
 		this.type = type;
 	}
-	public boolean isCanUse() {
-		return canUse;
+	public boolean isUsable() {
+		return usable;
 	}
-	public void setCanUse(boolean canUse) {
-		this.canUse = canUse;
+	public void setUsable(boolean canUse) {
+		this.usable = canUse;
 	}
 	
 }

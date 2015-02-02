@@ -1,7 +1,10 @@
 package shared.models;
 
 import java.util.List;
+
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 
 /**
  * Model for Player. Player is a user who is in game
@@ -27,7 +30,20 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoad(){
-		return false;
+		if(isOnTurn){
+			int brick = getResCount(ResourceType.BRICK);
+			int wood = getResCount(ResourceType.WOOD);
+			int roadBuildCard = getUsableDevCount(DevCardType.ROAD_BUILD);
+			if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -35,7 +51,21 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlement(){
-		return false;
+		if(isOnTurn){
+			int brick = getResCount(ResourceType.BRICK);
+			int wood = getResCount(ResourceType.WOOD);
+			int sheep = getResCount(ResourceType.SHEEP);
+			int wheat = getResCount(ResourceType.WHEAT);
+			if(brick > 0 && wood > 0 && sheep > 0 && wheat > 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -43,7 +73,19 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildCity(){
-		return false;
+		if(isOnTurn){
+			int ore = getResCount(ResourceType.ORE);
+			int wheat = getResCount(ResourceType.WHEAT);
+			if(ore >= 3 && wheat >= 2){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -51,7 +93,20 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuyDevCard(){
-		return false;
+		if(isOnTurn){
+			int ore = getResCount(ResourceType.ORE);
+			int sheep = getResCount(ResourceType.SHEEP);
+			int wheat = getResCount(ResourceType.WHEAT);
+			if(ore > 0 && wheat > 0 && sheep > 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -59,7 +114,12 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canTrade(){
-		return false;
+		if(isOnTurn && resCards.size() > 0){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -67,7 +127,12 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canRollDice(){
-		return false;
+		if(isOnTurn){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
@@ -75,15 +140,12 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canWinGame(){
-		return false;
-	}
-	
-	/**
-	 * Check if user have a Development card that is available to use and is on turn
-	 * @return true if possible false if not
-	 */
-	public boolean canUseDevCard(){
-		return false;
+		if(victoryPoint >= 10){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	public int getUserId() {
@@ -166,4 +228,23 @@ public class Player {
 		this.sizeLongestRoad = sizeLongestRoad;
 	}
 	
+	private int getResCount(ResourceType type){
+		int count = 0;
+		for(ResCard thisCard : resCards){
+			if(thisCard.getType() == type){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	private int getUsableDevCount(DevCardType type){
+		int count = 0;
+		for(DevCard thisCard : devCards){
+			if(thisCard.getType() == type && thisCard.isUsable()){
+				count++;
+			}
+		}
+		return count;
+	}
 }

@@ -13,10 +13,6 @@ public class GameManager {
 		return isJoinedGame;
 	}
 
-	public void setJoinedGmae(boolean isJoinedGmae) {
-		this.isJoinedGame = isJoinedGmae;
-	}
-
 	public Game getGame() {
 		return game;
 	}
