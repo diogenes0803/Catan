@@ -4,6 +4,7 @@
 package client.communication;
 
 import shared.communicator.*;
+import shared.models.CatanModel;
 
 /**
  * @author campbeln
@@ -218,7 +219,7 @@ public interface ServerInterface {
 	 * @pre None.
 	 * @post The chat contains your message at the end.
 	 */
-	MoveResults sendChat(MoveParams params);
+	CatanModel sendChat(SendChatParams params);
 	
 	/* Miscellaneous Commands */
 	
@@ -229,7 +230,7 @@ public interface ServerInterface {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	MoveResults acceptTrade(MoveParams params);
+	CatanModel acceptTrade(MoveParams params);
 	
 	/**
 	 * @pre The status of the client model is 'Discarding'
@@ -238,7 +239,7 @@ public interface ServerInterface {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	MoveResults discardCards(MoveParams params);
+	CatanModel discardCards(MoveParams params);
 	
 	/* Rolling Commands */
 	
@@ -247,7 +248,7 @@ public interface ServerInterface {
 	 * The client model's status is -€˜Rolling'
 	 * @post The client model's status is now in -€˜Discarding' or -€˜Robbing' or -€˜Playing'
 	 */
-	MoveResults rollNumber(MoveParams params);
+	CatanModel rollNumber(RollNumberParams params);
 	
 	/* Playing Commands */
 	
@@ -268,7 +269,7 @@ public interface ServerInterface {
 	 * The road is on the map at the specified location
 	 * If applicable, "longest road" has been awarded to the player with the longest road
 	 */
-	MoveResults buildRoad(MoveParams params);
+	CatanModel buildRoad(BuildRoadParams params);
 	
 	/**
 	 * @pre The settlement location is open 
@@ -279,7 +280,7 @@ public interface ServerInterface {
 	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
-	MoveResults buildSettlement(MoveParams params);
+	CatanModel buildSettlement(BuildSettlementParams params);
 	
 	/**
 	 * @pre The city location is where you currently have a settlement
@@ -288,13 +289,13 @@ public interface ServerInterface {
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
-	MoveResults buildCity(MoveParams params);
+	CatanModel buildCity(BuildCityParams params);
 	
 	/**
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	MoveResults offerTrade(MoveParams params);
+	CatanModel offerTrade(MoveParams params);
 	
 	/**
 	 * @pre You have the resources you are giving
@@ -302,7 +303,7 @@ public interface ServerInterface {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	MoveResults maritimeTrade(MoveParams params);
+	CatanModel maritimeTrade(MoveParams params);
 	
 	/**
 	 * @pre The robber is not being kept in the same location
@@ -310,14 +311,14 @@ public interface ServerInterface {
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
-	MoveResults robPlayer(MoveParams params);
+	CatanModel robPlayer(RobPlayerParams params);
 	
 	/**
 	 * @pre None (except the preconditions for all Playing Commands)
 	 * @post The cards in your new dev card hand have been transferred to your old dev card hand
 	 * It is the next player's turn
 	 */
-	MoveResults finishTurn(MoveParams params);
+	CatanModel finishTurn(FinishTurnParams params);
 	
 	/**
 	 * @pre You have the required resources (1 ore, 1 wheat, 1 sheep)
@@ -326,7 +327,7 @@ public interface ServerInterface {
 	 * If it is a monument card, it has been added to your old devcard hand
 	 * If it is a non-­monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
-	MoveResults buyDevCard(MoveParams params);
+	CatanModel buyDevCard(BuyDevCardParams params);
 	
 	/* Dev Card Commands */
 	
@@ -347,13 +348,13 @@ public interface ServerInterface {
 	 * You are not allowed to play other development cards during this turn (except for
 	 * monument cards, which may still be played).
 	 */
-	MoveResults playSoldier(MoveParams params);
+	CatanModel playSoldier(PlaySoldierParams params);
 	
 	/**
 	 * @pre The two specified resources are in the bank.
 	 * @post You gained the two specified resources.
 	 */
-	MoveResults yearOfPlenty(MoveParams params);
+	CatanModel yearOfPlenty(YearOfPlentyParams params);
 	
 	/**
 	 * @pre The first road location (spot1) is connected to one of your roads.
@@ -365,25 +366,25 @@ public interface ServerInterface {
 	 * Two new roads appear on the map at the specified locations.
 	 * If applicable, "longest road" has been awarded to the player with the longest road.
 	 */
-	MoveResults roadBuilding(MoveParams params);
+	CatanModel roadBuilding(RoadBuildingParams params);
 	
 	/**
 	 * @pre None (except the general preconditions for this section).
 	 * @post All of the other players have given you all of their resource cards of the specified type.
 	 */
-	MoveResults monopoly(MoveParams params);
+	CatanModel monopoly(MonopolyParams params);
 	
 	/**
 	 * @pre You have enough monument cards to win the game (i.e., reach 10 victory points).
 	 * @post You gained a victory point.
 	 */
-	MoveResults monument(MoveParams params);
+	CatanModel monument(MonumentParams params);
 	
 	/**
 	 * @pre You must be in your turn
 	 * @post Roll two dices and sum result
 	 */
-	MoveResults rollDice(MoveParams params);
+	CatanModel rollDice(MoveParams params);
 	
 	/**
 	 * Bank Distribute Resource Cards to users who are qualified 

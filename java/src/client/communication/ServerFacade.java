@@ -1,6 +1,7 @@
 package client.communication;
 
 import shared.communicator.*;
+import shared.models.CatanModel;
 
 /**
  * Description: The Server Facade takes in parameter objects for the commands that the server is able to perform,
@@ -247,7 +248,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre None.
 	 * @post The chat contains your message at the end.
 	 */
-	public MoveResults sendChat(MoveParams params) {
+	public CatanModel sendChat(SendChatParams params) {
 		return null;
 	}
 	
@@ -260,7 +261,7 @@ public class ServerFacade implements ServerInterface {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	public MoveResults acceptTrade(MoveParams params) {
+	public CatanModel acceptTrade(MoveParams params) {
 		return null;
 	}
 	
@@ -271,7 +272,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	public MoveResults discardCards(MoveParams params) {
+	public CatanModel discardCards(MoveParams params) {
 		return null;
 	}
 	
@@ -283,7 +284,7 @@ public class ServerFacade implements ServerInterface {
 	 * The client model's status is -€˜Rolling'
 	 * @post The client model's status is now in -€˜Discarding' or -€˜Robbing' or -€˜Playing'
 	 */
-	public MoveResults rollNumber(MoveParams params) {
+	public CatanModel rollNumber(RollNumberParams params) {
 		return null;
 	}
 	
@@ -306,7 +307,7 @@ public class ServerFacade implements ServerInterface {
 	 * The road is on the map at the specified location
 	 * If applicable, "longest road" has been awarded to the player with the longest road
 	 */
-	public MoveResults buildRoad(MoveParams params) {
+	public CatanModel buildRoad(BuildRoadParams params) {
 		return null;
 	}
 	
@@ -320,7 +321,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
-	public MoveResults buildSettlement(MoveParams params) {
+	public CatanModel buildSettlement(BuildSettlementParams params) {
 		return null;
 	}
 	
@@ -332,7 +333,7 @@ public class ServerFacade implements ServerInterface {
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
-	public MoveResults buildCity(MoveParams params) {
+	public CatanModel buildCity(BuildCityParams params) {
 		return null;
 	}
 	
@@ -340,7 +341,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	public MoveResults offerTrade(MoveParams params) {
+	public CatanModel offerTrade(MoveParams params) {
 		return null;
 	}
 	
@@ -350,7 +351,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	public MoveResults maritimeTrade(MoveParams params) {
+	public CatanModel maritimeTrade(MoveParams params) {
 		return null;
 	}
 	
@@ -360,7 +361,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
-	public MoveResults robPlayer(MoveParams params) {
+	public CatanModel robPlayer(RobPlayerParams params) {
 		return null;
 	}
 	
@@ -369,7 +370,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post The cards in your new dev card hand have been transferred to your old dev card hand
 	 * It is the next player's turn
 	 */
-	public MoveResults finishTurn(MoveParams params) {
+	public CatanModel finishTurn(FinishTurnParams params) {
 		return null;
 	}
 	
@@ -380,7 +381,7 @@ public class ServerFacade implements ServerInterface {
 	 * If it is a monument card, it has been added to your old devcard hand
 	 * If it is a non-­monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
-	public MoveResults buyDevCard(MoveParams params) {
+	public CatanModel buyDevCard(BuyDevCardParams params) {
 		return null;
 	}
 	
@@ -403,7 +404,7 @@ public class ServerFacade implements ServerInterface {
 	 * You are not allowed to play other development cards during this turn (except for
 	 * monument cards, which may still be played).
 	 */
-	public MoveResults playSoldier(MoveParams params) {
+	public CatanModel playSoldier(PlaySoldierParams params) {
 		return null;
 	}
 	
@@ -411,7 +412,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre The two specified resources are in the bank.
 	 * @post You gained the two specified resources.
 	 */
-	public MoveResults yearOfPlenty(MoveParams params) {
+	public CatanModel yearOfPlenty(YearOfPlentyParams params) {
 		return null;
 	}
 	
@@ -425,7 +426,7 @@ public class ServerFacade implements ServerInterface {
 	 * Two new roads appear on the map at the specified locations.
 	 * If applicable, "longest road" has been awarded to the player with the longest road.
 	 */
-	public MoveResults roadBuilding(MoveParams params) {
+	public CatanModel roadBuilding(RoadBuildingParams params) {
 		return null;
 	}
 	
@@ -433,7 +434,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre None (except the general preconditions for this section).
 	 * @post All of the other players have given you all of their resource cards of the specified type.
 	 */
-	public MoveResults monopoly(MoveParams params) {
+	public CatanModel monopoly(MonopolyParams params) {
 		return null;
 	}
 	
@@ -441,7 +442,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre You have enough monument cards to win the game (i.e., reach 10 victory points).
 	 * @post You gained a victory point.
 	 */
-	public MoveResults monument(MoveParams params) {
+	public CatanModel monument(MonumentParams params) {
 		return null;
 	}
 	
@@ -449,7 +450,8 @@ public class ServerFacade implements ServerInterface {
 	 * @pre You must be in your turn
 	 * @post Roll two dices and sum result
 	 */
-	public MoveResults rollDice(MoveParams params) {
+	//Nate: Do we really need this function?
+	public CatanModel rollDice(MoveParams params) {
 		return null;
 	}
 	
