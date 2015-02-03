@@ -8,10 +8,11 @@ package shared.communicator;
 public class UserLoginParams {
 	
 	private UserName userName;
-	private Password password;
+	private String password;
 	
-	UserLoginParams(UserName userName, Password password)
+	UserLoginParams(UserName userName, String password)
 	{
-		
+		this.userName = userName;
+		this.password = password;
 	}
 }

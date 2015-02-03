@@ -34,7 +34,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#listGames(shared.communicator.ListGamesParams)
 	 */
 	@Override
-	public ListGamesResults listGames(ListGamesParams params) {
+	public ListGamesResults listGames() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -43,7 +43,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#createGame(shared.communicator.CreateGameParams)
 	 */
 	@Override
-	public CreatGameResults createGame(CreateGameParams params) {
+	public CreateGameResults createGame(CreateGameParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,7 +79,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#getModel(shared.communicator.GetModelParams)
 	 */
 	@Override
-	public GetModelResults getModel(GetModelParams params) {
+	public GetModelResults getModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -88,7 +88,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#resetGame(shared.communicator.ResetGameParams)
 	 */
 	@Override
-	public ResetGameResults resetGame(ResetGameParams params) {
+	public ResetGameResults resetGame() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -56,7 +56,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	ListGamesResults listGames(ListGamesParams params);
+	ListGamesResults listGames();
 	
 	/**
 	 * @pre name != null 
@@ -70,7 +70,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	CreatGameResults createGame(CreateGameParams params);
+	CreateGameResults createGame(CreateGameParams params);
 	
 	/**
 	 * @pre 1. The user has previously logged in to the server (i.e., they have a valid catan.user HTTP cookie).
@@ -134,7 +134,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	GetModelResults getModel(GetModelParams params);
+	GetModelResults getModel();
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -149,7 +149,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	ResetGameResults resetGame(ResetGameParams params);
+	ResetGameResults resetGame();
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -212,7 +212,6 @@ public interface ServerInterface {
 	 */
 	
 	
-	
 	/* Anytime Commands */
 	
 	/**
@@ -245,8 +244,8 @@ public interface ServerInterface {
 	
 	/**
 	 * @pre It is your turn
-	 * The client model's status is -€˜Rolling'
-	 * @post The client model's status is now in -€˜Discarding' or -€˜Robbing' or -€˜Playing'
+	 * The client model's status is 'Rolling'
+	 * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
 	 */
 	CatanModel rollNumber(RollNumberParams params);
 	
@@ -262,10 +261,10 @@ public interface ServerInterface {
 	 * @pre The road location is open
 	 * The road location is connected to another road owned by the player
 	 * The road location is not on water
-	 * You have the required resources (1 wood, 1 brickÍ¾ 1 road)
+	 * You have the required resources (1 wood, 1 brick, 1 road)
 	 * Setup round: Must be placed by settlement owned by the player with no adjacent
 	 * road
-	 * @post You lost the resources required to build a road (1 wood, 1 brickÍ¾ 1 road)
+	 * @post You lost the resources required to build a road (1 wood, 1 brick, 1 road)
 	 * The road is on the map at the specified location
 	 * If applicable, "longest road" has been awarded to the player with the longest road
 	 */
@@ -275,17 +274,17 @@ public interface ServerInterface {
 	 * @pre The settlement location is open 
 	 * The settlement location is not on water
 	 * The settlement location is connected to one of your roads except during setup
-	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
+	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheep, 1 settlement)
 	 * The settlement cannot be placed adjacent to another settlement
-	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheepÍ¾ 1 settlement)
+	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep, 1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
 	CatanModel buildSettlement(BuildSettlementParams params);
 	
 	/**
 	 * @pre The city location is where you currently have a settlement
-	 * You have the required resources (2 wheat, 3 oreÍ¾ 1 city)
-	 * @post You lost the resources required to build a city (2 wheat, 3 oreÍ¾ 1 city)
+	 * You have the required resources (2 wheat, 3 ore, 1 city)
+	 * @post You lost the resources required to build a city (2 wheat, 3 ore, 1 city)
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
