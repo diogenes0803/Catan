@@ -10,7 +10,14 @@ import shared.models.CatanModel;
  * @author campbeln
  *
  */
-public class MockServer implements ServerInterface {
+public class MockServer implements ServerStandinInterface, ServerInterface {
+    
+    
+    private CatanModel model_ptr;
+
+    public MockServer(CatanModel model){
+        model_ptr = model;
+    }
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#userLogin(shared.communicator.UserLoginParams)
@@ -317,5 +324,11 @@ public class MockServer implements ServerInterface {
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    public void updateModel() {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

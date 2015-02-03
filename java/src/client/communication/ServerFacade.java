@@ -18,13 +18,13 @@ public class ServerFacade implements ServerInterface {
 	/**
 	 * @pre username is not null, password is not null
 	 * 
-	 * @post If the passed-¬≠in (username, password) pair is valid,
+	 * @post If the passed≠in (username, password) pair is valid,
 	 * 	1. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 	2. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * 	logged-¬≠in player. The cookie uses "Path=/", and its value contains a url-¬≠encoded JSON object of
+	 * 	logged≠in player. The cookie uses "Path=/", and its value contains a url≠encoded JSON object of
 	 * 	the following form: { "name": STRING, "password": STRING, "playerID": INTEGER }. For
 	 * 	example, { "name": "Rick", "password": "secret", "playerID": 14 }.
-	 * 	If the passed-¬≠in (username, password) pair is not valid, or the operation fails for any other
+	 * 	If the passed≠in (username, password) pair is not valid, or the operation fails for any other
 	 * 	reason,
 	 * 	1. The server returns an HTTP 400 error response, and the body contains an error
 	 * 	message.
@@ -40,7 +40,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. A new user account has been created with the specified username and password.
 	 * 2. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 3. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * logged-¬≠in player. The cookie uses "Path=/", and its value contains a url-¬≠encoded JSON object of
+	 * logged≠in player. The cookie uses "Path=/", and its value contains a url≠encoded JSON object of
 	 * the following form: { "name": STRING, "password": STRING, "playerID": INTEGER }. For
 	 * example, { "name": "Rick", "password": "secret", "playerID": 14 }.
 	 * If there is already an existing user with the specified name, or the operation fails for any other
@@ -96,7 +96,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 2. The player is in the game with the specified color (i.e. calls to /games/list method will
 	 * show the player in the game with the chosen color).
-	 * 3. The server response includes the "Set-¬≠cookie" response header setting the catan.game
+	 * 3. The server response includes the "Set≠cookie" response header setting the catan.game
 	 * HTTP cookie
 	 * If the operation fails,1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -194,7 +194,7 @@ public class ServerFacade implements ServerInterface {
 	 * valid catan.user and catan.game HTTP cookies).
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The passed-¬≠in command list has been applied to the game.
+	 * 1. The passed≠in command list has been applied to the game.
 	 * 2. The server returns an HTTP 200 success response.
 	 * 3. The body contains the game's updated client model JSON
 	 * If the operation fails,
@@ -235,8 +235,8 @@ public class ServerFacade implements ServerInterface {
 	
 	/*
 	 * Universal Pre-Conditions:
-	 * All /move/* methods also have a common pre-¬≠condition in that they assume that the caller has
-	 * already logged in to the server and joined a game. This pre-¬≠condition is not repeated on each
+	 * All /move/* methods also have a common pre≠condition in that they assume that the caller has
+	 * already logged in to the server and joined a game. This pre≠condition is not repeated on each
 	 * move type, but should be assumed.
 	 */
 	
@@ -281,8 +281,8 @@ public class ServerFacade implements ServerInterface {
 	
 	/**
 	 * @pre It is your turn
-	 * The client model's status is -‚Ç¨ÀúRolling'
-	 * @post The client model's status is now in -‚Ç¨ÀúDiscarding' or -‚Ç¨ÀúRobbing' or -‚Ç¨ÀúPlaying'
+	 * The client model's status is Ç'Rolling'
+	 * @post The client model's status is now in Ç'Discarding' or Ç'Robbing' or Ç'Playing'
 	 */
 	public CatanModel rollNumber(RollNumberParams params) {
 		return null;
@@ -300,10 +300,10 @@ public class ServerFacade implements ServerInterface {
 	 * @pre The road location is open
 	 * The road location is connected to another road owned by the player
 	 * The road location is not on water
-	 * You have the required resources (1 wood, 1 brick√ç¬æ 1 road)
+	 * You have the required resources (1 wood, 1 brick,1 road)
 	 * Setup round: Must be placed by settlement owned by the player with no adjacent
 	 * road
-	 * @post You lost the resources required to build a road (1 wood, 1 brick√ç¬æ 1 road)
+	 * @post You lost the resources required to build a road (1 wood, 1 brick,1 road)
 	 * The road is on the map at the specified location
 	 * If applicable, "longest road" has been awarded to the player with the longest road
 	 */
@@ -316,9 +316,9 @@ public class ServerFacade implements ServerInterface {
 	 * @pre The settlement location is open 
 	 * The settlement location is not on water
 	 * The settlement location is connected to one of your roads except during setup
-	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheep√ç¬æ 1 settlement)
+	 * You have the required resources (1 wood, 1 brick, 1 wheat, 1 sheep,1 settlement)
 	 * The settlement cannot be placed adjacent to another settlement
-	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep√ç¬æ 1 settlement)
+	 * @post You lost the resources required to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep,1 settlement)
 	 * The settlement is on the map at the specified location
 	 */
 	public CatanModel buildSettlement(BuildSettlementParams params) {
@@ -328,8 +328,8 @@ public class ServerFacade implements ServerInterface {
 	
 	/**
 	 * @pre The city location is where you currently have a settlement
-	 * You have the required resources (2 wheat, 3 ore√ç¬æ 1 city)
-	 * @post You lost the resources required to build a city (2 wheat, 3 ore√ç¬æ 1 city)
+	 * You have the required resources (2 wheat, 3 ore,1 city)
+	 * @post You lost the resources required to build a city (2 wheat, 3 ore,1 city)
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
@@ -357,7 +357,7 @@ public class ServerFacade implements ServerInterface {
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != -¬≠1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != ≠1), the player being robbed has resource cards
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
@@ -379,7 +379,7 @@ public class ServerFacade implements ServerInterface {
 	 * There are dev cards left in the deck
 	 * @post You have a new card
 	 * If it is a monument card, it has been added to your old devcard hand
-	 * If it is a non-¬≠monument card, it has been added to your new devcard hand (unplayable this turn)
+	 * If it is a non≠monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
 	public CatanModel buyDevCard(BuyDevCardParams params) {
 		return null;
@@ -392,12 +392,12 @@ public class ServerFacade implements ServerInterface {
 	 * It is your turn
 	 * The client model status is 'Playing'
 	 * You have the specific card you want to play in your old dev card hand
-	 * You have not yet played a non-¬≠monument dev card this turn
+	 * You have not yet played a non≠monument dev card this turn
 	 */
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != -¬≠1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != ≠1), the player being robbed has resource cards
 	 * @post The robber is in the new location.
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected).
 	 * If applicable, "largest army" has been awarded to the player who has played the most soldier cards.
