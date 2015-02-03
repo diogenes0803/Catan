@@ -12,7 +12,15 @@ public class ClientCommunicator {
 	 * 
 	 * @post
 	 */
-	public Object sendCommand(String urlPrefix, Object params)
+	public Object post(String urlPrefix, Object params)
+	{
+		return null;
+	}
+	/**
+	 * 
+	 * @post
+	 */
+	public Object get(String urlPrefix)
 	{
 		return null;
 	}

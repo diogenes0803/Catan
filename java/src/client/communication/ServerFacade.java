@@ -62,7 +62,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ListGamesResults listGames(ListGamesParams params){
+	public ListGamesResults listGames(){
 		return null;
 	}
 	
@@ -78,7 +78,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public CreatGameResults createGame(CreateGameParams params){
+	public CreateGameResults createGame(CreateGameParams params){
 		return null;
 	}
 	
@@ -150,7 +150,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public GetModelResults getModel(GetModelParams params){
+	public GetModelResults getModel(){
 		return null;
 	}
 	
@@ -167,7 +167,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	public ResetGameResults resetGame(ResetGameParams params){
+	public ResetGameResults resetGame(){
 		return null;
 	}
 	
