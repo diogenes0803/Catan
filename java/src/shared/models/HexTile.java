@@ -61,7 +61,7 @@ public class HexTile {
 	public void setRobber(Piece robber) {
 		this.robber = robber;
 	}
-	public boolean isHasRobber() {
+	public boolean getHasRobber() {
 		return hasRobber;
 	}
 	public void setHasRobber(boolean hasRobber) {

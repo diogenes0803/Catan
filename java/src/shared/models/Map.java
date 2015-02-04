@@ -2,6 +2,7 @@ package shared.models;
 
 import java.util.List;
 
+import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -16,6 +17,7 @@ import shared.locations.VertexLocation;
 public class Map {
 	
 	private List< List<HexTile> > hexTiles;
+	private HexLocation robberLocation;
 	
 	/**
 	 * Check if player can build a road on certain edge
@@ -28,16 +30,21 @@ public class Map {
 		if(thisEdge.getHasRoad()){
 			return false;
 		}
-		else{
-			List<EdgeLocation> edgeLocations = thisEdge.getLocations();
-			for(EdgeLocation thisLocation : edgeLocations)
-			{
-				if(!edgeLocation.equals(thisLocation))
-				{
-					
-				}
-			}
+		else if(TurnTracker.turnCount < 5){
 			return true;
+		}
+		else{
+			List<EdgeLocation>neighborLocations = thisEdge.getNeighborEdgeLocations();
+			for(EdgeLocation thisLocation : neighborLocations) {
+				Edge neighborEdge = hexTiles.get(thisLocation.getHexLoc().getX()).get(thisLocation.getHexLoc().getY()).getEdges().get(thisLocation.getDir());
+				if(neighborEdge.getHasRoad()) {
+					if(neighborEdge.getRoad().getOwnerPlayerId() == TurnTracker.thisTurnPlayerId) {
+						return true;
+					}
+				}
+				
+			}
+			return false;
 		}
 	}
 	
@@ -46,7 +53,21 @@ public class Map {
 	 * @param vertexLocation
 	 * @return true if possible false if not
 	 */
-	public boolean canBuildSettlementAt(VertexLocation vertexLocation){
+	public boolean canBuildSettlementAt(VertexLocation vertexLocation) {
+		Vertex thisVertex = hexTiles.get(vertexLocation.getHexLoc().getX()).get(vertexLocation.getHexLoc().getY()).getVertices().get(vertexLocation);
+		if(thisVertex.getHasSettlement()) {
+			return false;
+		}
+		List<EdgeLocation>neighborLocations = thisVertex.getNeighborEdgeLocations();
+		for(EdgeLocation thisLocation : neighborLocations) {
+			Edge neighborEdge = hexTiles.get(thisLocation.getHexLoc().getX()).get(thisLocation.getHexLoc().getY()).getEdges().get(thisLocation.getDir());
+			if(neighborEdge.getHasRoad()) {
+				if(neighborEdge.getRoad().getOwnerPlayerId() == TurnTracker.thisTurnPlayerId) {
+					return true;
+				}
+			}
+			
+		}
 		return false;
 	}
 	
@@ -55,8 +76,13 @@ public class Map {
 	 * @param vertexLocation
 	 * @return true if possible false if not
 	 */
-	public boolean canUpgradeSettlementAt(VertexLocation vertexLocation){
-		return false;
+	public boolean canUpgradeSettlementAt(VertexLocation vertexLocation) {
+		if(hexTiles.get(vertexLocation.getHexLoc().getX()).get(vertexLocation.getHexLoc().getY()).getVertices().get(vertexLocation).getSettlement().getType()!=PieceType.CITY) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -64,8 +90,13 @@ public class Map {
 	 * @param hexLocation
 	 * @return true if possible false if not
 	 */
-	public boolean canMoveRobber(HexLocation hexLocation){
+	public boolean canMoveRobber(HexLocation hexLocation) {
+		if(hexTiles.get(hexLocation.getX()).get(hexLocation.getY()).getHasRobber()) {
+			return false;
+		}
+		else {
 		return false;
+		}
 	}
 
 	public List<List<HexTile>> getHexTiles() {
@@ -75,7 +106,14 @@ public class Map {
 	public void setHexTiles(List<List<HexTile>> hexTiles) {
 		this.hexTiles = hexTiles;
 	}
-	
+
+	public HexLocation getRobberLocation() {
+		return robberLocation;
+	}
+
+	public void setRobberLocation(HexLocation robberLocation) {
+		this.robberLocation = robberLocation;
+	}
 	
 
 }
