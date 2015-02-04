@@ -4,12 +4,20 @@
 package client.communication;
 
 import shared.communicator.*;
+import shared.models.CatanModel;
 
 /**
  * @author campbeln
  *
  */
-public class MockServer implements ServerInterface {
+public class MockServer implements ServerStandinInterface, ServerInterface {
+    
+    
+    private CatanModel model_ptr;
+
+    public MockServer(CatanModel model){
+        model_ptr = model;
+    }
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#userLogin(shared.communicator.UserLoginParams)
@@ -132,7 +140,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#sendChat(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults sendChat(MoveParams params) {
+	public CatanModel sendChat(SendChatParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -141,7 +149,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#acceptTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults acceptTrade(MoveParams params) {
+	public CatanModel acceptTrade(MoveParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -150,7 +158,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#discardCards(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults discardCards(MoveParams params) {
+	public CatanModel discardCards(MoveParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -159,7 +167,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#rollNumber(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults rollNumber(MoveParams params) {
+	public CatanModel rollNumber(RollNumberParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -168,7 +176,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#buildRoad(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults buildRoad(MoveParams params) {
+	public CatanModel buildRoad(BuildRoadParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -177,7 +185,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#buildSettlement(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults buildSettlement(MoveParams params) {
+	public CatanModel buildSettlement(BuildSettlementParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -186,7 +194,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#buildCity(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults buildCity(MoveParams params) {
+	public CatanModel buildCity(BuildCityParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -195,7 +203,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#offerTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults offerTrade(MoveParams params) {
+	public CatanModel offerTrade(MoveParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -204,7 +212,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#maritimeTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults maritimeTrade(MoveParams params) {
+	public CatanModel maritimeTrade(MoveParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -213,7 +221,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#robPlayer(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults robPlayer(MoveParams params) {
+	public CatanModel robPlayer(RobPlayerParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -222,7 +230,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#finishTurn(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults finishTurn(MoveParams params) {
+	public CatanModel finishTurn(FinishTurnParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -231,7 +239,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#buyDevCard(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults buyDevCard(MoveParams params) {
+	public CatanModel buyDevCard(BuyDevCardParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -240,7 +248,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#playSoldier(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults playSoldier(MoveParams params) {
+	public CatanModel playSoldier(PlaySoldierParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -249,7 +257,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#yearOfPlenty(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults yearOfPlenty(MoveParams params) {
+	public CatanModel yearOfPlenty(YearOfPlentyParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -258,7 +266,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#roadBuilding(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults roadBuilding(MoveParams params) {
+	public CatanModel roadBuilding(RoadBuildingParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -267,7 +275,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#monopoly(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults monopoly(MoveParams params) {
+	public CatanModel monopoly(MonopolyParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -276,7 +284,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#monument(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults monument(MoveParams params) {
+	public CatanModel monument(MonumentParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -285,7 +293,7 @@ public class MockServer implements ServerInterface {
 	 * @see client.communication.ServerInterface#rollDice(shared.communicator.MoveParams)
 	 */
 	@Override
-	public MoveResults rollDice(MoveParams params) {
+	public CatanModel rollDice(MoveParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -316,5 +324,11 @@ public class MockServer implements ServerInterface {
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    public void updateModel() {
+        // TODO Auto-generated method stub
+        
+    }
 
 }
