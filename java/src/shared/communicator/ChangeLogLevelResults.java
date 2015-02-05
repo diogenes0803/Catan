@@ -5,5 +5,11 @@ package shared.communicator;
  *
  */
 public class ChangeLogLevelResults {
+	String status;
+	
+	ChangeLogLevelResults(String status)
+	{
+		this.status = status;
+	}
 
 }
