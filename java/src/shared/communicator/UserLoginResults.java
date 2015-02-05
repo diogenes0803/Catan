@@ -5,5 +5,12 @@ package shared.communicator;
  *
  */
 public class UserLoginResults {
+	
+	String responseBody;
+	
+	UserLoginResults(String responseBody)
+	{
+		this.responseBody = responseBody;
+	}
 
 }

@@ -5,5 +5,11 @@ package shared.communicator;
  *
  */
 public class ListAIParams {
+	String aIToAdd;
+	
+	ListAIParams(String aIToAdd)
+	{
+		this.aIToAdd = aIToAdd;
+	}
 
 }
