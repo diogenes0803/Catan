@@ -18,13 +18,13 @@ public class ServerFacade implements ServerInterface {
 	/**
 	 * @pre username is not null, password is not null
 	 * 
-	 * @post If the passed­in (username, password) pair is valid,
+	 * @post If the passedï¿½in (username, password) pair is valid,
 	 * 	1. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 	2. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * 	logged­in player. The cookie uses "Path=/", and its value contains a url­encoded JSON object of
+	 * 	loggedï¿½in player. The cookie uses "Path=/", and its value contains a urlï¿½encoded JSON object of
 	 * 	the following form: { "name": STRING, "password": STRING, "playerID": INTEGER }. For
 	 * 	example, { "name": "Rick", "password": "secret", "playerID": 14 }.
-	 * 	If the passed­in (username, password) pair is not valid, or the operation fails for any other
+	 * 	If the passedï¿½in (username, password) pair is not valid, or the operation fails for any other
 	 * 	reason,
 	 * 	1. The server returns an HTTP 400 error response, and the body contains an error
 	 * 	message.
@@ -40,7 +40,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. A new user account has been created with the specified username and password.
 	 * 2. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 3. The HTTP response headers set the catan.user cookie to contain the identity of the
-	 * logged­in player. The cookie uses "Path=/", and its value contains a url­encoded JSON object of
+	 * loggedï¿½in player. The cookie uses "Path=/", and its value contains a urlï¿½encoded JSON object of
 	 * the following form: { "name": STRING, "password": STRING, "playerID": INTEGER }. For
 	 * example, { "name": "Rick", "password": "secret", "playerID": 14 }.
 	 * If there is already an existing user with the specified name, or the operation fails for any other
@@ -96,7 +96,7 @@ public class ServerFacade implements ServerInterface {
 	 * 1. The server returns an HTTP 200 success response with "Success" in the body.
 	 * 2. The player is in the game with the specified color (i.e. calls to /games/list method will
 	 * show the player in the game with the chosen color).
-	 * 3. The server response includes the "Set­cookie" response header setting the catan.game
+	 * 3. The server response includes the "Setï¿½cookie" response header setting the catan.game
 	 * HTTP cookie
 	 * If the operation fails,1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
@@ -194,7 +194,7 @@ public class ServerFacade implements ServerInterface {
 	 * valid catan.user and catan.game HTTP cookies).
 	 * 
 	 * @post If the operation succeeds,
-	 * 1. The passed­in command list has been applied to the game.
+	 * 1. The passedï¿½in command list has been applied to the game.
 	 * 2. The server returns an HTTP 200 success response.
 	 * 3. The body contains the game's updated client model JSON
 	 * If the operation fails,
@@ -235,8 +235,8 @@ public class ServerFacade implements ServerInterface {
 	
 	/*
 	 * Universal Pre-Conditions:
-	 * All /move/* methods also have a common pre­condition in that they assume that the caller has
-	 * already logged in to the server and joined a game. This pre­condition is not repeated on each
+	 * All /move/* methods also have a common preï¿½condition in that they assume that the caller has
+	 * already logged in to the server and joined a game. This preï¿½condition is not repeated on each
 	 * move type, but should be assumed.
 	 */
 	
@@ -261,7 +261,7 @@ public class ServerFacade implements ServerInterface {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	public CatanModel acceptTrade(MoveParams params) {
+	public CatanModel acceptTrade(AcceptTradeParams params) {
 		return null;
 	}
 	
@@ -272,7 +272,7 @@ public class ServerFacade implements ServerInterface {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	public CatanModel discardCards(MoveParams params) {
+	public CatanModel discardCards(DiscardCardsParams params) {
 		return null;
 	}
 	
@@ -281,8 +281,8 @@ public class ServerFacade implements ServerInterface {
 	
 	/**
 	 * @pre It is your turn
-	 * The client model's status is ‚'Rolling'
-	 * @post The client model's status is now in ‚'Discarding' or ‚'Robbing' or ‚'Playing'
+	 * The client model's status is ï¿½'Rolling'
+	 * @post The client model's status is now in ï¿½'Discarding' or ï¿½'Robbing' or ï¿½'Playing'
 	 */
 	public CatanModel rollNumber(RollNumberParams params) {
 		return null;
@@ -341,7 +341,7 @@ public class ServerFacade implements ServerInterface {
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	public CatanModel offerTrade(MoveParams params) {
+	public CatanModel offerTrade(OfferTradeParams params) {
 		return null;
 	}
 	
@@ -351,13 +351,13 @@ public class ServerFacade implements ServerInterface {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	public CatanModel maritimeTrade(MoveParams params) {
+	public CatanModel maritimeTrade(MaritimeTradeParams params) {
 		return null;
 	}
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != ï¿½1), the player being robbed has resource cards
 	 * @post The robber is in the new location
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected)
 	 */
@@ -379,7 +379,7 @@ public class ServerFacade implements ServerInterface {
 	 * There are dev cards left in the deck
 	 * @post You have a new card
 	 * If it is a monument card, it has been added to your old devcard hand
-	 * If it is a non­monument card, it has been added to your new devcard hand (unplayable this turn)
+	 * If it is a nonï¿½monument card, it has been added to your new devcard hand (unplayable this turn)
 	 */
 	public CatanModel buyDevCard(BuyDevCardParams params) {
 		return null;
@@ -392,12 +392,12 @@ public class ServerFacade implements ServerInterface {
 	 * It is your turn
 	 * The client model status is 'Playing'
 	 * You have the specific card you want to play in your old dev card hand
-	 * You have not yet played a non­monument dev card this turn
+	 * You have not yet played a nonï¿½monument dev card this turn
 	 */
 	
 	/**
 	 * @pre The robber is not being kept in the same location
-	 * If a player is being robbed (i.e., victimIndex != ­1), the player being robbed has resource cards
+	 * If a player is being robbed (i.e., victimIndex != ï¿½1), the player being robbed has resource cards
 	 * @post The robber is in the new location.
 	 * The player being robbed (if any) gave you one of his resource cards (randomly selected).
 	 * If applicable, "largest army" has been awarded to the player who has played the most soldier cards.

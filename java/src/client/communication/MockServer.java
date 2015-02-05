@@ -149,7 +149,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#acceptTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public CatanModel acceptTrade(MoveParams params) {
+	public CatanModel acceptTrade(AcceptTradeParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -158,7 +158,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#discardCards(shared.communicator.MoveParams)
 	 */
 	@Override
-	public CatanModel discardCards(MoveParams params) {
+	public CatanModel discardCards(DiscardCardsParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -203,7 +203,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#offerTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public CatanModel offerTrade(MoveParams params) {
+	public CatanModel offerTrade(OfferTradeParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -212,7 +212,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#maritimeTrade(shared.communicator.MoveParams)
 	 */
 	@Override
-	public CatanModel maritimeTrade(MoveParams params) {
+	public CatanModel maritimeTrade(MaritimeTradeParams params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
