@@ -3,8 +3,13 @@
  */
 package client.communication;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import shared.communicator.*;
 import shared.models.CatanModel;
+import shared.models.Player;
 
 /**
  * @author campbeln
@@ -12,20 +17,39 @@ import shared.models.CatanModel;
  */
 public class MockServer implements ServerStandinInterface, ServerInterface {
     
-    
+	
     private CatanModel model_ptr;
+    
+    //In case we create a more robust mock server
+    private HashMap<String, String> users;
 
     public MockServer(CatanModel model){
         model_ptr = model;
+        users = new HashMap<String, String>();
     }
+    
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#userLogin(shared.communicator.UserLoginParams)
 	 */
 	@Override
 	public UserLoginResults userLogin(UserLoginParams params) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		UserLoginResults results = new UserLoginResults();
+		
+		if (!params.getUserName().equals("John"))
+		{
+			results.setResponseBody("Failed to login - bad username or password.");
+			return results;
+		}
+		else if (!params.getPassword().equals("Doe"))
+		{
+			results.setResponseBody("Failed to login - bad username or password.");
+			return results;
+		}
+	
+		results.setResponseBody("Success");
+		return results;
 	}
 
 	/* (non-Javadoc)
@@ -33,8 +57,17 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 */
 	@Override
 	public RegisterUserResults registerUser(RegisterUserParams params) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		RegisterUserResults results = new RegisterUserResults();
+		
+		if (params.getUserName().equals("John"))
+		{
+			results.setResponseBody("Failed to register - someone already has that username.");
+			return results;
+		}
+
+		results.setResponseBody("Success");
+		return results;
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +75,93 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 */
 	@Override
 	public ListGamesResults listGames() {
-		// TODO Auto-generated method stub
+		
+		ListGamesResults results = new ListGamesResults();
+		
+		Player player = new Player();
+		
+		/*
+		player.setColor();
+		
+		
+		Player[] players = new Player[4];
+		Game game = new game("Default Game", 0, )
+		
+	    "players": [
+	      {
+	        "color": "orange",
+	        "name": "Sam",
+	        "id": 0
+	      },
+	      {
+	        "color": "blue",
+	        "name": "Brooke",
+	        "id": 1
+	      },
+	      {
+	        "color": "red",
+	        "name": "Pete",
+	        "id": 10
+	      },
+	      {
+	        "color": "green",
+	        "name": "Mark",
+	        "id": 11
+	      }
+	    ]
+	  },
+	  {
+	    "title": "AI Game",
+	    "id": 1,
+	    "players": [
+	      {
+	        "color": "orange",
+	        "name": "Pete",
+	        "id": 10
+	      },
+	      {
+	        "color": "red",
+	        "name": "Quinn",
+	        "id": -2
+	      },
+	      {
+	        "color": "blue",
+	        "name": "Steve",
+	        "id": -3
+	      },
+	      {
+	        "color": "green",
+	        "name": "Ken",
+	        "id": -4
+	      }
+	    ]
+	  },
+	  {
+	    "title": "Empty Game",
+	    "id": 2,
+	    "players": [
+	      {
+	        "color": "orange",
+	        "name": "Sam",
+	        "id": 0
+	      },
+	      {
+	        "color": "blue",
+	        "name": "Brooke",
+	        "id": 1
+	      },
+	      {
+	        "color": "red",
+	        "name": "Pete",
+	        "id": 10
+	      },
+	      {
+	        "color": "green",
+	        "name": "Mark",
+	        "id": 11
+	      }
+	    ]
+	    */
 		return null;
 	}
 
@@ -329,6 +448,26 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
     public void updateModel() {
         // TODO Auto-generated method stub
         
+    }
+    
+    
+    //The following two methods are only to be used if we create a more robust mock server
+    private void addUser(String userName, String password)
+    {
+    	users.put(userName, password);
+    }
+    
+    private boolean checkForUser(String userName, String password)
+    {
+    	String value = users.get(userName);
+    	if (value != null)
+    	{
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
     }
 
 }
