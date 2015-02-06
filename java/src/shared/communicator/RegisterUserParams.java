@@ -13,4 +13,22 @@ public class RegisterUserParams {
 		this.userName = userName;
 		this.password = password;
 	}
+
+	public UserName getUserName() {
+		return userName;
+	}
+
+	public void setUserName(UserName userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
 }

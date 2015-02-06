@@ -13,4 +13,14 @@ public class ChangeLogLevelParams {
 		//Valid values are ALL, SEVERE, WARNING, INFO, CONFIG,FINE,FINER,FINEST,OFF
 	}
 
+	public String getLogLevel() {
+		return logLevel;
+	}
+
+	public void setLogLevel(String logLevel) {
+		this.logLevel = logLevel;
+	}
+	
+	
+
 }

@@ -13,4 +13,18 @@ public class UserLoginResults {
 		this.responseBody = responseBody;
 	}
 
+	public UserLoginResults() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getResponseBody() {
+		return responseBody;
+	}
+
+	public void setResponseBody(String responseBody) {
+		this.responseBody = responseBody;
+	}
+	
+	
+
 }

@@ -15,4 +15,14 @@ public class ListAIResults {
 		this.aITypes = aITypes;
 	}
 
+	public List<String> getaITypes() {
+		return aITypes;
+	}
+
+	public void setaITypes(List<String> aITypes) {
+		this.aITypes = aITypes;
+	}
+	
+	
+
 }

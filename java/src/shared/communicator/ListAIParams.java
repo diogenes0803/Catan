@@ -12,4 +12,14 @@ public class ListAIParams {
 		this.aIToAdd = aIToAdd;
 	}
 
+	public String getaIToAdd() {
+		return aIToAdd;
+	}
+
+	public void setaIToAdd(String aIToAdd) {
+		this.aIToAdd = aIToAdd;
+	}
+	
+	
+
 }
