@@ -264,8 +264,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		boolean hasRobber = true;
 		hex.setHasRobber(hasRobber);
 		
-		HexTile[][] hexTiles = new HexTile[5][5];
-		hexTiles[0][0] = hex;
+		List< List<HexTile> > hexTiles = new ArrayList< List<HexTile>>();
+		List<HexTile> hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//2
 		hex = new HexTile();
@@ -280,7 +282,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[1][0] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		
 		//3
@@ -296,7 +301,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[2][0] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//4
 		hex = new HexTile();
@@ -311,7 +319,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[3][0] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//5
 		hex = new HexTile();
@@ -326,7 +337,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[4][0] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//6
 		hex = new HexTile();
@@ -341,7 +355,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[0][1] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//7
 		hex = new HexTile();
@@ -356,7 +373,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[0][2] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//8
 		hex = new HexTile();
@@ -371,7 +391,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[0][3] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//9
 		hex = new HexTile();
@@ -386,7 +409,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[0][4] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//10
 		hex = new HexTile();
@@ -401,7 +427,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[1][1] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//11
 		hex = new HexTile();
@@ -416,7 +445,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[2][1] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//12
 		hex = new HexTile();
@@ -431,7 +463,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[3][1] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//13
 		hex = new HexTile();
@@ -446,7 +481,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[4][1] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//14
 		hex = new HexTile();
@@ -461,7 +499,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[1][2] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//15
 		hex = new HexTile();
@@ -476,7 +517,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[2][2] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//16
 		hex = new HexTile();
@@ -491,7 +535,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[3][2] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//17
 		hex = new HexTile();
@@ -506,7 +553,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[4][2] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//18
 		hex = new HexTile();
@@ -521,7 +571,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[3][3] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 		
 		//19
 		hex = new HexTile();
@@ -536,7 +589,10 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hasRobber = false;
 		hex.setHasRobber(hasRobber);
 		
-		hexTiles[4][3] = hex;
+		hexTiles = new ArrayList< List<HexTile>>();
+		hexes = new ArrayList<HexTile>();
+		hexes.add(hex);
+		hexTiles.add(hexes);
 
 		//Sets variables for the map
 		map.setHexTiles(hexTiles);
@@ -688,7 +744,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#getCommands(shared.communicator.GetCommandsParams)
 	 */
 	@Override
-	public GetCommandsResults getCommands() {
+	public GetCommandsResults getCommands(GetCommandsParams params) {
 		//May need to do some modification to this
 		
 		List<String> commands = new ArrayList<String>();
@@ -710,7 +766,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#listAI(shared.communicator.ListAIParams)
 	 */
 	@Override
-	public ListAIResults listAI() {
+	public ListAIResults listAI(ListAIParams params) {
 		
 		List<String> aI = new ArrayList<String>();
 		ListAIResults results = new ListAIResults(aI);
