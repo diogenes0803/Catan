@@ -2,6 +2,8 @@ package shared.communicator;
 
 import java.util.List;
 
+import shared.models.Game;
+
 /**
  * Dumb data holder
  * @author Jonathan

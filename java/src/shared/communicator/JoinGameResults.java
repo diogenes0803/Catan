@@ -7,7 +7,7 @@ package shared.communicator;
 public class JoinGameResults {
 	String status;
 	
-	JoinGameResults(String status)
+	public JoinGameResults(String status)
 	{
 		this.status = status;
 	}

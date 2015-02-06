@@ -1,5 +1,7 @@
 package shared.communicator;
 
+import java.util.List;
+
 import shared.models.CatanModel;
 
 /**
@@ -8,20 +10,26 @@ import shared.models.CatanModel;
  *
  */
 public class GetCommandsResults {
-	CatanModel model;
+	List<String> commands;
 	
-	GetCommandsResults(CatanModel model)
+	public GetCommandsResults(List<String> commands)
 	{
-		this.model = model;
+		this.commands = commands;
 	}
 
-	public CatanModel getModel() {
-		return model;
+	public GetCommandsResults() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setModel(CatanModel model) {
-		this.model = model;
+	public List<String> getCommands() {
+		return commands;
 	}
+
+	public void setCommands(List<String> commands) {
+		this.commands = commands;
+	}
+
+	
 	
 	
 

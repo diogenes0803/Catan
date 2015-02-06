@@ -10,7 +10,7 @@ import shared.models.CatanModel;
 public class GetModelResults {
 	CatanModel model;
 	
-	GetModelResults(CatanModel model)
+	public GetModelResults(CatanModel model)
 	{
 		this.model = model;
 	}

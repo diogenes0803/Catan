@@ -10,7 +10,7 @@ import shared.models.CatanModel;
 public class ResetGameResults {
 	CatanModel model;
 	
-	ResetGameResults(CatanModel model)
+	public ResetGameResults(CatanModel model)
 	{
 		this.model = model;
 	}
