@@ -229,7 +229,7 @@ public interface ServerInterface {
 	 * If you declined no resources are exchanged
 	 * The trade offer is removed
 	 */
-	CatanModel acceptTrade(MoveParams params);
+	CatanModel acceptTrade(AcceptTradeParams params);
 	
 	/**
 	 * @pre The status of the client model is 'Discarding'
@@ -238,7 +238,7 @@ public interface ServerInterface {
 	 * @post You gave up the specified resources
 	 * If you're the last one to discard, the client model status changes to 'Robbing
 	 */
-	CatanModel discardCards(MoveParams params);
+	CatanModel discardCards(DiscardCardsParams params);
 	
 	/* Rolling Commands */
 	
@@ -294,7 +294,7 @@ public interface ServerInterface {
 	 * @pre You have the resources you are offering
 	 * @post The trade is offered to the other player (stored in the server model)
 	 */
-	CatanModel offerTrade(MoveParams params);
+	CatanModel offerTrade(OfferTradeParams params);
 	
 	/**
 	 * @pre You have the resources you are giving
@@ -302,7 +302,7 @@ public interface ServerInterface {
 	 * @post The trade has been executed (the offered resources are in the bank, and the
 	 * requested resource has been received)
 	 */
-	CatanModel maritimeTrade(MoveParams params);
+	CatanModel maritimeTrade(MaritimeTradeParams params);
 	
 	/**
 	 * @pre The robber is not being kept in the same location
