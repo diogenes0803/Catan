@@ -14,6 +14,7 @@ public class CreateGameResults {
 	String title;
 	int id;
 	List<Player> players;
+	boolean success;
 	
 	public CreateGameResults(String title, int id, List<Player> players2)
 	{
@@ -45,5 +46,14 @@ public class CreateGameResults {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+	
 	
 }

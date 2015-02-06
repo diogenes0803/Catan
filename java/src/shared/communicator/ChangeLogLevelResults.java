@@ -6,6 +6,7 @@ package shared.communicator;
  */
 public class ChangeLogLevelResults {
 	String status;
+	boolean success;
 	
 	public ChangeLogLevelResults(String status)
 	{
@@ -18,6 +19,14 @@ public class ChangeLogLevelResults {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 	
 	

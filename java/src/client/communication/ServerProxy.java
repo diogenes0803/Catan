@@ -77,7 +77,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
 
     @Override
-    public ExecuteCommandsResults executeCommands(ExecuteCommandsParams params) {
+    public CatanModel executeCommands(ExecuteCommandsParams params) {
         // TODO Auto-generated method stub
         return null;
     }

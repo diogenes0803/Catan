@@ -178,7 +178,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	ExecuteCommandsResults executeCommands(ExecuteCommandsParams params);
+	CatanModel executeCommands(ExecuteCommandsParams params);
 	
 	/**
 	 * @pre None.
