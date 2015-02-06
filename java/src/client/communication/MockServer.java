@@ -246,7 +246,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#getModel(shared.communicator.GetModelParams)
 	 */
 	@Override
-	public GetModelResults getModel() {
+	public CatanModel getModel() {
 		
 		GameManager gameManager = new GameManager();
 		Game game = new Game();
@@ -669,18 +669,15 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		model_ptr.setGameManager(gameManager);
 		model_ptr.setUserManager(userManager);
 		
-		GetModelResults results = new GetModelResults(model_ptr);
-		
-		return results;
+		return model_ptr;
 	}
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#resetGame(shared.communicator.ResetGameParams)
 	 */
 	@Override
-	public ResetGameResults resetGame() {
-		ResetGameResults results = new ResetGameResults(model_ptr);
-		return results;
+	public CatanModel resetGame() {
+		return model_ptr;
 	}
 
 	/* (non-Javadoc)

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class ListAIResults {
 	List<String> aITypes;
+	boolean success;
 	
 	public ListAIResults(List<String> aITypes)
 	{
@@ -21,6 +22,14 @@ public class ListAIResults {
 
 	public void setaITypes(List<String> aITypes) {
 		this.aITypes = aITypes;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 	
 	

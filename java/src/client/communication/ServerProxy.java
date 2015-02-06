@@ -59,13 +59,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
 
     @Override
-    public GetModelResults getModel() {
+    public CatanModel getModel() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ResetGameResults resetGame() {
+    public CatanModel resetGame() {
         // TODO Auto-generated method stub
         return null;
     }

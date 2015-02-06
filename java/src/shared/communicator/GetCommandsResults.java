@@ -11,6 +11,7 @@ import shared.models.CatanModel;
  */
 public class GetCommandsResults {
 	List<String> commands;
+	boolean success;
 	
 	public GetCommandsResults(List<String> commands)
 	{
@@ -29,8 +30,13 @@ public class GetCommandsResults {
 		this.commands = commands;
 	}
 
-	
-	
-	
+	public boolean isSuccess() {
+		return success;
+	}
 
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	
 }

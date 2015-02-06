@@ -11,6 +11,7 @@ import shared.models.Game;
  */
 public class ListGamesResults {
 	List<Game> games;
+	boolean success;
 	
 	ListGamesResults(List<Game> games)
 	{
@@ -29,4 +30,13 @@ public class ListGamesResults {
 		this.games = games;
 	}
 
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	
 }
