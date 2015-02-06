@@ -18,122 +18,98 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     @Override
     public UserLoginResults userLogin(UserLoginParams params) {
-       
-    	//HttpURLResponse blah =  clientComm.post("/user/login", params);
-    	// if blah == 200
-    	UserLoginResults results = new UserLoginResults();
-    	
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public RegisterUserResults registerUser(RegisterUserParams params) {
-       
-    	RegisterUserResults results = (RegisterUserResults) clientComm.post("/user/register", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public ListGamesResults listGames() {
-    	
-    	ListGamesResults results = (ListGamesResults) clientComm.get("/games/list");
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public CreateGameResults createGame(CreateGameParams params) {
-    	
-    	CreateGameResults results = (CreateGameResults) clientComm.post("/game/create", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public JoinGameResults joinGame(JoinGameParams params) {
-    	
-    	JoinGameResults results = (JoinGameResults) clientComm.post("/game/join", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public SaveGameResults saveGame(SaveGameParams params) {
-    	
-    	SaveGameResults results = (SaveGameResults) clientComm.post("/game/save", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public LoadGameResults loadGame(LoadGameParams params) {
-    	
-    	LoadGameResults results = (LoadGameResults) clientComm.post("/game/load", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public GetModelResults getModel() {
-    	
-    	GetModelResults results = (GetModelResults) clientComm.get("/games/model");
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public ResetGameResults resetGame() {
-    	ResetGameResults results = (ResetGameResults) clientComm.get("/games/reset");
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
-    public GetCommandsResults getCommands() {
-    	
-    	GetCommandsResults results = (GetCommandsResults) clientComm.get("/game/commands");
-        return results;
+    public GetCommandsResults getCommands(GetCommandsParams params) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public ExecuteCommandsResults executeCommands(ExecuteCommandsParams params) {
-    	
-    	ExecuteCommandsResults results = (ExecuteCommandsResults) clientComm.post("/game/commands", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
-    public ListAIResults listAI() {
-    	ListAIResults results = (ListAIResults) clientComm.get("/game/listAI");
-        return results;
+    public ListAIResults listAI(ListAIParams params) {
+        // TODO Auto-generated method stub
+        return null;
     }
-    
-    @Override
-	public String addAI(String AIType) {
-    	
-    	String results = (String) clientComm.get("/game/addAI");
-        return results;
-	}
 
     @Override
     public ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params) {
-
-    	ChangeLogLevelResults results = (ChangeLogLevelResults) clientComm.post("/game/changeloglevel", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public CatanModel sendChat(SendChatParams params) {
-        
-    	CatanModel results = (CatanModel) clientComm.post("/game/sendChat", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public CatanModel acceptTrade(AcceptTradeParams params) {
-    	
-    	CatanModel results = (CatanModel) clientComm.post("/game/acceptTrade", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public CatanModel discardCards(DiscardCardsParams params) {
-
-    	CatanModel results = (CatanModel) clientComm.post("/game/discardCardsParams", params);
-        return results;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
