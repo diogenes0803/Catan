@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class UserName {
 	String name;
 	
-	UserName(String name)
+	public UserName(String name)
 	{
 		if (validateName(name))
 		{

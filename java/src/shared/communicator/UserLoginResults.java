@@ -7,6 +7,7 @@ package shared.communicator;
 public class UserLoginResults {
 	
 	String responseBody;
+	boolean success;
 	
 	UserLoginResults(String responseBody)
 	{
@@ -23,6 +24,14 @@ public class UserLoginResults {
 
 	public void setResponseBody(String responseBody) {
 		this.responseBody = responseBody;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 	
 	
