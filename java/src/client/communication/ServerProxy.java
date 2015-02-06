@@ -11,13 +11,9 @@ import shared.models.CatanModel;
 @SuppressWarnings("unused")
 public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	private ClientCommunicator clientComm;
-    private ServerFacade serverFacade;
-    private CatanModel model_ptr;
 	
-	ServerProxy(CatanModel model){	
-	    this.model_ptr = model;
-	    serverFacade = new ServerFacade();
-	    
+	public ServerProxy(){	
+		clientComm = new ClientCommunicator();
 	}//end constructor
 
     @Override
