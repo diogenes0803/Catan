@@ -11,109 +11,129 @@ import shared.models.CatanModel;
 @SuppressWarnings("unused")
 public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	private ClientCommunicator clientComm;
-    private ServerFacade serverFacade;
-    private CatanModel model_ptr;
 	
-	ServerProxy(CatanModel model){	
-	    this.model_ptr = model;
-	    serverFacade = new ServerFacade();
-	    
+	public ServerProxy(){	
+		clientComm = new ClientCommunicator();
 	}//end constructor
 
     @Override
     public UserLoginResults userLogin(UserLoginParams params) {
-        // TODO Auto-generated method stub
-        return null;
+       
+    	//HttpURLResponse blah =  clientComm.post("/user/login", params);
+    	// if blah == 200
+    	UserLoginResults results = new UserLoginResults();
+    	
+        return results;
     }
 
     @Override
     public RegisterUserResults registerUser(RegisterUserParams params) {
-        // TODO Auto-generated method stub
-        return null;
+       
+    	RegisterUserResults results = (RegisterUserResults) clientComm.post("/user/register", params);
+        return results;
     }
 
     @Override
     public ListGamesResults listGames() {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	ListGamesResults results = (ListGamesResults) clientComm.get("/games/list");
+        return results;
     }
 
     @Override
     public CreateGameResults createGame(CreateGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	CreateGameResults results = (CreateGameResults) clientComm.post("/game/create", params);
+        return results;
     }
 
     @Override
     public JoinGameResults joinGame(JoinGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	JoinGameResults results = (JoinGameResults) clientComm.post("/game/join", params);
+        return results;
     }
 
     @Override
     public SaveGameResults saveGame(SaveGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	SaveGameResults results = (SaveGameResults) clientComm.post("/game/save", params);
+        return results;
     }
 
     @Override
     public LoadGameResults loadGame(LoadGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	LoadGameResults results = (LoadGameResults) clientComm.post("/game/load", params);
+        return results;
     }
 
     @Override
     public GetModelResults getModel() {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	GetModelResults results = (GetModelResults) clientComm.get("/games/model");
+        return results;
     }
 
     @Override
     public ResetGameResults resetGame() {
-        // TODO Auto-generated method stub
-        return null;
+    	ResetGameResults results = (ResetGameResults) clientComm.get("/games/reset");
+        return results;
     }
 
     @Override
-    public GetCommandsResults getCommands(GetCommandsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    public GetCommandsResults getCommands() {
+    	
+    	GetCommandsResults results = (GetCommandsResults) clientComm.get("/game/commands");
+        return results;
     }
 
     @Override
     public ExecuteCommandsResults executeCommands(ExecuteCommandsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	ExecuteCommandsResults results = (ExecuteCommandsResults) clientComm.post("/game/commands", params);
+        return results;
     }
 
     @Override
-    public ListAIResults listAI(ListAIParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    public ListAIResults listAI() {
+    	ListAIResults results = (ListAIResults) clientComm.get("/game/listAI");
+        return results;
     }
+    
+    @Override
+	public String addAI(String AIType) {
+    	
+    	String results = (String) clientComm.get("/game/addAI");
+        return results;
+	}
 
     @Override
     public ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	ChangeLogLevelResults results = (ChangeLogLevelResults) clientComm.post("/game/changeloglevel", params);
+        return results;
     }
 
     @Override
     public CatanModel sendChat(SendChatParams params) {
-        // TODO Auto-generated method stub
-        return null;
+        
+    	CatanModel results = (CatanModel) clientComm.post("/game/sendChat", params);
+        return results;
     }
 
     @Override
     public CatanModel acceptTrade(AcceptTradeParams params) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	CatanModel results = (CatanModel) clientComm.post("/game/acceptTrade", params);
+        return results;
     }
 
     @Override
     public CatanModel discardCards(DiscardCardsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel) clientComm.post("/game/discardCardsParams", params);
+        return results;
     }
 
     @Override

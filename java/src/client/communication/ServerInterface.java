@@ -164,7 +164,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	GetCommandsResults getCommands(GetCommandsParams params);
+	GetCommandsResults getCommands();
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
@@ -188,7 +188,7 @@ public interface ServerInterface {
 	 * 2. The body contains a JSON string array enumerating the different types of AI players.
 	 * These are the values that may be passed to the /game/addAI method.
 	 */
-	ListAIResults listAI(ListAIParams params);
+	ListAIResults listAI();
 	
 	/**
 	 * @pre 1.The caller specifies a valid logging level. Valid values include: SEVERE, WARNING,
@@ -200,6 +200,8 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
+	
+	String addAI(String AIType);
 	ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params);
 	
 	/* Move Commands */
