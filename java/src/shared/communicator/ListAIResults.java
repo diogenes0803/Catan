@@ -10,9 +10,19 @@ import java.util.List;
 public class ListAIResults {
 	List<String> aITypes;
 	
-	ListAIResults(List<String> aITypes)
+	public ListAIResults(List<String> aITypes)
 	{
 		this.aITypes = aITypes;
 	}
+
+	public List<String> getaITypes() {
+		return aITypes;
+	}
+
+	public void setaITypes(List<String> aITypes) {
+		this.aITypes = aITypes;
+	}
+	
+	
 
 }

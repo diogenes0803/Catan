@@ -5,5 +5,21 @@ package shared.communicator;
  *
  */
 public class JoinGameResults {
+	String status;
+	
+	public JoinGameResults(String status)
+	{
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 
 }

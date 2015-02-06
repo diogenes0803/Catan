@@ -1,5 +1,8 @@
 package shared.communicator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.models.Player;
 
 /**
@@ -10,13 +13,13 @@ import shared.models.Player;
 public class CreateGameResults {
 	String title;
 	int id;
-	Player[] players;
+	List<Player> players;
 	
-	CreateGameResults(String title, int id, Player[] players)
+	public CreateGameResults(String title, int id, List<Player> players2)
 	{
 		this.title = title;
 		this.id = id;
-		this.players = players;
+		this.players = players2;
 	}
 
 	public String getTitle() {
@@ -35,11 +38,11 @@ public class CreateGameResults {
 		this.id = id;
 	}
 
-	public Player[] getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(Player[] players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
 	

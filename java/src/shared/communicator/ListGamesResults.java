@@ -1,6 +1,8 @@
 package shared.communicator;
 
-import shared.models.Player;
+import java.util.List;
+
+import shared.models.Game;
 
 /**
  * Dumb data holder
@@ -8,41 +10,23 @@ import shared.models.Player;
  *
  */
 public class ListGamesResults {
-	String title;
-	int id;
-	Player[] players;
+	List<Game> games;
 	
-	ListGamesResults(String title, int id, Player[] players)
+	ListGamesResults(List<Game> games)
 	{
-		this.title = title;
-		this.id = id;
-		this.players = players;
+		this.games = games;
 	}
 	
-	public String getTitle() {
-		return title;
+	public ListGamesResults() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public List<Game> getGames() {
+		return games;
 	}
 
-	public int getId() {
-		return id;
+	public void setGames(List<Game> games) {
+		this.games = games;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Player[] getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(Player[] players) {
-		this.players = players;
-	}
-
-	
 
 }
