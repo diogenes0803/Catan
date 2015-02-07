@@ -119,7 +119,7 @@
 		</copy>
  		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
 			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
+				<attribute name="Main-Class" value="client.ClientLauncher"/>
 				<attribute name="Class-Path" 
 					value="lib/gson-2.2.4.jar" />
 			</manifest>
@@ -152,6 +152,14 @@
 	</target>
 	
 	<target name="test" depends="package" description="phase1 test">
+		<java classname="test.JunitTestDriver" fork="yes">
+		            <classpath>
+		                <path refid="all-classpath"/>
+		            </classpath>
+		            <assertions>
+		                <enable/>
+		            </assertions>
+		        </java>
 	</target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
