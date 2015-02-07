@@ -13,7 +13,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	private ClientCommunicator clientComm;
 	
 	public ServerProxy(){	
-		clientComm = new ClientCommunicator("localhost", "8081");
+		clientComm = new ClientCommunicator("localhost", 8081);
 	}//end constructor
 
     @Override

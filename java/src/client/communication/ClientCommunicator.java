@@ -23,10 +23,10 @@ public class ClientCommunicator {
    
     private Gson gson;
     private String host;
-    private String port;
+    private int port;
 
 
-    public ClientCommunicator(String host, String port){
+    public ClientCommunicator(String host, int port){
         this.host = host;
         this.port = port;
         GsonBuilder builder = new GsonBuilder();
