@@ -18,188 +18,270 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     @Override
     public UserLoginResults userLogin(UserLoginParams params) {
-        // TODO Auto-generated method stub
-        return null;
+        
+    	UserLoginResults results = new UserLoginResults();
+    	
+    	Object response = clientComm.post("/user/login", params);
+    	
+        return results;
     }
 
     @Override
     public RegisterUserResults registerUser(RegisterUserParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	RegisterUserResults results = new RegisterUserResults();
+    	
+    	Object response = clientComm.post("/user/register", params);
+    	
+        return results;
     }
 
     @Override
     public ListGamesResults listGames() {
-        // TODO Auto-generated method stub
-        return null;
+
+    	ListGamesResults results = new ListGamesResults();
+    	
+    	Object response = clientComm.get("/games/list");
+    	
+        return results;
     }
 
     @Override
     public CreateGameResults createGame(CreateGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CreateGameResults results = new CreateGameResults();
+    	
+    	Object response = clientComm.post("/user/create", params);
+    	
+        return results;
     }
 
     @Override
     public JoinGameResults joinGame(JoinGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	JoinGameResults results = new JoinGameResults();
+    	
+    	Object response = clientComm.post("/user/join", params);
+    	
+        return results;
     }
 
     @Override
     public SaveGameResults saveGame(SaveGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	SaveGameResults results = new SaveGameResults();
+    	
+    	Object response = clientComm.post("/user/save", params);
+    	
+        return results;
     }
 
     @Override
     public LoadGameResults loadGame(LoadGameParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	LoadGameResults results = new LoadGameResults();
+    	
+    	Object response = clientComm.post("/user/load", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel getModel() {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.get("/games/model");
+    	
+        return results;
     }
 
     @Override
     public CatanModel resetGame() {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.get("/games/reset");
+    	
+        return results;
     }
 
     @Override
     public GetCommandsResults getCommands(GetCommandsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	GetCommandsResults results = new GetCommandsResults();
+    	
+    	Object response = clientComm.post("/user/commands", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel executeCommands(ExecuteCommandsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/commands", params);
+    	
+        return results;
     }
 
     @Override
     public ListAIResults listAI(ListAIParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	ListAIResults results = new ListAIResults();
+    	
+    	Object response = clientComm.post("/user/listAI", params);
+    	
+        return results;
     }
 
     @Override
     public ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	ChangeLogLevelResults results = new ChangeLogLevelResults();
+    	
+    	Object response = clientComm.post("/user/changeloglevel", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel sendChat(SendChatParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/sendChat", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel acceptTrade(AcceptTradeParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/acceptTrade", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel discardCards(DiscardCardsParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/discardCards", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel rollNumber(RollNumberParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/rollNumber", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel buildRoad(BuildRoadParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/buildRoad", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel buildSettlement(BuildSettlementParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/buildSettlement", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel buildCity(BuildCityParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/buildCity", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel offerTrade(OfferTradeParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/offerTrade", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel maritimeTrade(MaritimeTradeParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/maritimeTrade", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel robPlayer(RobPlayerParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/robPlayer", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel finishTurn(FinishTurnParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/finishTurn", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel buyDevCard(BuyDevCardParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/buyDevCard", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel playSoldier(PlaySoldierParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/Soldier", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel yearOfPlenty(YearOfPlentyParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/Year_of_Plenty", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel roadBuilding(RoadBuildingParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/Road_Building", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel monopoly(MonopolyParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/Monopoly", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel monument(MonumentParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/Monument", params);
+    	
+        return results;
     }
 
     @Override
     public CatanModel rollDice(MoveParams params) {
-        // TODO Auto-generated method stub
-        return null;
+
+    	CatanModel results = (CatanModel)clientComm.post("/games/rollNumber", params);
+    	
+        return results;
     }
 
     @Override

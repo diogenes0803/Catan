@@ -13,6 +13,10 @@ public class LoadGameResults {
 		this.status = status;
 	}
 
+	public LoadGameResults() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getStatus() {
 		return status;
 	}
