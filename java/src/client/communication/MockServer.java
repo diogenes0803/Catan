@@ -703,12 +703,22 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#listAI(shared.communicator.ListAIParams)
 	 */
 	@Override
-	public ListAIResults listAI(ListAIParams params) {
+	public ListAIResults listAI() {
 		
 		List<String> aI = new ArrayList<String>();
 		ListAIResults results = new ListAIResults(aI);
 		return results;
 	}
+	
+	/* (non-Javadoc)
+	 * @see client.communication.ServerInterface#changeLogLevel(shared.communicator.AddAIParams)
+	 */
+	@Override
+	public AddAIResults AddAI(String params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#changeLogLevel(shared.communicator.ChangeLogLevelParams)
