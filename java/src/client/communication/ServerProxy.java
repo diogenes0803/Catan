@@ -21,7 +21,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         
     	UserLoginResults results = new UserLoginResults();
     	
-    	Object response = clientComm.post("/user/login", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/login", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
@@ -31,7 +37,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	RegisterUserResults results = new RegisterUserResults();
     	
-    	Object response = clientComm.post("/user/register", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/register", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
@@ -41,7 +53,12 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	ListGamesResults results = new ListGamesResults();
     	
-    	Object response = clientComm.get("/games/list");
+    	try {
+			results.setResponse(clientComm.get("/games/list", null));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
@@ -51,7 +68,14 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	CreateGameResults results = new CreateGameResults();
     	
-    	Object response = clientComm.post("/user/create", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/create", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
+
     	
         return results;
     }
@@ -61,7 +85,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	JoinGameResults results = new JoinGameResults();
     	
-    	Object response = clientComm.post("/user/join", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/join", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
@@ -71,7 +101,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	SaveGameResults results = new SaveGameResults();
     	
-    	Object response = clientComm.post("/user/save", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/save", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
@@ -81,23 +117,41 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	LoadGameResults results = new LoadGameResults();
     	
-    	Object response = clientComm.post("/user/load", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/load", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel getModel() {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.get("/games/model");
+    	try {
+			String response = clientComm.get("/games/model", null);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel resetGame() {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.get("/games/reset");
+    	try {
+			String response = clientComm.get("/games/reset", null);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
@@ -107,15 +161,27 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	GetCommandsResults results = new GetCommandsResults();
     	
-    	Object response = clientComm.post("/user/commands", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/commands", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel executeCommands(ExecuteCommandsParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/commands", params);
+    	try {
+			Boolean success = clientComm.post("/games/commands", params);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
@@ -125,7 +191,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	ListAIResults results = new ListAIResults();
     	
-    	Object response = clientComm.post("/user/listAI", params);
+    	try {
+			results.setSuccess(clientComm.post("/user/listAI", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
     	
         return results;
     }
@@ -135,151 +207,301 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	ChangeLogLevelResults results = new ChangeLogLevelResults();
     	
-    	Object response = clientComm.post("/user/changeloglevel", params);
-    	
+    	try {
+			results.setSuccess(clientComm.post("/user/changeloglevel", params));
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			results.setSuccess(false);
+		}
+		    	
         return results;
     }
 
     @Override
     public CatanModel sendChat(SendChatParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/sendChat", params);
+    	try {
+			if(clientComm.post("/games/sendChat", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel acceptTrade(AcceptTradeParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/acceptTrade", params);
+    	try {
+			if(clientComm.post("/games/acceptTrade", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel discardCards(DiscardCardsParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/discardCards", params);
+    	try {
+			if(clientComm.post("/games/discardCards", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel rollNumber(RollNumberParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/rollNumber", params);
+    	try {
+			if(clientComm.post("/games/rollNumber", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel buildRoad(BuildRoadParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/buildRoad", params);
+    	try {
+			if(clientComm.post("/games/buildRoad", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel buildSettlement(BuildSettlementParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/buildSettlement", params);
+    	try {
+			if(clientComm.post("/games/buildSettlement", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel buildCity(BuildCityParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/buildCity", params);
+    	try {
+			if(clientComm.post("/games/buildCity", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel offerTrade(OfferTradeParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/offerTrade", params);
+    	try {
+			if(clientComm.post("/games/offerTrade", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel maritimeTrade(MaritimeTradeParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/maritimeTrade", params);
+    	try {
+			if(clientComm.post("/games/maritimeTrade", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel robPlayer(RobPlayerParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/robPlayer", params);
+    	try {
+			if(clientComm.post("/games/robPlayer", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel finishTurn(FinishTurnParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/finishTurn", params);
+    	try {
+			if(clientComm.post("/games/finishTurn", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel buyDevCard(BuyDevCardParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/buyDevCard", params);
+    	try {
+			if(clientComm.post("/games/buyDevCard", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel playSoldier(PlaySoldierParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/Soldier", params);
+    	try {
+			if(clientComm.post("/games/Soldier", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel yearOfPlenty(YearOfPlentyParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/Year_of_Plenty", params);
+    	try {
+			if(clientComm.post("/games/Year_of_Plenty", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel roadBuilding(RoadBuildingParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/Road_Building", params);
+    	try {
+			if(clientComm.post("/games/Road_Building", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel monopoly(MonopolyParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/Monopoly", params);
+    	try {
+			if(clientComm.post("/games/Monopoly", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel monument(MonumentParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/Monument", params);
+    	try {
+			if(clientComm.post("/games/Monument", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
 
     @Override
     public CatanModel rollDice(MoveParams params) {
+    	CatanModel results = new CatanModel();
 
-    	CatanModel results = (CatanModel)clientComm.post("/games/rollNumber", params);
+    	try {
+			if(clientComm.post("/games/rollNumber", params)) {
+				results = getModel();
+			}
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
         return results;
     }
