@@ -6,7 +6,7 @@ package shared.communicator;
  */
 public class SaveGameResults {
 	String status;
-	Boolean success;
+	boolean success;
 	
 	public SaveGameResults(String status)
 	{
@@ -25,12 +25,8 @@ public class SaveGameResults {
 		this.status = status;
 	}
 
-	public Boolean getSuccess() {
-		return success;
-	}
-
-	public void setSuccess(Boolean success) {
-		this.success = success;
+	public void setSuccess(boolean b) {
+		this.success = b;
 	}
 	
 	

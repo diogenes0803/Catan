@@ -11,6 +11,7 @@ import shared.models.Game;
  */
 public class ListGamesResults {
 	List<Game> games;
+	boolean success;
 	String response;
 	
 	ListGamesResults(List<Game> games)
@@ -30,15 +31,18 @@ public class ListGamesResults {
 		this.games = games;
 	}
 
-	public String getResponse() {
-		return response;
+	public boolean isSuccess() {
+		return success;
 	}
 
-	public void setResponse(String response) {
-		this.response = response;
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
-
+	public void setResponse(String string) {
+		this.response = string;
+		
+	}
 
 	
 }
