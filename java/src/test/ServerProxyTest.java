@@ -25,13 +25,26 @@ public class ServerProxyTest {
 	public void testServerProxy() {
 		fail("Not yet implemented"); // TODO
 	}
+	
+	/**
+	 * Test method for {@link client.communication.ServerProxy#registerUser(shared.communicator.RegisterUserParams)}.
+	 */
+	@Test
+	public void testRegisterUser() {
+		String username = "jonathan";
+		RegisterUserParams params = new RegisterUserParams(username, "changeme");
+		
+		RegisterUserResults results = serverProxy.registerUser(params);
+		
+		assertTrue(results.isSuccess());
+	}
 
 	/**
 	 * Test method for {@link client.communication.ServerProxy#userLogin(shared.communicator.UserLoginParams)}.
 	 */
 	@Test
 	public void testUserLogin() {
-		UserName username = new UserName("johnathan");
+		String username = "jonathan";
 		UserLoginParams params = new UserLoginParams(username, "changeme");
 		
 		UserLoginResults results = serverProxy.userLogin(params);
@@ -40,15 +53,7 @@ public class ServerProxyTest {
 			fail("User failed to login");
 		}
 		
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link client.communication.ServerProxy#registerUser(shared.communicator.RegisterUserParams)}.
-	 */
-	@Test
-	public void testRegisterUser() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(results.isSuccess());
 	}
 
 	/**

@@ -20,13 +20,15 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     public UserLoginResults userLogin(UserLoginParams params) {
         
     	UserLoginResults results = new UserLoginResults();
+    	results.setSuccess(false);
     	
     	try {
 			results.setSuccess(clientComm.post("/user/login", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			results.setSuccess(false);
+			results.setSuccess(true);
+			return results;
 		}
     	
         return results;
@@ -41,7 +43,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/register", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -57,7 +59,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setResponse(clientComm.get("/games/list", null));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -72,7 +74,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/create", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
 
@@ -89,7 +91,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/join", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -105,7 +107,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/save", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -121,7 +123,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/load", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -137,7 +139,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			// TODO turn response into a CatanModel
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -153,7 +155,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -168,7 +170,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setResponse(clientComm.get("/user/commands", null));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -185,7 +187,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -200,7 +202,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/listAI", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
     	
@@ -216,7 +218,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			results.setSuccess(clientComm.post("/user/changeloglevel", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			results.setSuccess(false);
 		}
 		    	
@@ -233,7 +235,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -249,7 +251,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -265,7 +267,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -281,7 +283,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -297,7 +299,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -313,7 +315,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -329,7 +331,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -345,7 +347,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -361,7 +363,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -377,7 +379,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -393,7 +395,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -409,7 +411,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -425,7 +427,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -441,7 +443,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -457,7 +459,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -473,7 +475,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -489,7 +491,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
@@ -505,7 +507,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	
         return results;
