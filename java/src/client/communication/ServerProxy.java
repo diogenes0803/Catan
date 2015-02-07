@@ -134,6 +134,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     	try {
 			String response = clientComm.get("/games/model", null);
+			// TODO turn response into a CatanModel
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,7 +148,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			String response = clientComm.get("/games/reset", null);
+			if(clientComm.post("/games/reset", null)) {
+				results = getModel();
+			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +165,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	GetCommandsResults results = new GetCommandsResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/commands", params));
+			results.setResponse(clientComm.get("/user/commands", null));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,7 +180,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			Boolean success = clientComm.post("/games/commands", params);
+			if(clientComm.post("/games/commands", params)) {
+				results = getModel();
+			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
