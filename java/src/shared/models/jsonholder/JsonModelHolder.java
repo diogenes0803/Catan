@@ -2,6 +2,8 @@ package shared.models.jsonholder;
 
 import java.util.List;
 
+import shared.models.Game;
+
 public class JsonModelHolder {
 	private Deck deck;
 	private List<Player> players;
@@ -11,6 +13,16 @@ public class JsonModelHolder {
 	private TurnTracker turnTracker;
 	private int winner;
 	private int version;
+	
+	public Game buildCatanModel() {
+		Game game = new Game();
+		game.setWinner(winner);
+		game.setVersion(version);
+		
+		return null;
+	}
+	
+	
 	public Deck getDeck() {
 		return deck;
 	}

@@ -10,21 +10,14 @@ import java.util.List;
 
 public class Game {
 	
-	private int gameId;
 	private String gameTitle;
 	private List<Player> players;
 	private boolean isStarted;
 	private Map map;
 	private Bank bank;
 	private TurnTracker turnTracker;
-
-	public int getGameId() {
-		return gameId;
-	}
-
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
-	}
+	private int winner;
+	private int version;
 
 	public String getGameTitle() {
 		return gameTitle;
@@ -64,6 +57,30 @@ public class Game {
 
 	public void setBank(Bank bank) {
 		this.bank = bank;
+	}
+
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
+	}
+
+	public void setTurnTracker(TurnTracker turnTracker) {
+		this.turnTracker = turnTracker;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public int getWinner() {
+		return winner;
+	}
+
+	public void setWinner(int winner) {
+		this.winner = winner;
 	}
 	
 	
