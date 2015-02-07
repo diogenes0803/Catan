@@ -13,6 +13,10 @@ public class JoinGameResults {
 		this.status = status;
 	}
 
+	public JoinGameResults() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getStatus() {
 		return status;
 	}

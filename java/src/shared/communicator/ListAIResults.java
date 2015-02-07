@@ -16,6 +16,10 @@ public class ListAIResults {
 		this.aITypes = aITypes;
 	}
 
+	public ListAIResults() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<String> getaITypes() {
 		return aITypes;
 	}

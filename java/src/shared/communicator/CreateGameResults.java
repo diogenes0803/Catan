@@ -23,6 +23,10 @@ public class CreateGameResults {
 		this.players = players2;
 	}
 
+	public CreateGameResults() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getTitle() {
 		return title;
 	}
