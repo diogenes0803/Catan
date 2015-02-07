@@ -6,6 +6,7 @@ package shared.communicator;
  */
 public class RegisterUserResults {
 	String responseBody;
+	boolean success;
 	
 	RegisterUserResults(String responseBody)
 	{
@@ -22,6 +23,14 @@ public class RegisterUserResults {
 
 	public void setResponseBody(String responseBody) {
 		this.responseBody = responseBody;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
 	

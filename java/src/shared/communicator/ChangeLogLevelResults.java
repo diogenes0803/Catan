@@ -13,6 +13,10 @@ public class ChangeLogLevelResults {
 		this.status = status;
 	}
 
+	public ChangeLogLevelResults() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getStatus() {
 		return status;
 	}
