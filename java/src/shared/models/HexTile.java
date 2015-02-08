@@ -4,10 +4,8 @@ import java.util.HashMap;
 
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
 
 /**
  * 
@@ -24,6 +22,49 @@ public class HexTile {
 	private int token;
 	private Piece robber;
 	private boolean hasRobber;
+	
+	public HexTile(int x, int y, String resource, int token) {
+		
+		location = new HexLocation(x, y);
+		hexType  = stringToResource(resource);
+		this.token = token;
+		edges.put(EdgeDirection.North, new Edge(EdgeDirection.North, location));
+		edges.put(EdgeDirection.NorthEast, new Edge(EdgeDirection.NorthEast, location));
+		edges.put(EdgeDirection.NorthWest, new Edge(EdgeDirection.NorthWest, location));
+		edges.put(EdgeDirection.South, new Edge(EdgeDirection.South, location));
+		edges.put(EdgeDirection.SouthEast, new Edge(EdgeDirection.SouthEast, location));
+		edges.put(EdgeDirection.SouthWest, new Edge(EdgeDirection.SouthWest, location));
+		vertices.put(VertexDirection.East, new Vertex(VertexDirection.East, location));
+		vertices.put(VertexDirection.NorthEast, new Vertex(VertexDirection.NorthEast, location));
+		vertices.put(VertexDirection.NorthWest, new Vertex(VertexDirection.NorthWest, location));
+		vertices.put(VertexDirection.SouthEast, new Vertex(VertexDirection.SouthEast, location));
+		vertices.put(VertexDirection.SouthWest, new Vertex(VertexDirection.SouthWest, location));
+		vertices.put(VertexDirection.West, new Vertex(VertexDirection.West, location));
+		hasRobber = false;
+		
+	}
+	
+	private ResourceType stringToResource(String resource) {
+		ResourceType resourceType = null;
+		switch(resource) {
+		case "brick":
+			resourceType = ResourceType.BRICK;
+			break;
+		case "ore":
+			resourceType = ResourceType.ORE;
+			break;
+		case "sheep":
+			resourceType = ResourceType.SHEEP;
+			break;
+		case "wood":
+			resourceType = ResourceType.WOOD;
+			break;
+		case "wheat":
+			resourceType = ResourceType.WHEAT;
+			break;
+		}
+		return resourceType;
+	}
 	
 	public boolean playerHasRoadOnNeighborAt(int playerId, EdgeDirection direction) {
 		Edge edge1 = null;

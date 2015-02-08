@@ -1,5 +1,7 @@
 package shared.models;
 
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 /**
@@ -13,6 +15,10 @@ public class Vertex {
 	private VertexLocation location;
 	private Piece settlement;
 	private boolean hasSettlement;
+	
+	public Vertex(VertexDirection direction, HexLocation hexLoc) {
+		location = new VertexLocation(hexLoc, direction);
+	}
 	
 
 	public VertexLocation getLocation() {

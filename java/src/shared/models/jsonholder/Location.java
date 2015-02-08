@@ -3,7 +3,7 @@ package shared.models.jsonholder;
 public class Location {
 	private int x;
 	private int y;
-	private int direction;
+	private String direction;
 	
 	public int getX() {
 		return x;
@@ -17,10 +17,10 @@ public class Location {
 	public void setY(int y) {
 		this.y = y;
 	}
-	public int getDirection() {
+	public String getDirection() {
 		return direction;
 	}
-	public void setDirection(int direction) {
+	public void setDirection(String direction) {
 		this.direction = direction;
 	}
 	

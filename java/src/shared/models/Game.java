@@ -18,6 +18,17 @@ public class Game {
 	private TurnTracker turnTracker;
 	private int winner;
 	private int version;
+	private int gameId;
+	
+	
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
 
 	public String getGameTitle() {
 		return gameTitle;

@@ -1,6 +1,8 @@
 package shared.models;
 
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 /**
  * 
  * @author HojuneYoo
@@ -12,6 +14,9 @@ public class Edge {
 	private Piece road;
 	private boolean hasRoad;
 	
+	public Edge(EdgeDirection direction, HexLocation hexLoc) {
+		this.location = new EdgeLocation(hexLoc, direction);
+	}
 	
 
 	public EdgeLocation getLocation() {
