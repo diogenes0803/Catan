@@ -21,5 +21,6 @@ public enum EdgeDirection
 	{
 		return opposite;
 	}
+	
 }
 

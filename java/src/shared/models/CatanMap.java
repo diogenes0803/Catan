@@ -15,14 +15,14 @@ import shared.locations.VertexLocation;
  *
  */
 
-public class Map {
+public class CatanMap {
 
 	private HexTile[][] hexTiles;
 	private HashMap<EdgeLocation, Port> ports;
 	private HexLocation robberLocation;
 	private int radius;
 
-	public Map() {
+	public CatanMap() {
 	}
 
 	/**

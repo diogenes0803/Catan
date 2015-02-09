@@ -18,8 +18,8 @@ public class HexTile {
 	private HexLocation location;
 	private HashMap<EdgeDirection, Edge> edges;
 	private HashMap<VertexDirection, Vertex> vertices;
-	private ResourceType hexType;
-	private int token;
+	private ResourceType resourceType;
+	private int token = -1;
 	private Piece robber;
 	private boolean hasRobber;
 	
@@ -29,7 +29,7 @@ public class HexTile {
 		edges = new HashMap<EdgeDirection, Edge>();
 		vertices = new HashMap<VertexDirection, Vertex>();
 		location = new HexLocation(x, y);
-		hexType  = resource;
+		resourceType  = resource;
 		this.token = token;
 		edges.put(EdgeDirection.North, new Edge(EdgeDirection.North, location));
 		edges.put(EdgeDirection.NorthEast, new Edge(EdgeDirection.NorthEast, location));
@@ -209,11 +209,11 @@ public class HexTile {
 	public void setVertices(HashMap<VertexDirection, Vertex> vertices) {
 		this.vertices = vertices;
 	}
-	public ResourceType getHexType() {
-		return hexType;
+	public ResourceType getResourceType() {
+		return resourceType;
 	}
-	public void setHexType(ResourceType hexType) {
-		this.hexType = hexType;
+	public void setResourceType(ResourceType hexType) {
+		this.resourceType = hexType;
 	}
 	public int getToken() {
 		return token;

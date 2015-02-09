@@ -37,7 +37,7 @@ public class Player {
 		if(isOnTurn){
 			int brick = getResCount(ResourceType.BRICK);
 			int wood = getResCount(ResourceType.WOOD);
-			int roadBuildCard = getUsableDevCount(DevCardType.ROAD_BUILD);
+			int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
 			if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
 				return true;
 			}
@@ -275,10 +275,10 @@ public class Player {
 		this.discarded = discarded;
 	}
 
-	private int getUsableDevCount(DevCardType type){
+	private int getOldDevCount(DevCardType type){
 		int count = 0;
 		for(DevCard thisCard : devCards){
-			if(thisCard.getType() == type && thisCard.isUsable()){
+			if(thisCard.getType() == type && thisCard.isOld()){
 				count++;
 			}
 		}

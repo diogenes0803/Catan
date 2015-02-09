@@ -6,6 +6,17 @@ public class Deck {
 	private int soldier;
 	private int roadBuilding;
 	private int monument;
+	
+	public Deck(){}
+	
+	public Deck(int yearOfPlenty, int monopoly, int soldier, int roadBuilding, int monument) {
+		this.yearOfPlenty = yearOfPlenty;
+		this.monopoly = monopoly;
+		this.soldier = soldier;
+		this.roadBuilding = roadBuilding;
+		this.monument = monument;
+	}
+	
 	public int getYearOfPlenty() {
 		return yearOfPlenty;
 	}

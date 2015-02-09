@@ -16,7 +16,7 @@ import shared.models.Bank;
 import shared.models.DevCard;
 import shared.models.Game;
 import shared.models.HexTile;
-import shared.models.Map;
+import shared.models.CatanMap;
 import shared.models.MessageLine;
 import shared.models.Piece;
 import shared.models.Player;
@@ -44,7 +44,7 @@ public class JsonModelHolder {
 		game.setPlayers(createPlayerList());
 		game.setBank(new Bank(createBankResCards(), createBankDevCards()));
 		game.setLogs(createLog());
-		game.setChat(createChat());
+		game.setChats(createChat());
 		TurnTracker.getInstance().setStatus(turnTracker.getStatus());
 		TurnTracker.getInstance().setCurrentTurn(turnTracker.getCurrentTurn());
 		TurnTracker.getInstance().setLongestRoad(turnTracker.getLongestRoad());
@@ -54,8 +54,8 @@ public class JsonModelHolder {
 	
 	
 	
-	private Map createMap() {
-		Map mapModel = new Map();
+	private CatanMap createMap() {
+		CatanMap mapModel = new CatanMap();
 		int radius = map.getRadius();
 		mapModel.setRadius(radius);
 		HexTile[][] hexArray = new HexTile[radius*2-1][radius*2-1];
@@ -118,8 +118,8 @@ public class JsonModelHolder {
 		return mapModel;
 	}
 	
-	private List<Player> createPlayerList() {
-		List<Player> players = new ArrayList<Player>();
+	private Player[] createPlayerList() {
+		Player[] players = new Player[4];
 		for(JsonPlayer thisPlayer : this.players) {
 			Player player = new Player();
 			player.setColor(stringToCatanColor(thisPlayer.getColor()));
@@ -205,7 +205,10 @@ public class JsonModelHolder {
 				Piece thisSettlement = new Piece(PieceType.SETTLEMENT, thisPlayer.getPlayerID());
 				availablePieces.add(thisSettlement);
 			}
-			players.add(player);
+			player.setDevCards(devCards);
+			player.setResCards(resCards);
+			player.setAvailablePieces(availablePieces);
+			players[thisPlayer.getPlayerIndex()] = player;
 		}
 		return players;
 	}
@@ -261,21 +264,24 @@ public class JsonModelHolder {
 	}
 	
 	private List<MessageLine> createLog() {
-		List<Line> lines = log.getLines();
-		List<MessageLine> log = new ArrayList<MessageLine>();
-		for(Line thisLine : lines) {
-			MessageLine messageLine = new MessageLine(thisLine.getSource(), thisLine.getMessage());
-			log.add(messageLine);
+		List<MessageLine> catanLog = new ArrayList<MessageLine>();
+		if(log.getLines() != null) {
+			for(Line thisLine : log.getLines()) {
+				MessageLine messageLine = new MessageLine(thisLine.getSource(), thisLine.getMessage());
+				catanLog.add(messageLine);
+			}
 		}
-		return log;
+		return catanLog;
 	}
 	
 	private List<MessageLine> createChat() {
 		List<Line> lines = chat.getLines();
 		List<MessageLine> chat = new ArrayList<MessageLine>();
-		for(Line thisLine : lines) {
-			MessageLine messageLine = new MessageLine(thisLine.getSource(), thisLine.getMessage());
-			chat.add(messageLine);
+		if(lines != null) {
+			for(Line thisLine : lines) {
+				MessageLine messageLine = new MessageLine(thisLine.getSource(), thisLine.getMessage());
+				chat.add(messageLine);
+			}
 		}
 		return chat;
 	}

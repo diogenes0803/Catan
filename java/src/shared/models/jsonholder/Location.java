@@ -5,6 +5,17 @@ public class Location {
 	private int y;
 	private String direction;
 	
+	public Location(int x, int y, String direction) {
+		this.x = x;
+		this.y = y;
+		this.direction = direction;
+	}
+	
+	public Location(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public int getX() {
 		return x;
 	}

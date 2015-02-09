@@ -11,12 +11,12 @@ import shared.definitions.DevCardType;
 public class DevCard {
 	
 	private DevCardType type;
-	private boolean usable;
+	private boolean old;
 	
 	public DevCard(){}
-	public DevCard(DevCardType type, boolean usable) {
+	public DevCard(DevCardType type, boolean old) {
 		this.type = type;
-		this.usable = usable;
+		this.old = old;
 	}
 	
 	public DevCardType getType() {
@@ -25,11 +25,11 @@ public class DevCard {
 	public void setType(DevCardType type) {
 		this.type = type;
 	}
-	public boolean isUsable() {
-		return usable;
+	public boolean isOld() {
+		return old;
 	}
-	public void setUsable(boolean canUse) {
-		this.usable = canUse;
+	public void setOld(boolean old) {
+		this.old = old;
 	}
 	
 }

@@ -29,7 +29,7 @@ import shared.models.ResCard;
 import shared.models.TurnTracker;
 import shared.models.User;
 import shared.models.UserManager;
-import shared.models.Map;
+import shared.models.CatanMap;
 import shared.models.Vertex;
 
 /**
@@ -106,23 +106,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		player.setUserId(0);
 		//player.setColor("orange");
 		//player.setName("Sam");
-		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(player);
+		Player[] players = new Player[4];
+		players[0] = (player);
 		player = new Player();
 		player.setUserId(1);
 		//player.setColor("blue");
 		//player.setName("Brooke");
-		players.add(player);
+		players[1] = player;
 		player = new Player();
 		player.setUserId(10);
 		//player.setColor("red");
 		//player.setName("Pete");
-		players.add(player);
+		players[2] = player;
 		player = new Player();
 		player.setUserId(11);
 		//player.setColor("Green");
 		//player.setName("Mark");
-		players.add(player);
+		players[3] = player;
 		
 		Game game = new Game();
 		game.setPlayers(players);
@@ -135,23 +135,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		player.setUserId(10);
 		//player.setColor("orange");
 		//player.setName("Pete");
-		players = new ArrayList<Player>();
-		players.add(player);
+		players = new Player[4];
+		players[0] = player;
 		player = new Player();
 		player.setUserId(-2);
 		//player.setColor("red");
 		//player.setName("Quinn");
-		players.add(player);
+		players[1] = player;
 		player = new Player();
 		player.setUserId(-3);
 		//player.setColor("blue");
 		//player.setName("Steve");
-		players.add(player);
+		players[2] = player;
 		player = new Player();
 		player.setUserId(-4);
 		//player.setColor("green");
 		//player.setName("Ken");
-		players.add(player);
+		players[3] = player;
 		
 		game = new Game();
 		game.setPlayers(players);
@@ -164,23 +164,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		player.setUserId(0);
 		//player.setColor("orange");
 		//player.setName("Sam");
-		players = new ArrayList<Player>();
-		players.add(player);
+		players = new Player[4];
+		players[0] = player;
 		player = new Player();
 		player.setUserId(1);
 		//player.setColor("blue");
 		//player.setName("Brooke");
-		players.add(player);
+		players[1] = player;
 		player = new Player();
 		player.setUserId(10);
 		//player.setColor("red");
 		//player.setName("Pete");
-		players.add(player);
+		players[2] = player;
 		player = new Player();
 		player.setUserId(11);
 		//player.setColor("Green");
 		//player.setName("Mark");
-		players.add(player);
+		players[3] = player;
 		
 		game = new Game();
 		game.setPlayers(players);
@@ -250,7 +250,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		GameManager gameManager = new GameManager();
 		Game game = new Game();
-		Map map = new Map();
+		CatanMap map = new CatanMap();
 		
 		//1
 		HexTile hex = new HexTile();
@@ -274,7 +274,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		ResourceType hexType = ResourceType.BRICK;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -290,7 +290,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WOOD;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -305,7 +305,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.BRICK;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -320,7 +320,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WOOD;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -334,7 +334,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.ORE;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -349,7 +349,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.SHEEP;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -364,7 +364,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.ORE;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -379,7 +379,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.SHEEP;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -394,7 +394,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WHEAT;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -409,7 +409,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.BRICK;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -424,7 +424,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WHEAT;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -439,7 +439,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WHEAT;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -454,7 +454,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.SHEEP;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -469,7 +469,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WOOD;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -484,7 +484,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.SHEEP;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -499,7 +499,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WOOD;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -514,7 +514,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.ORE;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -529,7 +529,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
 		hexType = ResourceType.WHEAT;
-		hex.setHexType(hexType);
+		hex.setResourceType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -548,35 +548,35 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		{
 			DevCard card = new DevCard();
 			card.setType(DevCardType.YEAR_OF_PLENTY);
-			card.setUsable(true);
+			card.setOld(true);
 			devCards.add(card);
 		}
 		for (int i = 0; i < 2; i++)
 		{
 			DevCard card = new DevCard();
 			card.setType(DevCardType.MONOPOLY);
-			card.setUsable(true);
+			card.setOld(true);
 			devCards.add(card);
 		}
 		for (int i = 0; i < 14; i++)
 		{
 			DevCard card = new DevCard();
 			card.setType(DevCardType.SOLDIER);
-			card.setUsable(true);
+			card.setOld(true);
 			devCards.add(card);
 		}
 		for (int i = 0; i < 2; i++)
 		{
 			DevCard card = new DevCard();
 			card.setType(DevCardType.ROAD_BUILD);
-			card.setUsable(true);
+			card.setOld(true);
 			devCards.add(card);
 		}
 		for (int i = 0; i < 5; i++)
 		{
 			DevCard card = new DevCard();
 			card.setType(DevCardType.MONUMENT);
-			card.setUsable(true);
+			card.setOld(true);
 			devCards.add(card);
 		}
 		
@@ -605,7 +605,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		bank.setResCards(resCards);
 		
 		
-		List<Player> players = new ArrayList<Player>();
+		Player[] players = new Player[4];
 		
 		Player player = new Player();
 		player.setUserId(0);
@@ -643,9 +643,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		player.setDevCards(playaerDevCards);
 		player.setResCards(playerResCards);
 		player.setAvailablePieces(availablePieces);
-		players.add(player);
-		
-		TurnTracker turnTracker = new TurnTracker();
+		players[0] = player;
 		
 
 		
