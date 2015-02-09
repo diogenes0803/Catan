@@ -1,5 +1,6 @@
 package shared.communicator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.models.Game;
@@ -9,18 +10,19 @@ import shared.models.Game;
  * @author Jonathan
  *
  */
-public class ListGamesResults {
+public class ListGamesResults extends ResponseBodyContainer{
 	List<Game> games;
-	boolean success;
-	String response;
 	
-	ListGamesResults(List<Game> games)
+	public ListGamesResults(List<Game> games)
 	{
+	    super("SUCCESS");
 		this.games = games;
+        setSuccess(true);
 	}
 	
 	public ListGamesResults() {
-		// TODO Auto-generated constructor stub
+	    super("");
+		games = new ArrayList<Game>();
 	}
 
 	public List<Game> getGames() {
@@ -31,18 +33,7 @@ public class ListGamesResults {
 		this.games = games;
 	}
 
-	public boolean isSuccess() {
-		return success;
-	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public void setResponse(String string) {
-		this.response = string;
-		
-	}
 
 	
 }

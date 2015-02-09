@@ -16,60 +16,49 @@ public class Player {
 	
 	private int userId;
 	private int playerId;
-	private String name;
 	private List<ResCard> resCards;
 	private List<DevCard> devCards;
 	private int victoryPoint;
-	private boolean isOnTurn;
+	//private boolean isTheirTurn; unneccessary.
 	private List<Piece> availablePieces;
 	private CatanColor color;
-	private int numSoldierPlayed;
-	private int numMonumentPlayed;
+	private int numKnightUses;
 	private int sizeLongestRoad;
-	private boolean playedDevCard;
-	private boolean discarded;
 	
 	/**
-	 * Check if user have enough resources and pieces and is on turn to build a road
+	 * Check if user has enough resources and pieces to buy road
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoad(){
-		if(isOnTurn){
-			int brick = getResCount(ResourceType.BRICK);
-			int wood = getResCount(ResourceType.WOOD);
-			int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
-			if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
-				return true;
-			}
-			else{
-				return false;
-			}
+
+		int brick = getResCount(ResourceType.BRICK);
+		int wood = getResCount(ResourceType.WOOD);
+			//int roadBuildCard = getUsableDevCount(DevCardType.ROAD_BUILD);
+		if((brick > 0 && wood > 0)){
+			return true;
 		}
-		else{
-			return false;
-		}
+		
+	    return false;
+		
 	}
 	
 	/**
-	 * Check if user have enough resources and pieces and is on turn to build a Settlement
+	 * <p>Check if user have enough resources and pieces to build settlement.
+	 </p>
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlement(){
-		if(isOnTurn){
+            //one of each of the following is needed:
 			int brick = getResCount(ResourceType.BRICK);
 			int wood = getResCount(ResourceType.WOOD);
 			int sheep = getResCount(ResourceType.SHEEP);
 			int wheat = getResCount(ResourceType.WHEAT);
-			if(brick > 0 && wood > 0 && sheep > 0 && wheat > 0){
+			if(brick > 0 && wood > 0 && sheep > 0 && wheat > 0)
 				return true;
-			}
-			else{
-				return false;
-			}
-		}
-		else{
+			
+		
 			return false;
-		}
+		
 	}
 	
 	/**
@@ -77,19 +66,15 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildCity(){
-		if(isOnTurn){
+
 			int ore = getResCount(ResourceType.ORE);
 			int wheat = getResCount(ResourceType.WHEAT);
 			if(ore >= 3 && wheat >= 2){
 				return true;
 			}
-			else{
-				return false;
-			}
-		}
-		else{
+			
 			return false;
-		}
+		
 	}
 	
 	/**
@@ -97,20 +82,16 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuyDevCard(){
-		if(isOnTurn){
+		    //one of each reource
 			int ore = getResCount(ResourceType.ORE);
 			int sheep = getResCount(ResourceType.SHEEP);
 			int wheat = getResCount(ResourceType.WHEAT);
 			if(ore > 0 && wheat > 0 && sheep > 0){
 				return true;
 			}
-			else{
-				return false;
-			}
-		}
-		else{
+			
 			return false;
-		}
+		
 	}
 	
 	/**
@@ -118,7 +99,7 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canTrade(){
-		if(isOnTurn && resCards.size() > 0){
+		if( resCards.size() > 0){
 			return true;
 		}
 		else{
@@ -126,18 +107,7 @@ public class Player {
 		}
 	}
 	
-	/**
-	 * Check if user is on turn to roll a dice
-	 * @return true if possible false if not
-	 */
-	public boolean canRollDice(){
-		if(isOnTurn){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	
 	
 	/**
 	 * Check if user has enough point to win a game
@@ -192,13 +162,6 @@ public class Player {
 		this.victoryPoint = victoryPoint;
 	}
 
-	public boolean isOnTurn() {
-		return isOnTurn;
-	}
-
-	public void setOnTurn(boolean isOnTurn) {
-		this.isOnTurn = isOnTurn;
-	}
 
 	public List<Piece> getAvailablePieces() {
 		return availablePieces;
@@ -215,21 +178,13 @@ public class Player {
 	public void setColor(CatanColor color) {
 		this.color = color;
 	}
-	
-	public int getNumSoldierPlayed() {
-		return numSoldierPlayed;
+
+	public int getNumKnightUses() {
+		return numKnightUses;
 	}
 
-	public void setNumSoldierPlayed(int numSoldierPlayed) {
-		this.numSoldierPlayed = numSoldierPlayed;
-	}
-
-	public int getNumMonumentPlayed() {
-		return numMonumentPlayed;
-	}
-
-	public void setNumMonumentPlayed(int numMonumentPlayed) {
-		this.numMonumentPlayed = numMonumentPlayed;
+	public void setNumKnightUses(int numKnightUses) {
+		this.numKnightUses = numKnightUses;
 	}
 
 	public int getSizeLongestRoad() {
@@ -240,22 +195,6 @@ public class Player {
 		this.sizeLongestRoad = sizeLongestRoad;
 	}
 	
-	public boolean isPlayedDevCard() {
-		return playedDevCard;
-	}
-
-	public void setPlayedDevCard(boolean playedDevCard) {
-		this.playedDevCard = playedDevCard;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	private int getResCount(ResourceType type){
 		int count = 0;
 		for(ResCard thisCard : resCards){
@@ -266,19 +205,10 @@ public class Player {
 		return count;
 	}
 	
-	
-	public boolean isDiscarded() {
-		return discarded;
-	}
-
-	public void setDiscarded(boolean discarded) {
-		this.discarded = discarded;
-	}
-
-	private int getOldDevCount(DevCardType type){
+	public int getUsableDevCount(DevCardType type){
 		int count = 0;
 		for(DevCard thisCard : devCards){
-			if(thisCard.getType() == type && thisCard.isOld()){
+			if(thisCard.getType() == type && thisCard.isUsable()){
 				count++;
 			}
 		}

@@ -3,6 +3,11 @@
  */
 package client.communication;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 /**
  * Contains the generic response from an http request.
  * @author Scott Woodfield
@@ -28,19 +33,23 @@ public class HttpURLResponse {
 	/**
 	 * A user defined response object.  May be null.
 	 */
-	private Object responseBody;
+	private String responseBody;
+
+    private Map<String, List<String>> headerFields; //<header name, header value>
 	
 	//Constructors
 	public HttpURLResponse() {
 		this.responseCode = 0;
 		this.responseLength = 0;
 		this.responseBody = null;
+		headerFields = new HashMap<String, List<String>>();
 	}
 	
-	public HttpURLResponse (int responseCode, int responseLength, Object responseBody) {
+	public HttpURLResponse (int responseCode, int responseLength, String responseBody) {
 		this.responseCode = responseCode;
 		this.responseLength = responseLength;
 		this.responseBody = responseBody;
+		headerFields = new HashMap<String, List<String>>();
 	}
 
 	//Queries
@@ -52,7 +61,7 @@ public class HttpURLResponse {
 		return responseLength;
 	}
 
-	public Object getResponseBody() {
+	public String getResponseBody() {
 		return responseBody;
 	}
 	
@@ -82,8 +91,62 @@ public class HttpURLResponse {
 		this.responseLength = responseLength;
 	}
 
-	public void setResponseBody(Object responseBody) {
+	public void setResponseBody(String responseBody) {
 		this.responseBody = responseBody;
 	}
 
+    public void setHeaderFields(Map<String, List<String>> headerFields) {
+        this.headerFields = headerFields;
+    }
+    
+    @SuppressWarnings("resource")
+    public String getCookie(String cookie_name){
+        List<String> cookies = headerFields.get("Set-cookie");
+        
+        for(int i=0; i< cookies.size(); i++){ 
+            String elem = cookies.get(i);
+            Scanner scan= new Scanner(elem).useDelimiter("\\A");
+            
+            if(scan.hasNext("\\A"+cookie_name+"=")){ 
+                String piece_to_remove = ";\\s*Path=/;";
+                elem = elem.replaceFirst(piece_to_remove, "");
+                StringBuilder s = new StringBuilder(elem);
+                s.replace(0, cookie_name.length()+1, "");
+                scan.close();
+                return s.toString();
+            }
+        }
+        return "";
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

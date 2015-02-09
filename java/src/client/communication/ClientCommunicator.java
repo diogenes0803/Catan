@@ -23,10 +23,10 @@ public class ClientCommunicator {
    
     private Gson gson;
     private String host;
-    private int port;
+    private String port;
 
 
-    public ClientCommunicator(String host, int port){
+    public ClientCommunicator(String host, String port){
         this.host = host;
         this.port = port;
         GsonBuilder builder = new GsonBuilder();
@@ -101,8 +101,12 @@ public class ClientCommunicator {
 	 * return <p>a string containing json response</p>
 	 * @post
 	 */
-	public String get(String urlCommand, Object params) throws ClientException {
+	public HttpURLResponse get(String urlCommand, Object params) throws ClientException {
 	    HttpURLConnection connection = null;
+	    assert urlCommand != null;
+        assert params != null;
+        
+        HttpURLResponse result = new HttpURLResponse();
 	    try {
             String recent_url = "http://" + host + ":" + port + urlCommand;
             URL url = new URL(recent_url); 
@@ -132,15 +136,20 @@ public class ClientCommunicator {
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {  
               // return the object returned by the server
-               String response = convertStreamToString(new BufferedInputStream(connection.getInputStream())); 
-              return response;
-
+               String e_result = convertStreamToString(new BufferedInputStream(connection.getInputStream())); 
+               result.setResponseBody(e_result);
+               result.setResponseLength(e_result.length());
+               result.setResponseCode(connection.getResponseCode());
+               result.setHeaderFields(connection.getHeaderFields());
             } else {
               // SERVER RETURNED AN ERROR
-              String result = convertStreamToString(new BufferedInputStream(       
+              String e_result = convertStreamToString(new BufferedInputStream(       
                                           connection.getErrorStream()) );
-              throw new Exception("Server Response was "+connection.getResponseCode()+"\n"+
-                      result);
+
+              result.setResponseBody(e_result);
+              result.setResponseLength(e_result.length());
+              result.setResponseCode(connection.getResponseCode());
+              
             }
 
          }
@@ -151,6 +160,7 @@ public class ClientCommunicator {
                  connection.disconnect(); 
                }
              }
+        return result;
 	}//end get
 	
 	//=========================================================================
@@ -160,7 +170,7 @@ public class ClientCommunicator {
 	}
 	
     
-   //convert json to Object using Gson library. To be called in ServerFacade.
+   //convert json to Object using Gson library. To be called in ServerProxy
     public Object deserializeObject(String result, Object newObject){        
         return gson.fromJson(result, newObject.getClass());
     }

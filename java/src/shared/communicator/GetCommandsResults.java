@@ -12,7 +12,6 @@ import shared.models.CatanModel;
 public class GetCommandsResults {
 	List<String> commands;
 	boolean success;
-	String Response;
 	
 	public GetCommandsResults(List<String> commands)
 	{
@@ -39,11 +38,5 @@ public class GetCommandsResults {
 		this.success = success;
 	}
 
-	public String getResponse() {
-		return Response;
-	}
-
-	public void setResponse(String response) {
-		Response = response;
-	}
+	
 }

@@ -4,36 +4,41 @@ package shared.communicator;
  * @author Jonathan
  *
  */
-public class UserLoginResults {
+public class UserLoginResults extends ResponseBodyContainer{
 	
 	String responseBody;
-	boolean success;
+    private String name;
+    private String password;
+    private int id; //not same as player index;
 	
 	UserLoginResults(String responseBody)
 	{
-		this.responseBody = responseBody;
+	    super(responseBody);
+		name = "";
+		password = "";
+		id = 0;
 	}
 
 	public UserLoginResults() {
-		// TODO Auto-generated constructor stub
+	    super("");
 	}
 
-	public String getResponseBody() {
-		return responseBody;
-	}
 
-	public void setResponseBody(String responseBody) {
-		this.responseBody = responseBody;
-	}
+    public void setName(String _name) {
+        this.name = _name;
+    }
 
-	public boolean isSuccess() {
-		return success;
-	}
+    public void setPassword(String _password) {
+        this.password = _password;
+    }
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    public void setPlayerId(int _id) {
+        this.id = _id;
+    }
 	
 	
-
+    public String getName(){return name;}
+    public String getPassword(){return password;}
+    public int getPlayerId(){return id;}
+    
 }

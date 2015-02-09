@@ -1,5 +1,13 @@
 package client.communication;
 
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URLDecoder;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.communicator.*;
 import shared.models.CatanModel;
 
@@ -10,59 +18,130 @@ import shared.models.CatanModel;
  */
 @SuppressWarnings("unused")
 public class ServerProxy implements ServerStandinInterface, ServerInterface{
-	private ClientCommunicator clientComm;
-	
-	public ServerProxy(){	
-		clientComm = new ClientCommunicator("localhost", 8081);
-	}//end constructor
-
+    private ClientCommunicator clientComm;
+    private final int HTTP_OK = HttpURLConnection.HTTP_OK;
+    
+    public ServerProxy(String host, String port){   
+        clientComm = new ClientCommunicator(host, port);
+    }//end constructor
+    
+    
+    private void createCookie(String cookie_name, String content) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    private String getCookie(String cookie_name){
+        return null;
+    }
+    
+    
+    //if successful, set cookie and return
     @Override
     public UserLoginResults userLogin(UserLoginParams params) {
+        assert(params != null);
         
-    	UserLoginResults results = new UserLoginResults();
-    	results.setSuccess(false);
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/login", params));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			results.setSuccess(true);
-			return results;
-		}
-    	
-        return results;
+        UserLoginResults result = new UserLoginResults();
+
+        try{
+          HttpURLResponse response = clientComm.get("/user/login", params);
+
+          result.setSuccess(response.getResponseCode() == HTTP_OK);
+          result.setResponseBody(result.getResponseBody());
+          if(result.isSuccess()){
+              String new_cookie = response.getCookie("catan.user");
+              createCookie("catan.user", new_cookie);
+              try {
+                String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
+                JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
+                result.setName(je.get("name").getAsString());
+                result.setPassword(je.get("password").getAsString());
+                result.setPlayerId(je.get("playerID").getAsInt());
+                
+            } catch (UnsupportedEncodingException e) {
+                //should never happen as long as UTF-8 is a valid encoding.
+                e.printStackTrace();
+            }
+          }
+        
+        }catch(ClientException e){
+            result.setResponseBody(e.toString());
+            result.setSuccess(false);
+            System.out.println(e.toString());
+
+        }
+        return result;
     }
 
+    
+
+
+    //will register user and log them in at the same time.
     @Override
     public RegisterUserResults registerUser(RegisterUserParams params) {
 
-    	RegisterUserResults results = new RegisterUserResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/register", params));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
-        return results;
-    }
+        RegisterUserResults result = new RegisterUserResults();
+        try{
+            HttpURLResponse response = clientComm.get("/user/register", params);
+            result.setSuccess(response.getResponseCode() == HTTP_OK);
+            result.setResponseBody(result.getResponseBody());
+            
+            if(result.isSuccess()){
+                String new_cookie = response.getCookie("catan.user");
+                createCookie("catan.user", new_cookie);
+                try {
+                  String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
+                  JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
+                  result.setName(je.get("name").getAsString());
+                  result.setPassword(je.get("password").getAsString());
+                  result.setPlayerId(je.get("playerID").getAsInt());
+                  
+              } catch (UnsupportedEncodingException e) {
+                  //should never happen as long as UTF-8 is a valid encoding.
+                  e.printStackTrace();
+              }
+            }
+            
+        }catch(ClientException e){
+            result.setResponseBody(e.toString());
+            result.setSuccess(false);
+            System.out.println(e.toString());
 
+        }
+    return result;
+}
+
+    //get a list of game_info objects
     @Override
     public ListGamesResults listGames() {
 
-    	ListGamesResults results = new ListGamesResults();
-    	
-    	try {
-			results.setResponse(clientComm.get("/games/list", null));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
-        return results;
+        ListGamesResults result = new ListGamesResults();
+        try{
+            HttpURLResponse response = clientComm.get("/games/list", "");
+            
+            result.setSuccess(response.getResponseCode() == HTTP_OK);
+            result.setResponseBody(result.getResponseBody());
+            
+            if(result.isSuccess()){
+                JsonArray ja = (JsonArray)new JsonParser().parse(result.getResponseBody()); //array of games
+                for(int i=0; i< ja.size(); i++){
+                    
+                    JsonObject game = (JsonObject)ja.get(i);
+                    String game_name = game.get("name").getAsString();
+                    int game_id = game.get("id").getAsInt();
+                    
+                    JsonArray playerArray = (JsonArray) game.get("players");
+                }
+            }
+            
+            
+        }catch(ClientException e){
+            result = new ListGamesResults();
+            result.setSuccess(false);
+            System.out.println(e.toString());
+
+        }
+        return result;
     }
 
     @Override
