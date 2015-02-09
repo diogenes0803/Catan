@@ -10,6 +10,11 @@ import shared.definitions.ResourceType;
 public class ResCard {
 	
 	private ResourceType type;
+	
+	public ResCard(){}
+	public ResCard(ResourceType type) {
+		this.type = type;
+	}
 
 	public ResourceType getType() {
 		return type;

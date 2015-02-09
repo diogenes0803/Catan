@@ -13,6 +13,8 @@ public class Piece {
 	private PieceType type;
 	private int ownerPlayerId;
 	
+	public Piece(){}
+	
 	public Piece(PieceType type, int ownerPlayerId) {
 		this.type = type;
 		this.ownerPlayerId = ownerPlayerId;

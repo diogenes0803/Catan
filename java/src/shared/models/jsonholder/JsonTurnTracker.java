@@ -1,6 +1,6 @@
 package shared.models.jsonholder;
 
-public class TurnTracker {
+public class JsonTurnTracker {
 	private String status;
 	private int currentTurn;
 	private int longestRoad;

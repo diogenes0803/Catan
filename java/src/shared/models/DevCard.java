@@ -13,6 +13,12 @@ public class DevCard {
 	private DevCardType type;
 	private boolean usable;
 	
+	public DevCard(){}
+	public DevCard(DevCardType type, boolean usable) {
+		this.type = type;
+		this.usable = usable;
+	}
+	
 	public DevCardType getType() {
 		return type;
 	}

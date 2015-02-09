@@ -16,11 +16,29 @@ public class Game {
 	private Map map;
 	private Bank bank;
 	private TurnTracker turnTracker;
+	private List<MessageLine> logs;
+	private List<MessageLine> chat;
 	private int winner;
 	private int version;
 	private int gameId;
 	
 	
+
+	public List<MessageLine> getLogs() {
+		return logs;
+	}
+
+	public void setLogs(List<MessageLine> logs) {
+		this.logs = logs;
+	}
+
+	public List<MessageLine> getChat() {
+		return chat;
+	}
+
+	public void setChat(List<MessageLine> chat) {
+		this.chat = chat;
+	}
 
 	public int getGameId() {
 		return gameId;

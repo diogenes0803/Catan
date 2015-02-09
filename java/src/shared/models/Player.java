@@ -16,14 +16,18 @@ public class Player {
 	
 	private int userId;
 	private int playerId;
+	private String name;
 	private List<ResCard> resCards;
 	private List<DevCard> devCards;
 	private int victoryPoint;
 	private boolean isOnTurn;
 	private List<Piece> availablePieces;
 	private CatanColor color;
-	private int numKnightUses;
+	private int numSoldierPlayed;
+	private int numMonumentPlayed;
 	private int sizeLongestRoad;
+	private boolean playedDevCard;
+	private boolean discarded;
 	
 	/**
 	 * Check if user have enough resources and pieces and is on turn to build a road
@@ -211,13 +215,21 @@ public class Player {
 	public void setColor(CatanColor color) {
 		this.color = color;
 	}
-
-	public int getNumKnightUses() {
-		return numKnightUses;
+	
+	public int getNumSoldierPlayed() {
+		return numSoldierPlayed;
 	}
 
-	public void setNumKnightUses(int numKnightUses) {
-		this.numKnightUses = numKnightUses;
+	public void setNumSoldierPlayed(int numSoldierPlayed) {
+		this.numSoldierPlayed = numSoldierPlayed;
+	}
+
+	public int getNumMonumentPlayed() {
+		return numMonumentPlayed;
+	}
+
+	public void setNumMonumentPlayed(int numMonumentPlayed) {
+		this.numMonumentPlayed = numMonumentPlayed;
 	}
 
 	public int getSizeLongestRoad() {
@@ -228,6 +240,22 @@ public class Player {
 		this.sizeLongestRoad = sizeLongestRoad;
 	}
 	
+	public boolean isPlayedDevCard() {
+		return playedDevCard;
+	}
+
+	public void setPlayedDevCard(boolean playedDevCard) {
+		this.playedDevCard = playedDevCard;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private int getResCount(ResourceType type){
 		int count = 0;
 		for(ResCard thisCard : resCards){
@@ -238,6 +266,15 @@ public class Player {
 		return count;
 	}
 	
+	
+	public boolean isDiscarded() {
+		return discarded;
+	}
+
+	public void setDiscarded(boolean discarded) {
+		this.discarded = discarded;
+	}
+
 	private int getUsableDevCount(DevCardType type){
 		int count = 0;
 		for(DevCard thisCard : devCards){

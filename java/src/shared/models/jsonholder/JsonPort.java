@@ -1,7 +1,9 @@
 package shared.models.jsonholder;
 
-public class Port {
+
+public class JsonPort {
 	private int ratio;
+	private String resource;
 	private String direction;
 	private Location location;
 	public int getRatio() {
@@ -22,6 +24,13 @@ public class Port {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+	public String getResource() {
+		return resource;
+	}
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
+	
 	
 	
 }

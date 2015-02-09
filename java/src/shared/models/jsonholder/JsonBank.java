@@ -1,6 +1,6 @@
 package shared.models.jsonholder;
 
-public class Bank {
+public class JsonBank {
 	private int brick;
 	private int wood;
 	private int sheep;

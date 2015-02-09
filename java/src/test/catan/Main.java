@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import shared.models.Game;
 import shared.models.jsonholder.JsonModelHolder;
 
 import com.google.gson.Gson;
@@ -19,6 +20,8 @@ public class Main {
 			Gson gson = new Gson();
 			JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 			System.out.println("Deserialize Done");
+			Game thisGame = modelHolder.buildCatanModel();
+			thisGame.getVersion();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

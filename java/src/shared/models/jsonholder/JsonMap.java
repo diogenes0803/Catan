@@ -8,10 +8,8 @@ public class JsonMap {
 	private List<City> cities;
 	private List<Settlement> settlements; 
 	private int radius;
-	private List<Port> ports;
+	private List<JsonPort> ports;
 	private Robber robber;
-	
-	
 	public List<Hex> getHexes() {
 		return hexes;
 	}
@@ -42,11 +40,10 @@ public class JsonMap {
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
-
-	public List<Port> getPorts() {
+	public List<JsonPort> getPorts() {
 		return ports;
 	}
-	public void setPorts(List<Port> ports) {
+	public void setPorts(List<JsonPort> ports) {
 		this.ports = ports;
 	}
 	public Robber getRobber() {
@@ -55,6 +52,7 @@ public class JsonMap {
 	public void setRobber(Robber robber) {
 		this.robber = robber;
 	}
+	
 	
 	
 

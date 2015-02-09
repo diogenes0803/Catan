@@ -23,10 +23,13 @@ public class HexTile {
 	private Piece robber;
 	private boolean hasRobber;
 	
-	public HexTile(int x, int y, String resource, int token) {
-		
+	public HexTile(){}
+	
+	public HexTile(int x, int y, ResourceType resource, int token) {
+		edges = new HashMap<EdgeDirection, Edge>();
+		vertices = new HashMap<VertexDirection, Vertex>();
 		location = new HexLocation(x, y);
-		hexType  = stringToResource(resource);
+		hexType  = resource;
 		this.token = token;
 		edges.put(EdgeDirection.North, new Edge(EdgeDirection.North, location));
 		edges.put(EdgeDirection.NorthEast, new Edge(EdgeDirection.NorthEast, location));
@@ -42,28 +45,6 @@ public class HexTile {
 		vertices.put(VertexDirection.West, new Vertex(VertexDirection.West, location));
 		hasRobber = false;
 		
-	}
-	
-	private ResourceType stringToResource(String resource) {
-		ResourceType resourceType = null;
-		switch(resource) {
-		case "brick":
-			resourceType = ResourceType.BRICK;
-			break;
-		case "ore":
-			resourceType = ResourceType.ORE;
-			break;
-		case "sheep":
-			resourceType = ResourceType.SHEEP;
-			break;
-		case "wood":
-			resourceType = ResourceType.WOOD;
-			break;
-		case "wheat":
-			resourceType = ResourceType.WHEAT;
-			break;
-		}
-		return resourceType;
 	}
 	
 	public boolean playerHasRoadOnNeighborAt(int playerId, EdgeDirection direction) {
@@ -252,5 +233,6 @@ public class HexTile {
 	public void setHasRobber(boolean hasRobber) {
 		this.hasRobber = hasRobber;
 	}
+	
 
 }

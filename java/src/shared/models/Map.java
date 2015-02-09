@@ -1,5 +1,7 @@
 package shared.models;
 
+import java.util.HashMap;
+
 import shared.definitions.PieceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -15,8 +17,10 @@ import shared.locations.VertexLocation;
 
 public class Map {
 
-	private HexTile[][] hexTiles = new HexTile[5][5];
+	private HexTile[][] hexTiles;
+	private HashMap<EdgeLocation, Port> ports;
 	private HexLocation robberLocation;
+	private int radius;
 
 	public Map() {
 	}
@@ -31,7 +35,7 @@ public class Map {
 		HexTile thisTile = getHexTileAt(edgeLocation.getHexLoc());
 		if (thisTile.getEdges().get(edgeLocation.getDir()).getHasRoad()) {
 			return false;
-		} else if (TurnTracker.turnCount < 5) {
+		} else if (TurnTracker.getInstance().getCurrentTurn() < 5) {
 			return true;
 		} else {
 			HexTile neighborTile = getHexTileAt(thisTile.getLocation()
@@ -177,6 +181,22 @@ public class Map {
 
 	public void setRobberLocation(HexLocation robberLocation) {
 		this.robberLocation = robberLocation;
+	}
+
+	public HashMap<EdgeLocation, Port> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(HashMap<EdgeLocation, Port> ports) {
+		this.ports = ports;
+	}
+	
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
 	}
 
 	private HexTile getHexTileAt(HexLocation location) {

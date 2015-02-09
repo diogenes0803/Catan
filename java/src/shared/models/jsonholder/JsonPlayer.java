@@ -1,6 +1,6 @@
 package shared.models.jsonholder;
 
-public class Player {
+public class JsonPlayer {
 	private Resources resources;
 	private Deck oldDevCards;
 	private Deck newDevCards;

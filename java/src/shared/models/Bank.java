@@ -14,6 +14,15 @@ public class Bank {
 	
 	private List<ResCard> resCards;
 	private List<DevCard> devCards;
+	
+	public Bank() {
+		
+	}
+	
+	public Bank(List<ResCard> resCards, List<DevCard> devCards) {
+		this.resCards = resCards;
+		this.devCards = devCards;
+	}
 
 	public List<ResCard> getResCards() {
 		return resCards;
