@@ -67,7 +67,7 @@ public class JsonModelHolder {
 			if(thisHex.getResource()!=null) {
 				type = stringToResource(thisHex.getResource());
 			}
-			int number = thisHex.getNumber();
+			Integer number = thisHex.getNumber();
 			HexTile thisHextile = new HexTile(x, y, type, number);
 			hexArray[thisHextile.getLocation().getX()+radius-1][thisHextile.getLocation().getY()+radius-1] = thisHextile;
 		}
@@ -77,6 +77,7 @@ public class JsonModelHolder {
 			EdgeDirection thisDirection = stringToEdgeDirection(thisRoad.getLocation().getDirection());
 			Piece road = new Piece(PieceType.ROAD, thisRoad.getOwner());
 			hexArray[x+radius-1][y+radius-1].getEdgeAt(thisDirection).setRoad(road);
+			hexArray[x+radius-1][y+radius-1].getEdgeAt(thisDirection).setHasRoad(true);
 		}
 		for(City thisCity : map.getCities()) {
 			int x = thisCity.getLocation().getX();
@@ -84,13 +85,15 @@ public class JsonModelHolder {
 			VertexDirection thisDirection = stringToVertexDirection(thisCity.getLocation().getDirection());
 			Piece city = new Piece(PieceType.CITY, thisCity.getOwner());
 			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setSettlement(city);
+			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setHasSettlement(true);
 		}
 		for(Settlement thisSettlement : map.getSettlements()) {
 			int x = thisSettlement.getLocation().getX();
 			int y = thisSettlement.getLocation().getY();
 			VertexDirection thisDirection = stringToVertexDirection(thisSettlement.getLocation().getDirection());
-			Piece city = new Piece(PieceType.CITY, thisSettlement.getOwner());
-			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setSettlement(city);
+			Piece settlement = new Piece(PieceType.SETTLEMENT, thisSettlement.getOwner());
+			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setSettlement(settlement);
+			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setHasSettlement(true);
 		}
 		for(JsonPort thisPort : map.getPorts()) {
 			int x = thisPort.getLocation().getX();
