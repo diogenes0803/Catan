@@ -200,9 +200,9 @@ public class CatanMap {
 	}
 
 	private HexTile getHexTileAt(HexLocation location) {
-		int x = location.getX() + 2;
-		int y = location.getY() + 2;
-		if (!(x > 4 || y > 4 || x < 0 || y < 0)) {
+		int x = location.getX() + radius-1;
+		int y = location.getY() + radius-1;
+		if (!(x > hexTiles.length-1 || y > hexTiles.length-1 || x < 0 || y < 0)) {
 			return hexTiles[x][y];
 		} else {
 			return null;
