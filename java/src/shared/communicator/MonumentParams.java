@@ -10,9 +10,11 @@ package shared.communicator;
 public class MonumentParams {
 
 	private int playerIndex;
+	private String type;
 	
 	public MonumentParams(int playerIndex) {
 		this.playerIndex = playerIndex;
+		setType("Monument");
 	}
 
 	/**
@@ -27,6 +29,14 @@ public class MonumentParams {
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

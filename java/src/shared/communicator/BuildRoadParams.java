@@ -14,11 +14,13 @@ public class BuildRoadParams {
 	private int playerIndex;
 	private EdgeLocation roadLocation;
 	private boolean free;
+	private String type;
 	
 	public BuildRoadParams(int playerIndex, EdgeLocation roadLocation, boolean free) {
 		this.playerIndex = playerIndex;
 		this.roadLocation = roadLocation;
 		this.free = free;
+		setType("buildRoad");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class BuildRoadParams {
 	 */
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

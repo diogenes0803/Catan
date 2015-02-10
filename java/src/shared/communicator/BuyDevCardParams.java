@@ -10,9 +10,11 @@ package shared.communicator;
 public class BuyDevCardParams {
 
 	private int playerIndex;
+	private String type;
 	
 	public BuyDevCardParams(int playerIndex) {
 		this.playerIndex = playerIndex;
+		setType("buyDevCard");
 	}
 
 	/**
@@ -27,5 +29,13 @@ public class BuyDevCardParams {
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

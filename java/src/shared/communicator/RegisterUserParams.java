@@ -5,21 +5,21 @@ package shared.communicator;
  *
  */
 public class RegisterUserParams {
-	private UserName userName;
+	private String username;
 	private String password;
 
-	RegisterUserParams(UserName userName, String password)
+	RegisterUserParams(String username, String password)
 	{
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 	}
 
-	public UserName getUserName() {
-		return userName;
+	public String getusername() {
+		return username;
 	}
 
-	public void setUserName(UserName userName) {
-		this.userName = userName;
+	public void setusername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

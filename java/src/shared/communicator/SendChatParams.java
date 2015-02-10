@@ -3,11 +3,13 @@ package shared.communicator;
 public class SendChatParams {
 	
 	private int playerIndex;
-	private String message;
+	private String content;
+	private String type;
 	
-	public SendChatParams (String message, int playerIndex) {
+	public SendChatParams (String content, int playerIndex) {
 		this.playerIndex = playerIndex;
-		this.message = message;
+		this.content = content;
+		setType("sendChat");
 	}
 
 	/**
@@ -25,17 +27,25 @@ public class SendChatParams {
 	}
 
 	/**
-	 * @return the message
+	 * @return the content
 	 */
-	public String getMessage() {
-		return message;
+	public String getContent() {
+		return content;
 	}
 
 	/**
-	 * @param message the message to set
+	 * @param content the content to set
 	 */
-	public void setMessage(String message) {
-		this.message = message;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

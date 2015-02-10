@@ -14,11 +14,13 @@ public class RobPlayerParams {
 	private int playerIndex;
 	private int victimIndex;
 	private HexLocation location;
+	private String type;
 	
 	public RobPlayerParams(int playerIndex, int victimIndex, HexLocation location) {
 		this.playerIndex = playerIndex;
 		this.victimIndex = victimIndex;
 		this.location = location;
+		setType("robPlayer");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class RobPlayerParams {
 	 */
 	public void setLocation(HexLocation location) {
 		this.location = location;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

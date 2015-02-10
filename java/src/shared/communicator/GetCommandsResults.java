@@ -9,7 +9,7 @@ import shared.models.CatanModel;
  * @author Jonathan
  *
  */
-public class GetCommandsResults {
+public class GetCommandsResults extends ResponseBodyContainer {
 	List<String> commands;
 	boolean success;
 	

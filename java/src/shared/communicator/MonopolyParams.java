@@ -11,10 +11,12 @@ public class MonopolyParams {
 
 	private int playerIndex;
 	private String resource;
+	private String type;
 	
 	public MonopolyParams(int playerIndex, String resource) {
 		this.playerIndex = playerIndex;
 		this.resource = resource;
+		setType("Monopoly");
 	}
 
 	/**
@@ -43,6 +45,14 @@ public class MonopolyParams {
 	 */
 	public void setResource(String resource) {
 		this.resource = resource;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

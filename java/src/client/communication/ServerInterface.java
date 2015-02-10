@@ -380,12 +380,6 @@ public interface ServerInterface {
 	CatanModel monument(MonumentParams params);
 	
 	/**
-	 * @pre You must be in your turn
-	 * @post Roll two dices and sum result
-	 */
-	CatanModel rollDice(MoveParams params);
-	
-	/**
 	 * Bank Distribute Resource Cards to users who are qualified 
 	 * @pre Dices needs to be thrown on that turn before bank can distribute a card
 	 * @post Remove resource cards that has been distributed

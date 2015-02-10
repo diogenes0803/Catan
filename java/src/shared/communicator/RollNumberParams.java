@@ -10,11 +10,13 @@ package shared.communicator;
 public class RollNumberParams {
 	
 	private int playerIndex;
-	private int numberRolled;
+	private int number;
+	private String type;
 	
-	public RollNumberParams(int playerIndex, int numberRolled) {
+	public RollNumberParams(int playerIndex, int number) {
 		this.playerIndex = playerIndex;
-		this.numberRolled = numberRolled;
+		this.number = number;
+		setType("rollNumber");
 	}
 
 	/**
@@ -32,16 +34,24 @@ public class RollNumberParams {
 	}
 
 	/**
-	 * @return the numberRolled
+	 * @return the number
 	 */
-	public int getNumberRolled() {
-		return numberRolled;
+	public int getNumber() {
+		return number;
 	}
 
 	/**
-	 * @param numberRolled the numberRolled to set
+	 * @param number the number to set
 	 */
-	public void setNumberRolled(int numberRolled) {
-		this.numberRolled = numberRolled;
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

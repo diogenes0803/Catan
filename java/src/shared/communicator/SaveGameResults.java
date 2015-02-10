@@ -4,7 +4,7 @@ package shared.communicator;
  * @author Jonathan
  *
  */
-public class SaveGameResults {
+public class SaveGameResults extends ResponseBodyContainer {
 	String status;
 	
 	public SaveGameResults(String status)

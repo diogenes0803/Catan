@@ -14,11 +14,13 @@ public class RoadBuildingParams {
 	private int playerIndex;
 	private EdgeLocation spot1;
 	private EdgeLocation spot2;
+	private String type;
 	
 	public RoadBuildingParams(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
 		this.playerIndex = playerIndex;
 		this.spot1 = spot1;
 		this.spot2 = spot2;
+		setType("Road_Building");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class RoadBuildingParams {
 	 */
 	public void setSpot2(EdgeLocation spot2) {
 		this.spot2 = spot2;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

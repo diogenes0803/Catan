@@ -13,10 +13,12 @@ public class BuildCityParams {
 
 	private int playerIndex;
 	private VertexLocation vertexLocation;
+	private String type;
 	
 	public BuildCityParams(int playerIndex, VertexLocation vertexLocation) {
 		this.playerIndex = playerIndex;
 		this.vertexLocation = vertexLocation;
+		setType("buildCity");
 	}
 
 	/**
@@ -45,6 +47,14 @@ public class BuildCityParams {
 	 */
 	public void setVertexLocation(VertexLocation vertexLocation) {
 		this.vertexLocation = vertexLocation;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

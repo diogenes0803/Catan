@@ -14,11 +14,13 @@ public class BuildSettlementParams {
 	private int playerIndex;
 	private VertexLocation vertexLocation;
 	private boolean free;
+	private String type;
 	
 	public BuildSettlementParams(int playerIndex, VertexLocation vertexLocation, boolean free) {
 		this.playerIndex = playerIndex;
 		this.vertexLocation = vertexLocation;
 		this.free = free;
+		setType("buildSettlement");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class BuildSettlementParams {
 	 */
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

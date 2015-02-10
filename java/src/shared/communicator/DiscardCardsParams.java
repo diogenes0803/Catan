@@ -13,10 +13,12 @@ public class DiscardCardsParams {
 
 	private int playerIndex;
 	private ResourceList discardedCards;
+	private String type;
 	
 	public DiscardCardsParams(int playerIndex, ResourceList discardedCards) {
 		this.playerIndex = playerIndex;
 		this.discardedCards = discardedCards;
+		setType("discardCards");
 	}
 
 	/**
@@ -45,6 +47,14 @@ public class DiscardCardsParams {
 	 */
 	public void setDiscardedCards(ResourceList discardedCards) {
 		this.discardedCards = discardedCards;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

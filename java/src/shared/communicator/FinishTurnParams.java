@@ -10,9 +10,11 @@ package shared.communicator;
 public class FinishTurnParams {
 
 	private int playerIndex;
+	private String type;
 	
 	public FinishTurnParams (int playerIndex) {
 		this.playerIndex = playerIndex;
+		setType("finishTurn");
 	}
 
 	/**
@@ -27,5 +29,13 @@ public class FinishTurnParams {
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

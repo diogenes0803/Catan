@@ -7,21 +7,21 @@ package shared.communicator;
  */
 public class UserLoginParams {
 	
-	private UserName userName;
+	private String username;
 	private String password;
 	
-	public UserLoginParams(UserName userName, String password)
+	public UserLoginParams(String username, String password)
 	{
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 	}
 
-	public UserName getUserName() {
-		return userName;
+	public String getusername() {
+		return username;
 	}
 
-	public void setUserName(UserName userName) {
-		this.userName = userName;
+	public void setusername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

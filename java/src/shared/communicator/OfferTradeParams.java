@@ -14,11 +14,13 @@ public class OfferTradeParams {
 	private int playerIndex;
 	private ResourceList offer;
 	private int receiver;
+	private String type;
 	
 	public OfferTradeParams(int playerIndex, ResourceList offer, int receiver) {
 		this.playerIndex = playerIndex;
 		this.offer = offer;
 		this.receiver = receiver;
+		setType("offerTrade");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class OfferTradeParams {
 	 */
 	public void setReceiver(int receiver) {
 		this.receiver = receiver;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

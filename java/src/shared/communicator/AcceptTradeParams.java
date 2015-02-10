@@ -10,11 +10,13 @@ package shared.communicator;
 public class AcceptTradeParams {
 
 	private int playerIndex;
-	private boolean accepted;
+	private boolean willAccept;
+	private String type;
 	
-	public AcceptTradeParams(int playerIndex, boolean accepted) {
+	public AcceptTradeParams(int playerIndex, boolean willAccept) {
 		this.playerIndex = playerIndex;
-		this.accepted = accepted;
+		this.willAccept = willAccept;
+		setType("acceptTrade");
 	}
 
 	/**
@@ -34,15 +36,23 @@ public class AcceptTradeParams {
 	/**
 	 * @return the boolean
 	 */
-	public boolean isAccepted() {
-		return accepted;
+	public boolean willAccept() {
+		return willAccept;
 	}
 
 	/**
-	 * @param accepted the boolean to set
+	 * @param willAccept the boolean to set
 	 */
-	public void setWillAccept(boolean accepted) {
-		this.accepted = accepted;
+	public void setWillAccept(boolean willAccept) {
+		this.willAccept = willAccept;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

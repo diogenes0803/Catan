@@ -14,11 +14,13 @@ public class PlaySoldierParams {
 	private int playerIndex;
 	private int victimIndex;
 	private HexLocation location;
+	private String type;
 	
 	public PlaySoldierParams(int playerIndex, int victimIndex, HexLocation location) {
 		this.playerIndex = playerIndex;
 		this.victimIndex = victimIndex;
 		this.location = location;
+		setType("Soldier");
 	}
 
 	/**
@@ -61,6 +63,14 @@ public class PlaySoldierParams {
 	 */
 	public void setLocation(HexLocation location) {
 		this.location = location;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

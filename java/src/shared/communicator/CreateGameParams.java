@@ -5,15 +5,17 @@ package shared.communicator;
  *
  */
 public class CreateGameParams {
-	boolean randomTiles;
-	boolean randomNumbers;
-	boolean randomPorts;
+	private boolean randomTiles;
+	private boolean randomNumbers;
+	private boolean randomPorts;
+	private String name;
 	
-	CreateGameParams(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+	CreateGameParams(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
 	{
 		this.randomTiles = randomTiles;
 		this.randomNumbers = randomNumbers;
 		this.randomPorts = randomPorts;
+		this.setName(name);
 	}
 
 	public boolean isRandomTiles() {
@@ -38,6 +40,14 @@ public class CreateGameParams {
 
 	public void setRandomPorts(boolean randomPorts) {
 		this.randomPorts = randomPorts;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
