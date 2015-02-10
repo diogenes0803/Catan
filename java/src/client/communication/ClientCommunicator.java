@@ -49,6 +49,7 @@ public class ClientCommunicator {
 	      url = new URL("http://"+host+":"+port+urlCommand);
 	      connection = (HttpURLConnection)url.openConnection();
 	      connection.setRequestMethod("POST");
+	      
 	      connection.setRequestProperty("Content-Type", 
 	           "application/x-www-form-urlencoded");
 	           
@@ -56,19 +57,24 @@ public class ClientCommunicator {
 	      
 	      connection.setRequestProperty("Content-Length", "" + 
 	               Integer.toString(message.getBytes().length));
-	      connection.setRequestProperty("Content-Language", "en-US");  
+	      
+	      connection.setRequestProperty("Content-Language", "en-US"); 
+	      
+	      
 	      //Adds whatever is in the cookie string (if it's not null) to the httpHeader 
-	      if (cookie != null)
-          {
-          	connection.setRequestProperty("cookie", cookie);
+	      
+	      if (cookie.length() > 0){
+	          //System.out.println("cookie: '"+cookie+"'");
+          	connection.addRequestProperty("Cookie", cookie);
           }
 	            
 	      connection.setUseCaches (false);
 	      
 	      connection.setDoOutput(true);
-
-	      connection.connect();
 	      
+	      //System.out.println(connection.getRequestProperties());
+	      connection.connect();
+	      //System.out.println("Connection estabished");
 	      OutputStream requestBody = connection.getOutputStream();
 	      
 	      requestBody.write(message.getBytes());
@@ -80,12 +86,14 @@ public class ClientCommunicator {
 
           } else {
             // SERVER RETURNED AN ERROR
-            String result = convertStreamToString(connection.getErrorStream());
-            throw new Exception("Server Response was "+connection.getResponseCode()+"\n"+
+            String result = convertStreamToString(new BufferedInputStream(
+                    connection.getErrorStream()));
+            throw new Exception("Server Response was "+connection.getResponseCode()+".\n"+
               result);
           }
 	      
 	    } catch (Exception e) {
+	        //e.printStackTrace();
 	        throw new ClientException("ClientCommunicator.post() Error:\n"+e.toString());
 	      
 
@@ -113,44 +121,57 @@ public class ClientCommunicator {
         
         HttpURLResponse result = new HttpURLResponse();
 	    try {
+	        // Write request body to OutputStream ...
+            String message = serializeObject(params);
+	        
+	        
             String recent_url = "http://" + host + ":" + port + urlCommand;
             URL url = new URL(recent_url); 
            
             connection = (HttpURLConnection)url.openConnection();
+            //System.out.println("ClientCommuniator.get.connection established");
             
             connection.setRequestMethod("GET");
-            connection.setDoInput(true);
+            
             connection.setDoOutput(true);
+            
+            connection.setRequestProperty("Content-Length", "" + 
+                    Integer.toString(message.getBytes().length));
+            
+            connection.setRequestProperty("Content-Language", "en-US"); 
+            
+            
             //Adds whatever is in the cookie string (if it's not null) to the httpHeader 
-            if (cookie != null)
-            {
-            	connection.setRequestProperty("cookie", cookie);
+            //System.out.println("ClientCommuniator.get.cookie:\n\""+cookie+"\"");
+            if (cookie.length() != 0){
+            	connection.setRequestProperty("Cookie", cookie);
             }
 
             connection.connect();
 
-            BufferedOutputStream requestBody = new BufferedOutputStream(connection.getOutputStream());
-
-            // Write request body to OutputStream ...
-            String message = serializeObject(params);
-            
-            connection.setRequestProperty("Content-Length", "" + 
-                    Integer.toString(message.getBytes().length));
-           connection.setRequestProperty("Content-Language", "en-US");  
+            //System.out.println("Connection.connect successful.");
+            BufferedOutputStream requestBody = new BufferedOutputStream(
+                    connection.getOutputStream());
 
             requestBody.write(message.getBytes());
 
             requestBody.close();
-
+            //System.out.println("RequetBody.close was successful.");
+            
+            
+            
             // Read response body from InputStream ...                  
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {  
               // return the object returned by the server
-               String e_result = convertStreamToString(new BufferedInputStream(connection.getInputStream())); 
+               String e_result = convertStreamToString(new BufferedInputStream(
+                       connection.getInputStream())); 
                result.setResponseBody(e_result);
                result.setResponseLength(e_result.length());
                result.setResponseCode(connection.getResponseCode());
                result.setHeaderFields(connection.getHeaderFields());
+               //System.out.println("e_result = \""+e_result+"\"");
+               
             } else {
               // SERVER RETURNED AN ERROR
               String e_result = convertStreamToString(new BufferedInputStream(       
@@ -159,7 +180,7 @@ public class ClientCommunicator {
               result.setResponseBody(e_result);
               result.setResponseLength(e_result.length());
               result.setResponseCode(connection.getResponseCode());
-              
+              //System.out.println("e_result = \""+e_result+"\"");
             }
 
          }
@@ -168,6 +189,7 @@ public class ClientCommunicator {
          }finally {
              if(connection != null) {
                  connection.disconnect(); 
+                 //System.out.println("Connection closed.");
                }
              }
         return result;

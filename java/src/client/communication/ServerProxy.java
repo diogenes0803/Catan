@@ -18,67 +18,73 @@ import shared.models.CatanModel;
  */
 @SuppressWarnings("unused")
 public class ServerProxy implements ServerStandinInterface, ServerInterface{
-    private ClientCommunicator clientComm;
+    public static final int UNINITIALIZED_MODEL = -1;//-1 mean model not yet initialized
+    public static final String PATH = "; Path=/";
     private final int HTTP_OK = HttpURLConnection.HTTP_OK;
+    
+    
+    private ClientCommunicator clientComm;  
+    
     private String playerCookie;
     private String gameCookie;
+    private int version;
     
+    
+
     public ServerProxy(String host, String port){   
         clientComm = new ClientCommunicator(host, port);
-        playerCookie = null;
-        gameCookie = null;
+        playerCookie = "";
+        gameCookie = "";
+        version = UNINITIALIZED_MODEL; 
     }//end constructor
-    
-    
-    private void createCookie(String cookie_name, String content) {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    private String getCookie(String cookie_name){
-        return null;
-    }
-    
-    
+
+
+
     //if successful, set cookie and return
     @Override
     public UserLoginResults userLogin(UserLoginParams params) {
         assert(params != null);
-        
+
         UserLoginResults result = new UserLoginResults();
 
         try{
-          HttpURLResponse response = clientComm.get("/user/login", params, playerCookie);
+            HttpURLResponse response = clientComm.get("/user/login", params, playerCookie);
 
-          result.setSuccess(response.getResponseCode() == HTTP_OK);
-          result.setResponseBody(result.getResponseBody());
-          if(result.isSuccess()){
-              String new_cookie = response.getCookie("catan.user");
-              playerCookie = new_cookie;
-              try {
-                String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
-               
-                JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-                result.setName(je.get("name").getAsString());
-                result.setPassword(je.get("password").getAsString());
-                result.setPlayerId(je.get("playerID").getAsInt());
+            result.setSuccess(response.getResponseCode() == HTTP_OK);
+            result.setResponseBody(result.getResponseBody());
+            if(result.isSuccess()){
+                String new_cookie = response.getCookie("catan.user");
                 
-            } catch (UnsupportedEncodingException e) {
-                //should never happen as long as UTF-8 is a valid encoding.
-                e.printStackTrace();
+                playerCookie = "catan.user="+new_cookie;
+                //System.out.println("playerCookie:\n\t"+playerCookie);
+                try {
+                    String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
+                    //System.out.println("json_cookie:\n\t'"+json_cookie+"'");
+                    
+                    JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
+                    result.setName(je.get("name").getAsString());
+                    result.setPassword(je.get("password").getAsString());
+                    result.setPlayerId(je.get("playerID").getAsInt());
+
+                } catch (UnsupportedEncodingException e) {
+                    //should never happen as long as UTF-8 is a valid encoding.
+                    e.printStackTrace();
+                }
             }
-          }
-        
         }catch(ClientException e){
             result.setResponseBody(e.toString());
             result.setSuccess(false);
             System.out.println(e.toString());
 
+        }catch(Exception e1){
+            result.setResponseBody(e1.toString());
+            result.setSuccess(false);
+            System.out.println(e1.toString());
         }
         return result;
     }
 
-    
+
 
 
     //will register user and log them in at the same time.
@@ -87,60 +93,60 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         RegisterUserResults result = new RegisterUserResults();
         try{
-            HttpURLResponse response = clientComm.get("/user/register", params, playerCookie+";PATH=/");
+            HttpURLResponse response = clientComm.get("/user/register", params, playerCookie);
             result.setSuccess(response.getResponseCode() == HTTP_OK);
             result.setResponseBody(result.getResponseBody());
-            
+
             if(result.isSuccess()){
                 String new_cookie = response.getCookie("catan.user");
                 playerCookie = "catan.user="+new_cookie;
                 try {
-                  String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
-              
-                  JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-                  result.setName(je.get("name").getAsString());
-                  result.setPassword(je.get("password").getAsString());
-                  result.setPlayerId(je.get("playerID").getAsInt());
-                  
-              } catch (UnsupportedEncodingException e) {
-                  //should never happen as long as UTF-8 is a valid encoding.
-                  e.printStackTrace();
-              }
+                    String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
+
+                    JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
+                    result.setName(je.get("name").getAsString());
+                    result.setPassword(je.get("password").getAsString());
+                    result.setPlayerId(je.get("playerID").getAsInt());
+
+                } catch (UnsupportedEncodingException e) {
+                    //should never happen as long as UTF-8 is a valid encoding.
+                    e.printStackTrace();
+                }
             }
-            
+
         }catch(ClientException e){
             result.setResponseBody(e.toString());
             result.setSuccess(false);
             System.out.println(e.toString());
 
         }
-    return result;
-}
-
+        return result;
+    }
+ //===================================================================================
     //get a list of game_info objects
     @Override
     public ListGamesResults listGames() {
 
         ListGamesResults result = new ListGamesResults();
         try{
-            HttpURLResponse response = clientComm.get("/games/list", "", playerCookie+"; "+gameCookie);
-            
+            HttpURLResponse response = clientComm.get("/games/list", "", playerCookie);
+
             result.setSuccess(response.getResponseCode() == HTTP_OK);
             result.setResponseBody(result.getResponseBody());
-            
+
             if(result.isSuccess()){
                 JsonArray ja = (JsonArray)new JsonParser().parse(result.getResponseBody()); //array of games
                 for(int i=0; i< ja.size(); i++){
-                    
+
                     JsonObject game = (JsonObject)ja.get(i);
                     String game_name = game.get("name").getAsString();
                     int game_id = game.get("id").getAsInt();
-                    
+
                     JsonArray playerArray = (JsonArray) game.get("players");
                 }
             }
-            
-            
+
+
         }catch(ClientException e){
             result = new ListGamesResults();
             result.setSuccess(false);
@@ -149,486 +155,522 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         }
         return result;
     }
-
-    @Override
-    public CreateGameResults createGame(CreateGameParams params) {
-
-    	CreateGameResults results = new CreateGameResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/create", params, playerCookie+"; "+gameCookie));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-
-    	
-        return results;
-    }
-
+    
+    //===================================================================================
+    
+    
     @Override
     public JoinGameResults joinGame(JoinGameParams params) {
 
-    	JoinGameResults results = new JoinGameResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/join", params, playerCookie+"; "+gameCookie));     
-               
-                 //playerCookie = json_cookie;
-                 //JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-                 if(results.isSuccess())
-                     gameCookie = "catan.game="+params.getId();
+        JoinGameResults results = new JoinGameResults();
 
-                 
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
+        try {//only uses player cookie
+            results.setSuccess(clientComm.post("/games/join", params, playerCookie));     
+
+            //playerCookie = json_cookie;
+            //JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
+            if(results.isSuccess())
+                gameCookie = "catan.game="+params.getId();
+
+
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            System.out.println(e.toString());
+            results.setSuccess(false);
+        }
+
         return results;
     }
+
+    //===================================================================================
+    @Override
+    public CreateGameResults createGame(CreateGameParams params) {
+
+        CreateGameResults results = new CreateGameResults();
+
+        try {
+            results.setSuccess(clientComm.post("/games/create", params, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
+
+        return results;
+    }
+
+    //===================================================================================
 
     @Override
     public SaveGameResults saveGame(SaveGameParams params) {
 
-    	SaveGameResults results = new SaveGameResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/save", params, playerCookie+"; "+gameCookie));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
+        SaveGameResults results = new SaveGameResults();
+
+        try {
+            results.setSuccess(clientComm.post("/games/save", params, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public LoadGameResults loadGame(LoadGameParams params) {
 
-    	LoadGameResults results = new LoadGameResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/load", params, playerCookie+"; "+gameCookie));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
+        LoadGameResults results = new LoadGameResults();
+
+        try {
+            results.setSuccess(clientComm.post("/games/load", params, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel getModel() {
-    	CatanModel results = new CatanModel();
+        CatanModel result_model = new CatanModel();
+        String strVersion = "";
+        if(version != UNINITIALIZED_MODEL)
+            strVersion = "?version="+version;
+        try {
+            HttpURLResponse response = clientComm.get("/games/model"+strVersion, null, playerCookie+"; "+gameCookie);
+            // TODO turn response into a CatanModel
+        } catch (ClientException e) {
+                      
+            System.out.println(e);
+            
+        }
 
-    	try {
-			HttpURLResponse response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
-			// TODO turn response into a CatanModel
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
-        return results;
+        return result_model;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel resetGame() {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/reset", null, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/reset", null, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public GetCommandsResults getCommands() {
 
-    	GetCommandsResults results = new GetCommandsResults();
-    	
-    	try {
-    		HttpURLResponse response = clientComm.get("/user/commands", null, playerCookie+"; "+gameCookie);
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
+        GetCommandsResults results = new GetCommandsResults();
+
+        try {
+            HttpURLResponse response = clientComm.get("/user/commands", null, playerCookie+"; "+gameCookie);
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
         return results;
     }
-
+    //===================================================================================
+    //command post version
     @Override
     public CatanModel executeCommands(ExecuteCommandsParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/commands", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/commands", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public ListAIResults listAI() {
 
-    	ListAIResults results = new ListAIResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/listAI", null, playerCookie+"; "+gameCookie));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-    	
+        ListAIResults results = new ListAIResults();
+
+        try {
+            results.setSuccess(clientComm.post("/user/listAI", null, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params) {
 
-    	ChangeLogLevelResults results = new ChangeLogLevelResults();
-    	
-    	try {
-			results.setSuccess(clientComm.post("/user/changeloglevel", params, playerCookie+"; "+gameCookie));
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			results.setSuccess(false);
-		}
-		    	
+        ChangeLogLevelResults results = new ChangeLogLevelResults();
+
+        try {
+            results.setSuccess(clientComm.post("/user/changeloglevel", params, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel sendChat(SendChatParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/sendChat", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/sendChat", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel acceptTrade(AcceptTradeParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/acceptTrade", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/acceptTrade", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel discardCards(DiscardCardsParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/discardCards", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/discardCards", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel rollNumber(RollNumberParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/rollNumber", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/rollNumber", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel buildRoad(BuildRoadParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/buildRoad", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/buildRoad", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel buildSettlement(BuildSettlementParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/buildSettlement", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/buildSettlement", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel buildCity(BuildCityParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/buildCity", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/buildCity", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel offerTrade(OfferTradeParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/offerTrade", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/offerTrade", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel maritimeTrade(MaritimeTradeParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/maritimeTrade", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/maritimeTrade", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel robPlayer(RobPlayerParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/robPlayer", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/robPlayer", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel finishTurn(FinishTurnParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/finishTurn", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/finishTurn", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel buyDevCard(BuyDevCardParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/buyDevCard", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/buyDevCard", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel playSoldier(PlaySoldierParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/Soldier", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/Soldier", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel yearOfPlenty(YearOfPlentyParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/Year_of_Plenty", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/Year_of_Plenty", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel roadBuilding(RoadBuildingParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/Road_Building", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/Road_Building", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel monopoly(MonopolyParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/Monopoly", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/Monopoly", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public CatanModel monument(MonumentParams params) {
-    	CatanModel results = new CatanModel();
+        CatanModel results = new CatanModel();
 
-    	try {
-			if(clientComm.post("/games/Monument", params, playerCookie+"; "+gameCookie)) {
-				results = getModel();
-			}
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-    	
+        try {
+            if(clientComm.post("/games/Monument", params, playerCookie+"; "+gameCookie)) {
+                results = getModel();
+            }
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+
         return results;
     }
-
+    //===================================================================================
+    
     @Override
     public void distributeCards(int diceSum) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void startGame() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void leaveGame() {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
+    //===================================================================================
+    //Called by poller.
     @Override
     public boolean updateModel() {
-    	HttpURLResponse response = new HttpURLResponse();
-    	try {
-			response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
-			
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			response.setResponseCode(400);
-			
-		}
-    	
+        HttpURLResponse response = new HttpURLResponse();
+        try {
+            response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
+
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            response.setResponseCode(400);
+
+        }
+
         return response.getResponseCode() == HTTP_OK;
-        
+
     }
 
 
-	@Override
-	public AddAIResults AddAI(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public AddAIResults AddAI(String params) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
