@@ -241,7 +241,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
 
     @Override
-    public GetCommandsResults getCommands(GetCommandsParams params) {
+    public GetCommandsResults getCommands() {
 
     	GetCommandsResults results = new GetCommandsResults();
     	

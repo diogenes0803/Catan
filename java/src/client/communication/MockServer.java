@@ -689,7 +689,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 * @see client.communication.ServerInterface#getCommands(shared.communicator.GetCommandsParams)
 	 */
 	@Override
-	public GetCommandsResults getCommands(GetCommandsParams params) {
+	public GetCommandsResults getCommands() {
 		//May need to do some modification to this
 		
 		List<String> commands = new ArrayList<String>();

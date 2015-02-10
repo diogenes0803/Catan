@@ -164,7 +164,7 @@ public interface ServerInterface {
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error
 	 * message.
 	 */
-	GetCommandsResults getCommands(GetCommandsParams params);
+	GetCommandsResults getCommands();
 	
 	/**
 	 * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have
