@@ -5,10 +5,10 @@ package shared.communicator;
  *
  */
 public class JoinGameParams {
-	int id;
-	String color;
+	private int id;
+	private String color;
 	
-	JoinGameParams(int id, String color)
+	public JoinGameParams(int id, String color)
 	{
 		this.id = id;
 		this.color = color;
