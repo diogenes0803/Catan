@@ -55,13 +55,9 @@ import com.google.gson.JsonParser;
 public class ServerProxy implements ServerStandinInterface, ServerInterface{
     private ClientCommunicator clientComm;
     private final int HTTP_OK = HttpURLConnection.HTTP_OK;
-    private String playerCookie;
-    private String gameCookie;
     
     public ServerProxy(String host, String port){   
         clientComm = new ClientCommunicator(host, port);
-        playerCookie = null;
-        gameCookie = null;
     }//end constructor
     
     
@@ -83,16 +79,15 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         UserLoginResults result = new UserLoginResults();
 
         try{
-          HttpURLResponse response = clientComm.get("/user/login", params, playerCookie);
+          HttpURLResponse response = clientComm.get("/user/login", params);
 
           result.setSuccess(response.getResponseCode() == HTTP_OK);
           result.setResponseBody(result.getResponseBody());
           if(result.isSuccess()){
               String new_cookie = response.getCookie("catan.user");
-              playerCookie = new_cookie;
+              createCookie("catan.user", new_cookie);
               try {
                 String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
-               
                 JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
                 result.setName(je.get("name").getAsString());
                 result.setPassword(je.get("password").getAsString());
@@ -122,16 +117,15 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         RegisterUserResults result = new RegisterUserResults();
         try{
-            HttpURLResponse response = clientComm.get("/user/register", params, playerCookie+";PATH=/");
+            HttpURLResponse response = clientComm.get("/user/register", params);
             result.setSuccess(response.getResponseCode() == HTTP_OK);
             result.setResponseBody(result.getResponseBody());
             
             if(result.isSuccess()){
                 String new_cookie = response.getCookie("catan.user");
-                playerCookie = "catan.user="+new_cookie;
+                createCookie("catan.user", new_cookie);
                 try {
                   String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
-              
                   JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
                   result.setName(je.get("name").getAsString());
                   result.setPassword(je.get("password").getAsString());
@@ -158,7 +152,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         ListGamesResults result = new ListGamesResults();
         try{
-            HttpURLResponse response = clientComm.get("/games/list", "", playerCookie+"; "+gameCookie);
+            HttpURLResponse response = clientComm.get("/games/list", "");
             
             result.setSuccess(response.getResponseCode() == HTTP_OK);
             result.setResponseBody(result.getResponseBody());
@@ -191,7 +185,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CreateGameResults results = new CreateGameResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/create", params, playerCookie+"; "+gameCookie));
+			results.setSuccess(clientComm.post("/user/create", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -208,14 +202,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	JoinGameResults results = new JoinGameResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/join", params, playerCookie+"; "+gameCookie));     
-               
-                 //playerCookie = json_cookie;
-                 //JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-                 if(results.isSuccess())
-                     gameCookie = "catan.game="+params.getId();
-
-                 
+			results.setSuccess(clientComm.post("/user/join", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -231,7 +218,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	SaveGameResults results = new SaveGameResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/save", params, playerCookie+"; "+gameCookie));
+			results.setSuccess(clientComm.post("/user/save", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -247,7 +234,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	LoadGameResults results = new LoadGameResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/load", params, playerCookie+"; "+gameCookie));
+			results.setSuccess(clientComm.post("/user/load", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -262,7 +249,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			HttpURLResponse response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
+			HttpURLResponse response = clientComm.get("/games/model", null);
 			// TODO turn response into a CatanModel
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
@@ -277,7 +264,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/reset", null, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/reset", null)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -294,7 +281,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	GetCommandsResults results = new GetCommandsResults();
     	
     	try {
-    		HttpURLResponse response = clientComm.get("/user/commands", null, playerCookie+"; "+gameCookie);
+			results.setResponseBody(clientComm.get("/user/commands", null));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -309,7 +296,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/commands", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/commands", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -321,12 +308,12 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
 
     @Override
-    public ListAIResults listAI() {
+    public ListAIResults listAI(ListAIParams params) {
 
     	ListAIResults results = new ListAIResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/listAI", null, playerCookie+"; "+gameCookie));
+			results.setSuccess(clientComm.post("/user/listAI", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -342,7 +329,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	ChangeLogLevelResults results = new ChangeLogLevelResults();
     	
     	try {
-			results.setSuccess(clientComm.post("/user/changeloglevel", params, playerCookie+"; "+gameCookie));
+			results.setSuccess(clientComm.post("/user/changeloglevel", params));
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -357,7 +344,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/sendChat", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/sendChat", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -373,7 +360,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/acceptTrade", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/acceptTrade", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -389,7 +376,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/discardCards", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/discardCards", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -405,7 +392,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/rollNumber", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/rollNumber", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -421,7 +408,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/buildRoad", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/buildRoad", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -437,7 +424,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/buildSettlement", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/buildSettlement", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -453,7 +440,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/buildCity", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/buildCity", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -469,7 +456,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/offerTrade", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/offerTrade", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -485,7 +472,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/maritimeTrade", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/maritimeTrade", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -501,7 +488,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/robPlayer", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/robPlayer", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -517,7 +504,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/finishTurn", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/finishTurn", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -533,7 +520,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/buyDevCard", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/buyDevCard", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -549,7 +536,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/Soldier", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/Soldier", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -565,7 +552,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/Year_of_Plenty", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/Year_of_Plenty", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -581,7 +568,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/Road_Building", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/Road_Building", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -597,7 +584,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/Monopoly", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/Monopoly", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -613,7 +600,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     	CatanModel results = new CatanModel();
 
     	try {
-			if(clientComm.post("/games/Monument", params, playerCookie+"; "+gameCookie)) {
+			if(clientComm.post("/games/Monument", params)) {
 				results = getModel();
 			}
 		} catch (ClientException e) {
@@ -658,11 +645,5 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         return response.getResponseCode() == HTTP_OK;
         
     }
-
-	@Override
-	public AddAIResults AddAI(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
