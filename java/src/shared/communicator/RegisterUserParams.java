@@ -8,7 +8,7 @@ public class RegisterUserParams {
 	private String username;
 	private String password;
 
-	RegisterUserParams(String username, String password)
+	public RegisterUserParams(String username, String password)
 	{
 		this.username = username;
 		this.password = password;
