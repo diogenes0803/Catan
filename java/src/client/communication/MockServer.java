@@ -58,7 +58,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		UserLoginResults results = new UserLoginResults();
 		
-		if (!params.getUserName().equals("John"))
+		if (!params.getusername().equals("John"))
 		{
 			results.setResponseBody("Failed to login - bad username or password.");
 			return results;
@@ -81,7 +81,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		RegisterUserResults results = new RegisterUserResults();
 		
-		if (params.getUserName().equals("John"))
+		if (params.getusername().equals("John"))
 		{
 			results.setResponseBody("Failed to register - someone already has that username.");
 			return results;
@@ -868,15 +868,6 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 	 */
 	@Override
 	public CatanModel monument(MonumentParams params) {
-		// TODO Auto-generated method stub
-		return model_ptr;
-	}
-
-	/* (non-Javadoc)
-	 * @see client.communication.ServerInterface#rollDice(shared.communicator.MoveParams)
-	 */
-	@Override
-	public CatanModel rollDice(MoveParams params) {
 		// TODO Auto-generated method stub
 		return model_ptr;
 	}
