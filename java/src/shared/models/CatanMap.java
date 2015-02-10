@@ -35,9 +35,8 @@ public class CatanMap {
 		HexTile thisTile = getHexTileAt(edgeLocation.getHexLoc());
 		if (thisTile.getEdges().get(edgeLocation.getDir()).getHasRoad()) {
 			return false;
-		} else if (TurnTracker.getInstance().getCurrentTurn() < 5) {
-			return true;
-		} else {
+		} 
+		else {
 			HexTile neighborTile = getHexTileAt(thisTile.getLocation()
 					.getNeighborLoc(edgeLocation.getDir()));
 			if (thisTile.playerHasRoadOnNeighborAt(playerId,
@@ -66,8 +65,7 @@ public class CatanMap {
 	 * @param vertexLocation
 	 * @return true if possible false if not
 	 */
-	public boolean canBuildSettlementAt(int playerId,
-			VertexLocation vertexLocation) {
+	public boolean canBuildSettlementAt(int playerId, VertexLocation vertexLocation) {
 		HexTile thisTile = getHexTileAt(vertexLocation.getHexLoc());
 		EdgeDirection dir1 = null;
 		EdgeDirection dir2 = null;

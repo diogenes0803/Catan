@@ -4,12 +4,47 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
 
+import shared.communicator.AcceptTradeParams;
+import shared.communicator.BuildCityParams;
+import shared.communicator.BuildRoadParams;
+import shared.communicator.BuildSettlementParams;
+import shared.communicator.BuyDevCardParams;
+import shared.communicator.ChangeLogLevelParams;
+import shared.communicator.ChangeLogLevelResults;
+import shared.communicator.CreateGameParams;
+import shared.communicator.CreateGameResults;
+import shared.communicator.DiscardCardsParams;
+import shared.communicator.ExecuteCommandsParams;
+import shared.communicator.FinishTurnParams;
+import shared.communicator.GetCommandsResults;
+import shared.communicator.JoinGameParams;
+import shared.communicator.JoinGameResults;
+import shared.communicator.ListAIParams;
+import shared.communicator.ListAIResults;
+import shared.communicator.ListGamesResults;
+import shared.communicator.LoadGameParams;
+import shared.communicator.LoadGameResults;
+import shared.communicator.MaritimeTradeParams;
+import shared.communicator.MonopolyParams;
+import shared.communicator.MonumentParams;
+import shared.communicator.OfferTradeParams;
+import shared.communicator.PlaySoldierParams;
+import shared.communicator.RegisterUserParams;
+import shared.communicator.RegisterUserResults;
+import shared.communicator.RoadBuildingParams;
+import shared.communicator.RobPlayerParams;
+import shared.communicator.RollNumberParams;
+import shared.communicator.SaveGameParams;
+import shared.communicator.SaveGameResults;
+import shared.communicator.SendChatParams;
+import shared.communicator.UserLoginParams;
+import shared.communicator.UserLoginResults;
+import shared.communicator.YearOfPlentyParams;
+import shared.models.CatanModel;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import shared.communicator.*;
-import shared.models.CatanModel;
 
 /**
  * Description: Holds the Client Communicator and the Server Facade

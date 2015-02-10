@@ -415,11 +415,11 @@
     },
     {
       "resources": {
-        "brick": 1,
-        "wood": 0,
-        "sheep": 1,
-        "wheat": 0,
-        "ore": 1
+        "brick": 100,
+        "wood": 100,
+        "sheep": 100,
+        "wheat": 100,
+        "ore": 100
       },
       "oldDevCards": {
         "yearOfPlenty": 0,
