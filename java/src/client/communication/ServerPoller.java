@@ -21,12 +21,7 @@ public class ServerPoller {
 		this.server = server;
 		timer = new Timer();
 		
-		timer.schedule(new TimerTask() {
-		    @Override
-		    public void run() {
-		      updateModel();
-		    }
-		  }, CHECK_FREQUENCY, CHECK_FREQUENCY );
+		
 	}
 	
 	/**
@@ -46,6 +41,16 @@ public class ServerPoller {
 	public void stopTimer(){
 	    timer.cancel();
 	    timer.purge();
+	}
+
+	public void startTimer() {
+		timer.schedule(new TimerTask() {
+		    @Override
+		    public void run() {
+		      updateModel();
+		    }
+		  }, CHECK_FREQUENCY, CHECK_FREQUENCY );	
+		
 	}
 	
 }//end class

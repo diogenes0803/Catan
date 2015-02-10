@@ -595,8 +595,19 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
 
     @Override
-    public void updateModel() {
-        // TODO Auto-generated method stub
+    public boolean updateModel() {
+    	HttpURLResponse response = new HttpURLResponse();
+    	try {
+			response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
+			
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			response.setResponseCode(400);
+			
+		}
+    	
+        return response.getResponseCode() == HTTP_OK;
         
     }
 

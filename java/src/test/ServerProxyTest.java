@@ -16,7 +16,7 @@ import shared.communicator.*;
  */
 public class ServerProxyTest {
 	
-	private ServerProxy serverProxy = new ServerProxy();
+	private ServerProxy serverProxy = new ServerProxy(null, null);
 
 	/**
 	 * Test method for {@link client.communication.ServerProxy#ServerProxy(shared.models.CatanModel)}.

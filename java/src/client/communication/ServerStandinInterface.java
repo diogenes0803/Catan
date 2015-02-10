@@ -11,5 +11,5 @@ public interface ServerStandinInterface{
     /**
      * Allows poller to tell server to update Model.
      */
-    public void updateModel();
+    public boolean updateModel();
 }

@@ -6,11 +6,10 @@ public class JunitTestDriver {
     public static void main(String[] args) {
 
         String[] testClasses = new String[] {
+        		"test.ServerCommunicatorTest",
+        		"test.ServerProxyTest",
                 "test.CatanModelTest",
-                "test.PollerTest",
-                "test.MockServerTest",
-                "test.ServerFacadeTest",
-                "test.ServerCommunicatorTest"
+                "test.ServerPollerTest"
         };
 
         org.junit.runner.JUnitCore.main(testClasses);

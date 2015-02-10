@@ -40,15 +40,22 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
     
 	
     private CatanModel model_ptr;
+    private int timesUpdated;
     
     //In case we create a more robust mock server
     private HashMap<String, String> users;
 
-    public MockServer(CatanModel model){
-        model_ptr = model;
+    public MockServer(){
+        model_ptr = null;
         users = new HashMap<String, String>();
+        timesUpdated = 0;
     }
-    
+
+	public int getTimesUpdated() {
+		return timesUpdated;
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see client.communication.ServerInterface#userLogin(shared.communicator.UserLoginParams)
@@ -909,9 +916,12 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 
 	}
 
+	
+	
     @Override
-    public void updateModel() {
-        // TODO Auto-generated method stub
+    public boolean updateModel() {
+    	timesUpdated++;
+        return true;
         
     }
     
