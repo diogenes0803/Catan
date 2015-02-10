@@ -1,5 +1,6 @@
 package shared.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
@@ -7,6 +8,12 @@ public class GameManager {
 	private boolean isJoinedGame;
 	private Game game;
 	private List<GameInfo> availableGames;
+	
+	public GameManager(){
+	    isJoinedGame = false;
+	    game = null;
+	    availableGames = new ArrayList<GameInfo>();
+	}
 	
 	
 	public boolean isJoinedGame() {

@@ -39,11 +39,11 @@ public class ClientLauncher {
                 if(!result2.isSuccess())
                   return;
                 CatanModel model = server.getModel();
-                System.out.println("Model Obtained:");
+                System.out.println("Model obtained:");
                 if(model != null){
                     String jsonModel = new Gson().toJson(model);
                     @SuppressWarnings("resource")
-                    Scanner scan = new Scanner(jsonModel).useDelimiter("\n");
+                    Scanner scan = new Scanner(jsonModel).useDelimiter(",");
                     while(scan.hasNext())
                         System.out.println(scan.next());
                 }

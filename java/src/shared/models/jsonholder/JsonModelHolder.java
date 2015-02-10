@@ -35,11 +35,11 @@ public class JsonModelHolder {
 	private int winner;
 	private int version;
 	
-	public Game buildCatanModel() {
+	public Game buildCatanGame() {
 		Game game = new Game();
 	    
 		game.setWinner(winner);
-		game.setVersion(version);
+		
 		game.setMap(createMap());
 		game.setPlayers(createPlayerList());
 		game.setBank(new Bank(createBankResCards(), createBankDevCards()));
