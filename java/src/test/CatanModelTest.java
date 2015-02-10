@@ -9,14 +9,44 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import client.communication.ServerProxy;
+import shared.communicator.*;
+import shared.models.CatanModel;
+
 /**
  * @author campbeln
  *
  */
 public class CatanModelTest {
     
+	private String username;
+	private String password;
+	private int gameid;
+	private int playerid;
+	private CatanModel testModel;
+	private boolean canRunTests = true;
+	
     @Before
     public void setUp() throws Exception {
+    	username = "Sam";
+    	password = "sam";
+    	gameid = 0;
+    	playerid = 0;
+    	ServerProxy testServer = new ServerProxy("localhost", "8081");
+    	
+    	UserLoginParams params = new UserLoginParams(username, password);
+    	UserLoginResults result = testServer.userLogin(params);
+    	canRunTests = result.isSuccess();
+    	assert(result.isSuccess()) : "CatanModelTest.setup ERROR: could not login to Sam's account";
+    	//assertTrue("ERROR: Can not run tests", canRunTests);
+    	
+    	JoinGameResults result2 = testServer.joinGame(new JoinGameParams(gameid, "orange"));
+    	assert(result2.isSuccess()) : "CatanModelTest.setup ERROR: could not join Sam's game";
+    	if (canRunTests == true) {
+    		canRunTests = result2.isSuccess();
+    	}
+    	
+    	testModel = testServer.getModel();
     }
 
     @After
@@ -30,8 +60,9 @@ public class CatanModelTest {
     
     
     @Test
-    public void testModelCanDo() {
+    public void testModelCanDoBuildRoad() {
         fail("Not yet implemented");
+
     }
 
 	/**
@@ -66,4 +97,672 @@ public class CatanModelTest {
 		fail("Not yet implemented"); // TODO
 	}
 
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*===========================================================================================
+ *                              Catan Model For Junit tests, game is under Sam:sam, GameId:0
+ * ==========================================================================================
+ * 
+ * {
+  "deck": {
+    "yearOfPlenty": 2,
+    "monopoly": 2,
+    "soldier": 14,
+    "roadBuilding": 2,
+    "monument": 5
+  },
+  "map": {
+    "hexes": [
+      {
+        "location": {
+          "x": 0,
+          "y": -2
+        }
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 1,
+          "y": -2
+        },
+        "number": 4
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 2,
+          "y": -2
+        },
+        "number": 11
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": -1,
+          "y": -1
+        },
+        "number": 8
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 0,
+          "y": -1
+        },
+        "number": 3
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": 1,
+          "y": -1
+        },
+        "number": 9
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 2,
+          "y": -1
+        },
+        "number": 12
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -2,
+          "y": 0
+        },
+        "number": 5
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": -1,
+          "y": 0
+        },
+        "number": 10
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 0,
+          "y": 0
+        },
+        "number": 11
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 1,
+          "y": 0
+        },
+        "number": 5
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 2,
+          "y": 0
+        },
+        "number": 6
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": -2,
+          "y": 1
+        },
+        "number": 2
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": -1,
+          "y": 1
+        },
+        "number": 9
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 0,
+          "y": 1
+        },
+        "number": 4
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 1,
+          "y": 1
+        },
+        "number": 10
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": -2,
+          "y": 2
+        },
+        "number": 6
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -1,
+          "y": 2
+        },
+        "number": 3
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 0,
+          "y": 2
+        },
+        "number": 8
+      }
+    ],
+    "roads": [
+      {
+        "owner": 2,
+        "location": {
+          "direction": "S",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": 2,
+          "y": -2
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "S",
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": -2,
+          "y": 1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "S",
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SW",
+          "x": 2,
+          "y": 0
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "S",
+          "x": -1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": -1,
+          "y": 1
+        }
+      }
+    ],
+    "cities": [],
+    "settlements": [
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SE",
+          "x": 1,
+          "y": -2
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SW",
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SW",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": -1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SE",
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": -2,
+          "y": 1
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SW",
+          "x": 2,
+          "y": 0
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": -1,
+          "y": 1
+        }
+      }
+    ],
+    "radius": 3,
+    "ports": [
+      {
+        "ratio": 2,
+        "resource": "brick",
+        "direction": "NE",
+        "location": {
+          "x": -2,
+          "y": 3
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "NW",
+        "location": {
+          "x": 2,
+          "y": 1
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "ore",
+        "direction": "S",
+        "location": {
+          "x": 1,
+          "y": -3
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "wood",
+        "direction": "NE",
+        "location": {
+          "x": -3,
+          "y": 2
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "sheep",
+        "direction": "NW",
+        "location": {
+          "x": 3,
+          "y": -1
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "SW",
+        "location": {
+          "x": 3,
+          "y": -3
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "wheat",
+        "direction": "S",
+        "location": {
+          "x": -1,
+          "y": -2
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "SE",
+        "location": {
+          "x": -3,
+          "y": 0
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "N",
+        "location": {
+          "x": 0,
+          "y": 3
+        }
+      }
+    ],
+    "robber": {
+      "x": 0,
+      "y": -2
+    }
+  },
+  "players": [
+    {
+      "resources": {
+        "brick": 0,
+        "wood": 1,
+        "sheep": 1,
+        "wheat": 1,
+        "ore": 0
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 0,
+      "playerIndex": 0,
+      "name": "Sam",
+      "color": "orange"
+    },
+    {
+      "resources": {
+        "brick": 1,
+        "wood": 0,
+        "sheep": 1,
+        "wheat": 0,
+        "ore": 1
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 1,
+      "playerIndex": 1,
+      "name": "Brooke",
+      "color": "blue"
+    },
+    {
+      "resources": {
+        "brick": 0,
+        "wood": 1,
+        "sheep": 1,
+        "wheat": 1,
+        "ore": 0
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 10,
+      "playerIndex": 2,
+      "name": "Pete",
+      "color": "red"
+    },
+    {
+      "resources": {
+        "brick": 0,
+        "wood": 1,
+        "sheep": 1,
+        "wheat": 0,
+        "ore": 1
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 11,
+      "playerIndex": 3,
+      "name": "Mark",
+      "color": "green"
+    }
+  ],
+  "log": {
+    "lines": [
+      {
+        "source": "Sam",
+        "message": "Sam built a road"
+      },
+      {
+        "source": "Sam",
+        "message": "Sam built a settlement"
+      },
+      {
+        "source": "Sam",
+        "message": "Sam's turn just ended"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke built a road"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke built a settlement"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke's turn just ended"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete built a road"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete built a settlement"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete's turn just ended"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark built a road"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark built a settlement"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark's turn just ended"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark built a road"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark built a settlement"
+      },
+      {
+        "source": "Mark",
+        "message": "Mark's turn just ended"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete built a road"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete built a settlement"
+      },
+      {
+        "source": "Pete",
+        "message": "Pete's turn just ended"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke built a road"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke built a settlement"
+      },
+      {
+        "source": "Brooke",
+        "message": "Brooke's turn just ended"
+      },
+      {
+        "source": "Sam",
+        "message": "Sam built a road"
+      },
+      {
+        "source": "Sam",
+        "message": "Sam built a settlement"
+      },
+      {
+        "source": "Sam",
+        "message": "Sam's turn just ended"
+      }
+    ]
+  },
+  "chat": {
+    "lines": []
+  },
+  "bank": {
+    "brick": 23,
+    "wood": 21,
+    "sheep": 20,
+    "wheat": 22,
+    "ore": 22
+  },
+  "turnTracker": {
+    "status": "Rolling",
+    "currentTurn": 0,
+    "longestRoad": -1,
+    "largestArmy": -1
+  },
+  "winner": -1,
+  "version": 0
+}
+ * 
+ */
