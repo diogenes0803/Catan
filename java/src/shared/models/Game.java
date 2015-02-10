@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.models.jsonholder.Chat;
 import shared.models.jsonholder.City;
 import shared.models.jsonholder.Deck;
@@ -44,9 +47,170 @@ public class Game {
 	private TurnTracker turnTracker;
 	private List<MessageLine> logs;
 	private List<MessageLine> chats;
+	private int dice;
 	private int winner;
 	private int version;
 	private int gameId;
+	
+	public boolean canBuildRoad(EdgeLocation location) {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.canBuildRoad() && map.canBuildRoadAt(thisPlayer.getPlayerId(), location))
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean canPlayDevCard() {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.isPlayedDevCard())
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean canOfferTrade(ResourceList offer) {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		int brick = offer.getBricks();
+		int ore = offer.getOres();
+		int sheep = offer.getSheep();
+		int wheat = offer.getWheat();
+		int wood = offer.getWood();
+		if(brick < 0) {
+			if(0 > brick+thisPlayer.getResCount(ResourceType.BRICK))
+				return false;
+		}
+		if(ore < 0) {
+			if(0 > ore+thisPlayer.getResCount(ResourceType.ORE))
+				return false;
+		}
+		if(sheep < 0) {
+			if(0 > sheep+thisPlayer.getResCount(ResourceType.SHEEP))
+				return false;
+		}
+		if(wheat < 0) {
+			if(0 > wheat+thisPlayer.getResCount(ResourceType.WHEAT))
+				return false;
+		}
+		if(wood < 0) {
+			if(0 > wood+thisPlayer.getResCount(ResourceType.WOOD))
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean canAcceptTrade(int playerIndex, ResourceList offer) {
+		Player thisPlayer = players[playerIndex];
+		int brick = offer.getBricks();
+		int ore = offer.getOres();
+		int sheep = offer.getSheep();
+		int wheat = offer.getWheat();
+		int wood = offer.getWood();
+		if(brick > 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.BRICK) - brick)
+				return false;
+		}
+		if(ore > 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.ORE) - ore)
+				return false;
+		}
+		if(sheep > 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.SHEEP) - sheep)
+				return false;
+		}
+		if(wheat > 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.WHEAT) - wheat)
+				return false;
+		}
+		if(wood > 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.WOOD) - wood)
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean canRoleDice() {
+		if(TurnTracker.getInstance().getStatus() == "Rolling") {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canBuildSettlement(VertexLocation location) {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.canBuildSettlement() && map.canBuildSettlementAt(thisPlayer.getPlayerId(), location)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canUpgradeToCity(VertexLocation location) {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.canBuildCity() && map.canUpgradeSettlementAt(thisPlayer.getPlayerId(), location)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canBuyDevCard() {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.canBuyDevCard()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canMoveRobber(HexLocation destination) {
+		if(dice == 7) {
+			HexLocation from = map.getRobberLocation();
+			if(from.getX() == destination.getX() && from.getY() == destination.getY()) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canUseDevCard(DevCardType type) {
+		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+		if(thisPlayer.getDevCount(type) > 0 && !thisPlayer.isPlayedDevCard()) {
+			if(type == DevCardType.MONUMENT) {
+				return true;
+			}
+			else {
+				if(thisPlayer.getOldDevCount(type) > 0) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
+	public boolean canFinishTurn() {
+		if(TurnTracker.getInstance().getStatus() == "Playing") {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public JsonModelHolder toJsonModel() {
 		JsonModelHolder jsonModel = new JsonModelHolder();
@@ -522,6 +686,15 @@ public class Game {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
+
+	public int getDice() {
+		return dice;
+	}
+
+	public void setDice(int dice) {
+		this.dice = dice;
+	}
+	
 	
 	
 

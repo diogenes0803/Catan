@@ -20,7 +20,6 @@ public class Player {
 	private List<ResCard> resCards;
 	private List<DevCard> devCards;
 	private int victoryPoint;
-	private boolean isOnTurn;
 	private List<Piece> availablePieces;
 	private CatanColor color;
 	private int numSoldierPlayed;
@@ -34,16 +33,11 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoad(){
-		if(isOnTurn){
-			int brick = getResCount(ResourceType.BRICK);
-			int wood = getResCount(ResourceType.WOOD);
-			int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
-			if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
-				return true;
-			}
-			else{
-				return false;
-			}
+		int brick = getResCount(ResourceType.BRICK);
+		int wood = getResCount(ResourceType.WOOD);
+		int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
+		if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
+			return true;
 		}
 		else{
 			return false;
@@ -55,21 +49,17 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlement(){
-		if(isOnTurn){
-			int brick = getResCount(ResourceType.BRICK);
-			int wood = getResCount(ResourceType.WOOD);
-			int sheep = getResCount(ResourceType.SHEEP);
-			int wheat = getResCount(ResourceType.WHEAT);
-			if(brick > 0 && wood > 0 && sheep > 0 && wheat > 0){
-				return true;
-			}
-			else{
-				return false;
-			}
+		int brick = getResCount(ResourceType.BRICK);
+		int wood = getResCount(ResourceType.WOOD);
+		int sheep = getResCount(ResourceType.SHEEP);
+		int wheat = getResCount(ResourceType.WHEAT);
+		if(brick > 0 && wood > 0 && sheep > 0 && wheat > 0){
+			return true;
 		}
 		else{
 			return false;
 		}
+		
 	}
 	
 	/**
@@ -77,19 +67,15 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildCity(){
-		if(isOnTurn){
-			int ore = getResCount(ResourceType.ORE);
-			int wheat = getResCount(ResourceType.WHEAT);
-			if(ore >= 3 && wheat >= 2){
-				return true;
-			}
-			else{
-				return false;
-			}
+		int ore = getResCount(ResourceType.ORE);
+		int wheat = getResCount(ResourceType.WHEAT);
+		if(ore >= 3 && wheat >= 2){
+			return true;
 		}
 		else{
 			return false;
 		}
+		
 	}
 	
 	/**
@@ -97,61 +83,17 @@ public class Player {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuyDevCard(){
-		if(isOnTurn){
-			int ore = getResCount(ResourceType.ORE);
-			int sheep = getResCount(ResourceType.SHEEP);
-			int wheat = getResCount(ResourceType.WHEAT);
-			if(ore > 0 && wheat > 0 && sheep > 0){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}
-		else{
-			return false;
-		}
-	}
-	
-	/**
-	 * Check if user have enough resources and is on turn to trade resources
-	 * @return true if possible false if not
-	 */
-	public boolean canTrade(){
-		if(isOnTurn && resCards.size() > 0){
+		int ore = getResCount(ResourceType.ORE);
+		int sheep = getResCount(ResourceType.SHEEP);
+		int wheat = getResCount(ResourceType.WHEAT);
+		if(ore > 0 && wheat > 0 && sheep > 0){
 			return true;
 		}
 		else{
 			return false;
-		}
+		}	
 	}
 	
-	/**
-	 * Check if user is on turn to roll a dice
-	 * @return true if possible false if not
-	 */
-	public boolean canRollDice(){
-		if(isOnTurn){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	/**
-	 * Check if user has enough point to win a game
-	 * @return true if possible false if not
-	 */
-	public boolean canWinGame(){
-		if(victoryPoint >= 10){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
 	public int getUserId() {
 		return userId;
 	}
@@ -190,14 +132,6 @@ public class Player {
 
 	public void setVictoryPoint(int victoryPoint) {
 		this.victoryPoint = victoryPoint;
-	}
-
-	public boolean isOnTurn() {
-		return isOnTurn;
-	}
-
-	public void setOnTurn(boolean isOnTurn) {
-		this.isOnTurn = isOnTurn;
 	}
 
 	public List<Piece> getAvailablePieces() {
@@ -256,9 +190,19 @@ public class Player {
 		this.name = name;
 	}
 
-	private int getResCount(ResourceType type){
+	public int getResCount(ResourceType type){
 		int count = 0;
 		for(ResCard thisCard : resCards){
+			if(thisCard.getType() == type){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public int getDevCount(DevCardType type){
+		int count = 0;
+		for(DevCard thisCard : devCards){
 			if(thisCard.getType() == type){
 				count++;
 			}
@@ -275,7 +219,7 @@ public class Player {
 		this.discarded = discarded;
 	}
 
-	private int getOldDevCount(DevCardType type){
+	public int getOldDevCount(DevCardType type){
 		int count = 0;
 		for(DevCard thisCard : devCards){
 			if(thisCard.getType() == type && thisCard.isOld()){
