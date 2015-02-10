@@ -144,7 +144,7 @@ public class Game {
 					if(thisTile.getResourceType() != null) {
 						hex.setResource(resourceToString(thisTile.getResourceType()));
 					}
-					if(thisTile.getToken() != null) {
+					if(thisTile.getToken() != -1) {
 						hex.setNumber(thisTile.getToken());
 					}
 					hex.setLocation(new Location(x,y));
@@ -152,11 +152,10 @@ public class Game {
 					for (Map.Entry<EdgeDirection, Edge> entry : thisTile.getEdges().entrySet()) {
 					    EdgeDirection key = entry.getKey();
 					    Edge value = entry.getValue();
-					    if(value.getHasRoad()) {
+					    if(value.getRoad() != null) {
 					    	Road road = new Road();
 					    	road.setOwner(value.getRoad().getOwnerPlayerId());
 					    	road.setLocation(new Location(x, y, edgeDirectionToString(key)));
-					    	roads.add(road);
 					    }
 					}
 					for (Map.Entry<VertexDirection, Vertex> entry : thisTile.getVertices().entrySet()) {

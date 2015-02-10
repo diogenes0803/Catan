@@ -3,7 +3,7 @@ package shared.models.jsonholder;
 public class Hex {
 	private String resource;
 	private Location location;
-	private Integer number = null;
+	private int number;
 	public String getResource() {
 		return resource;
 	}
@@ -16,10 +16,10 @@ public class Hex {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	public Integer getNumber() {
+	public int getNumber() {
 		return number;
 	}
-	public void setNumber(Integer number) {
+	public void setNumber(int number) {
 		this.number = number;
 	}
 }

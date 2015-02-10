@@ -19,13 +19,13 @@ public class HexTile {
 	private HashMap<EdgeDirection, Edge> edges;
 	private HashMap<VertexDirection, Vertex> vertices;
 	private ResourceType resourceType;
-	private Integer token;
+	private int token = -1;
 	private Piece robber;
 	private boolean hasRobber;
 	
 	public HexTile(){}
 	
-	public HexTile(int x, int y, ResourceType resource, Integer token) {
+	public HexTile(int x, int y, ResourceType resource, int token) {
 		edges = new HashMap<EdgeDirection, Edge>();
 		vertices = new HashMap<VertexDirection, Vertex>();
 		location = new HexLocation(x, y);
@@ -215,10 +215,10 @@ public class HexTile {
 	public void setResourceType(ResourceType hexType) {
 		this.resourceType = hexType;
 	}
-	public Integer getToken() {
+	public int getToken() {
 		return token;
 	}
-	public void setToken(Integer token) {
+	public void setToken(int token) {
 		this.token = token;
 	}
 	public Piece getRobber() {
