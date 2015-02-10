@@ -190,16 +190,6 @@ public interface ServerInterface {
 	 */
 	ListAIResults listAI();
 	
-	/**
-	 * @pre 1.The caller specifies a valid logging level. Valid values include: SEVERE, WARNING,
-	 * INFO, CONFIG, FINE, FINER, FINEST
-	 * @post If the operation succeeds,
-	 * 1. The server returns an HTTP 200 success response with "Success" in the body.
-	 * 2. The Server is using the specified logging level
-	 * If the operation fails,
-	 * 1. The server returns an HTTP 400 error response, and the body contains an error
-	 * message.
-	 */
 	
 	/**
 	 * @pre
@@ -218,6 +208,16 @@ public interface ServerInterface {
 	 */
 	AddAIResults AddAI(String params);
 	
+	/**
+	 * @pre 1.The caller specifies a valid logging level. Valid values include: SEVERE, WARNING,
+	 * INFO, CONFIG, FINE, FINER, FINEST
+	 * @post If the operation succeeds,
+	 * 1. The server returns an HTTP 200 success response with "Success" in the body.
+	 * 2. The Server is using the specified logging level
+	 * If the operation fails,
+	 * 1. The server returns an HTTP 400 error response, and the body contains an error
+	 * message.
+	 */
 	ChangeLogLevelResults changeLogLevel(ChangeLogLevelParams params);
 	
 	/* Move Commands */
