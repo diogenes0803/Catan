@@ -41,7 +41,7 @@ public class ClientCommunicator {
 	 * @return boolean true meaning message sent, or Exception thrown indicating error.
 	 * @post
 	 */
-	public boolean post(String urlCommand, Object params) throws ClientException{
+	public boolean post(String urlCommand, Object params, String cookie) throws ClientException{
 	    URL url;
 	    HttpURLConnection connection = null;  
 	    try {
@@ -57,6 +57,11 @@ public class ClientCommunicator {
 	      connection.setRequestProperty("Content-Length", "" + 
 	               Integer.toString(message.getBytes().length));
 	      connection.setRequestProperty("Content-Language", "en-US");  
+	      //Adds whatever is in the cookie string (if it's not null) to the httpHeader 
+	      if (cookie != null)
+          {
+          	connection.setRequestProperty("cookie", cookie);
+          }
 	            
 	      connection.setUseCaches (false);
 	      
@@ -101,7 +106,7 @@ public class ClientCommunicator {
 	 * return <p>a string containing json response</p>
 	 * @post
 	 */
-	public HttpURLResponse get(String urlCommand, Object params) throws ClientException {
+	public HttpURLResponse get(String urlCommand, Object params, String cookie) throws ClientException {
 	    HttpURLConnection connection = null;
 	    assert urlCommand != null;
         assert params != null;
@@ -116,6 +121,11 @@ public class ClientCommunicator {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.setDoOutput(true);
+            //Adds whatever is in the cookie string (if it's not null) to the httpHeader 
+            if (cookie != null)
+            {
+            	connection.setRequestProperty("cookie", cookie);
+            }
 
             connection.connect();
 
