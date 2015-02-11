@@ -10,7 +10,7 @@ public class CreateGameParams {
 	private boolean randomPorts;
 	private String name;
 	
-	CreateGameParams(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+	public CreateGameParams(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
 	{
 		this.randomTiles = randomTiles;
 		this.randomNumbers = randomNumbers;

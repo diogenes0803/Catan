@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import client.communication.ServerProxy;
 import shared.communicator.*;
+import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -73,10 +75,7 @@ public class ServerProxyTest {
                 assertionOccured);
         }
         */
-        UserLoginParams params = new UserLoginParams(goodUsername, goodPassword);
-       UserLoginResults results = serverProxy.userLogin(params);
        
-      System.out.println("If this is not null then the command worked " + results.getPlayerId());
         
     }//end testUser
     
@@ -85,13 +84,15 @@ public class ServerProxyTest {
      */
     @Test
     public void test_2_RegisterUser() {
-        System.out.println("Testing Registering of GoodUser "+ goodUser + "with password: "+ goodPassword);
+        System.out.println("Testing Registering of GoodUser: "+ "bob1" + " with password: "+ goodPassword);
        //use already tested goodUserName
-        RegisterUserParams params = new RegisterUserParams(goodUser.getName(), goodPassword);
+        RegisterUserParams params = new RegisterUserParams("bob5", goodPassword);
         
         RegisterUserResults results = serverProxy.registerUser(params);
         
-        assertTrue("Error: Username "+ goodUser +" was not accepted.",results.isSuccess());
+       // assertTrue("Error: Username "+ goodUser +" was not accepted.",results.isSuccess());
+        
+        System.out.println("Return from registerUser "+ results.isSuccess());
         
     }
 
@@ -100,7 +101,7 @@ public class ServerProxyTest {
      */
     @Test
     public void test_3_UserLogin() {
-        UserLoginParams params = new UserLoginParams(goodUser.getName(), goodPassword);
+        UserLoginParams params = new UserLoginParams(goodUsername, goodPassword);
         
         UserLoginResults results = serverProxy.userLogin(params);
         
@@ -111,7 +112,7 @@ public class ServerProxyTest {
         //assertTrue("message to display if boolean is false", boolean)
         assertTrue("Jonathan ",results.isSuccess());
         
-        
+        System.out.println("User logged in? "+results.isSuccess());
         
     }
     
@@ -120,7 +121,10 @@ public class ServerProxyTest {
      */
     @Test
     public void test_4_CreateGame() {
-        fail("Not yet implemented"); // TODO
+        CreateGameParams params = new CreateGameParams(true,false,true,"test_game1");
+        
+        CreateGameResults results = serverProxy.createGame(params);
+        System.out.println("Did create Game Work "+results.isSuccess());
     }
     
 
@@ -130,7 +134,10 @@ public class ServerProxyTest {
     @Test
     public void test_5_ListGames() {
         //see if the game we created in test 4 showed up.
-        fail("Not yet implemented"); // TODO
+         ListGamesResults results = serverProxy.listGames();
+         System.out.println("List games returned fine " + results.isSuccess());
+        
+    	
     }
 
 
@@ -139,7 +146,14 @@ public class ServerProxyTest {
      */
     @Test
     public void test_6_JoinGame() {
-        fail("Not yet implemented"); // TODO
+    	 UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+         UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params = new JoinGameParams(0, "red");
+    	
+    	JoinGameResults results = serverProxy.joinGame(params);
+    	
+    	System.out.println("Join Game result: "+results.isSuccess());
+        
     }
 
     /**
@@ -147,7 +161,11 @@ public class ServerProxyTest {
      */
     @Test
     public void test_7_SaveGame() {
-        fail("Not yet implemented"); // TODO
+    	SaveGameParams params = new SaveGameParams(0, "test_save");
+    	
+    	SaveGameResults results = serverProxy.saveGame(params);
+    	
+    	System.out.println("SaveGame worked: "+results.isSuccess());
     }
 
     /**
@@ -163,7 +181,13 @@ public class ServerProxyTest {
      */
     @Test
     public void test_9_GetModel() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+         UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params);
+    	
+    	CatanModel model = serverProxy.getModel();
+    	System.out.println("GetModel: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -171,7 +195,14 @@ public class ServerProxyTest {
      */
     @Test
     public void test_10_ResetGame() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params);
+    	
+    	CatanModel model = serverProxy.resetGame();
+    	System.out.println("ResetGame: "+ model.getGameManager().getGame().getGameId());
+    	
     }
 
     /**
@@ -179,7 +210,8 @@ public class ServerProxyTest {
      */
     @Test
     public void test_11_GetCommands() {
-        fail("Not yet implemented"); // TODO
+        GetCommandsResults results = serverProxy.getCommands();
+        System.out.println("GetCommands worked: "+results.isSuccess());
     }
 
     /**

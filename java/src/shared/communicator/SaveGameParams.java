@@ -8,7 +8,7 @@ public class SaveGameParams {
 	int id;
 	String name;
 	
-	SaveGameParams(int id, String name)
+	public SaveGameParams(int id, String name)
 	{
 		this.id = id;
 		this.name = name;
