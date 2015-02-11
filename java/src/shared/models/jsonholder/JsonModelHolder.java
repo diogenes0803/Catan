@@ -47,7 +47,9 @@ public class JsonModelHolder {
 		game.setBank(new Bank(createBankResCards(), createBankDevCards()));
 		game.setLogs(createLog());
 		game.setChats(createChat());
-		game.setTradeOffer(new TradeOffer(tradeOffer.getSender(), tradeOffer.getReceiver(), tradeOffer.getOffer()));
+		if (tradeOffer != null) {
+			game.setTradeOffer(new TradeOffer(tradeOffer.getSender(), tradeOffer.getReceiver(), tradeOffer.getOffer()));
+		}
 		TurnTracker.getInstance().setStatus(turnTracker.getStatus());
 		TurnTracker.getInstance().setCurrentTurn(turnTracker.getCurrentTurn());
 		TurnTracker.getInstance().setLongestRoad(turnTracker.getLongestRoad());

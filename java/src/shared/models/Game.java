@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.CatanColor;
-import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
@@ -108,8 +107,13 @@ public class Game {
 		return true;
 	}
 	
-	public boolean canAcceptTrade(int playerIndex, ResourceList offer) {
+	public boolean canAcceptTrade(int playerIndex) {
 		Player thisPlayer = players[playerIndex];
+		ResourceList offer = tradeOffer.getOffer();
+		if (offer == null) {
+			return false;
+		}
+		
 		int brick = offer.getBricks();
 		int ore = offer.getOres();
 		int sheep = offer.getSheep();
