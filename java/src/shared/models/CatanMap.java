@@ -195,8 +195,12 @@ public class CatanMap {
 		}
 		EdgeLocation loc1 = edge1.getLocation().getNormalizedLocation();
 		EdgeLocation loc2 = edge2.getLocation().getNormalizedLocation();
-		edge1 = getHexTileAt(loc1.getHexLoc()).getEdgeAt(loc1.getDir());
-		edge2 = getHexTileAt(loc2.getHexLoc()).getEdgeAt(loc2.getDir());
+		if(!isOutOfBound(loc1.getHexLoc())) {
+			edge1 = getHexTileAt(loc1.getHexLoc()).getEdgeAt(loc1.getDir());
+		}
+		if(!isOutOfBound(loc2.getHexLoc())) {
+			edge2 = getHexTileAt(loc2.getHexLoc()).getEdgeAt(loc2.getDir());
+		}
 		if(edge1.getHasRoad()) {
 			if(edge1.getRoad().getOwnerPlayerId() == playerId)
 				result = true;
@@ -253,8 +257,13 @@ public class CatanMap {
 		
 		EdgeLocation loc1 = edge1.getLocation().getNormalizedLocation();
 		EdgeLocation loc2 = edge2.getLocation().getNormalizedLocation();
-		edge1 = getHexTileAt(loc1.getHexLoc()).getEdgeAt(loc1.getDir());
-		edge2 = getHexTileAt(loc2.getHexLoc()).getEdgeAt(loc2.getDir());
+		
+		if(!isOutOfBound(loc1.getHexLoc())) {
+			edge1 = getHexTileAt(loc1.getHexLoc()).getEdgeAt(loc1.getDir());
+		}
+		if(!isOutOfBound(loc2.getHexLoc())) {
+			edge2 = getHexTileAt(loc2.getHexLoc()).getEdgeAt(loc2.getDir());
+		}
 		
 		if(edge1.getHasRoad()) {
 			if(edge1.getRoad().getOwnerPlayerId() == playerId)
@@ -303,8 +312,12 @@ public class CatanMap {
 		}
 		VertexLocation loc1 = vertex1.getLocation().getNormalizedLocation();
 		VertexLocation loc2 = vertex2.getLocation().getNormalizedLocation();
-		vertex1 = getHexTileAt(loc1.getHexLoc()).getVertexAt(loc1.getDir());
-		vertex2 = getHexTileAt(loc2.getHexLoc()).getVertexAt(loc2.getDir());
+		if(!isOutOfBound(loc1.getHexLoc())) {
+			vertex1 = getHexTileAt(loc1.getHexLoc()).getVertexAt(loc1.getDir());
+		}
+		if(!isOutOfBound(loc2.getHexLoc())) {
+			vertex2 = getHexTileAt(loc2.getHexLoc()).getVertexAt(loc2.getDir());
+		}
 		if(vertex1.getHasSettlement()) {
 			if(vertex1.getSettlement().getOwnerPlayerId() == playerId)
 				result = true;
@@ -356,6 +369,18 @@ public class CatanMap {
 			return hexTiles[x][y];
 		} else {
 			return null;
+		}
+	}
+	
+	private boolean isOutOfBound(HexLocation location) {
+		if((location.getX()+radius-1) < 0 || (location.getY() + radius-1) < 0) {
+			return true;
+		}
+		else if((location.getX()+radius-1) > hexTiles.length-1 || (location.getY()+radius-1) > hexTiles.length-1) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
