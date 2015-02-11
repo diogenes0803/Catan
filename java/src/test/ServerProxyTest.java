@@ -450,7 +450,7 @@ public class ServerProxyTest {
     	JoinGameParams params2 = new JoinGameParams(0, "red");
     	JoinGameResults results = serverProxy.joinGame(params2);
 
-    	HexLocation hex = new HexLocation(-1,-1);
+    	HexLocation hex = new HexLocation(1,-1);
     	
     	VertexLocation edge = new VertexLocation(hex, VertexDirection.NorthWest );
        BuildSettlementParams params = new  BuildSettlementParams(0,edge,true );

@@ -504,7 +504,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/buildSettlement", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
