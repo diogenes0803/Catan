@@ -202,6 +202,8 @@ public class GameTest {
 		assertFalse("Error: user was permitted to build settlement too close to pre-existing settlement.",
 				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthEast)));
 		System.out.println("Testing user has enough resources, and location is good");
+		assertTrue("Error: user was not permitted to build settlement in valid location.",
+				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.East)));
 	}
 
 	@Test
