@@ -23,7 +23,7 @@ public class Main {
 			Gson gson = new Gson();
 			JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 			System.out.println("Deserialize Done");
-			Game thisGame = modelHolder.buildCatanModel();
+			Game thisGame = modelHolder.buildCatanGame();
 			JsonModelHolder jsonModel = thisGame.toJsonModel();
 			String jsonString = gson.toJson(jsonModel);
 			try {

@@ -59,12 +59,12 @@ public class ServerPollerTest {
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		System.out.println("Junit Thread  has now woken. Checking for success");
+		System.out.println("Junit Thread has now woken. Checking for success");
 		assertTrue("Poller did not call update model like it should have."+
                 " It only called the model "+count +" during a one minute interval.",
                 worked);
 		
-	   System.out.println("It "+(worked?"":"did not ")+"worked.");
+	   System.out.println("It "+(worked?"works :)":"did not work :("));
 	}
 
 }

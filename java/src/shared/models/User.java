@@ -11,6 +11,9 @@ public class User {
 	private int userId;
 	private String userName;
 	
+	public User(){userId=0; userName="";}
+	public User(String user, int id){userId=id; userName=user;}
+	
 	public int getUserId() {
 		return userId;
 	}

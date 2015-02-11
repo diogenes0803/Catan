@@ -10,6 +10,13 @@ public class CatanModel {
 	
 	private GameManager gameManager;
 	private UserManager userManager;
+	private int version;
+	
+	public CatanModel(){
+	    setVersion(-1);
+	    gameManager = null;
+	    userManager = null;
+	}
 	
 	public GameManager getGameManager() {
 		return gameManager;
@@ -26,5 +33,13 @@ public class CatanModel {
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 	
 }
