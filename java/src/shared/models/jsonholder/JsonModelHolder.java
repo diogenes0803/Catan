@@ -22,6 +22,7 @@ import shared.models.Piece;
 import shared.models.Player;
 import shared.models.Port;
 import shared.models.ResCard;
+import shared.models.TradeOffer;
 import shared.models.TurnTracker;
 
 public class JsonModelHolder {
@@ -34,6 +35,7 @@ public class JsonModelHolder {
 	private JsonTurnTracker turnTracker;
 	private int winner;
 	private int version;
+	private JsonTradeOffer tradeOffer;
 	
 	public Game buildCatanGame() {
 		Game game = new Game();
@@ -45,6 +47,7 @@ public class JsonModelHolder {
 		game.setBank(new Bank(createBankResCards(), createBankDevCards()));
 		game.setLogs(createLog());
 		game.setChats(createChat());
+		game.setTradeOffer(new TradeOffer(tradeOffer.getSender(), tradeOffer.getReceiver(), tradeOffer.getOffer()));
 		TurnTracker.getInstance().setStatus(turnTracker.getStatus());
 		TurnTracker.getInstance().setCurrentTurn(turnTracker.getCurrentTurn());
 		TurnTracker.getInstance().setLongestRoad(turnTracker.getLongestRoad());
@@ -446,5 +449,11 @@ public class JsonModelHolder {
 	}
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	public JsonTradeOffer getTradeOffer() {
+		return tradeOffer;
+	}
+	public void setTradeOffer(JsonTradeOffer tradeOffer) {
+		this.tradeOffer = tradeOffer;
 	}
 }

@@ -50,6 +50,7 @@ public class Game {
 	private int dice;
 	private int winner;
 	private int gameId;
+	private TradeOffer tradeOffer;
 	
 	public boolean canBuildRoad(EdgeLocation location) {
 		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
@@ -685,6 +686,16 @@ public class Game {
 	public void setDice(int dice) {
 		this.dice = dice;
 	}
+
+	public TradeOffer getTradeOffer() {
+		return tradeOffer;
+	}
+
+	public void setTradeOffer(TradeOffer tradeOffer) {
+		this.tradeOffer = tradeOffer;
+	}
+
+
 	
 	
 	
