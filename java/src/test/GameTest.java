@@ -14,6 +14,8 @@ import org.junit.Test;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.models.DevCard;
 import shared.models.Game;
 import shared.models.ResourceList;
@@ -146,7 +148,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void testCanRoleDice() {
+	public void testCanRollDice() {
 		String filePath = new File("").getAbsolutePath();
 		BufferedReader br = null;
 		try {
@@ -158,6 +160,18 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing CanRollDice");
+		System.out.println("--------------------------------------------");
+		System.out.println("Testing status isn't Rolling");
+		assertFalse("Error: user was permitted to roll during the wrong phase.",
+				thisGame.canRollDice());
+		System.out.println("Testing status is Rolling");
+		TurnTracker.getInstance().setStatus("Rolling");
+		assertTrue("Error: user wasn't permitted to roll during the rolling phase.",
+				thisGame.canRollDice());
+		System.out.println("");
+		System.out.println("");
 	}
 
 	@Test
@@ -174,6 +188,20 @@ public class GameTest {
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing CanBuildSettlement");
+		System.out.println("--------------------------------------------");
+		System.out.println("Testing user doesn't have enough resources");
+		assertFalse("Error: user was permitted to build settlement with insufficient resources.",
+				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(0,1), VertexDirection.West)));
+		System.out.println("Testing user has enough resources, but there's already a settlement there.");
+		TurnTracker.getInstance().setCurrentTurn(1);
+		assertFalse("Error: user was permitted to build settlement on pre-existing settlement.",
+				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthWest)));
+		System.out.println("Testing user building settlement too close to friendly settlement");
+		assertFalse("Error: user was permitted to build settlement too close to pre-existing settlement.",
+				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthEast)));
+		System.out.println("Testing user has enough resources, and location is good");
 	}
 
 	@Test

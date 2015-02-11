@@ -111,40 +111,40 @@ public class Game {
 	
 	public boolean canAcceptTrade(int playerIndex) {
 		Player thisPlayer = players[playerIndex];
-		ResourceList offer = tradeOffer.getOffer();
-		if (offer == null) {
+		if (tradeOffer == null) {
 			return false;
 		}
+		ResourceList offer = tradeOffer.getOffer();
 		
 		int brick = offer.getBricks();
 		int ore = offer.getOres();
 		int sheep = offer.getSheep();
 		int wheat = offer.getWheat();
 		int wood = offer.getWood();
-		if(brick > 0) {
-			if(0 > thisPlayer.getResCount(ResourceType.BRICK) - brick)
+		if(brick < 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.BRICK) + brick)
 				return false;
 		}
-		if(ore > 0) {
-			if(0 > thisPlayer.getResCount(ResourceType.ORE) - ore)
+		if(ore < 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.ORE) + ore)
 				return false;
 		}
-		if(sheep > 0) {
-			if(0 > thisPlayer.getResCount(ResourceType.SHEEP) - sheep)
+		if(sheep < 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.SHEEP) + sheep)
 				return false;
 		}
-		if(wheat > 0) {
-			if(0 > thisPlayer.getResCount(ResourceType.WHEAT) - wheat)
+		if(wheat < 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.WHEAT) + wheat)
 				return false;
 		}
-		if(wood > 0) {
-			if(0 > thisPlayer.getResCount(ResourceType.WOOD) - wood)
+		if(wood < 0) {
+			if(0 > thisPlayer.getResCount(ResourceType.WOOD) + wood)
 				return false;
 		}
 		return true;
 	}
 	
-	public boolean canRoleDice() {
+	public boolean canRollDice() {
 		if(TurnTracker.getInstance().getStatus() == "Rolling") {
 			return true;
 		}

@@ -169,6 +169,14 @@
         }
       },
       {
+      	"owner": 1,
+      	"location": {
+      		"direction": "SE",
+      		"x": -1,
+      		"y": -1
+      	}
+      },
+      {
         "owner": 3,
         "location": {
           "direction": "SW",
@@ -199,6 +207,14 @@
           "x": 0,
           "y": 1
         }
+      },
+      {
+      	"owner": 0,
+      	"location": {
+      	"direction": "SW",
+      	"x": 0,
+      	"y": 1
+      	}
       },
       {
         "owner": 2,
@@ -630,7 +646,7 @@
     "ore": 22
   },
   "turnTracker": {
-    "status": "Rolling",
+    "status": "Playing",
     "currentTurn": 0,
     "longestRoad": -1,
     "largestArmy": -1
