@@ -222,18 +222,18 @@ public class CatanMap {
 			case NorthEast:
 				vertex1 = tile.getVertexAt(VertexDirection.NorthWest);
 				vertex2 = tile.getVertexAt(VertexDirection.East);
-				neighborVertexHexLocation = new HexLocation(thisX+1, thisY+2);
+				neighborVertexHexLocation = new HexLocation(thisX+1, thisY-2);
 				
 				break;
 			case East:
 				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
 				vertex2 = tile.getVertexAt(VertexDirection.SouthEast);
-				neighborVertexHexLocation = new HexLocation(thisX+2, thisY);
+				neighborVertexHexLocation = new HexLocation(thisX+2, thisY-1);
 				break;
 			case SouthEast:
 				vertex1 = tile.getVertexAt(VertexDirection.East);
 				vertex2 = tile.getVertexAt(VertexDirection.SouthWest);
-				neighborVertexHexLocation = new HexLocation(thisX+1, thisY-2);
+				neighborVertexHexLocation = new HexLocation(thisX+1, thisY+1);
 				break;
 			case SouthWest:
 				vertex1 = tile.getVertexAt(VertexDirection.SouthEast);
@@ -243,24 +243,36 @@ public class CatanMap {
 			case West:
 				vertex1 = tile.getVertexAt(VertexDirection.SouthWest);
 				vertex2 = tile.getVertexAt(VertexDirection.NorthWest);
-				neighborVertexHexLocation = new HexLocation(thisX-2, thisY);
+				neighborVertexHexLocation = new HexLocation(thisX-2, thisY+1);
 				break;
 			case NorthWest:
 				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
 				vertex2 = tile.getVertexAt(VertexDirection.West);
-				neighborVertexHexLocation = new HexLocation(thisX-1, thisY+2);
+				neighborVertexHexLocation = new HexLocation(thisX-1, thisY-1);
 				break;
 			default:
 				break;
 		}
-		vertex3 = getHexTileAt(neighborVertexHexLocation).getVertexAt(direction.getOppositeDirection());
-		if(vertex1.getHasSettlement() || vertex2.getHasSettlement() || vertex3.getHasSettlement()) {
-			return true;
+		if(!isOutOfBound(neighborVertexHexLocation)) {
+			vertex3 = getHexTileAt(neighborVertexHexLocation).getVertexAt(direction.getOppositeDirection());
+			if(vertex1.getHasSettlement() || vertex2.getHasSettlement() || vertex3.getHasSettlement()) {
+				return true;
+			}
+			
+			else {
+				return false;
+			}
+		}
+		else {
+			if(vertex1.getHasSettlement() || vertex2.getHasSettlement()) {
+				return true;
+			}
+			
+			else {
+				return false;
+			}
 		}
 		
-		else {
-			return false;
-		}
 		
 	}
 	
