@@ -422,10 +422,10 @@
         "ore": 100
       },
       "oldDevCards": {
-        "yearOfPlenty": 0,
+        "yearOfPlenty": 1,
         "monopoly": 0,
         "soldier": 0,
-        "roadBuilding": 0,
+        "roadBuilding": 1,
         "monument": 0
       },
       "newDevCards": {
@@ -466,7 +466,7 @@
       "newDevCards": {
         "yearOfPlenty": 0,
         "monopoly": 0,
-        "soldier": 0,
+        "soldier": 1,
         "roadBuilding": 0,
         "monument": 0
       },

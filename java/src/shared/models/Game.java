@@ -61,10 +61,16 @@ public class Game {
 	
 	public boolean canPlayDevCard() {
 		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
-		if(thisPlayer.isPlayedDevCard())
+		if (thisPlayer.getDevCards().size() == 0) {
 			return false;
-		else
-			return true;
+		}
+		else {
+			if ((thisPlayer.hasOldDevCard() && !thisPlayer.hasPlayedDevCard()) || thisPlayer.hasMonument()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public boolean canOfferTrade(ResourceList offer) {
@@ -74,24 +80,28 @@ public class Game {
 		int sheep = offer.getSheep();
 		int wheat = offer.getWheat();
 		int wood = offer.getWood();
+		
+		// If you offer more than you have, returns false
 		if(brick < 0) {
-			if(0 > brick+thisPlayer.getResCount(ResourceType.BRICK))
+			
+			// If your offer (negative number) added to your resource count is less than 0, fails
+			if(0 > brick + thisPlayer.getResCount(ResourceType.BRICK))
 				return false;
 		}
 		if(ore < 0) {
-			if(0 > ore+thisPlayer.getResCount(ResourceType.ORE))
+			if(0 > ore + thisPlayer.getResCount(ResourceType.ORE))
 				return false;
 		}
 		if(sheep < 0) {
-			if(0 > sheep+thisPlayer.getResCount(ResourceType.SHEEP))
+			if(0 > sheep + thisPlayer.getResCount(ResourceType.SHEEP))
 				return false;
 		}
 		if(wheat < 0) {
-			if(0 > wheat+thisPlayer.getResCount(ResourceType.WHEAT))
+			if(0 > wheat + thisPlayer.getResCount(ResourceType.WHEAT))
 				return false;
 		}
 		if(wood < 0) {
-			if(0 > wood+thisPlayer.getResCount(ResourceType.WOOD))
+			if(0 > wood + thisPlayer.getResCount(ResourceType.WOOD))
 				return false;
 		}
 		return true;
@@ -157,6 +167,10 @@ public class Game {
 	}
 	
 	public boolean canBuyDevCard() {
+		if (bank.getDevCards().size() == 0) {
+			return false;
+		}
+		
 		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
 		if(thisPlayer.canBuyDevCard()) {
 			return true;
@@ -176,27 +190,6 @@ public class Game {
 				return true;
 			}
 		}
-		else {
-			return false;
-		}
-	}
-	
-	public boolean canUseDevCard(DevCardType type) {
-		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
-		if(thisPlayer.getDevCount(type) > 0 && !thisPlayer.isPlayedDevCard()) {
-			if(type == DevCardType.MONUMENT) {
-				return true;
-			}
-			else {
-				if(thisPlayer.getOldDevCount(type) > 0) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-		
 		else {
 			return false;
 		}
@@ -582,7 +575,7 @@ public class Game {
 			player.setSoldiers(thisPlayer.getNumSoldierPlayed());
 			player.setVictoryPoints(thisPlayer.getVictoryPoint());
 			player.setMonuments(thisPlayer.getNumMonumentPlayed());
-			player.setPlayedDevCard(thisPlayer.isPlayedDevCard());
+			player.setPlayedDevCard(thisPlayer.hasPlayedDevCard());
 			player.setDiscarded(thisPlayer.isDiscarded());
 			player.setPlayerID(thisPlayer.getPlayerId());
 			player.setPlayerIndex(i);
