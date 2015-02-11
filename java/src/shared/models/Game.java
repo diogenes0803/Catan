@@ -59,6 +59,8 @@ public class Game {
 			return false;
 	}
 	
+	
+	
 	public boolean canPlayDevCard() {
 		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
 		if (thisPlayer.getDevCards().size() == 0) {

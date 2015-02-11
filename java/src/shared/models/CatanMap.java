@@ -67,8 +67,11 @@ public class CatanMap {
 		EdgeDirection dir2 = null;
 		VertexDirection vdir1 = null;
 		VertexDirection vdir2 = null;
-		if (thisTile.getVertices().get(vertexLocation.getDir())
-				.getHasSettlement()) {
+		Vertex thisVertex = thisTile.getVertices().get(vertexLocation.getDir());
+		if (thisVertex.getHasSettlement()) {
+			return false;
+		}
+		if(locationHasNeighboringSettlement(thisVertex)) {
 			return false;
 		}
 		switch (vertexLocation.getDir()) {
@@ -206,14 +209,60 @@ public class CatanMap {
 		return result;
 	}
 	
-//	public boolean locationHasNeighboringSettlement(VertexDirection direction, HexTile tile) {
-//		Vertex vertex1 = null;
-//		Vertex vertex2 = null;
-//		Vertex vertex3 = null;
-//		switch(direction) {
-//			
-//		}
-//	}
+	public boolean locationHasNeighboringSettlement(Vertex thisVertex) {
+		HexTile tile = getHexTileAt(thisVertex.getLocation().getHexLoc());
+		VertexDirection direction = thisVertex.getLocation().getDir();
+		Vertex vertex1 = null;
+		Vertex vertex2 = null;
+		Vertex vertex3 = null;
+		HexLocation neighborVertexHexLocation = null;
+		int thisX = tile.getLocation().getX();
+		int thisY = tile.getLocation().getY();
+		switch(direction) {
+			case NorthEast:
+				vertex1 = tile.getVertexAt(VertexDirection.NorthWest);
+				vertex2 = tile.getVertexAt(VertexDirection.East);
+				neighborVertexHexLocation = new HexLocation(thisX+1, thisY+2);
+				
+				break;
+			case East:
+				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
+				vertex2 = tile.getVertexAt(VertexDirection.SouthEast);
+				neighborVertexHexLocation = new HexLocation(thisX+2, thisY);
+				break;
+			case SouthEast:
+				vertex1 = tile.getVertexAt(VertexDirection.East);
+				vertex2 = tile.getVertexAt(VertexDirection.SouthWest);
+				neighborVertexHexLocation = new HexLocation(thisX+1, thisY-2);
+				break;
+			case SouthWest:
+				vertex1 = tile.getVertexAt(VertexDirection.SouthEast);
+				vertex2 = tile.getVertexAt(VertexDirection.West);
+				neighborVertexHexLocation = new HexLocation(thisX-1, thisY+2);
+				break;
+			case West:
+				vertex1 = tile.getVertexAt(VertexDirection.SouthWest);
+				vertex2 = tile.getVertexAt(VertexDirection.NorthWest);
+				neighborVertexHexLocation = new HexLocation(thisX-2, thisY);
+				break;
+			case NorthWest:
+				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
+				vertex2 = tile.getVertexAt(VertexDirection.West);
+				neighborVertexHexLocation = new HexLocation(thisX-1, thisY+2);
+				break;
+			default:
+				break;
+		}
+		vertex3 = getHexTileAt(neighborVertexHexLocation).getVertexAt(direction.getOppositeDirection());
+		if(vertex1.getHasSettlement() || vertex2.getHasSettlement() || vertex3.getHasSettlement()) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+		
+	}
 	
 	public boolean playerHasRoadOnNeighborAt(int playerId, VertexDirection direction, HexTile tile) {
 		Edge edge1 = null;
