@@ -17,6 +17,7 @@ import shared.locations.HexLocation;
 import shared.models.DevCard;
 import shared.models.Game;
 import shared.models.ResourceList;
+import shared.models.TradeOffer;
 import shared.models.TurnTracker;
 import shared.models.jsonholder.JsonModelHolder;
 
@@ -99,7 +100,7 @@ public class GameTest {
 		
 		System.out.println("Testing CanOfferTrade");
 		System.out.println("--------------------------------------------");
-		System.out.println("Testing user doesn't have enough cards");
+		System.out.println("Testing user doesn't have enough resources");
 		ResourceList offer = new ResourceList(-100,-100,-100,-100,-100);
 		assertFalse("Error: user was permitted to offer an invalid trade.",
 				thisGame.canOfferTrade(offer));
@@ -129,7 +130,19 @@ public class GameTest {
 		System.out.println("--------------------------------------------");
 		System.out.println("Testing no trade has been offered");
 		assertFalse("Error: user was permitted to accept a non-existing trade.",
-				thisGame.canAcceptTrade(0, null));  //Change null to TradeOffer object once created.
+				thisGame.canAcceptTrade(0));
+		System.out.println("Testing user doesn't have enough resources");
+		TradeOffer offer = new TradeOffer(1, 0, new ResourceList(-100,-100,-100,-100,-100));
+		thisGame.setTradeOffer(offer);
+		assertFalse("Error: user was permitted to accept an invalid trade.",
+				thisGame.canAcceptTrade(0));
+		System.out.println("Testing valid trade offer");
+		offer = new TradeOffer(1, 0, new ResourceList(0, 1, 1, 0, 1));
+		thisGame.setTradeOffer(offer);
+		assertTrue("Error: user was not permitted to accept a valid trade.",
+				thisGame.canAcceptTrade(0));
+		System.out.println("");
+		System.out.println("");
 	}
 
 	@Test
