@@ -7,6 +7,9 @@
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="gameplay"/>
     <property name="options.arg" value="ug"/>
+	<property name="host" value="localhost"/>
+	<property name="useMockServer" value="false"/>
+	
      
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
@@ -32,6 +35,7 @@
 	<path id="java.lib.classpath">
 		<fileset dir="${java.lib.dir}">
 			<include name="**/*.jar" />
+			<include name="junit-4.11.jar" />
 		</fileset>
 	</path>
 
@@ -43,6 +47,7 @@
 			<arg value="${port.arg}"/>
 			<arg value="${web.arg}"/>
 			<arg value="${options.arg}"/>
+			
 			<assertions>
 				<enable/>
 			</assertions>
@@ -121,12 +126,20 @@
 			<manifest>
 				<attribute name="Main-Class" value="client.ClientLauncher"/>
 				<attribute name="Class-Path" 
+				
 					value="lib/gson-2.2.4.jar" />
 			</manifest>
 		</jar>
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
 			<manifest>
-				<attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
+				<attribute name="Main-Class" value="server.Server"/>
+				<attribute name="Class-Path" 
+					value="lib/gson-2.2.4.jar" />
+			</manifest>
+		</jar>
+		<jar jarfile="${java.dist}/catan-junit.jar" basedir="${java.build}">
+			<manifest>
+				<attribute name="Main-Class" value="test.catan.JunitTestDriver"/>
 				<attribute name="Class-Path" 
 					value="lib/gson-2.2.4.jar" />
 			</manifest>
@@ -136,6 +149,9 @@
 	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
 		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<arg value="${port.arg}"/>
+			<arg value="${host}"/>
+			<arg value="${useMockServer}"/>
 			<assertions>
 				<enable/>
 			</assertions>
@@ -151,15 +167,16 @@
 		</java>
 	</target>
 	
-	<target name="test" depends="package" description="phase1 test">
-		<java classname="test.JunitTestDriver" fork="yes">
-		            <classpath>
-		                <path refid="all-classpath"/>
-		            </classpath>
-		            <assertions>
-		                <enable/>
-		            </assertions>
-		        </java>
+	
+	
+	<!--<java classname="test.JunitTestDriver" fork="yes"> -->
+	<target name="test" depends="package" description="compiles a package just for junit phase1 test">
+		<java jar="${java.dist}/catan-junit.jar" dir="${java.dist}" fork="yes">
+			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+		</java>
 	</target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
