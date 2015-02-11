@@ -174,7 +174,7 @@ public class Player {
 		this.sizeLongestRoad = sizeLongestRoad;
 	}
 	
-	public boolean isPlayedDevCard() {
+	public boolean hasPlayedDevCard() {
 		return playedDevCard;
 	}
 
@@ -227,5 +227,25 @@ public class Player {
 			}
 		}
 		return count;
+	}
+	
+	public boolean hasOldDevCard() {
+		for (int i = 0; i < devCards.size(); i++) {
+			if (devCards.get(i).isOld()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean hasMonument() {
+		for (int i = 0; i < devCards.size(); i++) {
+			if (devCards.get(i).getType() == DevCardType.MONUMENT) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
