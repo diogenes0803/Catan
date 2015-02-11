@@ -25,8 +25,8 @@ public class ServerProxyTest {
     
     @Before
     public void setUp() throws Exception {
-        goodUsername = "John";
-        goodPassword = "Doe";
+        goodUsername = "Sam";
+        goodPassword = "sam";
         
     }
 
@@ -41,6 +41,7 @@ public class ServerProxyTest {
      */
     @Test
     public void test_1_UserName() {
+    	/*
         System.out.println("Testing Good Users");
         boolean assertionOccured = false;
         try{
@@ -58,7 +59,7 @@ public class ServerProxyTest {
                           "-","+","=",".",":","\"","@"," ",
                           "<",">","?","%","$","#","~",",",
                           "\n","&","*","^","/",";","|","\\",
-                          "÷","©","®","£","¥","¢","‡","Bad Wolf"};
+                          "ï¿½","ï¿½","ï¿½","ï¿½","ï¿½","ï¿½","ï¿½","Bad Wolf"};
         
         for(int i=0; i < tests.length; i++){
           String testString = tests[i];
@@ -71,6 +72,12 @@ public class ServerProxyTest {
           assertTrue("UserName wrongly accepted the non-AlphanumericCharacter '"+testString+"'", 
                 assertionOccured);
         }
+        */
+        UserLoginParams params = new UserLoginParams(goodUsername, goodPassword);
+       UserLoginResults results = serverProxy.userLogin(params);
+       
+      System.out.println("If this is not null then the command worked " + results.getPlayerId());
+        
     }//end testUser
     
     /**
