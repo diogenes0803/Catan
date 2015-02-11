@@ -39,18 +39,14 @@ public class CatanMap {
 		else {
 			HexTile neighborTile = getHexTileAt(thisTile.getLocation()
 					.getNeighborLoc(edgeLocation.getDir()));
-			if (thisTile.playerHasRoadOnNeighborAt(playerId,
-					edgeLocation.getDir()))
+			if (playerHasRoadOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
 				return true;
-			else if (thisTile.playerHasSettlementOnNeighborAt(playerId,
-					edgeLocation.getDir()))
+			else if (playerHasSettlementOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
 				return true;
 			else if (neighborTile != null) {
-				if (neighborTile.playerHasRoadOnNeighborAt(playerId,
-						edgeLocation.getDir()))
+				if (playerHasRoadOnNeighborAt(playerId, edgeLocation.getDir(), neighborTile))
 					return true;
-				else if (neighborTile.playerHasSettlementOnNeighborAt(playerId,
-						edgeLocation.getDir()))
+				else if (playerHasSettlementOnNeighborAt(playerId, edgeLocation.getDir(), neighborTile))
 					return true;
 			}
 		}
@@ -122,9 +118,9 @@ public class CatanMap {
 		
 		if (playerHasRoadOnNeighborAt(playerId, vertexLocation.getDir(), neighborTile1)) {
 			return true;
-		} else if (neighborTile1.playerHasRoadOnNeighborAt(playerId, vdir1)) {
+		} else if (playerHasRoadOnNeighborAt(playerId, vdir1, neighborTile1)) {
 			return true;
-		} else if (neighborTile2.playerHasRoadOnNeighborAt(playerId, vdir2)) {
+		} else if (playerHasRoadOnNeighborAt(playerId, vdir2, neighborTile2)) {
 			return true;
 		}
 
@@ -213,14 +209,14 @@ public class CatanMap {
 		return result;
 	}
 	
-	public boolean locationHasNeighboringSettlement(VertexDirection direction, HexTile tile) {
-		Vertex vertex1 = null;
-		Vertex vertex2 = null;
-		Vertex vertex3 = null;
-		switch(direction) {
-			
-		}
-	}
+//	public boolean locationHasNeighboringSettlement(VertexDirection direction, HexTile tile) {
+//		Vertex vertex1 = null;
+//		Vertex vertex2 = null;
+//		Vertex vertex3 = null;
+//		switch(direction) {
+//			
+//		}
+//	}
 	
 	public boolean playerHasRoadOnNeighborAt(int playerId, VertexDirection direction, HexTile tile) {
 		Edge edge1 = null;
