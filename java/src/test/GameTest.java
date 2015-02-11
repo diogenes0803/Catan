@@ -194,7 +194,7 @@ public class GameTest {
 		System.out.println("Testing user doesn't have enough resources");
 		assertFalse("Error: user was permitted to build settlement with insufficient resources.",
 				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(0,1), VertexDirection.West)));
-		System.out.println("Testing user has enough resources, but there's already a settlement there.");
+		System.out.println("Testing user has enough resources, but there's already a settlement there");
 		TurnTracker.getInstance().setCurrentTurn(1);
 		assertFalse("Error: user was permitted to build settlement on pre-existing settlement.",
 				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthWest)));
@@ -204,6 +204,8 @@ public class GameTest {
 		System.out.println("Testing user has enough resources, and location is good");
 		assertTrue("Error: user was not permitted to build settlement in valid location.",
 				thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1,-1), VertexDirection.East)));
+		System.out.println("");
+		System.out.println("");
 	}
 
 	@Test
@@ -220,6 +222,22 @@ public class GameTest {
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing CanUpgradeToCity");
+		System.out.println("--------------------------------------------");
+		System.out.println("Testing user doesn't have enough resources");
+		assertFalse("Error: user was permitted to build settlement with insufficient resources.",
+				thisGame.canUpgradeToCity(new VertexLocation(new HexLocation(0,1), VertexDirection.SouthEast)));
+		System.out.println("Testing user has enough resources, but no settlement exists");
+		TurnTracker.getInstance().setCurrentTurn(1);
+		assertFalse("Error: user was permitted to build a city in invalid location.",
+				thisGame.canUpgradeToCity(new VertexLocation(new HexLocation(-1,-1), VertexDirection.East)));
+		System.out.println("Testing user has enough resources and valid location");
+		assertTrue("Error: user was not permitted to build a city in a valid location.",
+				thisGame.canUpgradeToCity(new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthWest)));
+		System.out.println("");
+		System.out.println("");
+				
 	}
 
 	@Test
@@ -239,7 +257,7 @@ public class GameTest {
 		
 		System.out.println("Testing CanBuyDevCard");
 		System.out.println("--------------------------------------------");
-		System.out.println("Testing User doesn't have enough resources.");
+		System.out.println("Testing User doesn't have enough resources");
 		assertFalse("Error: user was permitted to buy a Devolepment Card.",
 				thisGame.canBuyDevCard());
 		System.out.println("Testing user has enough resources");
@@ -269,6 +287,21 @@ public class GameTest {
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing CanMoveRobber");
+		System.out.println("--------------------------------------------");
+		System.out.println("Testing dice aren't correct");
+		assertFalse("Error: user was permitted to move robber.",
+				thisGame.canMoveRobber(new HexLocation(0,0)));
+		System.out.println("Testing invalid location to move robber");
+		thisGame.setDice(7);
+		assertFalse("Error: user was permitted to move robber to invalid location.",
+				thisGame.canMoveRobber(new HexLocation(0, -2)));
+		System.out.println("Testing valid location to move robber");
+		assertTrue("Error: user was not permitted to move robber to valid location.",
+				thisGame.canMoveRobber(new HexLocation(0,0)));
+		System.out.println("");
+		System.out.println("");
 	}
 
 	@Test
@@ -285,6 +318,19 @@ public class GameTest {
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing CanFinishTurn");
+		System.out.println("--------------------------------------------");
+		System.out.println("Testing status isn't Playing");
+		TurnTracker.getInstance().setStatus("Rolling");
+		assertFalse("Error: user was permitted to end turn during incorrect phase.",
+				thisGame.canFinishTurn());
+		System.out.println("Testing status is Playing");
+		TurnTracker.getInstance().setStatus("Playing");
+		assertTrue("Error: user was not permitted to end turn.",
+				thisGame.canFinishTurn());
+		System.out.println("");
+		System.out.println("");
 	}
 	
 	@Test
@@ -301,6 +347,20 @@ public class GameTest {
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
 		Game thisGame = modelHolder.buildCatanGame();
+		
+		System.out.println("Testing IsPlayerTurn");
+		System.out.println("--------------------------------------------");
+		int playerId = 0;
+		
+		System.out.println("Testing it is the user's turn");
+		assertTrue("Error: game indicated it was not user's turn.",
+				TurnTracker.getInstance().getCurrentTurn() == playerId);
+		System.out.println("Testing it is not the user's turn");
+		playerId = 1;
+		assertFalse("Error: game indicated it was the user's turn",
+				TurnTracker.getInstance().getCurrentTurn() == playerId);
+		System.out.println("");
+		System.out.println("");
 	}
 
 }

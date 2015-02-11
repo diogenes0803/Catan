@@ -96,7 +96,7 @@ public class JsonModelHolder {
 			int x = thisSettlement.getLocation().getX();
 			int y = thisSettlement.getLocation().getY();
 			VertexDirection thisDirection = stringToVertexDirection(thisSettlement.getLocation().getDirection());
-			Piece city = new Piece(PieceType.CITY, thisSettlement.getOwner());
+			Piece city = new Piece(PieceType.SETTLEMENT, thisSettlement.getOwner());
 			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setSettlement(city);
 			hexArray[x+radius-1][y+radius-1].getVertexAt(thisDirection).setHasSettlement(true);
 		}
