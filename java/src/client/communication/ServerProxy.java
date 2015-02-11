@@ -185,10 +185,11 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
        
         try{
         	
-            HttpURLResponse response = clientComm.get("/games/list", "", playerCookie);
+            HttpURLResponse response = clientComm.get("/games/list", null, playerCookie);
 
           
             result.setSuccess(response.getResponseCode() == HTTP_OK);
+            
             result.setResponseBody(result.getResponseBody());
             
            /* Can implement later
@@ -350,7 +351,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         GetCommandsResults results = new GetCommandsResults();
 
         try {
-            HttpURLResponse response = clientComm.get("/user/commands", null, playerCookie+"; "+gameCookie);
+            HttpURLResponse response = clientComm.get("/game/commands", null, playerCookie+"; "+gameCookie);
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
@@ -384,7 +385,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         ListAIResults results = new ListAIResults();
 
         try {
-            results.setSuccess(clientComm.post("/user/listAI", null, playerCookie+"; "+gameCookie));
+            results.setSuccess(clientComm.post("/game/listAI", null, playerCookie+"; "+gameCookie));
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();

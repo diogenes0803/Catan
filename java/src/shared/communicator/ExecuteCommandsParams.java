@@ -10,7 +10,7 @@ import java.util.List;
 public class ExecuteCommandsParams {
 	List<String> commands;
 	
-	ExecuteCommandsParams(List<String> commands)
+	public ExecuteCommandsParams(List<String> commands)
 	{
 		this.commands = commands;
 	}

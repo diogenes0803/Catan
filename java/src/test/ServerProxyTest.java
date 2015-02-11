@@ -5,6 +5,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,9 +50,10 @@ public class ServerProxyTest {
     /**
      * Test method for {@link client.communication.ServerProxy#ServerProxy(shared.models.CatanModel)}.
      */
+    /*
     @Test
     public void test_1_UserName() {
-    	/*
+    	
         System.out.println("Testing Good Users");
         boolean assertionOccured = false;
         try{
@@ -81,11 +84,11 @@ public class ServerProxyTest {
           assertTrue("UserName wrongly accepted the non-AlphanumericCharacter '"+testString+"'", 
                 assertionOccured);
         }
-        */
+        
        
         
     }//end testUser
-    
+    */
     /**
      * Test method for {@link client.communication.ServerProxy#registerUser(shared.communicator.RegisterUserParams)}.
      */
@@ -99,7 +102,8 @@ public class ServerProxyTest {
         
        // assertTrue("Error: Username "+ goodUser +" was not accepted.",results.isSuccess());
         
-        System.out.println("RegisterUser: "+ results.isSuccess());
+        System.out.println("Testing RegisterUser for Connection");
+        assertTrue("Error: RegisterUser connection didn't work", results.isSuccess());
         
     }
 
@@ -119,7 +123,8 @@ public class ServerProxyTest {
         //assertTrue("message to display if boolean is false", boolean)
         assertTrue("Jonathan ",results.isSuccess());
         
-        System.out.println("UserLogin: "+results.isSuccess());
+        System.out.println("Testing UserLogin for Connection");
+        assertTrue("Error: UserLogin connection didn't work", results.isSuccess());
         
     }
     
@@ -131,7 +136,8 @@ public class ServerProxyTest {
         CreateGameParams params = new CreateGameParams(true,false,true,"test_game1");
         
         CreateGameResults results = serverProxy.createGame(params);
-        System.out.println("Create Game: "+results.isSuccess());
+        System.out.println("Testing CreateGame for Connection");
+        assertTrue("Error: CreateGame connection didn't work", results.isSuccess());
     }
     
 
@@ -142,7 +148,8 @@ public class ServerProxyTest {
     public void test_5_ListGames() {
         //see if the game we created in test 4 showed up.
          ListGamesResults results = serverProxy.listGames();
-         System.out.println("List games: " + results.isSuccess());
+         System.out.println("Testing ListGames for Connection");
+         assertTrue("Error: ListGames connection didn't work", results.isSuccess());
         
     	
     }
@@ -159,7 +166,8 @@ public class ServerProxyTest {
     	
     	JoinGameResults results = serverProxy.joinGame(params);
     	
-    	System.out.println("Join Game: "+results.isSuccess());
+    	System.out.println("Testing JoinGame for Connection");
+        assertTrue("Error: JoinGame connection didn't work", results.isSuccess());
         
     }
 
@@ -176,7 +184,8 @@ public class ServerProxyTest {
     	
     	SaveGameResults results = serverProxy.saveGame(params);
     	
-    	System.out.println("SaveGame: "+results.isSuccess());
+    	System.out.println("Testing SaveGame for Connection");
+        assertTrue("Error: SaveGame connection didn't work", results.isSuccess());
     }
 
     /**
@@ -189,7 +198,8 @@ public class ServerProxyTest {
     	LoadGameParams params = new LoadGameParams("test_save");
     	LoadGameResults results = serverProxy.loadGame(params);
     	
-    	System.out.println("LoadGame: "+results.isSuccess());
+    	System.out.println("Testing LoadGame for Connection");
+        assertTrue("Error: LoadGame connection didn't work", results.isSuccess());
     }
 
     /**
@@ -203,7 +213,13 @@ public class ServerProxyTest {
     	JoinGameResults results = serverProxy.joinGame(params);
     	
     	CatanModel model = serverProxy.getModel();
-    	System.out.println("GetModel: "+ model.getGameManager().getGame().getGameId());
+    	System.out.println("Testing GetModel Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: GetModel connection didn't work", value);
     }
 
     /**
@@ -217,7 +233,13 @@ public class ServerProxyTest {
     	JoinGameResults results = serverProxy.joinGame(params);
     	
     	CatanModel model = serverProxy.resetGame();
-    	System.out.println("ResetGame: "+ model.getGameManager().getGame().getGameId());
+    	System.out.println("Testing ResetGame Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: ResetGame connection didn't work", value);
     	
     }
 
@@ -226,8 +248,14 @@ public class ServerProxyTest {
      */
     @Test
     public void test_11_GetCommands() {
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results2 = serverProxy.joinGame(params2);
+    	
         GetCommandsResults results = serverProxy.getCommands();
-        System.out.println("GetCommands worked: "+results.isSuccess());
+        System.out.println("Testing GetCommands for Connection");
+        assertTrue("Error: GetCommands connection didn't work", results.isSuccess());
     }
 
     /**
@@ -235,7 +263,26 @@ public class ServerProxyTest {
      */
     @Test
     public void test_12_ExecuteCommands() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	GetCommandsResults getCommandsResults = serverProxy.getCommands();
+    	
+    	ArrayList<String> list = new ArrayList<String>();
+    	
+    	ExecuteCommandsParams params = new ExecuteCommandsParams(list);
+    	
+    	CatanModel model = serverProxy.executeCommands(params);
+    	
+    	System.out.println("Testing ExecuteCommands Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: ExecuteCommands connection didn't work", value);
+    	
     }
 
     /**
@@ -243,7 +290,15 @@ public class ServerProxyTest {
      */
     @Test
     public void test_13_ListAI() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+        ListAIResults results2 = serverProxy.listAI();
+        
+        System.out.println("Testing ListAI for Connection");
+        assertTrue("Error: ListAI connection didn't work", results2.isSuccess());
     }
 
     /**
@@ -254,7 +309,8 @@ public class ServerProxyTest {
         ChangeLogLevelParams params = new ChangeLogLevelParams("INFO");
         
         ChangeLogLevelResults result = serverProxy.changeLogLevel(params);
-        System.out.println("ChangeLogLevel worked: "+ result.isSuccess());
+        System.out.println("Testing ChangeLogLevel for Connection");
+        assertTrue("Error: ChangeLogLevel connection didn't work", result.isSuccess());
         
     }
 
@@ -273,7 +329,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.sendChat(params);
         
-        System.out.println("SendChat value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing SendChat Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: SendChat connection didn't work", value);
         
         
     }
@@ -293,7 +355,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.acceptTrade(params);
         
-        System.out.println("AcceptTrade value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing AcceptTrade Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: AcceptTrade connection didn't work", value);
     }
 
     /**
@@ -312,7 +380,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.discardCards(params);
         
-        System.out.println("DiscardCard value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing DiscardCards Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: DiscardCards connection didn't work", value);
     }
 
     /**
@@ -330,7 +404,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.rollNumber(params);
         
-        System.out.println("RollNumber value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing RollNumber Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: RollNumber connection didn't work", value);
     }
 
     /**
@@ -351,7 +431,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.buildRoad(params);
         
-        System.out.println("BuildRoad value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing BuildRoad Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: BuildRoad connection didn't work", value);
     }
 
     /**
@@ -372,7 +458,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.buildSettlement(params);
         
-        System.out.println("BuildSettlement value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing BuildSettlement Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: BuildSettlement connection didn't work", value);
     }
 
     /**
@@ -393,7 +485,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.buildCity(params);
         
-        System.out.println("BuildCity value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing BuildCity Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: BuildCity connection didn't work", value);
     }
 
     /**
@@ -412,7 +510,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.offerTrade(params);
         
-        System.out.println("OfferTrade value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing OfferTrade Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: OfferTrade connection didn't work", value);
     }
 
     /**
@@ -430,7 +534,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.maritimeTrade(params);
         
-        System.out.println("MaritimeTrade value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing MaritimeTrade Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: MaritimeTrade connection didn't work", value);
     }
 
     /**
@@ -449,7 +559,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.robPlayer(params);
         
-        System.out.println("RobPlayer value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing RobPlayer Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: RobPlayer connection didn't work", value);
     }
 
     /**
@@ -468,7 +584,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.finishTurn(params);
         
-        System.out.println("FinishTurn value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing FinishTurn Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: FinishTurn connection didn't work", value);
     }
 
     /**
@@ -486,7 +608,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.buyDevCard(params);
         
-        System.out.println("BuyDevCard value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing BuyDevCard Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: BuyDevCard connection didn't work", value);
     }
 
     /**
@@ -505,7 +633,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.playSoldier(params);
         
-        System.out.println("PlaySoldier value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing PlaySoldier Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: PlaySoldier connection didn't work", value);
     }
 
     /**
@@ -523,7 +657,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.yearOfPlenty(params);
         
-        System.out.println("YearOfPlenty value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing Year of Plenty Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: Year of Plenty connection didn't work", value);
     }
 
     /**
@@ -544,7 +684,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.roadBuilding(params);
         
-        System.out.println("RoadBuilding value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing RoadBuilding Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: RoadBuilding connection didn't work", value);
     }
 
     /**
@@ -562,7 +708,13 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.monopoly(params);
         
-        System.out.println("Monopoly value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing Monopoly Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: Monopoly connection didn't work", value);
     }
 
     /**
@@ -580,14 +732,21 @@ public class ServerProxyTest {
         
         CatanModel model = serverProxy.monument(params);
         
-        System.out.println("Monument value: "+ model.getGameManager().getGame().getGameId());
+        System.out.println("Testing Monument Function for connection");
+        boolean value = false;
+		if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: Monument connection didn't work", value);
     }
     /**
      * Test method for {@link client.communication.ServerProxy#updateModel()}.
      */
     @Test
     public void test_35_UpdateModel() {
-        fail("Not yet implemented"); // TODO
+    	System.out.println("UpdateModel is only used in the mock Server");
+        assertTrue("Only used in MockServer", true); // TODO
     }
 
 }
