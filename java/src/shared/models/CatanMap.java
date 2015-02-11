@@ -119,6 +119,7 @@ public class CatanMap {
 				.getNeighborLoc(dir1));
 		HexTile neighborTile2 = getHexTileAt(thisTile.getLocation()
 				.getNeighborLoc(dir2));
+		
 		if (thisTile.playerHasRoadOnNeighborAt(playerId,
 				vertexLocation.getDir())) {
 			return true;

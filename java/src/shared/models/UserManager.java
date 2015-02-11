@@ -10,6 +10,8 @@ public class UserManager {
 	
 	private boolean isLoggedIn;
 	private User loggedInUser;
+	
+	public UserManager(){isLoggedIn = false; loggedInUser = null;}
 
 	public boolean isLoggedIn() {
 		return isLoggedIn;
@@ -25,6 +27,7 @@ public class UserManager {
 
 	public void setLoggedInUser(User loggedInUser) {
 		this.loggedInUser = loggedInUser;
+		isLoggedIn = true;
 	}
 	
 	

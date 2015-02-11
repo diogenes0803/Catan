@@ -6,7 +6,8 @@ package client.communication;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+
+import java.util.regex.Pattern;
 
 /**
  * Contains the generic response from an http request.
@@ -99,20 +100,25 @@ public class HttpURLResponse {
         this.headerFields = headerFields;
     }
     
-    @SuppressWarnings("resource")
+    
     public String getCookie(String cookie_name){
+        //System.out.println(headerFields);
         List<String> cookies = headerFields.get("Set-cookie");
         
         for(int i=0; i< cookies.size(); i++){ 
             String elem = cookies.get(i);
-            Scanner scan= new Scanner(elem).useDelimiter("\\A");
+                        
+            //System.out.println("elem: "+elem);
+            Pattern p = Pattern.compile("\\A\\s*"+cookie_name+"=");
+            boolean cookieFound = p.matcher(elem).find();
             
-            if(scan.hasNext("\\A"+cookie_name+"=")){ 
+            if(cookieFound){ 
+                //System.out.println("cookie found");
                 String piece_to_remove = ";\\s*Path=/;";
                 elem = elem.replaceFirst(piece_to_remove, "");
                 StringBuilder s = new StringBuilder(elem);
                 s.replace(0, cookie_name.length()+1, "");
-                scan.close();
+                //scan.close();
                 return s.toString();
             }
         }

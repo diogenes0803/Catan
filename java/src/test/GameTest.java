@@ -32,16 +32,18 @@ public class GameTest {
 		}
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 		System.out.println("Testing CanBuildRoad");
 		System.out.println("--------------------------------------------");
-		System.out.println("User doesn't have enough resources");
-		assertFalse(thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
-		System.out.println("User have enough resources but there is a road already");
+		System.out.println("Testing User doesn't have enough resources.");
+		assertFalse("Error: user was permitted to build road.",
+		        thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
+		System.out.println("Testing User has enough resources but there is a road already.");
 		TurnTracker.getInstance().setCurrentTurn(1);
-		assertFalse(thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)));
-		System.out.println("User have enough resources and location is good");
-		assertTrue(thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
+		assertFalse("Error: User was permitted to build road ontop of an exsting road.",
+		        thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)));
+		System.out.println("Testing User has enough resources and location is good");
+		assertTrue("Error: user could not build road.",thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
 	}
 
 	@Test
@@ -56,7 +58,7 @@ public class GameTest {
 		}
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -71,7 +73,7 @@ public class GameTest {
 		}
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -86,7 +88,7 @@ public class GameTest {
 		}
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -101,7 +103,7 @@ public class GameTest {
 		}
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -117,7 +119,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -133,7 +135,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -149,7 +151,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -165,7 +167,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -181,7 +183,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 	@Test
@@ -197,7 +199,7 @@ public class GameTest {
 		Gson gson = new Gson();
 		JsonModelHolder modelHolder = gson.fromJson(br, JsonModelHolder.class);
 		
-		Game thisGame = modelHolder.buildCatanModel();
+		Game thisGame = modelHolder.buildCatanGame();
 	}
 
 }

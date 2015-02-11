@@ -49,7 +49,6 @@ public class Game {
 	private List<MessageLine> chats;
 	private int dice;
 	private int winner;
-	private int version;
 	private int gameId;
 	
 	public boolean canBuildRoad(EdgeLocation location) {
@@ -222,7 +221,6 @@ public class Game {
 		jsonModel.setBank(createJsonBank());
 		jsonModel.setTurnTracker(createJsonTurnTracker());
 		jsonModel.setWinner(winner);
-		jsonModel.setVersion(version);
 		
 		return jsonModel;
 	}
@@ -671,13 +669,6 @@ public class Game {
 		this.turnTracker = turnTracker;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public int getWinner() {
 		return winner;

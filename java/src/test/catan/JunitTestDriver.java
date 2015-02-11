@@ -8,7 +8,7 @@ public class JunitTestDriver {
         String[] testClasses = new String[] {
         		"test.ServerCommunicatorTest",
         		"test.ServerProxyTest",
-                "test.CatanModelTest",
+                "test.GameTest",
                 "test.ServerPollerTest"
         };
 

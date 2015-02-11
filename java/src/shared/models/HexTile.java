@@ -137,6 +137,49 @@ public class HexTile {
 		return result;
 	}
 	
+	public boolean findNeighboringSettlementAt(EdgeDirection direction) {
+		boolean result = false;
+		Vertex vertex1 = null;
+		Vertex vertex2 = null;
+		switch(direction) {
+		case North:
+			vertex1 = vertices.get(VertexDirection.NorthWest);
+			vertex2 = vertices.get(VertexDirection.NorthEast);
+			break;
+		case NorthEast:
+			vertex1 = vertices.get(VertexDirection.NorthEast);
+			vertex2 = vertices.get(VertexDirection.East);
+			break;
+		case SouthEast:
+			vertex1 = vertices.get(VertexDirection.East);
+			vertex2 = vertices.get(VertexDirection.SouthEast);
+			break;
+		case South:
+			vertex1 = vertices.get(VertexDirection.SouthEast);
+			vertex2 = vertices.get(VertexDirection.SouthWest);
+			break;
+		case SouthWest:
+			vertex1 = vertices.get(VertexDirection.West);
+			vertex2 = vertices.get(VertexDirection.SouthWest);
+			break;
+		case NorthWest:
+			vertex1 = vertices.get(VertexDirection.NorthWest);
+			vertex2 = vertices.get(VertexDirection.West);
+			break;
+		default:
+			break;
+		}
+		
+		if(vertex1.getHasSettlement()) {
+			result = true;
+		}
+		if(vertex2.getHasSettlement()) {
+			result = true;
+		}
+		
+		return result;
+	}
+	
 	public boolean playerHasSettlementOnNeighborAt(int playerId, EdgeDirection direction) {
 		boolean result = false;
 		
