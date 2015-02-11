@@ -23,6 +23,10 @@ public class MaritimeTradeParams {
 		setType("maritimeTrade");
 	}
 
+	public MaritimeTradeParams(int i) {
+		playerIndex = i;
+	}
+
 	/**
 	 * @return the playerIndex
 	 */

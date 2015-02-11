@@ -917,35 +917,6 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		// TODO Auto-generated method stub
 		return model_ptr;
 	}
-
-	/* (non-Javadoc)
-	 * @see client.communication.ServerInterface#distributeCards(int)
-	 */
-	@Override
-	public void distributeCards(int diceSum) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see client.communication.ServerInterface#startGame()
-	 */
-	@Override
-	public void startGame() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see client.communication.ServerInterface#leaveGame()
-	 */
-	@Override
-	public void leaveGame() {
-		// TODO Auto-generated method stub
-
-	}
-
-	
 	
     @Override
     public boolean updateModel() {

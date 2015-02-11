@@ -401,7 +401,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         ChangeLogLevelResults results = new ChangeLogLevelResults();
 
         try {
-            results.setSuccess(clientComm.post("/user/changeloglevel", params, playerCookie+"; "+gameCookie));
+            results.setSuccess(clientComm.post("/util/changeLogLevel", params, playerCookie+"; "+gameCookie));
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
@@ -418,7 +418,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/sendChat", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
@@ -469,7 +469,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/rollNumber", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
@@ -486,7 +486,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/buildRoad", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
@@ -622,7 +622,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/Soldier", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
@@ -639,7 +639,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
         try {
             if(clientComm.post("/moves/Year_of_Plenty", params, playerCookie+"; "+gameCookie)) {
-                results = getModel();
+                results = this.getModel();
             }
         } catch (ClientException e) {
             // TODO Auto-generated catch block
@@ -700,24 +700,6 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         return results;
     }
     //===================================================================================
-    
-    @Override
-    public void distributeCards(int diceSum) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void startGame() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void leaveGame() {
-        // TODO Auto-generated method stub
-
-    }
     //===================================================================================
     //Called by poller.
     @Override

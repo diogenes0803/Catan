@@ -11,8 +11,15 @@ import org.junit.Test;
 
 import client.communication.ServerProxy;
 import shared.communicator.*;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.models.CatanModel;
 import shared.models.Game;
+import shared.models.ResourceList;
 
 /**
  * @author campbeln
@@ -84,7 +91,7 @@ public class ServerProxyTest {
      */
     @Test
     public void test_2_RegisterUser() {
-        System.out.println("Testing Registering of GoodUser: "+ "bob1" + " with password: "+ goodPassword);
+       // System.out.println("Testing Registering of GoodUser: "+ "bob1" + " with password: "+ goodPassword);
        //use already tested goodUserName
         RegisterUserParams params = new RegisterUserParams("bob5", goodPassword);
         
@@ -92,7 +99,7 @@ public class ServerProxyTest {
         
        // assertTrue("Error: Username "+ goodUser +" was not accepted.",results.isSuccess());
         
-        System.out.println("Return from registerUser "+ results.isSuccess());
+        System.out.println("RegisterUser: "+ results.isSuccess());
         
     }
 
@@ -112,7 +119,7 @@ public class ServerProxyTest {
         //assertTrue("message to display if boolean is false", boolean)
         assertTrue("Jonathan ",results.isSuccess());
         
-        System.out.println("User logged in? "+results.isSuccess());
+        System.out.println("UserLogin: "+results.isSuccess());
         
     }
     
@@ -124,7 +131,7 @@ public class ServerProxyTest {
         CreateGameParams params = new CreateGameParams(true,false,true,"test_game1");
         
         CreateGameResults results = serverProxy.createGame(params);
-        System.out.println("Did create Game Work "+results.isSuccess());
+        System.out.println("Create Game: "+results.isSuccess());
     }
     
 
@@ -135,7 +142,7 @@ public class ServerProxyTest {
     public void test_5_ListGames() {
         //see if the game we created in test 4 showed up.
          ListGamesResults results = serverProxy.listGames();
-         System.out.println("List games returned fine " + results.isSuccess());
+         System.out.println("List games: " + results.isSuccess());
         
     	
     }
@@ -152,7 +159,7 @@ public class ServerProxyTest {
     	
     	JoinGameResults results = serverProxy.joinGame(params);
     	
-    	System.out.println("Join Game result: "+results.isSuccess());
+    	System.out.println("Join Game: "+results.isSuccess());
         
     }
 
@@ -161,11 +168,15 @@ public class ServerProxyTest {
      */
     @Test
     public void test_7_SaveGame() {
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results2 = serverProxy.joinGame(params2);
     	SaveGameParams params = new SaveGameParams(0, "test_save");
     	
     	SaveGameResults results = serverProxy.saveGame(params);
     	
-    	System.out.println("SaveGame worked: "+results.isSuccess());
+    	System.out.println("SaveGame: "+results.isSuccess());
     }
 
     /**
@@ -173,7 +184,12 @@ public class ServerProxyTest {
      */
     @Test
     public void test_8_LoadGame() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	LoadGameParams params = new LoadGameParams("test_save");
+    	LoadGameResults results = serverProxy.loadGame(params);
+    	
+    	System.out.println("LoadGame: "+results.isSuccess());
     }
 
     /**
@@ -235,7 +251,11 @@ public class ServerProxyTest {
      */
     @Test
     public void test_14_ChangeLogLevel() {
-        fail("Not yet implemented"); // TODO
+        ChangeLogLevelParams params = new ChangeLogLevelParams("INFO");
+        
+        ChangeLogLevelResults result = serverProxy.changeLogLevel(params);
+        System.out.println("ChangeLogLevel worked: "+ result.isSuccess());
+        
     }
 
     /**
@@ -243,7 +263,19 @@ public class ServerProxyTest {
      */
     @Test
     public void test_15_SendChat() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+        SendChatParams params = new SendChatParams("hello", 0);
+        params.setType("sendChat");
+        
+        CatanModel model = serverProxy.sendChat(params);
+        
+        System.out.println("SendChat value: "+ model.getGameManager().getGame().getGameId());
+        
+        
     }
 
     /**
@@ -251,7 +283,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_16_AcceptTrade() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+       AcceptTradeParams params = new AcceptTradeParams(0,false );
+        params.setType("acceptTrade");
+        
+        CatanModel model = serverProxy.acceptTrade(params);
+        
+        System.out.println("AcceptTrade value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -259,7 +301,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_17_DiscardCards() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	ResourceList list = new ResourceList(0,0,0,0,0);
+       DiscardCardsParams params = new  DiscardCardsParams(0,list );
+        params.setType("discardCards");
+        
+        CatanModel model = serverProxy.discardCards(params);
+        
+        System.out.println("DiscardCard value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -267,7 +320,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_18_RollNumber() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+        RollNumberParams params = new RollNumberParams(0,4 );
+        params.setType("rollNumber");
+        
+        CatanModel model = serverProxy.rollNumber(params);
+        
+        System.out.println("RollNumber value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -275,7 +338,20 @@ public class ServerProxyTest {
      */
     @Test
     public void test_19_BuildRoad() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+
+    	HexLocation hex = new HexLocation(0,0);
+    	
+    	EdgeLocation edge = new EdgeLocation(hex, EdgeDirection.NorthWest );
+       BuildRoadParams params = new  BuildRoadParams(0,edge,true );
+        params.setType("buildRoad");
+        
+        CatanModel model = serverProxy.buildRoad(params);
+        
+        System.out.println("BuildRoad value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -283,7 +359,20 @@ public class ServerProxyTest {
      */
     @Test
     public void test_20_BuildSettlement() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+
+    	HexLocation hex = new HexLocation(-1,-1);
+    	
+    	VertexLocation edge = new VertexLocation(hex, VertexDirection.NorthWest );
+       BuildSettlementParams params = new  BuildSettlementParams(0,edge,true );
+        params.setType("buildSettlement");
+        
+        CatanModel model = serverProxy.buildSettlement(params);
+        
+        System.out.println("BuildSettlement value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -291,7 +380,20 @@ public class ServerProxyTest {
      */
     @Test
     public void test_21_BuildCity() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+
+    	HexLocation hex = new HexLocation(-1,-1);
+    	
+    	VertexLocation edge = new VertexLocation(hex, VertexDirection.NorthWest );
+       BuildCityParams params = new  BuildCityParams(0,edge);
+        params.setType("buildCity");
+        
+        CatanModel model = serverProxy.buildCity(params);
+        
+        System.out.println("BuildCity value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -299,7 +401,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_22_OfferTrade() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	ResourceList list = new ResourceList(1,1,1,1,1);
+       OfferTradeParams params = new OfferTradeParams(1,list,1);
+        params.setType("offerTrade");
+        
+        CatanModel model = serverProxy.offerTrade(params);
+        
+        System.out.println("OfferTrade value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -307,7 +420,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_23_MaritimeTrade() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+       MaritimeTradeParams params = new MaritimeTradeParams(0, 1, "wheat", "ore");
+        params.setType("maritimeTrade");
+        
+        CatanModel model = serverProxy.maritimeTrade(params);
+        
+        System.out.println("MaritimeTrade value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -315,7 +438,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_24_RobPlayer() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	HexLocation hex = new HexLocation(-1,-1);
+      RobPlayerParams params = new RobPlayerParams(0, 1, hex);
+        params.setType("robPlayer");
+        
+        CatanModel model = serverProxy.robPlayer(params);
+        
+        System.out.println("RobPlayer value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -323,7 +457,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_25_FinishTurn() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+ 
+      FinishTurnParams params = new FinishTurnParams(0);
+        params.setType("finishTurn");
+        
+        CatanModel model = serverProxy.finishTurn(params);
+        
+        System.out.println("FinishTurn value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -331,7 +476,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_26_BuyDevCard() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+      BuyDevCardParams params = new BuyDevCardParams(0);
+        params.setType("buyDevCard");
+        
+        CatanModel model = serverProxy.buyDevCard(params);
+        
+        System.out.println("BuyDevCard value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -339,7 +494,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_27_PlaySoldier() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	HexLocation hex = new HexLocation(1,-1);
+      PlaySoldierParams params = new PlaySoldierParams(0, 1, hex);
+        params.setType("Soldier");
+        
+        CatanModel model = serverProxy.playSoldier(params);
+        
+        System.out.println("PlaySoldier value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -347,7 +513,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_28_YearOfPlenty() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+      YearOfPlentyParams params = new YearOfPlentyParams(0, ResourceType.WHEAT, ResourceType.WHEAT);
+        params.setType("Year_of_Plenty");
+        
+        CatanModel model = serverProxy.yearOfPlenty(params);
+        
+        System.out.println("YearOfPlenty value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -355,7 +531,20 @@ public class ServerProxyTest {
      */
     @Test
     public void test_29_RoadBuilding() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	HexLocation hex = new HexLocation(1,-1);
+    	EdgeLocation edge1 = new EdgeLocation(hex, EdgeDirection.SouthWest );
+    	EdgeLocation edge2 = new EdgeLocation(hex, EdgeDirection.NorthWest );
+      RoadBuildingParams params = new RoadBuildingParams(0, edge1, edge2);
+        params.setType("Road_Building");
+        
+        CatanModel model = serverProxy.roadBuilding(params);
+        
+        System.out.println("RoadBuilding value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -363,7 +552,17 @@ public class ServerProxyTest {
      */
     @Test
     public void test_30_Monopoly() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+      MonopolyParams params = new MonopolyParams(0, "ore");
+        params.setType("Monopoly");
+        
+        CatanModel model = serverProxy.monopoly(params);
+        
+        System.out.println("Monopoly value: "+ model.getGameManager().getGame().getGameId());
     }
 
     /**
@@ -371,34 +570,18 @@ public class ServerProxyTest {
      */
     @Test
     public void test_31_Monument() {
-        fail("Not yet implemented"); // TODO
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+      MonumentParams params = new MonumentParams(0);
+        params.setType("Monument");
+        
+        CatanModel model = serverProxy.monument(params);
+        
+        System.out.println("Monument value: "+ model.getGameManager().getGame().getGameId());
     }
-
-
-    /**
-     * Test method for {@link client.communication.ServerProxy#distributeCards(int)}.
-     */
-    @Test
-    public void test_32_DistributeCards() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link client.communication.ServerProxy#startGame()}.
-     */
-    @Test
-    public void test_33_StartGame() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link client.communication.ServerProxy#leaveGame()}.
-     */
-    @Test
-    public void test_34_LeaveGame() {
-        fail("Not yet implemented"); // TODO
-    }
-
     /**
      * Test method for {@link client.communication.ServerProxy#updateModel()}.
      */

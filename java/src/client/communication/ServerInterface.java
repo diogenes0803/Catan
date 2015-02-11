@@ -396,26 +396,5 @@ public interface ServerInterface {
 	 * @post You gained a victory point.
 	 */
 	CatanModel monument(MonumentParams params);
-	
-	/**
-	 * Bank Distribute Resource Cards to users who are qualified 
-	 * @pre Dices needs to be thrown on that turn before bank can distribute a card
-	 * @post Remove resource cards that has been distributed
-	 * @param diceSum
-	 */
-	void distributeCards(int diceSum);
-	
-	/**
-	 * Start a game
-	 * @pre Game must have 4 players and game must not been started yet.
-	 * @post Game must have started
-	 */
-	void startGame();
-	
-	/**
-	 * Allow user to leave a game
-	 * @pre User must be in a game
-	 * @post Game has to be stopped and user must be out of game
-	 */
-	void leaveGame();
+
 }

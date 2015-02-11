@@ -1,10 +1,10 @@
 package shared.communicator;
 
 public class SendChatParams {
-	
+	private String type;
 	private int playerIndex;
 	private String content;
-	private String type;
+	
 	
 	public SendChatParams (String content, int playerIndex) {
 		this.playerIndex = playerIndex;

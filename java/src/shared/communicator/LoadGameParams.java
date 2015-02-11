@@ -7,7 +7,7 @@ package shared.communicator;
 public class LoadGameParams {
 	String name;
 	
-	LoadGameParams(String name)
+	public LoadGameParams(String name)
 	{
 		this.name = name;
 	}
