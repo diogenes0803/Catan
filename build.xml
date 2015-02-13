@@ -123,7 +123,7 @@
 <attribute name="Class-Path" value="lib/gson-2.2.4.jar"/>
 </manifest>
 </jar>
-<jar jarfile="${java.lib}/junit-4.11.jar" basedir="${java.build}">
+<jar jarfile="${java.lib}/junit-4.12.jar" basedir="${java.build}">
 <manifest>
 <attribute name="Main-Class" value="test.catan.JunitTestDriver"/>
 <attribute name="Class-Path" value="lib/gson-2.2.4.jar"/>
