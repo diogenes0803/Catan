@@ -305,6 +305,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     
     @Override
     public CatanModel getModel() {
+    	/*
+    	 * TODO Get version number from model, and store it in server proxy
+    	 */
         CatanModel result_model = new CatanModel();
         String strVersion = "";
         if(version != UNINITIALIZED_MODEL)
