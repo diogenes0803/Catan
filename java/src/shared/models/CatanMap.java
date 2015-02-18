@@ -33,12 +33,14 @@ public class CatanMap {
 	 */
 	public boolean canBuildRoadAt(int playerId, EdgeLocation edgeLocation) {
 		HexTile thisTile = getHexTileAt(edgeLocation.getHexLoc());
-		if (thisTile.getEdges().get(edgeLocation.getDir()).getHasRoad()) {
+		HexTile neighborTile = getHexTileAt(thisTile.getLocation().getNeighborLoc(edgeLocation.getDir()));
+		if (thisTile.getEdgeAt(edgeLocation.getDir()).getHasRoad()) {
 			return false;
 		} 
+		else if(neighborTile.getEdgeAt(edgeLocation.getDir().getOppositeDirection()).getHasRoad()) {
+			return false;
+		}
 		else {
-			HexTile neighborTile = getHexTileAt(thisTile.getLocation()
-					.getNeighborLoc(edgeLocation.getDir()));
 			if (playerHasRoadOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
 				return true;
 			else if (playerHasSettlementOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
