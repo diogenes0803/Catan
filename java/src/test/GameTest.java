@@ -11,16 +11,13 @@ import java.util.List;
 
 import org.junit.Test;
 
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import shared.models.DevCard;
-import shared.models.Game;
-import shared.models.ResourceList;
-import shared.models.TradeOffer;
-import shared.models.TurnTracker;
+import shared.models.*;
 import shared.models.jsonholder.JsonModelHolder;
 
 import com.google.gson.Gson;
@@ -300,8 +297,33 @@ public class GameTest {
 		System.out.println("Testing valid location to move robber");
 		assertTrue("Error: user was not permitted to move robber to valid location.",
 				thisGame.canMoveRobber(new HexLocation(0,0)));
-		System.out.println("");
-		System.out.println("");
+
+        System.out.println("Testing for moving robber to same tile");
+
+        assertFalse("Error: User was able to place robber on same tile.", thisGame.canMoveRobber(thisGame.getMap().getRobberLocation()));
+
+
+        Piece piece = new Piece();
+        piece.setOwnerPlayerId(thisGame.getPlayers()[2].getPlayerId());
+        HexTile hex = new HexTile(0,0,ResourceType.ORE,1);
+        hex.getVertexAt(VertexDirection.NorthWest).setSettlement(piece);
+
+        System.out.println("Check if we can rob Player3 \n(Note: this checks if Player3 has a settlement there to validate if Player3 can be selected)");
+        //assertTrue("Error: Player3 was not able to be targeted", thisGame.canRobPlayer(thisGame.getMap().getHexTiles()[0][0], thisGame.getPlayers()[2]));
+        assertTrue("Error: Player3 was not able to be targeted", thisGame.canRobPlayer(hex, thisGame.getPlayers()[2]));
+        //tempList.add(new ResCard(ResourceType.ORE));
+        //players[2].setResCards(tempList);
+        System.out.println("Attempt to steal from Player2. . .");
+        assertFalse("Error: Player1 was able to rob Player2 who is not on Hex", thisGame.canRobPlayer(hex, thisGame.getPlayers()[1]));
+        System.out.println("Add settlement for Player2");
+        piece.setOwnerPlayerId(thisGame.getPlayers()[1].getPlayerId());
+        hex.getVertexAt(VertexDirection.West).setSettlement(piece);
+        thisGame.getPlayers()[1].setResCards(new ArrayList<ResCard>());
+        assertFalse("Error: Player1 was able to rob Player2 who had no cards", thisGame.canRobPlayer(hex, thisGame.getPlayers()[1]));
+
+        //thisGame.setPlayers();
+        System.out.println("");
+        System.out.println("");
 	}
 
 	@Test

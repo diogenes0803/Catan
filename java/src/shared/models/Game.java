@@ -1,9 +1,8 @@
 package shared.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.thoughtworks.xstream.core.util.ArrayIterator;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
@@ -201,6 +200,41 @@ public class Game {
 			return false;
 		}
 	}
+
+    public boolean canRobPlayer(HexTile h, Player p){
+        //Vertex [] v = (Vertex[]) h.getVertices().values().toArray();
+        Vertex [] v = new Vertex[]{h.getVertexAt(VertexDirection.West),
+                                    h.getVertexAt(VertexDirection.East),
+                                    h.getVertexAt(VertexDirection.NorthEast),
+                                    h.getVertexAt(VertexDirection.NorthWest),
+                                    h.getVertexAt(VertexDirection.SouthEast),
+                                    h.getVertexAt(VertexDirection.SouthWest)};
+        /**
+         *
+         * While we should check if a player has cards, it is important to first see if the player even exists at that tile.
+         * It does not matter if they have cards, they cannot be selected to be robbed.
+         *
+         * If the player does have a settlement there we can then check if they have a resource card.
+         *
+         * TODO: Set this canDo in a try-catch block statement to determine what error message must be displayed
+         */
+
+        for (int i = 0; i < 6; i++){
+            try {   //NullPointerException: if Settlement does not exist we cannot access PlayerID
+                if (v[i].getSettlement().getOwnerPlayerId() == p.getPlayerId())   // We confirm that the target player owns this settlement
+                    if (p.getResCards().size() > 0) // We can now check if they have available resource cards to steal
+                        return true;
+                    else
+                        return false;   // No cards
+            }
+            catch (Exception e){
+                //Nothing. Continue loop
+            }
+
+        }
+        // No settlement owned by player exists here
+        return false;
+    }
 	
 	public boolean canFinishTurn() {
 		if(TurnTracker.getInstance().getStatus() == "Playing") {
