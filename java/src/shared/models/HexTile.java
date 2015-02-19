@@ -11,6 +11,10 @@ import shared.locations.VertexDirection;
  * 
  * @author HojuneYoo
  * Model for HexTile, HexTile contains Edges and Vertexes. It can also has robber piece
+ *
+ * @author KentCoble
+ *
+ * Assisstant in editing
  * 
  */
 public class HexTile {
