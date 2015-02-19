@@ -36,7 +36,8 @@ public class Player {
 		int brick = getResCount(ResourceType.BRICK);
 		int wood = getResCount(ResourceType.WOOD);
 		int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
-		if((brick > 0 && wood > 0) || (roadBuildCard > 0)){
+		if((brick > 0 && wood > 0) || (roadBuildCard > 0) || TurnTracker.getInstance().getStatus().equals("FirstRound") 
+				|| TurnTracker.getInstance().getStatus().equals("SecondRound")){
 			return true;
 		}
 		else{
