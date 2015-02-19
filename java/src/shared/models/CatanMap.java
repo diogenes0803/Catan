@@ -401,7 +401,7 @@ public class CatanMap {
 		this.radius = radius;
 	}
 
-	private HexTile getHexTileAt(HexLocation location) {
+	public HexTile getHexTileAt(HexLocation location) {
 		int x = location.getX() + radius-1;
 		int y = location.getY() + radius-1;
 		if (!(x > hexTiles.length-1 || y > hexTiles.length-1 || x < 0 || y < 0)) {
