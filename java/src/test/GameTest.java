@@ -39,15 +39,31 @@ public class GameTest {
 		Game thisGame = modelHolder.buildCatanGame();
 		System.out.println("Testing CanBuildRoad");
 		System.out.println("--------------------------------------------");
+		
 		System.out.println("Testing User doesn't have enough resources.");
 		assertFalse("Error: user was permitted to build road.",
 		        thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
+		
 		System.out.println("Testing User has enough resources but there is a road already.");
 		TurnTracker.getInstance().setCurrentTurn(1);
 		assertFalse("Error: User was permitted to build road ontop of an exsting road.",
 		        thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)));
+		
 		System.out.println("Testing User has enough resources and location is good");
 		assertTrue("Error: user could not build road.",thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
+		
+		System.out.println("Testing User has no resources, but valid location in setup round 1");
+		TurnTracker.getInstance().setStatus("FirstRound");
+		TurnTracker.getInstance().setCurrentTurn(3);
+		assertTrue("Error: user could not build road during setup phase 1.", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1,1), EdgeDirection.South)));
+		
+		System.out.println("Testing User has no resources, but valid location in setup round 2");
+		TurnTracker.getInstance().setStatus("SecondRound");
+		assertTrue("Error: user could not build road during setup phase 2.", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1,1), EdgeDirection.South)));
+		
+		System.out.println("Testing setup round 2, but invalid location");
+		assertFalse("Error: user was allowed to build road in invalid location", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1,1), EdgeDirection.SouthWest)));
+		
 		System.out.println("");
 		System.out.println("");
 	}

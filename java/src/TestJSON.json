@@ -502,10 +502,10 @@
     {
       "resources": {
         "brick": 0,
-        "wood": 1,
-        "sheep": 1,
+        "wood": 0,
+        "sheep": 0,
         "wheat": 0,
-        "ore": 1
+        "ore": 0
       },
       "oldDevCards": {
         "yearOfPlenty": 0,
