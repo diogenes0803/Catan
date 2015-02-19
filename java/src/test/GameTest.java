@@ -1,6 +1,7 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +18,14 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import shared.models.*;
+import shared.models.DevCard;
+import shared.models.Game;
+import shared.models.HexTile;
+import shared.models.Piece;
+import shared.models.ResCard;
+import shared.models.ResourceList;
+import shared.models.TradeOffer;
+import shared.models.TurnTracker;
 import shared.models.jsonholder.JsonModelHolder;
 
 import com.google.gson.Gson;

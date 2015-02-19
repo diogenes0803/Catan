@@ -3,25 +3,35 @@
  */
 package test;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.communication.ServerProxy;
-import shared.communicator.*;
-import shared.definitions.ResourceType;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
+import shared.communicator.AcceptTradeParams;
+import shared.communicator.BuyDevCardParams;
+import shared.communicator.ChangeLogLevelParams;
+import shared.communicator.ChangeLogLevelResults;
+import shared.communicator.CreateGameParams;
+import shared.communicator.CreateGameResults;
+import shared.communicator.DiscardCardsParams;
+import shared.communicator.FinishTurnParams;
+import shared.communicator.JoinGameParams;
+import shared.communicator.JoinGameResults;
+import shared.communicator.ListAIResults;
+import shared.communicator.ListGamesResults;
+import shared.communicator.MaritimeTradeParams;
+import shared.communicator.MonopolyParams;
+import shared.communicator.MonumentParams;
+import shared.communicator.OfferTradeParams;
+import shared.communicator.RollNumberParams;
+import shared.communicator.SendChatParams;
+import shared.communicator.UserLoginParams;
+import shared.communicator.UserLoginResults;
 import shared.models.CatanModel;
-import shared.models.Game;
 import shared.models.ResourceList;
+import client.communication.ServerProxy;
 
 /**
  * @author campbeln

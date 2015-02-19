@@ -1,8 +1,9 @@
 package test;
 
-import java.util.regex.Pattern;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import static org.junit.Assert.*;
+import java.util.regex.Pattern;
 
 
 

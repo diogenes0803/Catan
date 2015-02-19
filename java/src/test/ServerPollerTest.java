@@ -3,7 +3,7 @@
  */
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Timer;
 import java.util.TimerTask;
