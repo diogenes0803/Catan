@@ -66,7 +66,13 @@ public class Player {
 	/**
 	 * Check if user have enough resources and pieces and is on turn to upgrade a settlement to city
 	 * @return true if possible false if not
+        *
+        *   TODO: Check if available settlements is less than the total settlements a player can have.
+        *               If the player has less than the total number possible, a settlement is in play.
+        *               If availablePieces contains all settlements the player cannot build a city as no settlement is available.
 	 */
+
+
 	public boolean canBuildCity(){
 		int ore = getResCount(ResourceType.ORE);
 		int wheat = getResCount(ResourceType.WHEAT);

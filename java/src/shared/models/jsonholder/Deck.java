@@ -17,6 +17,10 @@ public class Deck {
 		this.monument = monument;
 	}
 	
+	public int getTotalDevNum() {
+		return yearOfPlenty+monopoly+soldier+roadBuilding+monument;
+	}
+	
 	public int getYearOfPlenty() {
 		return yearOfPlenty;
 	}

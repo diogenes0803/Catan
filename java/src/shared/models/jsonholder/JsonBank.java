@@ -16,6 +16,10 @@ public class JsonBank {
 		this.wheat = wheat;
 		this.ore = ore;
 	}
+	
+	public int getTotalResNum() {
+		return brick+wood+sheep+wheat+ore;
+	}
 
 	public int getBrick() {
 		return brick;

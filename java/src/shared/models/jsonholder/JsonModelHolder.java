@@ -294,7 +294,7 @@ public class JsonModelHolder {
 		return chat;
 	}
 	
-	private EdgeDirection stringToEdgeDirection(String direction) {
+	public EdgeDirection stringToEdgeDirection(String direction) {
 		EdgeDirection edgeDirection = null;
 		switch(direction) {
 			case"N":
@@ -319,7 +319,7 @@ public class JsonModelHolder {
 		return edgeDirection;
 	}
 	
-	private VertexDirection stringToVertexDirection(String direction) {
+	public VertexDirection stringToVertexDirection(String direction) {
 		VertexDirection vertexDirection = null;
 		switch(direction) {
 			case"E":
@@ -344,7 +344,7 @@ public class JsonModelHolder {
 		return vertexDirection;
 	}
 	
-	private ResourceType stringToResource(String resource) {
+	public ResourceType stringToResource(String resource) {
 		ResourceType resourceType = null;
 		switch(resource) {
 		case "brick":

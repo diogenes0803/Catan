@@ -1,8 +1,9 @@
 package shared.models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import com.thoughtworks.xstream.core.util.ArrayIterator;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
