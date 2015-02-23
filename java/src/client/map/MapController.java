@@ -14,6 +14,7 @@ import client.data.*;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private IState state;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
