@@ -1,7 +1,9 @@
 package client.maritime;
 
-import shared.definitions.*;
-import client.base.*;
+import java.util.Observable;
+
+import shared.definitions.ResourceType;
+import client.base.Controller;
 
 
 /**
@@ -67,6 +69,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void unsetGiveValue() {
 
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

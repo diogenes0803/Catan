@@ -1,8 +1,10 @@
 package client.domestic;
 
-import shared.definitions.*;
-import client.base.*;
-import client.misc.*;
+import java.util.Observable;
+
+import shared.definitions.ResourceType;
+import client.base.Controller;
+import client.misc.IWaitView;
 
 
 /**
@@ -114,6 +116,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 
 		getAcceptOverlay().closeModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

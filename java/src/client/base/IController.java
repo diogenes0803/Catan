@@ -1,9 +1,11 @@
 package client.base;
 
+import java.util.Observer;
+
 /**
  * Base controller interface
  */
-public interface IController
+public interface IController extends Observer
 {
 	
 	/**

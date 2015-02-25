@@ -3,6 +3,7 @@ package shared.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
@@ -36,7 +37,7 @@ import shared.models.jsonholder.Settlement;
  *
  */
 
-public class Game {
+public class Game extends Observable{
 	
 	private String gameTitle;
 	private Player[] players = new Player[4];

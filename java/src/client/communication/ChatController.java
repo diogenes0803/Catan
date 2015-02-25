@@ -1,6 +1,8 @@
 package client.communication;
 
-import client.base.*;
+import java.util.Observable;
+
+import client.base.Controller;
 
 
 /**
@@ -20,6 +22,12 @@ public class ChatController extends Controller implements IChatController {
 
 	@Override
 	public void sendMessage(String message) {
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 

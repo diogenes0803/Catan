@@ -1,10 +1,11 @@
 package client.communication;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-import client.base.*;
-import shared.definitions.*;
+import shared.definitions.CatanColor;
+import client.base.Controller;
 
 
 /**
@@ -42,6 +43,12 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		getView().setEntries(entries);
 	
 		//</temp>
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

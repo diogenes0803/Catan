@@ -1,14 +1,10 @@
 package client.login;
 
-import client.base.*;
-import client.misc.*;
+import java.util.Observable;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import client.base.Controller;
+import client.base.IAction;
+import client.misc.IMessageView;
 
 
 /**
@@ -87,6 +83,12 @@ public class LoginController extends Controller implements ILoginController {
 		// If register succeeded
 		getLoginView().closeModal();
 		loginAction.execute();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
