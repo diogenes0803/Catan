@@ -77,6 +77,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		Game game = (Game)arg;
+		//WOOD, BRICK, SHEEP, WHEAT, ORE, ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, SOLDIERS
 	}
 
 }
