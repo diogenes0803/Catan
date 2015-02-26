@@ -7,7 +7,7 @@ package shared.models;
  */
 
 public class CatanModel {
-	
+	private static CatanModel instance = new CatanModel();
 	private GameManager gameManager;
 	private UserManager userManager;
 	private int version;
@@ -16,6 +16,10 @@ public class CatanModel {
 	    setVersion(-1);
 	    gameManager = null;
 	    userManager = null;
+	}
+	
+	public static CatanModel getInstance() {
+		return instance;
 	}
 	
 	public GameManager getGameManager() {

@@ -37,7 +37,7 @@ import shared.models.jsonholder.Settlement;
  *
  */
 
-public class Game extends Observable{
+public class Game {
 	
 	private String gameTitle;
 	private Player[] players = new Player[4];

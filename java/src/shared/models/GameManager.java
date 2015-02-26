@@ -2,8 +2,9 @@ package shared.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class GameManager {
+public class GameManager extends Observable {
 
 	private boolean isJoinedGame;
 	private Game game;
@@ -26,6 +27,7 @@ public class GameManager {
 
 	public void setGame(Game game) {
 		this.game = game;
+		notifyObservers(game);
 	}
 
 	public List<GameInfo> getAvailableGames() {

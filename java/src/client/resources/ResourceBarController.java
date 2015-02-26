@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import shared.models.Game;
 import client.base.Controller;
 import client.base.IAction;
 
@@ -75,7 +76,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+		Game game = (Game)arg;
 	}
 
 }
