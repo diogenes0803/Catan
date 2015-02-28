@@ -29,16 +29,16 @@ public class ClientLauncher {
         //final boolean useMockServer = Boolean.parseBoolean(args[2]);
         EventQueue.invokeLater(new Runnable(){      
             public void run() {
-                ServerProxy server= new ServerProxy("localhost", "8081");
-                UserLoginResults result = server.userLogin(new UserLoginParams("Sam","sam"));
+                ServerProxy.getInstance().initClientComm("localhost", "8081");
+                UserLoginResults result = ServerProxy.getInstance().userLogin(new UserLoginParams("Sam","sam"));
                 System.out.println("UserLogin Result: "+ result.isSuccess());
                 if(!result.isSuccess())
                   return;
-                JoinGameResults result2 = server.joinGame(new JoinGameParams(0, "orange"));
+                JoinGameResults result2 = ServerProxy.getInstance().joinGame(new JoinGameParams(0, "orange"));
                 System.out.println("JoinGame Result: "+ result2.isSuccess());
                 if(!result2.isSuccess())
                   return;
-                CatanModel model = server.getModel();
+                CatanModel model = ServerProxy.getInstance().getModel();
                 System.out.println("Model obtained:");
                 if(model != null){
                     String jsonModel = new Gson().toJson(model);
