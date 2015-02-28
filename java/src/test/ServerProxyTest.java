@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.communicator.AcceptTradeParams;
+import shared.communicator.BuildRoadParams;
 import shared.communicator.BuyDevCardParams;
 import shared.communicator.ChangeLogLevelParams;
 import shared.communicator.ChangeLogLevelResults;
@@ -385,6 +386,30 @@ public class ServerProxyTest {
 		}
         assertTrue("Error: BuyDevCard connection didn't work", value);
     }
+    
+    /**
+     * Test method for {@link client.communication.ServerProxy#monument(shared.communicator.BuildRoadParams)}.
+     */
+    @Test
+    public void test_37_BuildRoad() {
+    	UserLoginParams params1 = new UserLoginParams(goodUsername, goodPassword);
+    	UserLoginResults results1 = serverProxy.userLogin(params1);
+    	JoinGameParams params2 = new JoinGameParams(0, "red");
+    	JoinGameResults results = serverProxy.joinGame(params2);
+    	
+    	BuildRoadParams params = new BuildRoadParams(0, null, false);
+    	params.setType("BuildRoad");
+    	
+    	CatanModel model = serverProxy.buildRoad(params);
+    	
+    	System.out.println("Testing BuildRoad Function for connection");
+    	boolean value = false;
+    	if (model.getGameManager().getGame() != null)
+		{
+			value = true;
+		}
+        assertTrue("Error: BuildRoad connection didn't work", value);
+    }
     /**
      * Test method for {@link client.communication.ServerProxy#monopoly(shared.communicator.MonopolyParams)}.
      */
@@ -408,6 +433,8 @@ public class ServerProxyTest {
 		}
         assertTrue("Error: Monopoly connection didn't work", value);
     }
+    
+ 
 
     /**
      * Test method for {@link client.communication.ServerProxy#monument(shared.communicator.MonumentParams)}.

@@ -63,6 +63,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     
     private ClientCommunicator clientComm;  
     
+    //Two Cookies Needed
     private String playerCookie;
     private String gameCookie;
     private int version;
@@ -160,6 +161,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
+                    
 
                 } catch (UnsupportedEncodingException e) {
                     //should never happen as long as UTF-8 is a valid encoding.
@@ -173,6 +175,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             System.out.println(e.toString());
 
         }
+       
         return result;
     }
  //===================================================================================
