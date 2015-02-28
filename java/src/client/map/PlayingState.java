@@ -22,6 +22,13 @@ import shared.communicator.YearOfPlentyParams;
  *
  */
 public class PlayingState implements IState {
+	
+	public static final PlayingState singleton = new PlayingState();
+	
+	private PlayingState()
+	{
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see client.state.IState#acceptTrade(client.state.MapController, shared.communicator.AcceptTradeParams)

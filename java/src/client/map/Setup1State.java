@@ -23,6 +23,13 @@ import shared.communicator.YearOfPlentyParams;
  */
 public class Setup1State implements IState {
 
+	public static final Setup1State	singleton = new Setup1State();
+	
+	private Setup1State()
+	{
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see client.state.IState#acceptTrade(client.state.MapController, shared.communicator.AcceptTradeParams)
 	 */

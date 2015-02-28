@@ -23,6 +23,13 @@ import shared.communicator.YearOfPlentyParams;
  */
 public class RollingState implements IState {
 
+	public static final RollingState singleton = new RollingState();
+	
+	private RollingState()
+	{
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see client.state.IState#acceptTrade(client.state.MapController, shared.communicator.AcceptTradeParams)
 	 */

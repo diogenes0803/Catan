@@ -23,6 +23,13 @@ import shared.communicator.YearOfPlentyParams;
  */
 public class DiscardingState implements IState {
 
+	public static final DiscardingState	singleton = new DiscardingState();
+	
+	private DiscardingState()
+	{
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see client.state.IState#acceptTrade(client.state.MapController, shared.communicator.AcceptTradeParams)
 	 */

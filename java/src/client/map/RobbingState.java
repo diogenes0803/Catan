@@ -23,6 +23,13 @@ import shared.communicator.YearOfPlentyParams;
  */
 public class RobbingState implements IState {
 
+	public static final RobbingState singleton = new RobbingState();
+	
+	private RobbingState()
+	{
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see client.state.IState#acceptTrade(client.state.MapController, shared.communicator.AcceptTradeParams)
 	 */
