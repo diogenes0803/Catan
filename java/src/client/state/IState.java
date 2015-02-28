@@ -7,11 +7,11 @@ import shared.communicator.*;
 
 /**
  * @author campbeln
- *
+ * kadsfjskljfdkljfdkla;;
  */
 public interface IState {
 	
-	void acceptTrade(StateManager manager, AcceptTradeParams params);
+	void acceptTrade(AcceptTradeParams params);
 	
 	void discardCards(StateManager manager, DiscardCardsParams params);
 	
