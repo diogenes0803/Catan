@@ -17,6 +17,7 @@ import shared.communicator.RoadBuildingParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.communicator.YearOfPlentyParams;
+import shared.models.CatanModel;
 
 /**
  * @author campbeln
@@ -46,7 +47,7 @@ public class DiscardingState implements IState {
 	public void discardCards(MapController controller, DiscardCardsParams params) {
 		// TODO Auto-generated method stub
 
-		ServerProxy.getInstance().discardCards(params);
+		CatanModel.setInstance(ServerProxy.getInstance().discardCards(params));
 		controller.setState(RobbingState.singleton);
 	}
 

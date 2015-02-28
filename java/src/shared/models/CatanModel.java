@@ -45,5 +45,9 @@ public class CatanModel {
     public void setVersion(int version) {
         this.version = version;
     }
+    
+    public static void setInstance(CatanModel model) {
+    	instance = model;
+    }
 	
 }

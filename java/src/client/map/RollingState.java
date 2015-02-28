@@ -1,5 +1,6 @@
 package client.map;
 
+import client.communication.ServerProxy;
 import shared.communicator.AcceptTradeParams;
 import shared.communicator.BuildCityParams;
 import shared.communicator.BuildRoadParams;
@@ -16,6 +17,7 @@ import shared.communicator.RoadBuildingParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.communicator.YearOfPlentyParams;
+import shared.models.CatanModel;
 
 /**
  * @author campbeln
@@ -35,8 +37,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void acceptTrade(MapController controller, AcceptTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -44,8 +45,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void discardCards(MapController controller, DiscardCardsParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -53,8 +53,8 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void rollNumber(MapController controller, RollNumberParams params) {
-		// TODO Auto-generated method stub
-
+		CatanModel.setInstance(ServerProxy.getInstance().rollNumber(params));
+		controller.setState(PlayingState.singleton);
 	}
 
 	/* (non-Javadoc)
@@ -62,8 +62,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void buildRoad(MapController controller, BuildRoadParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -72,8 +71,7 @@ public class RollingState implements IState {
 	@Override
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -81,8 +79,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void buildCity(MapController controller, BuildCityParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +87,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void offerTrade(MapController controller, OfferTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -99,8 +95,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void maritimeTrade(MapController controller, MaritimeTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -108,8 +103,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void robPlayer(MapController controller, RobPlayerParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +111,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void finishTurn(MapController controller, FinishTurnParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -126,8 +119,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void buyDevCard(MapController controller, BuyDevCardParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -135,8 +127,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void playSoldier(MapController controller, PlaySoldierParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -144,8 +135,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void yearOfPlenty(MapController controller, YearOfPlentyParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -153,8 +143,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void roadBuilding(MapController controller, RoadBuildingParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -162,8 +151,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void monopoly(MapController controller, MonopolyParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -171,8 +159,7 @@ public class RollingState implements IState {
 	 */
 	@Override
 	public void monument(MapController controller, MonumentParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 }
