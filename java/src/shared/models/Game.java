@@ -3,9 +3,9 @@ package shared.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import shared.definitions.CatanColor;
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
@@ -339,8 +339,8 @@ public class Game {
 					Hex hex = new Hex();
 					int x = thisTile.getLocation().getX();
 					int y = thisTile.getLocation().getY();
-					if(thisTile.getResourceType() != null) {
-						hex.setResource(resourceToString(thisTile.getResourceType()));
+					if(thisTile.getHexType() != null) {
+						hex.setResource(hexTypeToString(thisTile.getHexType()));
 					}
 					if(thisTile.getToken() != -1) {
 						hex.setNumber(thisTile.getToken());
@@ -465,7 +465,7 @@ public class Game {
 			return "NW";
 		default:
 			return null;
-	}
+		}
 	}
 	private String resourceToString(ResourceType type) {
 		switch(type) {
@@ -483,6 +483,27 @@ public class Game {
 				return null;
 		}
 	}
+	private String hexTypeToString(HexType type) {
+		switch(type) {
+			case BRICK:
+				return "brick";
+			case WOOD:
+				return "wood";
+			case SHEEP:
+				return "sheep";
+			case WHEAT:
+				return "wheat";
+			case ORE:
+				return "ore";
+			case DESERT:
+				return "desert";
+			case WATER:
+				return "water";
+			default:
+				return null;
+		}
+	}
+	
 	
 	private Deck createJsonDeck() {
 		Deck thisDeck = new Deck();
