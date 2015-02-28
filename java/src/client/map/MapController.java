@@ -1,7 +1,7 @@
 package client.map;
 
+import java.util.Iterator;
 import java.util.Observable;
-import java.util.Random;
 
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -12,6 +12,9 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.models.CatanModel;
+import shared.models.Game;
+import shared.models.HexTile;
 import client.base.Controller;
 import client.data.RobPlayerInfo;
 
@@ -46,18 +49,21 @@ public class MapController extends Controller implements IMapController {
 	
 	protected void initFromModel() {
 		
-		//<temp>
+		Game game = CatanModel.getInstance().getGameManager().getGame();
 		
-		Random rand = new Random();
-
-		for (int x = 0; x <= 3; ++x) {
+		for (int x = 0; x <= game.getMap().getRadius(); ++x) {
 			
 			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType = HexType.values()[r];
-				HexLocation hexLoc = new HexLocation(x, y);
+			for (int y = -3; y <= maxY; ++y) {			
+				HexTile thisTile = game.getMap().getHexTiles()[x][y];
+				int r = thisTile.getToken();
+				HexType hexType = thisTile.getHexType();
+				HexLocation hexLoc = thisTile.getLocation();
 				getView().addHex(hexLoc, hexType);
+				Iterator it = thisTile.getEdges().entrySet().iterator();
+				whlie(it.hasNext()) {
+					it.
+				}
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 						CatanColor.RED);
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),

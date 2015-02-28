@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import shared.definitions.ResourceType;
+import shared.definitions.HexType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -329,7 +329,7 @@ public class GameTest {
 
         Piece piece = new Piece();
         piece.setOwnerPlayerId(thisGame.getPlayers()[2].getPlayerId());
-        HexTile hex = new HexTile(0,0,ResourceType.ORE,1);
+        HexTile hex = new HexTile(0,0,HexType.ORE,1);
         hex.getVertexAt(VertexDirection.NorthWest).setSettlement(piece);
 
         System.out.println("Check if we can rob Player3 \n(Note: this checks if Player3 has a settlement there to validate if Player3 can be selected)");
