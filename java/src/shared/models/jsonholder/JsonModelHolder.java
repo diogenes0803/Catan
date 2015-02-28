@@ -8,6 +8,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -116,9 +117,12 @@ public class JsonModelHolder {
 		for (JsonPort thisPort : map.getPorts()) {
 			int x = thisPort.getLocation().getX();
 			int y = thisPort.getLocation().getY();
-			ResourceType type = null;
+			PortType type = null;
 			if (thisPort.getResource() != null) {
-				type = stringToResource(thisPort.getResource());
+				type = stringToPortType(thisPort.getResource());
+			}
+			else {
+				type = PortType.THREE;
 			}
 			EdgeDirection thisDirection = stringToEdgeDirection(thisPort
 					.getDirection());
@@ -368,28 +372,52 @@ public class JsonModelHolder {
 		return vertexDirection;
 	}
 
-	public ResourceType stringToResource(String resource) {
-		ResourceType resourceType = null;
-		switch (resource) {
+//	public ResourceType stringToResource(String resource) {
+//		ResourceType resourceType = null;
+//		switch (resource) {
+//		case "brick":
+//			resourceType = ResourceType.BRICK;
+//			break;
+//		case "ore":
+//			resourceType = ResourceType.ORE;
+//			break;
+//		case "sheep":
+//			resourceType = ResourceType.SHEEP;
+//			break;
+//		case "wood":
+//			resourceType = ResourceType.WOOD;
+//			break;
+//		case "wheat":
+//			resourceType = ResourceType.WHEAT;
+//			break;
+//		default:
+//			break;
+//		}
+//		return resourceType;
+//	}
+	
+	public PortType stringToPortType(String type) {
+		PortType portType = null;
+		switch (type) {
 		case "brick":
-			resourceType = ResourceType.BRICK;
+			portType = PortType.BRICK;
 			break;
 		case "ore":
-			resourceType = ResourceType.ORE;
+			portType = PortType.ORE;
 			break;
 		case "sheep":
-			resourceType = ResourceType.SHEEP;
+			portType = PortType.SHEEP;
 			break;
 		case "wood":
-			resourceType = ResourceType.WOOD;
+			portType = PortType.WOOD;
 			break;
 		case "wheat":
-			resourceType = ResourceType.WHEAT;
+			portType = PortType.WHEAT;
 			break;
 		default:
 			break;
 		}
-		return resourceType;
+		return portType;
 	}
 
 	public HexType stringToHexType(String type) {

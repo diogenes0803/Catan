@@ -39,9 +39,7 @@ import client.communication.ServerProxy;
  *
  */
 public class ServerProxyTest {
-    private ServerProxy serverProxy = new ServerProxy("localhost","8081");
-    private UserName goodUser;
-    private UserName badUser;
+    private ServerProxy serverProxy = ServerProxy.getInstance();
     private String goodUsername;
     private String goodPassword;
     
@@ -49,6 +47,7 @@ public class ServerProxyTest {
     public void setUp() throws Exception {
         goodUsername = "Sam";
         goodPassword = "sam";
+        serverProxy.initClientComm("localhost", "8081");
         
     }
 

@@ -47,7 +47,7 @@ public class ModelInitTest {
 				String direction = thisRoad.getLocation().getDirection();
 				int jsonModelHolderOwnerId = thisRoad.getOwner();
 				int gameModelOwnerId = thisGame.getMap().getHexTileAt(new HexLocation(x, y))
-						.getEdgeAt(modelHolder.stringToEdgeDirection(direction)).getRoad().getOwnerPlayerId();
+						.getEdgeAt(modelHolder.stringToEdgeDirection(direction)).getRoad().getOwnerPlayerIndex();
 				assertTrue(jsonModelHolderOwnerId == gameModelOwnerId);
 			}
 			System.out.println("Check if Settlements are on right position");
@@ -57,7 +57,7 @@ public class ModelInitTest {
 				String direction = thisSettlement.getLocation().getDirection();
 				int jsonModelHolderOwnerId = thisSettlement.getOwner();
 				int gameModelOwnerId = thisGame.getMap().getHexTileAt(new HexLocation(x, y))
-						.getVertexAt(modelHolder.stringToVertexDirection(direction)).getSettlement().getOwnerPlayerId();
+						.getVertexAt(modelHolder.stringToVertexDirection(direction)).getSettlement().getOwnerPlayerIndex();
 				assertTrue(jsonModelHolderOwnerId == gameModelOwnerId);
 			}
 			System.out.println("Check if HexTiles have correct informations");
@@ -75,10 +75,10 @@ public class ModelInitTest {
 				EdgeLocation thisLoc = new EdgeLocation(new HexLocation(x, y), modelHolder.stringToEdgeDirection(direction));
 				Port gamePort = thisGame.getMap().getPorts().get(thisLoc);
 				if(thisPort.getResource() == null) {
-					assertTrue(gamePort.getResource() == null);
+					assertTrue(gamePort.getType() == null);
 				}
 				else {
-					assertTrue(modelHolder.stringToResource(thisPort.getResource()) == gamePort.getResource());
+					assertTrue(modelHolder.stringToPortType(thisPort.getResource()) == gamePort.getType());
 				}
 			}
 			

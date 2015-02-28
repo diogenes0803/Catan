@@ -67,6 +67,8 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     private String playerCookie;
     private String gameCookie;
     private int version;
+    private int currentGameId;
+    private int currentPlayerId;
     
 
     public String getPlayerCookie() {
@@ -81,7 +83,14 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	public void setGameCookie(String gameCookie) {
 		this.gameCookie = gameCookie;
 	}
-	
+	public int getCurrentGameId() {
+		return currentGameId;
+	}
+	public int getCurrentPlayerId() {
+		return currentPlayerId;
+	}
+
+
 	private static ServerProxy instance = new ServerProxy();
 	private ServerProxy() {
         playerCookie = "";
@@ -95,7 +104,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	
 	//MUST be called before ServerProxy can be used
 	public void initClientComm (String host, String port) {
-		clientComm = new ClientCommunicator(host, port);
+		instance.clientComm = new ClientCommunicator(host, port);
 	}
 
 
@@ -125,6 +134,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
+                    instance.currentPlayerId = result.getPlayerId();
 
                 } catch (UnsupportedEncodingException e) {
                     //should never happen as long as UTF-8 is a valid encoding.
@@ -168,6 +178,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
+                    instance.currentPlayerId = result.getPlayerId();
                     
 
                 } catch (UnsupportedEncodingException e) {
@@ -243,8 +254,10 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
             //playerCookie = json_cookie;
             //JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-            if(results.isSuccess())
+            if(results.isSuccess()) {
                 gameCookie = "catan.game="+params.getId();
+                instance.currentGameId = params.getId();
+            }
 
 
         } catch (ClientException e) {

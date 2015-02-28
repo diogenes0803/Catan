@@ -655,21 +655,21 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		for (int i = 0; i < 15; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.ROAD);
 			availablePieces.add(piece);
 		}
 		for (int i = 0; i < 4; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.CITY);
 			availablePieces.add(piece);
 		}
 		for (int i = 0; i < 5; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.SETTLEMENT);
 			availablePieces.add(piece);
 		}

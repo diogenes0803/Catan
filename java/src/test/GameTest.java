@@ -328,7 +328,7 @@ public class GameTest {
 
 
         Piece piece = new Piece();
-        piece.setOwnerPlayerId(thisGame.getPlayers()[2].getPlayerId());
+        piece.setOwnerPlayerIndex(thisGame.getPlayers()[2].getPlayerId());
         HexTile hex = new HexTile(0,0,HexType.ORE,1);
         hex.getVertexAt(VertexDirection.NorthWest).setSettlement(piece);
 
@@ -340,7 +340,7 @@ public class GameTest {
         System.out.println("Attempt to steal from Player2. . .");
         assertFalse("Error: Player1 was able to rob Player2 who is not on Hex", thisGame.canRobPlayer(hex, thisGame.getPlayers()[1]));
         System.out.println("Add settlement for Player2");
-        piece.setOwnerPlayerId(thisGame.getPlayers()[1].getPlayerId());
+        piece.setOwnerPlayerIndex(thisGame.getPlayers()[1].getPlayerId());
         hex.getVertexAt(VertexDirection.West).setSettlement(piece);
         thisGame.getPlayers()[1].setResCards(new ArrayList<ResCard>());
         assertFalse("Error: Player1 was able to rob Player2 who had no cards", thisGame.canRobPlayer(hex, thisGame.getPlayers()[1]));

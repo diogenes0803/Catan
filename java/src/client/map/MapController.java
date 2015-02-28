@@ -17,6 +17,9 @@ import shared.models.CatanModel;
 import shared.models.Edge;
 import shared.models.Game;
 import shared.models.HexTile;
+import shared.models.Piece;
+import shared.models.Port;
+import shared.models.Vertex;
 import client.base.Controller;
 import client.data.RobPlayerInfo;
 
@@ -59,77 +62,49 @@ public class MapController extends Controller implements IMapController {
 			int maxY = 3 - x;			
 			for (int y = -3; y <= maxY; ++y) {			
 				HexTile thisTile = game.getMap().getHexTiles()[x][y];
-				int r = thisTile.getToken();
+				int token = thisTile.getToken();
+				getView().addNumber(thisTile.getLocation(), token);
 				HexType hexType = thisTile.getHexType();
 				HexLocation hexLoc = thisTile.getLocation();
 				getView().addHex(hexLoc, hexType);
-				Iterator<Entry<EdgeDirection, Edge>> it = thisTile.getEdges().entrySet().iterator();
-				while(it.hasNext()) {
-					Edge thisEdge = it.next().getValue();
+				Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
+				while(itEdge.hasNext()) {
+					Edge thisEdge = itEdge.next().getValue();
 					if (thisEdge.getHasRoad()) {
-						getView().placeRoad(thisEdge.getLocation(), );
+						Piece thisRoad = thisEdge.getRoad();
+						getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
 					}
 				}
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-			}
-			
-			if (x != 0) {
-				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) {
-					int r = rand.nextInt(HexType.values().length);
-					HexType hexType = HexType.values()[r];
-					HexLocation hexLoc = new HexLocation(-x, y);
-					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+				Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
+				while(itVertex.hasNext()) {
+					Vertex thisVertex = itVertex.next().getValue();
+					if (thisVertex.getHasSettlement()) {
+						Piece settlement = thisVertex.getSettlement();
+						if(settlement.getType() == PieceType.SETTLEMENT) {
+							getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+						}
+						else {
+							getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+						}
+					}
 				}
 			}
 		}
 		
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+		Iterator<Entry<EdgeLocation, Port>> itPort = game.getMap().getPorts().entrySet().iterator();
+		while(itPort.hasNext()) {
+			Entry<EdgeLocation, Port> thisEntry = itPort.next();
+			Port thisPort = thisEntry.getValue();
+			EdgeLocation thisLoc = thisEntry.getKey();
+			getView().addPort(thisLoc, thisPort.getType());
+		}
 		
-		getView().placeRobber(new HexLocation(0, 0));
-		
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
+		getView().placeRobber(game.getMap().getRobberLocation());
 		
 		//</temp>
 	}
 
-	private void whlie(boolean hasNext) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
 		return true;
 	}
 
