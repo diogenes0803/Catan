@@ -27,6 +27,7 @@ import client.data.RobPlayerInfo;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private IState state;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -194,6 +195,14 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public IState getState() {
+		return state;
+	}
+
+	public void setState(IState state) {
+		this.state = state;
 	}
 	
 }
