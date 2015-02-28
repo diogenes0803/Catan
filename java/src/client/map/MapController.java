@@ -1,6 +1,7 @@
 package client.map;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Observable;
 
 import shared.definitions.CatanColor;
@@ -13,6 +14,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.models.CatanModel;
+import shared.models.Edge;
 import shared.models.Game;
 import shared.models.HexTile;
 import client.base.Controller;
@@ -60,9 +62,12 @@ public class MapController extends Controller implements IMapController {
 				HexType hexType = thisTile.getHexType();
 				HexLocation hexLoc = thisTile.getLocation();
 				getView().addHex(hexLoc, hexType);
-				Iterator it = thisTile.getEdges().entrySet().iterator();
-				whlie(it.hasNext()) {
-					it.
+				Iterator<Entry<EdgeDirection, Edge>> it = thisTile.getEdges().entrySet().iterator();
+				while(it.hasNext()) {
+					Edge thisEdge = it.next().getValue();
+					if (thisEdge.getHasRoad()) {
+						getView().placeRoad(thisEdge.getLocation(), );
+					}
 				}
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 						CatanColor.RED);
@@ -115,6 +120,11 @@ public class MapController extends Controller implements IMapController {
 		getView().addNumber(new HexLocation(2, 0), 12);
 		
 		//</temp>
+	}
+
+	private void whlie(boolean hasNext) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
