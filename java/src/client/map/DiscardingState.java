@@ -1,5 +1,6 @@
 package client.map;
 
+import client.communication.ServerProxy;
 import shared.communicator.AcceptTradeParams;
 import shared.communicator.BuildCityParams;
 import shared.communicator.BuildRoadParams;
@@ -35,8 +36,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void acceptTrade(MapController controller, AcceptTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -46,6 +46,8 @@ public class DiscardingState implements IState {
 	public void discardCards(MapController controller, DiscardCardsParams params) {
 		// TODO Auto-generated method stub
 
+		ServerProxy.getInstance().discardCards(params);
+		controller.setState(RobbingState.singleton);
 	}
 
 	/* (non-Javadoc)
@@ -53,8 +55,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void rollNumber(MapController controller, RollNumberParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -62,8 +63,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void buildRoad(MapController controller, BuildRoadParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -72,8 +72,7 @@ public class DiscardingState implements IState {
 	@Override
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -81,8 +80,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void buildCity(MapController controller, BuildCityParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +88,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void offerTrade(MapController controller, OfferTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -99,8 +96,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void maritimeTrade(MapController controller, MaritimeTradeParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -108,8 +104,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void robPlayer(MapController controller, RobPlayerParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +112,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void finishTurn(MapController controller, FinishTurnParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -126,8 +120,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void buyDevCard(MapController controller, BuyDevCardParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -135,8 +128,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void playSoldier(MapController controller, PlaySoldierParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -144,8 +136,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void yearOfPlenty(MapController controller, YearOfPlentyParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -153,8 +144,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void roadBuilding(MapController controller, RoadBuildingParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -162,8 +152,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void monopoly(MapController controller, MonopolyParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	/* (non-Javadoc)
@@ -171,8 +160,7 @@ public class DiscardingState implements IState {
 	 */
 	@Override
 	public void monument(MapController controller, MonumentParams params) {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 }

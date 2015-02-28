@@ -81,15 +81,22 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	public void setGameCookie(String gameCookie) {
 		this.gameCookie = gameCookie;
 	}
-
-
-	public ServerProxy(String host, String port){   
-        clientComm = new ClientCommunicator(host, port);
+	
+	private static ServerProxy instance = new ServerProxy();
+	private ServerProxy() {
         playerCookie = "";
         gameCookie = "";
-        version = UNINITIALIZED_MODEL; 
-    }//end constructor
-
+        version = UNINITIALIZED_MODEL;
+	}
+	
+	public static ServerProxy getInstance() {
+		return instance;
+	}
+	
+	//MUST be called before ServerProxy can be used
+	public void initClientComm (String host, String port) {
+		clientComm = new ClientCommunicator(host, port);
+	}
 
 
     //if successful, set cookie and return
