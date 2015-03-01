@@ -408,30 +408,6 @@ public class Game {
 		
 		return jsonMap;
 	}
-	private String colorToString(CatanColor color) {
-		switch(color) {
-			case BLUE:
-				return "blue";
-			case BROWN:
-				return "brown";
-			case GREEN:
-				return "green";
-			case ORANGE:
-				return "orange";
-			case PUCE:
-				return "puce";
-			case PURPLE:
-				return "purple";
-			case RED:
-				return "red";
-			case WHITE:
-				return "white";
-			case YELLOW:
-				return "yellow";
-			default:
-				return null;
-		}
-	}
 	private String edgeDirectionToString(EdgeDirection direction) {
 		switch(direction) {
 			case North:
@@ -663,7 +639,7 @@ public class Game {
 			player.setResources(resources);
 			player.setOldDevCards(oldDevCards);
 			player.setNewDevCards(newDevCards);
-			player.setColor(colorToString(thisPlayer.getColor()));
+			player.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
 			player.setName(thisPlayer.getName());
 			jsonPlayers.add(player);
 		}

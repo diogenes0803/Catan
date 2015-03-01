@@ -1,9 +1,6 @@
 package shared.communicator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import shared.models.Game;
+import client.data.GameInfo;
 
 /**
  * Dumb data holder
@@ -11,9 +8,9 @@ import shared.models.Game;
  *
  */
 public class ListGamesResults extends ResponseBodyContainer{
-	List<Game> games;
+	GameInfo[] games;
 	
-	public ListGamesResults(List<Game> games)
+	public ListGamesResults(GameInfo[] games)
 	{
 	    super("SUCCESS");
 		this.games = games;
@@ -22,14 +19,13 @@ public class ListGamesResults extends ResponseBodyContainer{
 	
 	public ListGamesResults() {
 	    super("");
-		games = new ArrayList<Game>();
 	}
 
-	public List<Game> getGames() {
+	public GameInfo[] getGames() {
 		return games;
 	}
 
-	public void setGames(List<Game> games) {
+	public void setGames(GameInfo[] games) {
 		this.games = games;
 	}
 

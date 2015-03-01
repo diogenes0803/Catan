@@ -37,7 +37,7 @@ public class ServerPollerTest {
 		serverProxy = ServerProxy.getInstance();
 		serverProxy.initClientComm("localhost", "8081");
 		mockServer = new MockServer();
-		poller = new ServerPoller(serverProxy);
+		poller = new ServerPoller();
 		worked = false;
 		count = 0;
 	    goodUsername = "Sam";

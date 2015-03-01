@@ -2,8 +2,13 @@ package client.login;
 
 import java.util.Observable;
 
+import shared.communicator.RegisterUserParams;
+import shared.communicator.RegisterUserResults;
+import shared.communicator.UserLoginParams;
+import shared.communicator.UserLoginResults;
 import client.base.Controller;
 import client.base.IAction;
+import client.communication.ServerProxy;
 import client.misc.IMessageView;
 
 
@@ -68,21 +73,32 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		// TODO: log in user
-		
+		String username = getLoginView().getLoginUsername();
+		String password = getLoginView().getLoginPassword();
+		UserLoginResults result = ServerProxy.getInstance().userLogin(new UserLoginParams(username, password));
+		if(result.isSuccess()) {
 
 		// If log in succeeded
 		getLoginView().closeModal();
 		loginAction.execute();
+		}
+		
 	}
 
 	@Override
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
-		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if(getLoginView().getRegisterPassword() == getLoginView().getRegisterPasswordRepeat()) {
+			String username = getLoginView().getRegisterUsername();
+			String password = getLoginView().getRegisterPassword();
+			RegisterUserResults result = ServerProxy.getInstance().registerUser(new RegisterUserParams(username, password));
+			if(result.isSuccess()) {
+				// If register succeeded
+				getLoginView().closeModal();
+				loginAction.execute();
+			}
+		}
 	}
 
 	@Override

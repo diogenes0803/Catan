@@ -7,7 +7,6 @@ import java.util.Observable;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
-import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -21,6 +20,7 @@ import shared.models.Piece;
 import shared.models.Port;
 import shared.models.Vertex;
 import client.base.Controller;
+import client.communication.ServerProxy;
 import client.data.RobPlayerInfo;
 
 
@@ -108,37 +108,67 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		return true;
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		if(game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return true;
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		if(game.getMap().canBuildSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		return true;
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		if(game.getMap().canUpgradeSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
-		return true;
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		if(game.getMap().canMoveRobber(hexLoc)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+		getView().placeRoad(edgeLoc, thisColor);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+		getView().placeSettlement(vertLoc, thisColor);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+		getView().placeCity(vertLoc, thisColor);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -149,8 +179,10 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+		getView().startDrop(pieceType, thisColor, true);
 	}
 	
 	public void cancelMove() {
@@ -171,7 +203,7 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		initFromModel();
 		
 	}
 

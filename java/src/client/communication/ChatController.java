@@ -29,7 +29,7 @@ public class ChatController extends Controller implements IChatController {
 	@Override
 	public void sendMessage(String message) {
 		Game thisGame = CatanModel.getInstance().getGameManager().getGame();
-		int playerIndex = thisGame.getPlayerIndexByPlayerId(ServerProxy.getInstance().getMyPlayerId());
+		int playerIndex = thisGame.getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId());
 		SendChatParams params = new SendChatParams(message,playerIndex);
 		ServerProxy.getInstance().sendChat(params);
 	}

@@ -226,7 +226,6 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		games.add(game);
 		
 		
-		results.setGames(games);
 		
 		return results;
 		

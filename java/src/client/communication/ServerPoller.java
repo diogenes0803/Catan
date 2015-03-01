@@ -9,16 +9,16 @@ package client.communication;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import shared.models.CatanModel;
+
 public class ServerPoller {
 	
 	private Timer timer;
-	private ServerStandinInterface server;
 	
 	public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
     public final int CHECK_FREQUENCY = 1 * 1000; //check every 1 second
 	
-	public ServerPoller(ServerStandinInterface server) {
-		this.server = server;
+	public ServerPoller() {
 		timer = new Timer();
 		
 		
@@ -31,7 +31,10 @@ public class ServerPoller {
 	 */
 	public void updateModel() {
 	    
-		this.server.getModel();
+		CatanModel model = ServerProxy.getInstance().getModel();
+		if(model != null) {
+			CatanModel.setInstance(model);
+		}
 	}
 	
 	/**

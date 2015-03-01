@@ -148,7 +148,7 @@ public class JsonModelHolder {
 		Player[] players = new Player[4];
 		for (JsonPlayer thisPlayer : this.players) {
 			Player player = new Player();
-			player.setColor(stringToCatanColor(thisPlayer.getColor()));
+			player.setColor(CatanColor.getCatanColor(thisPlayer.getColor()));
 			player.setNumMonumentPlayed(thisPlayer.getMonuments());
 			player.setNumSoldierPlayed(thisPlayer.getSoldiers());
 			player.setPlayerId(thisPlayer.getPlayerID());
@@ -448,40 +448,6 @@ public class JsonModelHolder {
 			break;
 		}
 		return resourceType;
-	}
-
-	private CatanColor stringToCatanColor(String color) {
-		CatanColor cantanColor = null;
-		switch (color) {
-		case "blue":
-			cantanColor = CatanColor.BLUE;
-			break;
-		case "brown":
-			cantanColor = CatanColor.BROWN;
-			break;
-		case "green":
-			cantanColor = CatanColor.GREEN;
-			break;
-		case "orange":
-			cantanColor = CatanColor.ORANGE;
-			break;
-		case "puce":
-			cantanColor = CatanColor.PUCE;
-			break;
-		case "purple":
-			cantanColor = CatanColor.PURPLE;
-			break;
-		case "red":
-			cantanColor = CatanColor.RED;
-			break;
-		case "white":
-			cantanColor = CatanColor.WHITE;
-			break;
-		case "yellow":
-			cantanColor = CatanColor.YELLOW;
-			break;
-		}
-		return cantanColor;
 	}
 
 	public JsonMap getMap() {
