@@ -83,6 +83,12 @@ public class LoginController extends Controller implements ILoginController {
 		loginAction.execute();
 		}
 		
+		else {
+			messageView.setTitle("Error!");
+			messageView.setMessage("Sign in failed.");
+			messageView.showModal();
+		}
+		
 	}
 
 	@Override
