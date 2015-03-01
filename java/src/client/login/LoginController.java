@@ -95,7 +95,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
-		if(getLoginView().getRegisterPassword() == getLoginView().getRegisterPasswordRepeat()) {
+		if(getLoginView().getRegisterPassword().equals(getLoginView().getRegisterPasswordRepeat())) {
 			String username = getLoginView().getRegisterUsername();
 			String password = getLoginView().getRegisterPassword();
 			RegisterUserResults result = ServerProxy.getInstance().registerUser(new RegisterUserParams(username, password));
@@ -104,7 +104,18 @@ public class LoginController extends Controller implements ILoginController {
 				getLoginView().closeModal();
 				loginAction.execute();
 			}
+			else {
+				messageView.setTitle("Warning!");
+				messageView.setMessage("Invalid username or password.");
+				messageView.showModal();
+			}
 		}
+		else {
+			messageView.setTitle("Warning!");
+			messageView.setMessage("Invalid username or password.");
+			messageView.showModal();
+		}
+		
 	}
 
 	@Override
