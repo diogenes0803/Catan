@@ -69,6 +69,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     private int version;
     private int currentGameId;
     private int myPlayerId;
+    private int pollerCallCount;
     
 
     public String getPlayerCookie() {
@@ -88,6 +89,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	}
 	public int getMyPlayerId() {
 		return myPlayerId;
+	}
+	public int getPollerCallCount() {
+		return pollerCallCount;
 	}
 
 
@@ -325,7 +329,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         return results;
     }
     //===================================================================================
-    
+
     @Override
     public CatanModel getModel() {
     	/*
@@ -349,6 +353,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             System.out.println(e);
             
         }
+        pollerCallCount++;
 
         return result_model;
     }
@@ -728,23 +733,6 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
     //===================================================================================
     //===================================================================================
-    //Called by poller.
-    @Override
-    public boolean updateModel() {
-        HttpURLResponse response = new HttpURLResponse();
-        try {
-            response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
-
-        } catch (ClientException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
-            response.setResponseCode(400);
-
-        }
-
-        return response.getResponseCode() == HTTP_OK;
-
-    }
 
 
     @Override

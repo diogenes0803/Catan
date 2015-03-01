@@ -918,14 +918,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		// TODO Auto-generated method stub
 		return model_ptr;
 	}
-	
-    @Override
-    public boolean updateModel() {
-    	timesUpdated++;
-        return true;
-        
-    }
-    
+
     
     //The following two methods are only to be used if we create a more robust mock server
     private void addUser(String userName, String password)
