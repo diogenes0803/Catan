@@ -18,6 +18,7 @@ import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.communicator.YearOfPlentyParams;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -54,7 +55,13 @@ public class RollingState implements IState {
 	@Override
 	public void rollNumber(MapController controller, RollNumberParams params) {
 		CatanModel.setInstance(ServerProxy.getInstance().rollNumber(params));
-		controller.setState(PlayingState.singleton);
+		Game thisGame = CatanModel.getInstance().getGameManager().getGame();
+		if (thisGame.getDice() != 7) {
+			controller.setState(PlayingState.singleton);
+		}
+		else {
+			controller.setState(DiscardingState.singleton);
+		}
 	}
 
 	/* (non-Javadoc)
