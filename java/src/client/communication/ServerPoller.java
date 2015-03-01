@@ -14,8 +14,8 @@ public class ServerPoller {
 	private Timer timer;
 	private ServerStandinInterface server;
 	
-	public final int CHECKS_PER_MINUTE = 4;
-    public final int CHECK_FREQUENCY = 1*60*1000 / CHECKS_PER_MINUTE; //check 4 times per 1 minute
+	public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
+    public final int CHECK_FREQUENCY = 1 * 1000; //check every 1 second
 	
 	public ServerPoller(ServerStandinInterface server) {
 		this.server = server;
@@ -31,7 +31,7 @@ public class ServerPoller {
 	 */
 	public void updateModel() {
 	    
-		this.server.updateModel();
+		this.server.getModel();
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class ServerPoller {
 		    public void run() {
 		      updateModel();
 		    }
-		  }, CHECK_FREQUENCY, CHECK_FREQUENCY );	
+		  }, START_DELAY, CHECK_FREQUENCY );	
 		
 	}
 	
