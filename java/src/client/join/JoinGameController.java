@@ -2,6 +2,8 @@ package client.join;
 
 import java.util.Observable;
 
+import shared.communicator.JoinGameParams;
+import shared.communicator.JoinGameResults;
 import shared.definitions.CatanColor;
 import client.base.Controller;
 import client.base.IAction;
@@ -19,6 +21,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private GameInfo gameToJoin;
 	
 	/**
 	 * JoinGameController constructor
@@ -119,7 +122,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-
+		gameToJoin = game;
 		getSelectColorView().showModal();
 	}
 
@@ -131,17 +134,25 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
+		int id = gameToJoin.getId();
+		String colorString = CatanColor.getStringColor(color);
+		JoinGameParams params = new JoinGameParams(id, colorString);
+		JoinGameResults result = ServerProxy.getInstance().joinGame(params);
 		
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		if (result.isSuccess()) {
+			// If join succeeded
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+		GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
+		getJoinGameView().showModal();
+		getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
 	}
 
 }
