@@ -1,1 +1,4 @@
 /bin/
+/removed/
+.classpath
+.project
