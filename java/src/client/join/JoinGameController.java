@@ -7,7 +7,6 @@ import client.base.Controller;
 import client.base.IAction;
 import client.communication.ServerProxy;
 import client.data.GameInfo;
-import client.data.PlayerInfo;
 import client.misc.IMessageView;
 
 
@@ -95,8 +94,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
-		getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
 		getJoinGameView().showModal();
+		getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
+
 	}
 
 	@Override
