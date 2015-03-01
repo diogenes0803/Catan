@@ -55,6 +55,9 @@ public class MapController extends Controller implements IMapController {
 	
 	protected void initFromModel() {
 		
+		if (CatanModel.getInstance().getGameManager() == null) {
+			return;
+		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
 		
 		for (int x = 0; x <= game.getMap().getRadius(); ++x) {

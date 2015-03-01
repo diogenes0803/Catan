@@ -679,6 +679,16 @@ public class Game {
 		return -1;
 	}
 	
+	public CatanColor getPlayerColorByPlayerName(String playerName) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getName().equals(playerName)) {
+				return players[i].getColor();
+			}
+		}
+		
+		return null;
+	}
+	
 
 	public List<MessageLine> getLogs() {
 		return logs;

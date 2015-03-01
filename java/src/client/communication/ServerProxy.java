@@ -68,7 +68,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     private String gameCookie;
     private int version;
     private int currentGameId;
-    private int currentPlayerId;
+    private int myPlayerId;
     
 
     public String getPlayerCookie() {
@@ -86,8 +86,8 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	public int getCurrentGameId() {
 		return currentGameId;
 	}
-	public int getCurrentPlayerId() {
-		return currentPlayerId;
+	public int getMyPlayerId() {
+		return myPlayerId;
 	}
 
 
@@ -134,7 +134,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
-                    instance.currentPlayerId = result.getPlayerId();
+                    instance.myPlayerId = result.getPlayerId();
 
                 } catch (UnsupportedEncodingException e) {
                     //should never happen as long as UTF-8 is a valid encoding.
@@ -178,7 +178,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
-                    instance.currentPlayerId = result.getPlayerId();
+                    instance.myPlayerId = result.getPlayerId();
                     
 
                 } catch (UnsupportedEncodingException e) {
