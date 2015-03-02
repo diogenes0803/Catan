@@ -22,6 +22,7 @@ import shared.models.TurnTracker;
 import shared.models.Vertex;
 import client.base.Controller;
 import client.communication.ServerProxy;
+import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 
 
@@ -117,6 +118,8 @@ public class MapController extends Controller implements IMapController {
 		System.out.println("Step 6");
 		
 		//</temp>
+		
+		continueGame();
 	}
 	
 	private void drawRoad() {
@@ -252,5 +255,17 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 	
+	public void continueGame() {
+		if (state.equals(RollingState.singleton)) {
+			
+		}
+		else if (state.equals(Setup1State.singleton)) {
+			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
+				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
+				this.getView().startDrop(PieceType.SETTLEMENT, playerInfo.getColor(), false);
+			}
+		}
+	}
 }
 
