@@ -60,10 +60,10 @@ public class MapController extends Controller implements IMapController {
 		Game game = CatanModel.getInstance().getGameManager().getGame();
 		setStateString(TurnTracker.getInstance().getStatus());
 		
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); ++x) {
+		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
 			
 			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; ++y) {			
+			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {			
 				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
 				if (thisTile != null) {
 					int token = thisTile.getToken();

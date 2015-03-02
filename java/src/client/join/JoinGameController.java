@@ -169,7 +169,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
-		getJoinGameView().showModal();
 		getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
 	}
 

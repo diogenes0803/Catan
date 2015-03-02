@@ -17,7 +17,7 @@ public class ServerPoller {
 	private static ServerPoller instance = new ServerPoller();
 	
 	public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
-    public final int CHECK_FREQUENCY = 5 * 1000; //check every 1 second
+    public final int CHECK_FREQUENCY = 200 * 1000; //check every 1 second
 	
 	public ServerPoller() {
 		timer = new Timer();
