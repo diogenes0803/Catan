@@ -2,7 +2,7 @@ package shared.models;
 
 import java.util.HashMap;
 
-import shared.definitions.ResourceType;
+import shared.definitions.HexType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -22,18 +22,18 @@ public class HexTile {
 	private HexLocation location;
 	private HashMap<EdgeDirection, Edge> edges;
 	private HashMap<VertexDirection, Vertex> vertices;
-	private ResourceType resourceType;
+	private HexType hexType;
 	private int token = -1;
 	private Piece robber;
 	private boolean hasRobber;
 	
 	public HexTile(){}
 	
-	public HexTile(int x, int y, ResourceType resource, int token) {
+	public HexTile(int x, int y, HexType type, int token) {
 		edges = new HashMap<EdgeDirection, Edge>();
 		vertices = new HashMap<VertexDirection, Vertex>();
 		location = new HexLocation(x, y);
-		resourceType  = resource;
+		hexType  = type;
 		this.token = token;
 		edges.put(EdgeDirection.North, new Edge(EdgeDirection.North, location));
 		edges.put(EdgeDirection.NorthEast, new Edge(EdgeDirection.NorthEast, location));
@@ -77,11 +77,11 @@ public class HexTile {
 	public void setVertices(HashMap<VertexDirection, Vertex> vertices) {
 		this.vertices = vertices;
 	}
-	public ResourceType getResourceType() {
-		return resourceType;
+	public HexType getHexType() {
+		return hexType;
 	}
-	public void setResourceType(ResourceType hexType) {
-		this.resourceType = hexType;
+	public void setHexType(HexType hexType) {
+		this.hexType = hexType;
 	}
 	public int getToken() {
 		return token;

@@ -25,5 +25,55 @@ public enum CatanColor
 	{
 		return color;
 	}
+	
+	public static String getStringColor(CatanColor color) {
+			switch(color) {
+			case BLUE:
+				return "blue";
+			case BROWN:
+				return "brown";
+			case GREEN:
+				return "green";
+			case ORANGE:
+				return "orange";
+			case PUCE:
+				return "puce";
+			case PURPLE:
+				return "purple";
+			case RED:
+				return "red";
+			case WHITE:
+				return "white";
+			case YELLOW:
+				return "yellow";
+			default:
+				return null;
+		}
+	}
+	
+	public static CatanColor getCatanColor(String color) {
+		switch (color) {
+		case "blue":
+			return CatanColor.BLUE;
+		case "brown":
+			return CatanColor.BROWN;
+		case "green":
+			return CatanColor.GREEN;
+		case "orange":
+			return CatanColor.ORANGE;
+		case "puce":
+			return CatanColor.PUCE;
+		case "purple":
+			return CatanColor.PURPLE;
+		case "red":
+			return CatanColor.RED;
+		case "white":
+			return CatanColor.WHITE;
+		case "yellow":
+			return CatanColor.YELLOW;
+		default:
+			return null;
+		}
+	}
 }
 

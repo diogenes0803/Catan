@@ -1,5 +1,7 @@
 package client.base;
 
+import shared.models.CatanModel;
+
 /**
  * Base class for controllers
  */
@@ -10,6 +12,7 @@ public abstract class Controller implements IController
 	
 	protected Controller(IView view)
 	{
+		CatanModel.getInstance().getGameManager().addObserver(this);
 		setView(view);
 	}
 	

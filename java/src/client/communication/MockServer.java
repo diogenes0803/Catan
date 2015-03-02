@@ -45,6 +45,7 @@ import shared.communicator.UserLoginResults;
 import shared.communicator.YearOfPlentyParams;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
@@ -225,7 +226,6 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		games.add(game);
 		
 		
-		results.setGames(games);
 		
 		return results;
 		
@@ -309,8 +309,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		ResourceType hexType = ResourceType.BRICK;
-		hex.setResourceType(hexType);
+		HexType hexType = HexType.BRICK;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -325,8 +325,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WOOD;
-		hex.setResourceType(hexType);
+		hexType = HexType.WOOD;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -340,8 +340,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.BRICK;
-		hex.setResourceType(hexType);
+		hexType = HexType.BRICK;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -355,8 +355,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WOOD;
-		hex.setResourceType(hexType);
+		hexType = HexType.WOOD;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -369,8 +369,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.ORE;
-		hex.setResourceType(hexType);
+		hexType = HexType.ORE;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -384,8 +384,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.SHEEP;
-		hex.setResourceType(hexType);
+		hexType = HexType.SHEEP;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -399,8 +399,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.ORE;
-		hex.setResourceType(hexType);
+		hexType = HexType.ORE;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -414,8 +414,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.SHEEP;
-		hex.setResourceType(hexType);
+		hexType = HexType.SHEEP;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -429,8 +429,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WHEAT;
-		hex.setResourceType(hexType);
+		hexType = HexType.WHEAT;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -444,8 +444,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.BRICK;
-		hex.setResourceType(hexType);
+		hexType = HexType.BRICK;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -459,8 +459,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WHEAT;
-		hex.setResourceType(hexType);
+		hexType = HexType.WHEAT;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -474,8 +474,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WHEAT;
-		hex.setResourceType(hexType);
+		hexType = HexType.WHEAT;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -489,8 +489,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.SHEEP;
-		hex.setResourceType(hexType);
+		hexType = HexType.SHEEP;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -504,8 +504,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WOOD;
-		hex.setResourceType(hexType);
+		hexType = HexType.WOOD;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -519,8 +519,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.SHEEP;
-		hex.setResourceType(hexType);
+		hexType = HexType.SHEEP;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -534,8 +534,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WOOD;
-		hex.setResourceType(hexType);
+		hexType = HexType.WOOD;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -549,8 +549,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.ORE;
-		hex.setResourceType(hexType);
+		hexType = HexType.ORE;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -564,8 +564,8 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		hex.setLocation(location);
 		//HashMap<EdgeLocation, Edge> edges = new HashMap<EdgeLocation, Edge>();
 		//HashMap<VertexLocation, Vertex> vertices =  new HashMap<VertexLocation, Vertex>();
-		hexType = ResourceType.WHEAT;
-		hex.setResourceType(hexType);
+		hexType = HexType.WHEAT;
+		hex.setHexType(hexType);
 		//int token;
 		//Piece robber = new Piece();
 		hasRobber = false;
@@ -654,21 +654,21 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		for (int i = 0; i < 15; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.ROAD);
 			availablePieces.add(piece);
 		}
 		for (int i = 0; i < 4; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.CITY);
 			availablePieces.add(piece);
 		}
 		for (int i = 0; i < 5; i++)
 		{
 			Piece piece = new Piece();
-			piece.setOwnerPlayerId(12);
+			piece.setOwnerPlayerIndex(12);
 			piece.setType(PieceType.SETTLEMENT);
 			availablePieces.add(piece);
 		}
@@ -917,14 +917,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		// TODO Auto-generated method stub
 		return model_ptr;
 	}
-	
-    @Override
-    public boolean updateModel() {
-    	timesUpdated++;
-        return true;
-        
-    }
-    
+
     
     //The following two methods are only to be used if we create a more robust mock server
     private void addUser(String userName, String password)

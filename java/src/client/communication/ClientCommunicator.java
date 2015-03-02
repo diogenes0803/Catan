@@ -117,7 +117,6 @@ public class ClientCommunicator {
 	public HttpURLResponse get(String urlCommand, Object params, String cookie) throws ClientException {
 	    HttpURLConnection connection = null;
 	    assert urlCommand != null;
-        assert params != null;
         
         HttpURLResponse result = new HttpURLResponse();
 	    try {

@@ -149,7 +149,7 @@ public class CatanMap {
 				.getVertexAt(vertexLocation.getDir());
 		if (thisVertex.getHasSettlement()) {
 			if (thisVertex.getSettlement().getType() != PieceType.CITY
-					&& thisVertex.getSettlement().getOwnerPlayerId() == playerId) {
+					&& thisVertex.getSettlement().getOwnerPlayerIndex() == playerId) {
 				return true;
 			}
 		}
@@ -204,11 +204,11 @@ public class CatanMap {
 		}
 		
 		if(edge1.getHasRoad()) {
-			if(edge1.getRoad().getOwnerPlayerId() == playerId)
+			if(edge1.getRoad().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		if(edge2.getHasRoad()) {
-			if(edge2.getRoad().getOwnerPlayerId() == playerId)
+			if(edge2.getRoad().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		
@@ -316,11 +316,11 @@ public class CatanMap {
 		}
 		
 		if(edge1.getHasRoad()) {
-			if(edge1.getRoad().getOwnerPlayerId() == playerId)
+			if(edge1.getRoad().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		if(edge2.getHasRoad()) {
-			if(edge2.getRoad().getOwnerPlayerId() == playerId)
+			if(edge2.getRoad().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		
@@ -362,11 +362,11 @@ public class CatanMap {
 		}
 
 		if(vertex1.getHasSettlement()) {
-			if(vertex1.getSettlement().getOwnerPlayerId() == playerId)
+			if(vertex1.getSettlement().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		if(vertex2.getHasSettlement()) {
-			if(vertex2.getSettlement().getOwnerPlayerId() == playerId)
+			if(vertex2.getSettlement().getOwnerPlayerIndex() == playerId)
 				result = true;
 		}
 		

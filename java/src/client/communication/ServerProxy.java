@@ -40,12 +40,16 @@ import shared.communicator.SendChatParams;
 import shared.communicator.UserLoginParams;
 import shared.communicator.UserLoginResults;
 import shared.communicator.YearOfPlentyParams;
+import shared.definitions.CatanColor;
 import shared.models.CatanModel;
 import shared.models.Game;
 import shared.models.GameManager;
 import shared.models.jsonholder.JsonModelHolder;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -63,9 +67,13 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     
     private ClientCommunicator clientComm;  
     
+    //Two Cookies Needed
     private String playerCookie;
     private String gameCookie;
     private int version;
+    private int currentGameId;
+    private PlayerInfo localPlayer;
+    private int pollerCallCount;
     
 
     public String getPlayerCookie() {
@@ -80,15 +88,32 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 	public void setGameCookie(String gameCookie) {
 		this.gameCookie = gameCookie;
 	}
+	public int getCurrentGameId() {
+		return currentGameId;
+	}
+	public PlayerInfo getlocalPlayer() {
+		return localPlayer;
+	}
+	public int getPollerCallCount() {
+		return pollerCallCount;
+	}
 
 
-	public ServerProxy(String host, String port){   
-        clientComm = new ClientCommunicator(host, port);
+	private static ServerProxy instance = new ServerProxy();
+	private ServerProxy() {
         playerCookie = "";
         gameCookie = "";
-        version = UNINITIALIZED_MODEL; 
-    }//end constructor
-
+        version = UNINITIALIZED_MODEL;
+	}
+	
+	public static ServerProxy getInstance() {
+		return instance;
+	}
+	
+	//MUST be called before ServerProxy can be used
+	public void initClientComm (String host, String port) {
+		instance.clientComm = new ClientCommunicator(host, port);
+	}
 
 
     //if successful, set cookie and return
@@ -117,6 +142,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
+                    localPlayer = new PlayerInfo();
+                    localPlayer.setId(result.getPlayerId());
+                    localPlayer.setName(result.getName());
 
                 } catch (UnsupportedEncodingException e) {
                     //should never happen as long as UTF-8 is a valid encoding.
@@ -160,6 +188,10 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     result.setName(je.get("name").getAsString());
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
+                    localPlayer = new PlayerInfo();
+                    localPlayer.setId(result.getPlayerId());
+                    localPlayer.setName(result.getName());
+                    
 
                 } catch (UnsupportedEncodingException e) {
                     //should never happen as long as UTF-8 is a valid encoding.
@@ -173,6 +205,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             System.out.println(e.toString());
 
         }
+       
         return result;
     }
  //===================================================================================
@@ -190,26 +223,37 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
           
             result.setSuccess(response.getResponseCode() == HTTP_OK);
             
-            result.setResponseBody(result.getResponseBody());
+            result.setResponseBody(response.getResponseBody());
             
-           /* Can implement later
             if(result.isSuccess()){
                 JsonArray ja = (JsonArray)new JsonParser().parse(result.getResponseBody()); //array of games
+                GameInfo[] games = new GameInfo[ja.size()];
                 for(int i=0; i< ja.size(); i++){
 
                     JsonObject game = (JsonObject)ja.get(i);
-                    String game_name = game.get("name").getAsString();
+                    String game_name = game.get("title").getAsString();
                     int game_id = game.get("id").getAsInt();
                     
                     JsonArray playerArray = (JsonArray) game.get("players");
                     
-                    Game catanGame = new Game();
-                    catanGame.setGameId(game_id);
-                    catanGame.setGameTitle(game_name);
-                    
+                    GameInfo catanGame = new GameInfo();
+                    catanGame.setId(game_id);
+                    catanGame.setTitle(game_name);
+                    for(int j=0; j<playerArray.size(); j++) {
+                    	JsonObject player = (JsonObject)playerArray.get(j);
+                    	int playerId = player.get("id").getAsInt();
+                    	CatanColor color = CatanColor.getCatanColor(player.get("color").getAsString());
+                    	String name = player.get("name").getAsString();
+                    	PlayerInfo thisPlayer = new PlayerInfo();
+                    	thisPlayer.setId(playerId);
+                    	thisPlayer.setColor(color);
+                    	thisPlayer.setName(name);
+                    	catanGame.addPlayer(thisPlayer);
+                    }
+                    games[i] = catanGame;
                 }
+                result.setGames(games);
             }
-*/
            
         }catch(ClientException e){
             result = new ListGamesResults();
@@ -233,8 +277,10 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
             //playerCookie = json_cookie;
             //JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
-            if(results.isSuccess())
+            if(results.isSuccess()) {
                 gameCookie = "catan.game="+params.getId();
+                instance.currentGameId = params.getId();
+            }
 
 
         } catch (ClientException e) {
@@ -302,7 +348,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         return results;
     }
     //===================================================================================
-    
+
     @Override
     public CatanModel getModel() {
     	/*
@@ -326,6 +372,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             System.out.println(e);
             
         }
+        pollerCallCount++;
 
         return result_model;
     }
@@ -705,23 +752,6 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     }
     //===================================================================================
     //===================================================================================
-    //Called by poller.
-    @Override
-    public boolean updateModel() {
-        HttpURLResponse response = new HttpURLResponse();
-        try {
-            response = clientComm.get("/games/model", null, playerCookie+"; "+gameCookie);
-
-        } catch (ClientException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
-            response.setResponseCode(400);
-
-        }
-
-        return response.getResponseCode() == HTTP_OK;
-
-    }
 
 
     @Override

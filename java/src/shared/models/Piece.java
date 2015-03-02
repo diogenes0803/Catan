@@ -11,13 +11,13 @@ import shared.definitions.PieceType;
 public class Piece {
 	
 	private PieceType type;
-	private int ownerPlayerId;
+	private int ownerPlayerIndex;
 	
 	public Piece(){}
 	
 	public Piece(PieceType type, int ownerPlayerId) {
 		this.type = type;
-		this.ownerPlayerId = ownerPlayerId;
+		this.ownerPlayerIndex = ownerPlayerId;
 	}
 	public PieceType getType() {
 		return type;
@@ -25,11 +25,11 @@ public class Piece {
 	public void setType(PieceType type) {
 		this.type = type;
 	}
-	public int getOwnerPlayerId() {
-		return ownerPlayerId;
+	public int getOwnerPlayerIndex() {
+		return ownerPlayerIndex;
 	}
-	public void setOwnerPlayerId(int ownerPlayerId) {
-		this.ownerPlayerId = ownerPlayerId;
+	public void setOwnerPlayerIndex(int ownerPlayerId) {
+		this.ownerPlayerIndex = ownerPlayerId;
 	}
 
 }

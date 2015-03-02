@@ -1,14 +1,15 @@
 package client.login;
 
-import client.base.*;
-import client.misc.*;
+import java.util.Observable;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import shared.communicator.RegisterUserParams;
+import shared.communicator.RegisterUserResults;
+import shared.communicator.UserLoginParams;
+import shared.communicator.UserLoginResults;
+import client.base.Controller;
+import client.base.IAction;
+import client.communication.ServerProxy;
+import client.misc.IMessageView;
 
 
 /**
@@ -72,21 +73,55 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		// TODO: log in user
-		
+		String username = getLoginView().getLoginUsername();
+		String password = getLoginView().getLoginPassword();
+		UserLoginResults result = ServerProxy.getInstance().userLogin(new UserLoginParams(username, password));
+		if(result.isSuccess()) {
 
 		// If log in succeeded
 		getLoginView().closeModal();
 		loginAction.execute();
+		}
+		
+		else {
+			messageView.setTitle("Error!");
+			messageView.setMessage("Sign in failed.");
+			messageView.showModal();
+		}
+		
 	}
 
 	@Override
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
+		if(getLoginView().getRegisterPassword().equals(getLoginView().getRegisterPasswordRepeat())) {
+			String username = getLoginView().getRegisterUsername();
+			String password = getLoginView().getRegisterPassword();
+			RegisterUserResults result = ServerProxy.getInstance().registerUser(new RegisterUserParams(username, password));
+			if(result.isSuccess()) {
+				// If register succeeded
+				getLoginView().closeModal();
+				loginAction.execute();
+			}
+			else {
+				messageView.setTitle("Warning!");
+				messageView.setMessage("Invalid username or password.");
+				messageView.showModal();
+			}
+		}
+		else {
+			messageView.setTitle("Warning!");
+			messageView.setMessage("Invalid username or password.");
+			messageView.showModal();
+		}
 		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

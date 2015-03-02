@@ -1,9 +1,11 @@
 package client.map;
 
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
-import shared.locations.*;
+import shared.definitions.PieceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+import client.base.IController;
+import client.data.RobPlayerInfo;
 
 /**
  * Interface for the map controller

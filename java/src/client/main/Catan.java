@@ -1,12 +1,22 @@
 package client.main;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
-import client.catan.*;
-import client.login.*;
-import client.join.*;
-import client.misc.*;
-import client.base.*;
+import client.base.IAction;
+import client.catan.CatanPanel;
+import client.communication.ServerPoller;
+import client.communication.ServerProxy;
+import client.join.JoinGameController;
+import client.join.JoinGameView;
+import client.join.NewGameView;
+import client.join.PlayerWaitingController;
+import client.join.PlayerWaitingView;
+import client.join.SelectColorView;
+import client.login.LoginController;
+import client.login.LoginView;
+import client.misc.MessageView;
 
 /**
  * Main entry point for the Catan program
@@ -19,7 +29,7 @@ public class Catan extends JFrame
 	
 	public Catan()
 	{
-		
+		ServerProxy.getInstance().initClientComm("localhost", "8081");
 		client.base.OverlayView.setWindow(this);
 		
 		this.setTitle("Settlers of Catan");

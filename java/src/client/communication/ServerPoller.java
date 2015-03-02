@@ -9,16 +9,17 @@ package client.communication;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import shared.models.CatanModel;
+
 public class ServerPoller {
 	
 	private Timer timer;
-	private ServerStandinInterface server;
+	private static ServerPoller instance = new ServerPoller();
 	
-	public final int CHECKS_PER_MINUTE = 4;
-    public final int CHECK_FREQUENCY = 1*60*1000 / CHECKS_PER_MINUTE; //check 4 times per 1 minute
+	public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
+    public final int CHECK_FREQUENCY = 1 * 1000; //check every 1 second
 	
-	public ServerPoller(ServerStandinInterface server) {
-		this.server = server;
+	public ServerPoller() {
 		timer = new Timer();
 		
 		
@@ -31,7 +32,10 @@ public class ServerPoller {
 	 */
 	public void updateModel() {
 	    
-		this.server.updateModel();
+		CatanModel model = ServerProxy.getInstance().getModel();
+		if(model != null) {
+			CatanModel.getInstance().getGameManager().setGame(model.getGameManager().getGame());
+		}
 	}
 	
 	/**
@@ -49,8 +53,16 @@ public class ServerPoller {
 		    public void run() {
 		      updateModel();
 		    }
-		  }, CHECK_FREQUENCY, CHECK_FREQUENCY );	
+		  }, START_DELAY, CHECK_FREQUENCY );	
 		
+	}
+
+	public static ServerPoller getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(ServerPoller instance) {
+		ServerPoller.instance = instance;
 	}
 	
 }//end class

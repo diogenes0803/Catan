@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.CatanColor;
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -222,7 +224,7 @@ public class Game {
 
         for (int i = 0; i < 6; i++){
             try {   //NullPointerException: if Settlement does not exist we cannot access PlayerID
-                if (v[i].getSettlement().getOwnerPlayerId() == p.getPlayerId())   // We confirm that the target player owns this settlement
+                if (v[i].getSettlement().getOwnerPlayerIndex() == p.getPlayerId())   // We confirm that the target player owns this settlement
                     if (p.getResCards().size() > 0) // We can now check if they have available resource cards to steal
                         return true;
                     else
@@ -338,8 +340,8 @@ public class Game {
 					Hex hex = new Hex();
 					int x = thisTile.getLocation().getX();
 					int y = thisTile.getLocation().getY();
-					if(thisTile.getResourceType() != null) {
-						hex.setResource(resourceToString(thisTile.getResourceType()));
+					if(thisTile.getHexType() != null) {
+						hex.setResource(hexTypeToString(thisTile.getHexType()));
 					}
 					if(thisTile.getToken() != -1) {
 						hex.setNumber(thisTile.getToken());
@@ -351,7 +353,7 @@ public class Game {
 					    Edge value = entry.getValue();
 					    if(value.getRoad() != null) {
 					    	Road road = new Road();
-					    	road.setOwner(value.getRoad().getOwnerPlayerId());
+					    	road.setOwner(value.getRoad().getOwnerPlayerIndex());
 					    	road.setLocation(new Location(x, y, edgeDirectionToString(key)));
 					    }
 					}
@@ -361,14 +363,14 @@ public class Game {
 					    if(value.getHasSettlement()) {
 					    	if(value.getSettlement().getType() == PieceType.CITY) {
 					    		City city = new City();
-					    		city.setOwner(value.getSettlement().getOwnerPlayerId());
+					    		city.setOwner(value.getSettlement().getOwnerPlayerIndex());
 					    		city.setLocation(new Location(x, y, vertexDirectionToString(key)));
 					    		cities.add(city);
 					    		
 					    	}
 					    	else {
 					    		Settlement settlement = new Settlement();
-					    		settlement.setOwner(value.getSettlement().getOwnerPlayerId());
+					    		settlement.setOwner(value.getSettlement().getOwnerPlayerIndex());
 					    		settlement.setLocation(new Location(x, y, vertexDirectionToString(key)));
 					    		settlements.add(settlement);
 					    	}
@@ -386,8 +388,8 @@ public class Game {
 		    port.setDirection(edgeDirectionToString(key.getDir()));
 		    port.setLocation(new Location(key.getHexLoc().getX(), key.getHexLoc().getY()));
 		    port.setRatio(value.getRatio());
-		    if(value.getResource() != null) {
-		    	port.setResource(resourceToString(value.getResource()));
+		    if(value.getType() != PortType.THREE) {
+		    	port.setResource(portTypeToString(value.getType()));
 		    }
 		    ports.add(port);
 		}
@@ -405,30 +407,6 @@ public class Game {
 		jsonMap.setSettlements(settlements);
 		
 		return jsonMap;
-	}
-	private String colorToString(CatanColor color) {
-		switch(color) {
-			case BLUE:
-				return "blue";
-			case BROWN:
-				return "brown";
-			case GREEN:
-				return "green";
-			case ORANGE:
-				return "orange";
-			case PUCE:
-				return "puce";
-			case PURPLE:
-				return "purple";
-			case RED:
-				return "red";
-			case WHITE:
-				return "white";
-			case YELLOW:
-				return "yellow";
-			default:
-				return null;
-		}
 	}
 	private String edgeDirectionToString(EdgeDirection direction) {
 		switch(direction) {
@@ -464,9 +442,25 @@ public class Game {
 			return "NW";
 		default:
 			return null;
+		}
 	}
-	}
-	private String resourceToString(ResourceType type) {
+//	private String resourceToString(ResourceType type) {
+//		switch(type) {
+//			case BRICK:
+//				return "brick";
+//			case WOOD:
+//				return "wood";
+//			case SHEEP:
+//				return "sheep";
+//			case WHEAT:
+//				return "wheat";
+//			case ORE:
+//				return "ore";
+//			default:
+//				return null;
+//		}
+//	}
+	private String portTypeToString(PortType type) {
 		switch(type) {
 			case BRICK:
 				return "brick";
@@ -482,6 +476,27 @@ public class Game {
 				return null;
 		}
 	}
+	private String hexTypeToString(HexType type) {
+		switch(type) {
+			case BRICK:
+				return "brick";
+			case WOOD:
+				return "wood";
+			case SHEEP:
+				return "sheep";
+			case WHEAT:
+				return "wheat";
+			case ORE:
+				return "ore";
+			case DESERT:
+				return "desert";
+			case WATER:
+				return "water";
+			default:
+				return null;
+		}
+	}
+	
 	
 	private Deck createJsonDeck() {
 		Deck thisDeck = new Deck();
@@ -624,11 +639,30 @@ public class Game {
 			player.setResources(resources);
 			player.setOldDevCards(oldDevCards);
 			player.setNewDevCards(newDevCards);
-			player.setColor(colorToString(thisPlayer.getColor()));
+			player.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
 			player.setName(thisPlayer.getName());
 			jsonPlayers.add(player);
 		}
 		return jsonPlayers;
+	}
+	
+	public int getPlayerIndexByPlayerId(int playerId) {
+		for(int i = 0; i < players.length; i++) {
+			if(players[i].getUserId() == playerId) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public CatanColor getPlayerColorByPlayerName(String playerName) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getName().equals(playerName)) {
+				return players[i].getColor();
+			}
+		}
+		
+		return null;
 	}
 	
 
