@@ -361,11 +361,14 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         try {
             HttpURLResponse response = clientComm.get("/game/model"+strVersion, null, playerCookie+"; "+gameCookie);
             Gson gson = new Gson();
+            if(response.getResponseBody().equals("\"true\""))
+            	return null;
     		JsonModelHolder modelHolder = gson.fromJson(response.getResponseBody().toString(), JsonModelHolder.class);
     		Game thisGame = modelHolder.buildCatanGame();
     		GameManager manager = new GameManager();
     		result_model.setGameManager(manager);
     		result_model.getGameManager().setGame(thisGame);
+    		version = result_model.getGameManager().getGame().getVersion();
             // TODO turn response into a CatanModel
         } catch (ClientException e) {
                       

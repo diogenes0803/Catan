@@ -27,6 +27,7 @@ public class GameManager extends Observable {
 
 	public void setGame(Game game) {
 		this.game = game;
+		setChanged();
 		notifyObservers(game);
 	}
 

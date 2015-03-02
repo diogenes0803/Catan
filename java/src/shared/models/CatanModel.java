@@ -10,10 +10,8 @@ public class CatanModel {
 	private static CatanModel instance = new CatanModel();
 	private GameManager gameManager;
 	private UserManager userManager;
-	private int version;
 	
 	public CatanModel(){
-	    setVersion(-1);
 	    gameManager = new GameManager();
 	    userManager = null;
 	}
@@ -37,14 +35,6 @@ public class CatanModel {
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
     
     public static void setInstance(CatanModel model) {
     	instance.gameManager.setGame(model.getGameManager().getGame());

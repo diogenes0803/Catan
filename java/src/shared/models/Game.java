@@ -52,6 +52,7 @@ public class Game {
 	private int winner;
 	private int gameId;
 	private TradeOffer tradeOffer;
+	private int version = -1;
 	
 	public boolean canBuildRoad(EdgeLocation location) {
 		Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
@@ -762,6 +763,16 @@ public class Game {
 	public void setTradeOffer(TradeOffer tradeOffer) {
 		this.tradeOffer = tradeOffer;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
+	
 
 
 	

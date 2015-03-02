@@ -53,6 +53,7 @@ public class JsonModelHolder {
 			game.setTradeOffer(new TradeOffer(tradeOffer.getSender(),
 					tradeOffer.getReceiver(), tradeOffer.getOffer()));
 		}
+		game.setVersion(version);
 		TurnTracker.getInstance().setStatus(turnTracker.getStatus());
 		TurnTracker.getInstance().setCurrentTurn(turnTracker.getCurrentTurn());
 		TurnTracker.getInstance().setLongestRoad(turnTracker.getLongestRoad());
