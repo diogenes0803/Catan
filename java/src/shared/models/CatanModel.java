@@ -14,7 +14,7 @@ public class CatanModel {
 	
 	public CatanModel(){
 	    setVersion(-1);
-	    gameManager = null;
+	    gameManager = new GameManager();
 	    userManager = null;
 	}
 	
@@ -47,7 +47,7 @@ public class CatanModel {
     }
     
     public static void setInstance(CatanModel model) {
-    	instance = model;
+    	instance.gameManager.setGame(model.getGameManager().getGame());
     }
 	
 }

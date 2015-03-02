@@ -38,8 +38,6 @@ public class MapController extends Controller implements IMapController {
 		super(view);
 		
 		setRobView(robView);
-		
-		initFromModel();
 	}
 	
 	public IMapView getView() {
@@ -64,8 +62,8 @@ public class MapController extends Controller implements IMapController {
 		
 		for (int x = 0; x <= game.getMap().getRadius(); ++x) {
 			
-			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {			
+			int maxY = game.getMap().getRadius() - x;			
+			for (int y = -game.getMap().getRadius(); y <= maxY; ++y) {			
 				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
 				if (thisTile != null) {
 					int token = thisTile.getToken();

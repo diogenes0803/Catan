@@ -158,7 +158,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			
-			CatanModel.setInstance(ServerProxy.getInstance().getModel());
+			CatanModel.getInstance().getGameManager().setGame(ServerProxy.getInstance().getModel().getGameManager().getGame());
 			CatanModel.getInstance().getGameManager().setJoinedGame(true);
 			
 			joinAction.execute();
