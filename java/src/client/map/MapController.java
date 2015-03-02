@@ -62,9 +62,9 @@ public class MapController extends Controller implements IMapController {
 		
 		for (int x = 0; x <= game.getMap().getRadius(); ++x) {
 			
-			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {			
-				HexTile thisTile = game.getMap().getHexTiles()[x][y];
+			int maxY = game.getMap().getRadius() - x;			
+			for (int y = -game.getMap().getRadius(); y <= maxY; ++y) {			
+				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
 				int token = thisTile.getToken();
 				getView().addNumber(thisTile.getLocation(), token);
 				HexType hexType = thisTile.getHexType();
