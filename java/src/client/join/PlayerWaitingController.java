@@ -2,7 +2,9 @@ package client.join;
 
 import java.util.Observable;
 
+import shared.models.CatanModel;
 import client.base.Controller;
+import client.communication.ServerPoller;
 
 
 /**
@@ -10,6 +12,8 @@ import client.base.Controller;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
+	private int playersJoined;
+	
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
@@ -24,7 +28,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 
-		getView().showModal();
+		playersJoined = CatanModel.getInstance().getGameManager().getGame().getPlayers().length;
+		if (playersJoined < 4) {
+			getView().showModal();
+		}
+		else {
+			ServerPoller.getInstance().startTimer();
+		}
 	}
 
 	@Override

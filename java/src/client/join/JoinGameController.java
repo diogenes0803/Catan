@@ -7,6 +7,7 @@ import shared.communicator.CreateGameResults;
 import shared.communicator.JoinGameParams;
 import shared.communicator.JoinGameResults;
 import shared.definitions.CatanColor;
+import shared.models.CatanModel;
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ServerProxy;
@@ -156,6 +157,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
+			
+			CatanModel.setInstance(ServerProxy.getInstance().getModel());
+			CatanModel.getInstance().getGameManager().setJoinedGame(true);
+			
 			joinAction.execute();
 		}
 	}
