@@ -759,8 +759,17 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     @Override
     public AddAIResults AddAI(String params) {
-        // TODO Auto-generated method stub
-        return null;
+        AddAIResults results = new AddAIResults();
+        
+        try {
+            results.setSuccess(clientComm.post("/game/addAI", params, playerCookie+"; "+gameCookie));
+        } catch (ClientException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            results.setSuccess(false);
+        }
+
+        return results;
     }
 
 }
