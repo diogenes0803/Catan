@@ -18,6 +18,7 @@ import shared.models.Game;
 import shared.models.HexTile;
 import shared.models.Piece;
 import shared.models.Port;
+import shared.models.TurnTracker;
 import shared.models.Vertex;
 import client.base.Controller;
 import client.communication.ServerProxy;
@@ -59,35 +60,38 @@ public class MapController extends Controller implements IMapController {
 			return;
 		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
+		setStateString(TurnTracker.getInstance().getStatus());
 		
 		for (int x = 0; x <= game.getMap().getRadius(); ++x) {
 			
 			int maxY = 3 - x;			
 			for (int y = -3; y <= maxY; ++y) {			
-				HexTile thisTile = game.getMap().getHexTiles()[x][y];
-				int token = thisTile.getToken();
-				getView().addNumber(thisTile.getLocation(), token);
-				HexType hexType = thisTile.getHexType();
-				HexLocation hexLoc = thisTile.getLocation();
-				getView().addHex(hexLoc, hexType);
-				Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
-				while(itEdge.hasNext()) {
-					Edge thisEdge = itEdge.next().getValue();
-					if (thisEdge.getHasRoad()) {
-						Piece thisRoad = thisEdge.getRoad();
-						getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
-					}
-				}
-				Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
-				while(itVertex.hasNext()) {
-					Vertex thisVertex = itVertex.next().getValue();
-					if (thisVertex.getHasSettlement()) {
-						Piece settlement = thisVertex.getSettlement();
-						if(settlement.getType() == PieceType.SETTLEMENT) {
-							getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+				if (thisTile != null) {
+					int token = thisTile.getToken();
+					getView().addNumber(thisTile.getLocation(), token);
+					HexType hexType = thisTile.getHexType();
+					HexLocation hexLoc = thisTile.getLocation();
+					getView().addHex(hexLoc, hexType);
+					Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
+					while(itEdge.hasNext()) {
+						Edge thisEdge = itEdge.next().getValue();
+						if (thisEdge.getHasRoad()) {
+							Piece thisRoad = thisEdge.getRoad();
+							getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
 						}
-						else {
-							getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+					}
+					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
+					while(itVertex.hasNext()) {
+						Vertex thisVertex = itVertex.next().getValue();
+						if (thisVertex.getHasSettlement()) {
+							Piece settlement = thisVertex.getSettlement();
+							if(settlement.getType() == PieceType.SETTLEMENT) {
+								getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+							}
+							else {
+								getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+							}
 						}
 					}
 				}
@@ -213,6 +217,26 @@ public class MapController extends Controller implements IMapController {
 
 	public void setState(IState state) {
 		this.state = state;
+	}
+	
+	public void setStateString(String status) {
+		switch (status) {
+		case "Rolling":	state = RollingState.singleton;
+			break;
+		case "Robbing":	state = RobbingState.singleton;
+			break;
+		case "Playing":	state = PlayingState.singleton;
+			break;
+		case "Discarding":	state = DiscardingState.singleton;
+			break;
+		case "FirstRound":	state = Setup1State.singleton;
+			break;
+		case "SecondRound":	state = Setup2State.singleton;
+			break;
+		default:	state = Setup1State.singleton;
+			break;
+		
+		}
 	}
 	
 }

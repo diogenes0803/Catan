@@ -3,7 +3,6 @@ package shared.models;
 import java.util.HashMap;
 
 import shared.definitions.HexType;
-import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;

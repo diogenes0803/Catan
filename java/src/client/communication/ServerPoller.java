@@ -14,6 +14,7 @@ import shared.models.CatanModel;
 public class ServerPoller {
 	
 	private Timer timer;
+	private static ServerPoller instance = new ServerPoller();
 	
 	public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
     public final int CHECK_FREQUENCY = 1 * 1000; //check every 1 second
@@ -33,7 +34,7 @@ public class ServerPoller {
 	    
 		CatanModel model = ServerProxy.getInstance().getModel();
 		if(model != null) {
-			CatanModel.setInstance(model);
+			CatanModel.getInstance().getGameManager().setGame(model.getGameManager().getGame());
 		}
 	}
 	
@@ -54,6 +55,14 @@ public class ServerPoller {
 		    }
 		  }, START_DELAY, CHECK_FREQUENCY );	
 		
+	}
+
+	public static ServerPoller getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(ServerPoller instance) {
+		ServerPoller.instance = instance;
 	}
 	
 }//end class
