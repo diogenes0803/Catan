@@ -42,5 +42,9 @@ public class GameManager extends Observable {
 		this.isJoinedGame = isJoinedGame;
 	}
 	
+	public void changed() {
+		setChanged();
+	}
+	
 	
 }

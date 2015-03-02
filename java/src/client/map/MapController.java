@@ -68,9 +68,11 @@ public class MapController extends Controller implements IMapController {
 				if (thisTile != null) {
 					int token = thisTile.getToken();
 					getView().addNumber(thisTile.getLocation(), token);
+					System.out.println("Step 1");
 					HexType hexType = thisTile.getHexType();
 					HexLocation hexLoc = thisTile.getLocation();
 					getView().addHex(hexLoc, hexType);
+					System.out.println("Step 2");
 					Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
 					while(itEdge.hasNext()) {
 						Edge thisEdge = itEdge.next().getValue();
@@ -79,6 +81,7 @@ public class MapController extends Controller implements IMapController {
 							getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
 						}
 					}
+					System.out.println("Step 3");
 					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
 					while(itVertex.hasNext()) {
 						Vertex thisVertex = itVertex.next().getValue();
@@ -92,6 +95,7 @@ public class MapController extends Controller implements IMapController {
 							}
 						}
 					}
+					System.out.println("Step 4");
 				}
 			}
 		}
@@ -103,8 +107,10 @@ public class MapController extends Controller implements IMapController {
 			EdgeLocation thisLoc = thisEntry.getKey();
 			getView().addPort(thisLoc, thisPort.getType());
 		}
+		System.out.println("Step 5");
 		
 		getView().placeRobber(game.getMap().getRobberLocation());
+		System.out.println("Step 6");
 		
 		//</temp>
 	}
@@ -205,6 +211,7 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("Updated");
 		initFromModel();
 		
 	}
