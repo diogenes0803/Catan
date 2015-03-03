@@ -64,13 +64,12 @@ public class Setup1State implements IState {
 	 */
 	@Override
 	public void buildRoad(MapController controller, BuildRoadParams params) {
-		ServerProxy.getInstance().buildRoad(params);
-		Game game = CatanModel.getInstance().getGameManager().getGame();
+		Game game = ServerProxy.getInstance().buildRoad(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
 		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
 		
 		controller.getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
-		//CatanModel.getInstance().getGameManager().setGame(game);
 	}
 
 	/* (non-Javadoc)
@@ -80,8 +79,8 @@ public class Setup1State implements IState {
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
 		controller.setState(Setup2State.singleton);
-		ServerProxy.getInstance().buildSettlement(params);
-		//CatanModel.getInstance().getGameManager().setGame(game);
+		Game game = ServerProxy.getInstance().buildSettlement(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
 		
 		FinishTurnParams params2 = new FinishTurnParams(params.getPlayerIndex());
 		finishTurn(controller, params2);
@@ -124,7 +123,8 @@ public class Setup1State implements IState {
 	 */
 	@Override
 	public void finishTurn(MapController controller, FinishTurnParams params) {
-		ServerProxy.getInstance().finishTurn(params);
+		Game game = ServerProxy.getInstance().finishTurn(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
 	}
 
 	/* (non-Javadoc)
