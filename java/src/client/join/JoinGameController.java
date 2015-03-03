@@ -11,6 +11,7 @@ import shared.communicator.JoinGameParams;
 import shared.communicator.JoinGameResults;
 import shared.definitions.CatanColor;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 import java.util.Observable;
 
@@ -160,8 +161,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
 
-            CatanModel.getInstance().getGameManager().setGame(ServerProxy.getInstance().getModel().getGameManager().getGame());
-            CatanModel.getInstance().getGameManager().setJoinedGame(true);
+            Game game = ServerProxy.getInstance().getModel().getGameManager().getGame();
+			int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+			ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(game.getPlayerIndexByPlayerId(playerId));
+			CatanModel.getInstance().getGameManager().setGame(game);
+			CatanModel.getInstance().getGameManager().setJoinedGame(true);
 
             joinAction.execute();
         }

@@ -371,9 +371,7 @@ public class MapController extends Controller implements IMapController {
 	public void startGame() {
 		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
 		
-		System.out.println(TurnTracker.getInstance().getCurrentTurn());
 		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
-			System.out.println("done");
 			return;
 		}
 		else if (state.equals(Setup1State.singleton)) {

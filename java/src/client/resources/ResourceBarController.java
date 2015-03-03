@@ -82,16 +82,16 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
         Game game = (Game) arg;
 //Resource
-        getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.WOOD));
-        getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.BRICK));
-        getView().setElementAmount(ResourceBarElement.SHEEP, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.SHEEP));
-        getView().setElementAmount(ResourceBarElement.WHEAT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.WHEAT));
-        getView().setElementAmount(ResourceBarElement.ORE, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.ORE));
+        getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WOOD));
+        getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.BRICK));
+        getView().setElementAmount(ResourceBarElement.SHEEP, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.SHEEP));
+        getView().setElementAmount(ResourceBarElement.WHEAT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WHEAT));
+        getView().setElementAmount(ResourceBarElement.ORE, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.ORE));
 //Contructions
         int cityNum = 0;
         int settleNum = 0;
         int roadNum = 0;
-        for (Piece piece : game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getAvailablePieces()) {
+        for (Piece piece : game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getAvailablePieces()) {
             if (piece.getType() == PieceType.CITY) {
                 cityNum++;
             } else if (piece.getType() == PieceType.SETTLEMENT) {
@@ -108,8 +108,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
         getView().setElementAmount(ResourceBarElement.CITY, cityNum);
 //Cards
 
-        getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].canBuyDevCard());
-        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getNumMonumentPlayed());
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
+        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getNumMonumentPlayed());
 
         /**
          * For PLAY_CARD I don't know what to do, it seem
