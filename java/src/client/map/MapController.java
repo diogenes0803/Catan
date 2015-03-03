@@ -224,7 +224,9 @@ public class MapController extends Controller implements IMapController {
 		createRobber(game);
 		createWater(game);
 		
-		continueGame();
+		if (state == Setup1State.singleton || state == Setup2State.singleton) {
+			startGame();
+		}
 		
 }
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -279,9 +281,6 @@ public class MapController extends Controller implements IMapController {
 		
 		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
 		state.buildRoad(this, params);
-		if(state.equals(Setup1State.singleton)) {
-			getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
-		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -369,17 +368,19 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 	
-	public void continueGame() {
-		if (state.equals(RollingState.singleton)) {
-			
+	public void startGame() {
+		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+		
+		System.out.println(TurnTracker.getInstance().getCurrentTurn());
+		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
+			System.out.println("done");
+			return;
 		}
 		else if (state.equals(Setup1State.singleton)) {
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-			
-			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
-				System.out.println(TurnTracker.getInstance().getStatus());
-				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
-			}
+
+			System.out.println(TurnTracker.getInstance().getStatus());
+			this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
 		}
 	}
 }

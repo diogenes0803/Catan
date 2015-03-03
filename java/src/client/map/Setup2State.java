@@ -18,6 +18,7 @@ import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.communicator.YearOfPlentyParams;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -61,7 +62,8 @@ public class Setup2State implements IState {
 	 */
 	@Override
 	public void buildRoad(MapController controller, BuildRoadParams params) {
-		CatanModel.setInstance(ServerProxy.getInstance().buildRoad(params));
+		Game game = ServerProxy.getInstance().buildRoad(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
 	}
 
 	/* (non-Javadoc)
@@ -70,8 +72,9 @@ public class Setup2State implements IState {
 	@Override
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
-		CatanModel.setInstance(ServerProxy.getInstance().buildSettlement(params));
 		controller.setState(RollingState.singleton);
+		Game game = ServerProxy.getInstance().buildSettlement(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
 	}
 
 	/* (non-Javadoc)

@@ -3,7 +3,6 @@ package client.join;
 import java.util.Observable;
 
 import shared.models.CatanModel;
-import shared.models.Game;
 import client.base.Controller;
 import client.communication.ServerPoller;
 
@@ -35,7 +34,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 		else {
 			ServerPoller.getInstance().startTimer();
-			//Game game = CatanModel.getInstance().getGameManager().getGame();
 			CatanModel.getInstance().getGameManager().changed();
 		}
 	}

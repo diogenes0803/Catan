@@ -9,8 +9,8 @@ package shared.communicator;
  */
 public class FinishTurnParams {
 
-	private int playerIndex;
 	private String type;
+	private int playerIndex;
 	
 	public FinishTurnParams (int playerIndex) {
 		this.playerIndex = playerIndex;
