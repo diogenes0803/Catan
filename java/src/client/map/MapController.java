@@ -35,12 +35,15 @@ public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
 	private IState state;
+	private boolean setup1Initiated;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
 		
 		setRobView(robView);
+		
+		setup1Initiated = false;
 	}
 	
 	public IMapView getView() {
@@ -224,7 +227,7 @@ public class MapController extends Controller implements IMapController {
 		createRobber(game);
 		createWater(game);
 		
-		if (state == Setup1State.singleton || state == Setup2State.singleton) {
+		if (!setup1Initiated) {
 			startGame();
 		}
 		
@@ -376,8 +379,8 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if (state.equals(Setup1State.singleton)) {
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-
-			System.out.println(TurnTracker.getInstance().getStatus());
+			
+			setup1Initiated = true;
 			this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
 		}
 	}
