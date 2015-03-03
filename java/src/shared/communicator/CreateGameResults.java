@@ -1,6 +1,5 @@
 package shared.communicator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import shared.models.Player;

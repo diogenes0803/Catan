@@ -46,7 +46,7 @@ public class ChatController extends Controller implements IChatController {
 			LogEntry entry = new LogEntry(color,message);
 			entries.add(entry);
 		}
-		this.getView().setEntries(entries);
+		getView().setEntries(entries);
 	}
 
 }

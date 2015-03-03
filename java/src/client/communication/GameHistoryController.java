@@ -30,14 +30,11 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Game currentGame = CatanModel.getInstance().getGameManager().getGame();
-		Game updatedGame = (Game)arg;
-		if(updatedGame.getLogs().size() - currentGame.getLogs().size() != 0) {
-			updateFromModel(updatedGame);
-		}
+		updateFromModel();
 	}
 	
-	private void updateFromModel(Game game) {
+	private void updateFromModel() {
+		Game game = CatanModel.getInstance().getGameManager().getGame();
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		List<MessageLine> logs = game.getLogs();
 		for(MessageLine log : logs) {
