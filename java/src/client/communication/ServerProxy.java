@@ -243,6 +243,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     	JsonObject player = (JsonObject)playerArray.get(j);
                     	if (player != null)
                     	{
+                    		System.out.println("count");
 	                    	int playerId = player.get("id").getAsInt();
 	                    	CatanColor color = CatanColor.getCatanColor(player.get("color").getAsString());
 	                    	String name = player.get("name").getAsString();
