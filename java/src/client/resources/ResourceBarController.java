@@ -1,12 +1,17 @@
 package client.resources;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import shared.definitions.PieceType;
+import shared.definitions.ResourceType;
 import shared.models.Game;
+import shared.models.Piece;
 import client.base.Controller;
 import client.base.IAction;
+import client.communication.ServerProxy;
 
 
 /**
@@ -75,8 +80,48 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+
 		Game game = (Game)arg;
+//Resource
+		getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.WOOD));
+		getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.BRICK));
+		getView().setElementAmount(ResourceBarElement.SHEEP, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.SHEEP));
+		getView().setElementAmount(ResourceBarElement.WHEAT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.WHEAT));
+		getView().setElementAmount(ResourceBarElement.ORE, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getResCount(ResourceType.ORE));
+//Contructions
+		int cityNum = 0;
+		int settleNum = 0;
+		int roadNum = 0;
+		for(Piece piece : game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getAvailablePieces())
+		{
+			if(piece.getType()==PieceType.CITY)
+			{
+				cityNum++;
+			}else if(piece.getType()==PieceType.SETTLEMENT)
+			{
+				settleNum++;
+			}else if(piece.getType()==PieceType.ROAD)
+			{
+				roadNum++;
+			}
+			else if(piece.getType()==PieceType.ROBBER)
+			{
+				roadNum++;
+			}
+		}
+		
+		getView().setElementAmount(ResourceBarElement.ROAD, roadNum);
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, settleNum);
+		getView().setElementAmount(ResourceBarElement.CITY, cityNum);
+//Cards
+
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].canBuyDevCard());
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getId()].getNumMonumentPlayed());
+		
+		/**
+		 * For PLAY_CARD I don't know what to do, it seem
+		 */
+		
 		//WOOD, BRICK, SHEEP, WHEAT, ORE, ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, SOLDIERS
 	}
 
