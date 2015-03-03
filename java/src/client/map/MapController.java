@@ -3,9 +3,9 @@ package client.map;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Observable;
-
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
+import shared.communicator.RollNumberParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -34,7 +34,7 @@ import client.data.RobPlayerInfo;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
-	private IState state;
+	public static IState state;
 	private boolean setup1Initiated;
 	private boolean setup1Finished;
 	private boolean setup2Initiated;
@@ -237,9 +237,14 @@ public class MapController extends Controller implements IMapController {
 			startGame();
 		}
 		
-		System.out.println(Boolean.toString(setup1Finished));
 		if (setup1Finished && !setup2Initiated) {
 			startSetup2();
+		}
+		
+		if (state == RollingState.singleton) {
+			System.out.println("rolling");
+			CatanModel.getInstance().getGameManager().changed();
+			CatanModel.getInstance().getGameManager().notifyObservers();
 		}
 		
 }
@@ -354,12 +359,20 @@ public class MapController extends Controller implements IMapController {
 		
 	}
 
-	public IState getState() {
+	public static IState getState() {
 		return state;
 	}
 
-	public void setState(IState state) {
-		this.state = state;
+	public static void setState(IState state) {
+		MapController.state = state;
+	}
+	
+	public static void rollNumber(int number) {
+		
+		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+		
+		RollNumberParams params = new RollNumberParams(playerIndex, number);
+		state.rollNumber(null, params);
 	}
 	
 	public void setStateString(String status) {
