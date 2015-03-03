@@ -242,7 +242,6 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     for(int j=0; j<playerArray.size(); j++) {
                     	if (playerArray.get(j) != null)
                     	{
-                    		//System.out.println("Title: "+game_name + " count: "+j);
                     		JsonObject player = (JsonObject)playerArray.get(j);
                     		//Takes care of the case where there's a game waiting for players to join
                     		if (player.get("id") != null)
@@ -446,6 +445,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     @Override
     public ListAIResults listAI() {
 
+    	
         ListAIResults results = new ListAIResults();
 
         try {
