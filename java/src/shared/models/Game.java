@@ -30,6 +30,7 @@ public class Game {
     private int gameId;
     private TradeOffer tradeOffer;
     private int version = -1;
+    private int numberOfPlayers = 0;
 
     public boolean canBuildRoad(EdgeLocation location) {
         Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
@@ -741,6 +742,16 @@ public class Game {
     public void setVersion(int version) {
         this.version = version;
     }
+
+
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
+
+	public void setNumberOfPlayers(int numberOfPlayers) {
+		this.numberOfPlayers = numberOfPlayers;
+	}
 
 
 }

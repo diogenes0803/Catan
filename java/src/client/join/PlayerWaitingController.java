@@ -28,7 +28,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 
-		playersJoined = CatanModel.getInstance().getGameManager().getGame().getPlayers().length;
+		playersJoined = CatanModel.getInstance().getGameManager().getGame().getNumberOfPlayers();
 		if (playersJoined < 4) {
 			getView().showModal();
 		}

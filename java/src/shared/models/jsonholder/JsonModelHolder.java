@@ -22,6 +22,7 @@ public class JsonModelHolder {
     private int winner;
     private int version;
     private JsonTradeOffer tradeOffer;
+    private int numberOfPlayers = 0;
 
     public Game buildCatanGame() {
         Game game = new Game();
@@ -30,6 +31,7 @@ public class JsonModelHolder {
 
         game.setMap(createMap());
         game.setPlayers(createPlayerList());
+        game.setNumberOfPlayers(numberOfPlayers);
         game.setBank(new Bank(createBankResCards(), createBankDevCards()));
         game.setLogs(createLog());
         game.setChats(createChat());
@@ -225,6 +227,7 @@ public class JsonModelHolder {
 	            player.setResCards(resCards);
 	            player.setAvailablePieces(availablePieces);
 	            players[thisPlayer.getPlayerIndex()] = player;
+	            numberOfPlayers++;
         	}
         }
         return players;
