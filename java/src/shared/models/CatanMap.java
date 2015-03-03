@@ -170,11 +170,11 @@ public class CatanMap {
 		if(vertex1.getHasSettlement()) {
 			return vertex1.getSettlement();
 		}
-		else if(vertex2 != null) {
+		if(vertex2 != null) {
 			if(vertex2.getHasSettlement())
 				return vertex2.getSettlement();
 		}
-		else if(vertex3 != null) {
+		if(vertex3 != null) {
 			if(vertex3.getHasSettlement())
 				return vertex3.getSettlement();
 		}
@@ -271,9 +271,11 @@ public class CatanMap {
 		
 		for(Edge thisEdge : edges) {
 			if(thisEdge != null) {
-				if(thisEdge.getHasRoad())
-					if(thisEdge.getRoad().getOwnerPlayerIndex() == playerId)
+				Piece road = getRoadAt(thisEdge.getLocation());
+				if(road != null) {
+					if(road.getOwnerPlayerIndex() == playerId)
 						return true;
+				}
 			}
 		}
 		return false;
