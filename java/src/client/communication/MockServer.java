@@ -140,23 +140,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		//Game 1
 		Player player = new Player();
-		player.setUserId(0);
+		player.setPlayerId(0);
 		//player.setColor("orange");
 		//player.setName("Sam");
 		Player[] players = new Player[4];
 		players[0] = (player);
 		player = new Player();
-		player.setUserId(1);
+		player.setPlayerId(1);
 		//player.setColor("blue");
 		//player.setName("Brooke");
 		players[1] = player;
 		player = new Player();
-		player.setUserId(10);
+		player.setPlayerId(10);
 		//player.setColor("red");
 		//player.setName("Pete");
 		players[2] = player;
 		player = new Player();
-		player.setUserId(11);
+		player.setPlayerId(11);
 		//player.setColor("Green");
 		//player.setName("Mark");
 		players[3] = player;
@@ -169,23 +169,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		//Game 2
 		player = new Player();
-		player.setUserId(10);
+		player.setPlayerId(10);
 		//player.setColor("orange");
 		//player.setName("Pete");
 		players = new Player[4];
 		players[0] = player;
 		player = new Player();
-		player.setUserId(-2);
+		player.setPlayerId(-2);
 		//player.setColor("red");
 		//player.setName("Quinn");
 		players[1] = player;
 		player = new Player();
-		player.setUserId(-3);
+		player.setPlayerId(-3);
 		//player.setColor("blue");
 		//player.setName("Steve");
 		players[2] = player;
 		player = new Player();
-		player.setUserId(-4);
+		player.setPlayerId(-4);
 		//player.setColor("green");
 		//player.setName("Ken");
 		players[3] = player;
@@ -198,23 +198,23 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		
 		//Game 3
 		player = new Player();
-		player.setUserId(0);
+		player.setPlayerId(0);
 		//player.setColor("orange");
 		//player.setName("Sam");
 		players = new Player[4];
 		players[0] = player;
 		player = new Player();
-		player.setUserId(1);
+		player.setPlayerId(1);
 		//player.setColor("blue");
 		//player.setName("Brooke");
 		players[1] = player;
 		player = new Player();
-		player.setUserId(10);
+		player.setPlayerId(10);
 		//player.setColor("red");
 		//player.setName("Pete");
 		players[2] = player;
 		player = new Player();
-		player.setUserId(11);
+		player.setPlayerId(11);
 		//player.setColor("Green");
 		//player.setName("Mark");
 		players[3] = player;
@@ -644,7 +644,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
 		Player[] players = new Player[4];
 		
 		Player player = new Player();
-		player.setUserId(0);
+		player.setPlayerId(0);
 		player.setColor(CatanColor.RED);
 		player.setPlayerId(12);
 		player.setVictoryPoint(0);

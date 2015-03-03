@@ -649,7 +649,7 @@ public class Game {
 	
 	public int getPlayerIndexByPlayerId(int playerId) {
 		for(int i = 0; i < players.length; i++) {
-			if(players[i].getUserId() == playerId) {
+			if(players[i].getPlayerId() == playerId) {
 				return i;
 			}
 		}

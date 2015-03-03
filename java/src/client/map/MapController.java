@@ -259,8 +259,6 @@ public class MapController extends Controller implements IMapController {
 		else if (state.equals(Setup1State.singleton)) {
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
 			
-			System.out.println(TurnTracker.getInstance().getCurrentTurn());
-			System.out.println(playerInfo.getPlayerIndex());
 			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
 				System.out.println(TurnTracker.getInstance().getStatus());
 				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);

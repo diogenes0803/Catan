@@ -14,7 +14,6 @@ import shared.definitions.ResourceType;
 
 public class Player {
 	
-	private int userId;
 	private int playerId;
 	private String name;
 	private List<ResCard> resCards;
@@ -99,14 +98,6 @@ public class Player {
 		else{
 			return false;
 		}	
-	}
-	
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 	public int getPlayerId() {
