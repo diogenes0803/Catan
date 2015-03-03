@@ -131,98 +131,101 @@ public class JsonModelHolder {
     private Player[] createPlayerList() {
         Player[] players = new Player[4];
         for (JsonPlayer thisPlayer : this.players) {
-            Player player = new Player();
-            player.setColor(CatanColor.getCatanColor(thisPlayer.getColor()));
-            player.setNumMonumentPlayed(thisPlayer.getMonuments());
-            player.setNumSoldierPlayed(thisPlayer.getSoldiers());
-            player.setPlayerId(thisPlayer.getPlayerID());
-            player.setVictoryPoint(thisPlayer.getVictoryPoints());
-            player.setPlayedDevCard(thisPlayer.isPlayedDevCard());
-            player.setDiscarded(thisPlayer.isDiscarded());
-            player.setName(thisPlayer.getName());
-            List<ResCard> resCards = new ArrayList<ResCard>();
-            List<DevCard> devCards = new ArrayList<DevCard>();
-            List<Piece> availablePieces = new ArrayList<Piece>();
-            for (int i = 0; i < thisPlayer.getResources().getBrick(); i++) {
-                ResCard thisCard = new ResCard(ResourceType.BRICK);
-                resCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getResources().getOre(); i++) {
-                ResCard thisCard = new ResCard(ResourceType.ORE);
-                resCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getResources().getSheep(); i++) {
-                ResCard thisCard = new ResCard(ResourceType.SHEEP);
-                resCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getResources().getWheat(); i++) {
-                ResCard thisCard = new ResCard(ResourceType.WHEAT);
-                resCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getResources().getWood(); i++) {
-                ResCard thisCard = new ResCard(ResourceType.WOOD);
-                resCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getNewDevCards().getMonopoly(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.MONOPOLY, false);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getNewDevCards().getMonument(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.MONUMENT, false);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getNewDevCards().getRoadBuilding(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.ROAD_BUILD, false);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getNewDevCards().getSoldier(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.SOLDIER, false);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getNewDevCards().getYearOfPlenty(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.YEAR_OF_PLENTY,
-                        false);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getOldDevCards().getMonopoly(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.MONOPOLY, true);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getOldDevCards().getMonument(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.MONUMENT, true);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getOldDevCards().getRoadBuilding(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.ROAD_BUILD, true);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getOldDevCards().getSoldier(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.SOLDIER, true);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getOldDevCards().getYearOfPlenty(); i++) {
-                DevCard thisCard = new DevCard(DevCardType.YEAR_OF_PLENTY, true);
-                devCards.add(thisCard);
-            }
-            for (int i = 0; i < thisPlayer.getRoads(); i++) {
-                Piece thisRoad = new Piece(PieceType.ROAD,
-                        thisPlayer.getPlayerID());
-                availablePieces.add(thisRoad);
-            }
-            for (int i = 0; i < thisPlayer.getCities(); i++) {
-                Piece thisCity = new Piece(PieceType.CITY,
-                        thisPlayer.getPlayerID());
-                availablePieces.add(thisCity);
-            }
-            for (int i = 0; i < thisPlayer.getSettlements(); i++) {
-                Piece thisSettlement = new Piece(PieceType.SETTLEMENT,
-                        thisPlayer.getPlayerID());
-                availablePieces.add(thisSettlement);
-            }
-            player.setDevCards(devCards);
-            player.setResCards(resCards);
-            player.setAvailablePieces(availablePieces);
-            players[thisPlayer.getPlayerIndex()] = player;
+        	if (thisPlayer != null)
+        	{
+	            Player player = new Player();
+	            player.setColor(CatanColor.getCatanColor(thisPlayer.getColor()));
+	            player.setNumMonumentPlayed(thisPlayer.getMonuments());
+	            player.setNumSoldierPlayed(thisPlayer.getSoldiers());
+	            player.setPlayerId(thisPlayer.getPlayerID());
+	            player.setVictoryPoint(thisPlayer.getVictoryPoints());
+	            player.setPlayedDevCard(thisPlayer.isPlayedDevCard());
+	            player.setDiscarded(thisPlayer.isDiscarded());
+	            player.setName(thisPlayer.getName());
+	            List<ResCard> resCards = new ArrayList<ResCard>();
+	            List<DevCard> devCards = new ArrayList<DevCard>();
+	            List<Piece> availablePieces = new ArrayList<Piece>();
+	            for (int i = 0; i < thisPlayer.getResources().getBrick(); i++) {
+	                ResCard thisCard = new ResCard(ResourceType.BRICK);
+	                resCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getResources().getOre(); i++) {
+	                ResCard thisCard = new ResCard(ResourceType.ORE);
+	                resCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getResources().getSheep(); i++) {
+	                ResCard thisCard = new ResCard(ResourceType.SHEEP);
+	                resCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getResources().getWheat(); i++) {
+	                ResCard thisCard = new ResCard(ResourceType.WHEAT);
+	                resCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getResources().getWood(); i++) {
+	                ResCard thisCard = new ResCard(ResourceType.WOOD);
+	                resCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getNewDevCards().getMonopoly(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.MONOPOLY, false);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getNewDevCards().getMonument(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.MONUMENT, false);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getNewDevCards().getRoadBuilding(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.ROAD_BUILD, false);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getNewDevCards().getSoldier(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.SOLDIER, false);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getNewDevCards().getYearOfPlenty(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.YEAR_OF_PLENTY,
+	                        false);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getOldDevCards().getMonopoly(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.MONOPOLY, true);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getOldDevCards().getMonument(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.MONUMENT, true);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getOldDevCards().getRoadBuilding(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.ROAD_BUILD, true);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getOldDevCards().getSoldier(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.SOLDIER, true);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getOldDevCards().getYearOfPlenty(); i++) {
+	                DevCard thisCard = new DevCard(DevCardType.YEAR_OF_PLENTY, true);
+	                devCards.add(thisCard);
+	            }
+	            for (int i = 0; i < thisPlayer.getRoads(); i++) {
+	                Piece thisRoad = new Piece(PieceType.ROAD,
+	                        thisPlayer.getPlayerID());
+	                availablePieces.add(thisRoad);
+	            }
+	            for (int i = 0; i < thisPlayer.getCities(); i++) {
+	                Piece thisCity = new Piece(PieceType.CITY,
+	                        thisPlayer.getPlayerID());
+	                availablePieces.add(thisCity);
+	            }
+	            for (int i = 0; i < thisPlayer.getSettlements(); i++) {
+	                Piece thisSettlement = new Piece(PieceType.SETTLEMENT,
+	                        thisPlayer.getPlayerID());
+	                availablePieces.add(thisSettlement);
+	            }
+	            player.setDevCards(devCards);
+	            player.setResCards(resCards);
+	            player.setAvailablePieces(availablePieces);
+	            players[thisPlayer.getPlayerIndex()] = player;
+        	}
         }
         return players;
     }
