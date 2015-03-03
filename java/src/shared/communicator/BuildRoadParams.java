@@ -11,14 +11,14 @@ import shared.locations.EdgeLocation;
  */
 public class BuildRoadParams {
 
-	private int playerIndex;
-	private EdgeLocation roadLocation;
-	private boolean free;
 	private String type;
+	private int playerIndex;
+	private JsonFriendlyEdgeLocation roadLocation;
+	private boolean free;
 	
 	public BuildRoadParams(int playerIndex, EdgeLocation roadLocation, boolean free) {
 		this.playerIndex = playerIndex;
-		this.roadLocation = roadLocation;
+		this.setRoadLocation(new JsonFriendlyEdgeLocation(roadLocation));
 		this.free = free;
 		setType("buildRoad");
 	}
@@ -35,20 +35,6 @@ public class BuildRoadParams {
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
-	}
-
-	/**
-	 * @return the roadLocation
-	 */
-	public EdgeLocation getRoadLocation() {
-		return roadLocation;
-	}
-
-	/**
-	 * @param roadLocation the roadLocation to set
-	 */
-	public void setRoadLocation(EdgeLocation roadLocation) {
-		this.roadLocation = roadLocation;
 	}
 
 	/**
@@ -71,6 +57,14 @@ public class BuildRoadParams {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public JsonFriendlyEdgeLocation getRoadLocation() {
+		return roadLocation;
+	}
+
+	public void setRoadLocation(JsonFriendlyEdgeLocation roadLocation) {
+		this.roadLocation = roadLocation;
 	}
 	
 }
