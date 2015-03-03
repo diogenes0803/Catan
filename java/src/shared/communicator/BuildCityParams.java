@@ -11,13 +11,13 @@ import shared.locations.VertexLocation;
  */
 public class BuildCityParams {
 
-	private int playerIndex;
-	private VertexLocation vertexLocation;
 	private String type;
+	private int playerIndex;
+	private JsonFriendlyVertexLocation vertexLocation;
 	
 	public BuildCityParams(int playerIndex, VertexLocation vertexLocation) {
 		this.playerIndex = playerIndex;
-		this.vertexLocation = vertexLocation;
+		this.setVertexLocation(new JsonFriendlyVertexLocation(vertexLocation));
 		setType("buildCity");
 	}
 
@@ -38,14 +38,14 @@ public class BuildCityParams {
 	/**
 	 * @return the vertexLocation
 	 */
-	public VertexLocation getVertexLocation() {
+	public JsonFriendlyVertexLocation getVertexLocation() {
 		return vertexLocation;
 	}
 
 	/**
 	 * @param vertexLocation the vertexLocation to set
 	 */
-	public void setVertexLocation(VertexLocation vertexLocation) {
+	public void setVertexLocation(JsonFriendlyVertexLocation vertexLocation) {
 		this.vertexLocation = vertexLocation;
 	}
 
