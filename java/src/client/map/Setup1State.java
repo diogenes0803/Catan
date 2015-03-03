@@ -72,8 +72,9 @@ public class Setup1State implements IState {
 	@Override
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
-		CatanModel.setInstance(ServerProxy.getInstance().buildSettlement(params));
+		Game game = ServerProxy.getInstance().buildSettlement(params).getGameManager().getGame();
 		controller.setState(Setup2State.singleton);
+		CatanModel.getInstance().getGameManager().setGame(game);
 	}
 
 	/* (non-Javadoc)

@@ -11,14 +11,14 @@ import shared.locations.VertexLocation;
  */
 public class BuildSettlementParams {
 
-	private int playerIndex;
-	private VertexLocation vertexLocation;
-	private boolean free;
 	private String type;
+	private int playerIndex;
+	private JsonFriendlyVertexLocation vertexLocation;
+	private boolean free;
 	
 	public BuildSettlementParams(int playerIndex, VertexLocation vertexLocation, boolean free) {
 		this.playerIndex = playerIndex;
-		this.vertexLocation = vertexLocation;
+		this.setVertexLocation(new JsonFriendlyVertexLocation(vertexLocation));
 		this.free = free;
 		setType("buildSettlement");
 	}
@@ -35,20 +35,6 @@ public class BuildSettlementParams {
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
-	}
-
-	/**
-	 * @return the vertexLocation
-	 */
-	public VertexLocation getVertexLocation() {
-		return vertexLocation;
-	}
-
-	/**
-	 * @param vertexLocation the vertexLocation to set
-	 */
-	public void setVertexLocation(VertexLocation vertexLocation) {
-		this.vertexLocation = vertexLocation;
 	}
 
 	/**
@@ -71,6 +57,14 @@ public class BuildSettlementParams {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public JsonFriendlyVertexLocation getVertexLocation() {
+		return vertexLocation;
+	}
+
+	public void setVertexLocation(JsonFriendlyVertexLocation vertexLocation) {
+		this.vertexLocation = vertexLocation;
 	}
 	
 }
