@@ -99,6 +99,29 @@ public class Player {
             return false;
         }
     }
+    
+    
+    /**
+     * Check if user have enough resources and is on turn to buy a Development Card
+     *
+     * @return true if possible false if not
+     */
+    public boolean canPlayerDevCardType(DevCardType devCardType) {
+        	   
+	   		for(DevCard devCard : devCards)
+	   		{
+	   			if(devCard.getType() == devCardType)
+	   			{
+	   				if(devCard.isOld() == true)
+	   				{
+	   					System.out.println("Aqui dentro");
+	   					return true;
+	   				}
+	   				
+	   			}
+	   		}
+        	return false;
+   }
 
     public int getPlayerId() {
         return playerId;
