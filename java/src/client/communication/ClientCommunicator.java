@@ -41,10 +41,9 @@ public class ClientCommunicator {
 	 * @return boolean true meaning message sent, or Exception thrown indicating error.
 	 * @post
 	 */
-	public HttpURLResponse post(String urlCommand, Object params, String cookie) throws ClientException{
+	public boolean post(String urlCommand, Object params, String cookie) throws ClientException{
 	    URL url;
-	    HttpURLConnection connection = null; 
-	    HttpURLResponse result = new HttpURLResponse();
+	    HttpURLConnection connection = null;  
 	    try {
 	      //Create connection
 	      url = new URL("http://"+host+":"+port+urlCommand);
@@ -82,21 +81,15 @@ public class ClientCommunicator {
 
           requestBody.close();//closing the stream causes the msg to be sent.
 
-          if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-              String e_result = convertStreamToString(new BufferedInputStream(
-                      connection.getInputStream())); 
-              result.setResponseBody(e_result);
-              result.setResponseLength(e_result.length());
-              result.setResponseCode(connection.getResponseCode());
-              result.setHeaderFields(connection.getHeaderFields());
-              return result;
+          if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {  
+             return true;
 
           } else {
             // SERVER RETURNED AN ERROR
-            String error = convertStreamToString(new BufferedInputStream(
+            String result = convertStreamToString(new BufferedInputStream(
                     connection.getErrorStream()));
             throw new Exception("Server Response was "+connection.getResponseCode()+".\n"+
-            		error);
+              result);
           }
 	      
 	    } catch (Exception e) {
