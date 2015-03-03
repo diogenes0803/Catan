@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Observable;
 
+import shared.communicator.BuildRoadParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -71,11 +72,9 @@ public class MapController extends Controller implements IMapController {
 					if(token != 0) {
 						getView().addNumber(thisTile.getLocation(), token);
 					}
-					System.out.println("Step 1");
 					HexType hexType = thisTile.getHexType();
 					HexLocation hexLoc = thisTile.getLocation();
 					getView().addHex(hexLoc, hexType);
-					System.out.println("Step 2");
 					Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
 					while(itEdge.hasNext()) {
 						Edge thisEdge = itEdge.next().getValue();
@@ -84,7 +83,6 @@ public class MapController extends Controller implements IMapController {
 							getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
 						}
 					}
-					System.out.println("Step 3");
 					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
 					while(itVertex.hasNext()) {
 						Vertex thisVertex = itVertex.next().getValue();
@@ -98,7 +96,6 @@ public class MapController extends Controller implements IMapController {
 							}
 						}
 					}
-					System.out.println("Step 4");
 				}
 				else
 					continue;
@@ -112,18 +109,12 @@ public class MapController extends Controller implements IMapController {
 			EdgeLocation thisLoc = thisEntry.getKey();
 			getView().addPort(thisLoc, thisPort.getType());
 		}
-		System.out.println("Step 5");
 		
 		getView().placeRobber(game.getMap().getRobberLocation());
-		System.out.println("Step 6");
 		
 		//</temp>
 		
 		continueGame();
-	}
-	
-	private void drawRoad() {
-		
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -172,8 +163,12 @@ public class MapController extends Controller implements IMapController {
 	public void placeRoad(EdgeLocation edgeLoc) {
 		Game game = CatanModel.getInstance().getGameManager().getGame();
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
 		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
 		getView().placeRoad(edgeLoc, thisColor);
+		
+		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
+		ServerProxy.getInstance().buildRoad(params);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -222,7 +217,9 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Updated");
+		int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
+		int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
+		ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
 		initFromModel();
 		
 	}
@@ -261,9 +258,12 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if (state.equals(Setup1State.singleton)) {
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+			
+			System.out.println(TurnTracker.getInstance().getCurrentTurn());
+			System.out.println(playerInfo.getPlayerIndex());
 			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
+				System.out.println(TurnTracker.getInstance().getStatus());
 				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
-				this.getView().startDrop(PieceType.SETTLEMENT, playerInfo.getColor(), false);
 			}
 		}
 	}
