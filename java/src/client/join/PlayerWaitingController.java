@@ -66,15 +66,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().setPlayers(playerInfo);
 		}
 		else {
-			ServerPoller.getInstance().startTimer();
+			//was poller
 			CatanModel.getInstance().getGameManager().changed();
 		}
+		ServerPoller.getInstance().startTimer();
 	}
 
 	@Override
 	public void addAI() {
 
-		//ServerProxy.getInstance().AddAI(getView().getSelectedAI());
+		ServerProxy.getInstance().AddAI(getView().getSelectedAI());
 
 		playersJoined = CatanModel.getInstance().getGameManager().getGame().getNumberOfPlayers();
 		if (playersJoined == 4) {
