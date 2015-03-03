@@ -37,6 +37,7 @@ public class ChatController extends Controller implements IChatController {
 	@Override
 	public void update(Observable o, Object arg) {
 		Game thisGame = (Game)arg;
+		System.out.println("hey");
 		ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
 		for (MessageLine line : thisGame.getChats()) {
 			String message = line.getMessage();

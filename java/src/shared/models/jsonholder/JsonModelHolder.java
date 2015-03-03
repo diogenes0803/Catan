@@ -307,16 +307,17 @@ public class JsonModelHolder {
 	}
 
 	private List<MessageLine> createChat() {
-		List<Line> lines = chat.getLines();
-		List<MessageLine> chat = new ArrayList<MessageLine>();
+		List<Line> lines = this.chat.getLines();
+		List<MessageLine> chatReturn = new ArrayList<MessageLine>();
 		if (lines != null) {
 			for (Line thisLine : lines) {
+				System.out.println("Should be chats here after something is sent");
 				MessageLine messageLine = new MessageLine(thisLine.getSource(),
 						thisLine.getMessage());
-				chat.add(messageLine);
+				chatReturn.add(messageLine);
 			}
 		}
-		return chat;
+		return chatReturn;
 	}
 
 	public EdgeDirection stringToEdgeDirection(String direction) {
