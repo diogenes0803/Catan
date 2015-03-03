@@ -61,7 +61,14 @@ public class CatanMap {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlementAt(int playerId, VertexLocation vertexLocation) {
-
+		if(getSettlementAt(vertexLocation) != null)
+			return false;
+		else {
+			if(vertexHasNeighboringSettlement(vertexLocation))
+				return false;
+			else if(playerHasNeighboringRoad(playerId, vertexLocation))
+				return true;
+		}
 		return false;
 	}
 
@@ -190,6 +197,145 @@ public class CatanMap {
 			}
 		}
 		return null;
+	}
+	
+	private boolean vertexHasNeighboringSettlement(VertexLocation vLoc) {
+		Vertex[] vertices = getNeighboringVertices(vLoc);
+		for(Vertex thisVertex : vertices) {
+			if(thisVertex != null) {
+				Piece settlement = getSettlementAt(thisVertex.getLocation());
+				if(settlement != null)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean playerHasNeighboringRoad(int playerId, VertexLocation vLoc) {
+		HexTile thisTile = getHexTileAt(vLoc.getHexLoc());
+		HexTile neighborTile = null;
+		Edge edge1 = null;
+		Edge edge2 = null;
+		Edge edge3 = null;
+		int x = thisTile.getLocation().getX();
+		int y = thisTile.getLocation().getY();
+		
+		switch(vLoc.getDir()) {
+			case NorthEast:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.North);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.NorthEast);
+				neighborTile = getHexTileAt(new HexLocation(x, y-1));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.SouthEast);
+				break;
+			case East:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.NorthEast);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.SouthEast);
+				neighborTile = getHexTileAt(new HexLocation(x+1, y));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.North);
+				break;
+			case SouthEast:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.SouthEast);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.South);
+				neighborTile = getHexTileAt(new HexLocation(x, y+1));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.NorthEast);
+				break;
+			case SouthWest:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.South);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.SouthWest);
+				neighborTile = getHexTileAt(new HexLocation(x, y+1));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.NorthWest);
+				break;
+			case West:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.SouthWest);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.NorthWest);
+				neighborTile = getHexTileAt(new HexLocation(x-1, y));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.South);
+				break;
+			case NorthWest:
+				edge1 = thisTile.getEdgeAt(EdgeDirection.NorthWest);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.North);
+				neighborTile = getHexTileAt(new HexLocation(x, y-1));
+				if(neighborTile != null)
+					edge3 = neighborTile.getEdgeAt(EdgeDirection.SouthWest);
+				break;
+		}
+		Edge[] edges = new Edge[3];
+		edges[0] = edge1;
+		edges[1] = edge2;
+		edges[2] = edge3;
+		
+		for(Edge thisEdge : edges) {
+			if(thisEdge != null) {
+				if(thisEdge.getHasRoad())
+					if(thisEdge.getRoad().getOwnerPlayerIndex() == playerId)
+						return true;
+			}
+		}
+		return false;
+	}
+	
+	private Vertex[] getNeighboringVertices(VertexLocation vLoc) {
+		Vertex[] vertices = new Vertex[3];
+		HexTile thisTile = getHexTileAt(vLoc.getHexLoc());
+		HexTile neighborTile = null;
+		Vertex vertex1 = null;
+		Vertex vertex2 = null;
+		Vertex vertex3 = null;
+		int x = thisTile.getLocation().getX();
+		int y = thisTile.getLocation().getY();
+		switch(vLoc.getDir()) {
+			case NorthEast:
+				vertex1 = thisTile.getVertexAt(VertexDirection.NorthWest);
+				vertex2 = thisTile.getVertexAt(VertexDirection.East);
+				neighborTile = getHexTileAt(new HexLocation(x, y-1));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.East);
+				break;
+			case East:
+				vertex1 = thisTile.getVertexAt(VertexDirection.NorthEast);
+				vertex2 = thisTile.getVertexAt(VertexDirection.SouthEast);
+				neighborTile = getHexTileAt(new HexLocation(x+1, y));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.NorthEast);
+				break;
+			case SouthEast:
+				vertex1 = thisTile.getVertexAt(VertexDirection.East);
+				vertex2 = thisTile.getVertexAt(VertexDirection.SouthWest);
+				neighborTile = getHexTileAt(new HexLocation(x, y+1));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.East);
+				break;
+			case SouthWest:
+				vertex1 = thisTile.getVertexAt(VertexDirection.SouthEast);
+				vertex2 = thisTile.getVertexAt(VertexDirection.West);
+				neighborTile = getHexTileAt(new HexLocation(x, y+1));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.West);
+				break;
+			case West:
+				vertex1 = thisTile.getVertexAt(VertexDirection.SouthWest);
+				vertex2 = thisTile.getVertexAt(VertexDirection.NorthWest);
+				neighborTile = getHexTileAt(new HexLocation(x-1, y));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.SouthWest);
+				break;
+			case NorthWest:
+				vertex1 = thisTile.getVertexAt(VertexDirection.West);
+				vertex2 = thisTile.getVertexAt(VertexDirection.NorthEast);
+				neighborTile = getHexTileAt(new HexLocation(x, y-1));
+				if(neighborTile != null)
+					vertex3 = neighborTile.getVertexAt(VertexDirection.West);
+				break;
+		}
+		vertices[0] = vertex1;
+		vertices[1] = vertex2;
+		vertices[2] = vertex3;
+		return vertices;
 	}
 	
 	private boolean playerHasNeighboringRoad(int playerId, EdgeLocation eLoc) {
