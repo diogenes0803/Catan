@@ -157,7 +157,6 @@ public class MapController extends Controller implements IMapController {
 
 	protected void createTitles(Game game){
 		
-		System.out.println("Radius: " + game.getMap().getRadius());
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
 			int maxY = game.getMap().getRadius() - x;			
 			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {		
