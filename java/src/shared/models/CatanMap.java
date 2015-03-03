@@ -32,31 +32,24 @@ public class CatanMap {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoadAt(int playerId, EdgeLocation edgeLocation) {
-		HexTile thisTile = getHexTileAt(edgeLocation.getHexLoc());
-		HexTile neighborTile = getHexTileAt(thisTile.getLocation().getNeighborLoc(edgeLocation.getDir()));
-		
-		if (thisTile.getEdgeAt(edgeLocation.getDir()).getHasRoad()) {
+		if(getRoadAt(edgeLocation) != null)
 			return false;
-		} 
-		else if(neighborTile.getEdgeAt(edgeLocation.getDir().getOppositeDirection()).getHasRoad()) {
-			return false;
-		}
-		else if (TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {
-			return true;
-		}
 		else {
-			if (playerHasRoadOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
-				return true;
-			else if (playerHasSettlementOnNeighborAt(playerId, edgeLocation.getDir(), thisTile))
-				return true;
-			else if (neighborTile != null) {
-				if (playerHasRoadOnNeighborAt(playerId, edgeLocation.getDir(), neighborTile))
+			if(TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {
+				if(playerHasNeighboringRoad(playerId, edgeLocation))
 					return true;
-				else if (playerHasSettlementOnNeighborAt(playerId, edgeLocation.getDir(), neighborTile))
+				else if(edgeHasNeighboringSettlementOfOthers(playerId, edgeLocation))
+					return false;
+				else
+					return true;
+			}
+			else {
+				if(playerHasNeighboringRoad(playerId, edgeLocation))
+					return true;
+				else if(playerHasNeighboringSettlementAt(playerId, edgeLocation))
 					return true;
 			}
 		}
-
 		return false;
 
 	}
@@ -68,73 +61,8 @@ public class CatanMap {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlementAt(int playerId, VertexLocation vertexLocation) {
-		HexTile thisTile = getHexTileAt(vertexLocation.getHexLoc());
-		EdgeDirection dir1 = null;
-		EdgeDirection dir2 = null;
-		VertexDirection vdir1 = null;
-		VertexDirection vdir2 = null;
-		Vertex thisVertex = thisTile.getVertices().get(vertexLocation.getDir());
-		if (thisVertex.getHasSettlement()) {
-			return false;
-		}
-		if(locationHasNeighboringSettlement(thisVertex)) {
-			return false;
-		}
-		switch (vertexLocation.getDir()) {
-		case NorthEast:
-			dir1 = EdgeDirection.North;
-			dir2 = EdgeDirection.NorthEast;
-			vdir1 = VertexDirection.SouthEast;
-			vdir2 = VertexDirection.West;
-			break;
-		case East:
-			dir1 = EdgeDirection.NorthEast;
-			dir2 = EdgeDirection.SouthEast;
-			vdir1 = VertexDirection.SouthWest;
-			vdir2 = VertexDirection.NorthWest;
-			break;
-		case SouthEast:
-			dir1 = EdgeDirection.SouthEast;
-			dir2 = EdgeDirection.South;
-			vdir1 = VertexDirection.West;
-			vdir2 = VertexDirection.NorthEast;
-			break;
-		case SouthWest:
-			dir1 = EdgeDirection.South;
-			dir2 = EdgeDirection.SouthWest;
-			vdir1 = VertexDirection.NorthWest;
-			vdir2 = VertexDirection.East;
-			break;
-		case West:
-			dir1 = EdgeDirection.SouthWest;
-			dir1 = EdgeDirection.NorthWest;
-			vdir1 = VertexDirection.NorthEast;
-			vdir2 = VertexDirection.SouthEast;
-			break;
-		case NorthWest:
-			dir1 = EdgeDirection.NorthWest;
-			dir2 = EdgeDirection.North;
-			vdir1 = VertexDirection.East;
-			vdir2 = VertexDirection.SouthWest;
-			break;
-		default:
-			break;
-		}
-		HexTile neighborTile1 = getHexTileAt(thisTile.getLocation()
-				.getNeighborLoc(dir1));
-		HexTile neighborTile2 = getHexTileAt(thisTile.getLocation()
-				.getNeighborLoc(dir2));
-		
-		if (playerHasRoadOnNeighborAt(playerId, vertexLocation.getDir(), thisTile)) {
-			return true;
-		} else if (playerHasRoadOnNeighborAt(playerId, vdir1, neighborTile1)) {
-			return true;
-		} else if (playerHasRoadOnNeighborAt(playerId, vdir2, neighborTile2)) {
-			return true;
-		}
 
 		return false;
-
 	}
 
 	/**
@@ -170,227 +98,215 @@ public class CatanMap {
 		}
 	}
 	
-	public boolean playerHasRoadOnNeighborAt(int playerId, EdgeDirection direction, HexTile tile) {
+	
+	private Piece getSettlementAt(VertexLocation vLoc) {
+		HexTile hexTile1 = getHexTileAt(vLoc.getHexLoc());
+		HexTile hexTile2 = null;
+		HexTile hexTile3 = null;
+		Vertex vertex1 = hexTile1.getVertexAt(vLoc.getDir());
+		Vertex vertex2 = null;
+		Vertex vertex3 = null;
+		int x = hexTile1.getLocation().getX();
+		int y = hexTile1.getLocation().getY();
+		switch(vLoc.getDir()) {
+			case NorthEast :
+				hexTile2 = getHexTileAt(new HexLocation(x+1, y-1));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.West);
+				hexTile3 = getHexTileAt(new HexLocation(x, y-1));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.SouthEast);
+				break;
+			case East :
+				hexTile2 = getHexTileAt(new HexLocation(x+1, y-1));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.SouthWest);
+				hexTile3 = getHexTileAt(new HexLocation(x, y-1));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.NorthWest);
+				break;
+			case SouthEast :
+				hexTile2 = getHexTileAt(new HexLocation(x+1, y));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.West);
+				hexTile3 = getHexTileAt(new HexLocation(x, y+1));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.NorthEast);
+				break;
+			case SouthWest :
+				hexTile2 = getHexTileAt(new HexLocation(x, y+1));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.NorthWest);
+				hexTile3 = getHexTileAt(new HexLocation(x-1, y+1));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.East);
+				break;
+			case West :
+				hexTile2 = getHexTileAt(new HexLocation(x-1, y+1));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.NorthEast);
+				hexTile3 = getHexTileAt(new HexLocation(x-1, y));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.SouthEast);
+				break;
+			case NorthWest :
+				hexTile2 = getHexTileAt(new HexLocation(x-1, y));
+				if(hexTile2 != null)
+					vertex2 = hexTile2.getVertexAt(VertexDirection.East);
+				hexTile3 = getHexTileAt(new HexLocation(x, y-1));
+				if(hexTile3 != null)
+					vertex3 = hexTile3.getVertexAt(VertexDirection.SouthWest);
+				break;
+			default:
+				return null;
+		}
+		if(vertex1.getHasSettlement()) {
+			return vertex1.getSettlement();
+		}
+		else if(vertex2 != null) {
+			if(vertex2.getHasSettlement())
+				return vertex2.getSettlement();
+		}
+		else if(vertex3 != null) {
+			if(vertex3.getHasSettlement())
+				return vertex3.getSettlement();
+		}
+		
+		return null;
+		
+	}
+	
+	private Piece getRoadAt(EdgeLocation eLoc) {
+		HexTile hexTile1 = getHexTileAt(eLoc.getHexLoc());
+		Edge edge1 = hexTile1.getEdgeAt(eLoc.getDir());
+		if(edge1.getHasRoad())
+			return edge1.getRoad();
+		else {
+			HexTile hexTile2 = getHexTileAt(hexTile1.getLocation().getNeighborLoc(eLoc.getDir()));
+			if(hexTile2 != null) {
+				Edge edge2 = hexTile2.getEdgeAt(eLoc.getDir().getOppositeDirection());
+				if(edge2.getHasRoad())
+					return edge2.getRoad();
+			}
+		}
+		return null;
+	}
+	
+	private boolean playerHasNeighboringRoad(int playerId, EdgeLocation eLoc) {
+		HexTile thisTile = getHexTileAt(eLoc.getHexLoc());
+		HexTile neighborTile = getHexTileAt(eLoc.getHexLoc().getNeighborLoc(eLoc.getDir()));
 		Edge edge1 = null;
 		Edge edge2 = null;
 		Edge edge3 = null;
 		Edge edge4 = null;
-		boolean result = false;
-		switch(direction) {
+		switch(eLoc.getDir()) {
 			case North:
-				edge1 = tile.getEdges().get(EdgeDirection.NorthWest);
-				edge2 = tile.getEdges().get(EdgeDirection.NorthEast);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.NorthEast);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.NorthWest);
 				break;
 			case NorthEast:
-				edge1 = tile.getEdges().get(EdgeDirection.North);
-				edge2 = tile.getEdges().get(EdgeDirection.SouthEast);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.North);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.SouthEast);
 				break;
 			case SouthEast:
-				edge1 = tile.getEdges().get(EdgeDirection.NorthEast);
-				edge2 = tile.getEdges().get(EdgeDirection.South);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.NorthEast);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.South);
 				break;
 			case South:
-				edge1 = tile.getEdges().get(EdgeDirection.SouthEast);
-				edge2 = tile.getEdges().get(EdgeDirection.SouthWest);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.SouthEast);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.SouthWest);
 				break;
 			case SouthWest:
-				edge1 = tile.getEdges().get(EdgeDirection.NorthWest);
-				edge2 = tile.getEdges().get(EdgeDirection.South);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.South);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.NorthWest);
 				break;
 			case NorthWest:
-				edge1 = tile.getEdges().get(EdgeDirection.North);
-				edge2 = tile.getEdges().get(EdgeDirection.SouthWest);
+				edge1 = thisTile.getEdgeAt(EdgeDirection.North);
+				edge2 = thisTile.getEdgeAt(EdgeDirection.SouthWest);
 				break;
 			default:
 				break;
 		}
-			
-		if(edge1.getHasRoad()) {
-			if(edge1.getRoad().getOwnerPlayerIndex() == playerId)
-				result = true;
+		if(neighborTile != null) {
+			edge3 = neighborTile.getEdgeAt(edge1.getLocation().getDir().getOppositeDirection());
+			edge4 = neighborTile.getEdgeAt(edge2.getLocation().getDir().getOppositeDirection());
 		}
-		if(edge2.getHasRoad()) {
-			if(edge2.getRoad().getOwnerPlayerIndex() == playerId)
-				result = true;
-		}
+		Edge[] edges = new Edge[4];
+		edges[0] = edge1;
+		edges[1] = edge2;
+		edges[2] = edge3;
+		edges[3] = edge4;
 		
-		HexLocation edge1Neighbor = edge1.getLocation().getHexLoc().getNeighborLoc(edge1.getLocation().getDir());
-		HexLocation edge2Neighbor = edge2.getLocation().getHexLoc().getNeighborLoc(edge2.getLocation().getDir());
-		HexTile edge1NeighborTile = getHexTileAt(edge1Neighbor);
-		HexTile edge2NeighborTile = getHexTileAt(edge2Neighbor);
-		if(edge1NeighborTile != null) {
-			edge3 = edge1NeighborTile.getEdgeAt(edge1.getLocation().getDir().getOppositeDirection());
-			if(edge3.getHasRoad()) {
-				if(edge3.getRoad().getOwnerPlayerIndex() == playerId)
-					result = true;
+		for(Edge thisEdge :edges) {
+			if(thisEdge != null) {
+				Piece thisRoad = getRoadAt(thisEdge.getLocation());
+				if(thisRoad != null)
+					if(thisRoad.getOwnerPlayerIndex() == playerId)
+						return true;
 			}
 		}
-		if(edge2NeighborTile != null) {
-			edge4 = edge2NeighborTile.getEdgeAt(edge1.getLocation().getDir().getOppositeDirection());
-			if(edge4.getHasRoad()) {
-				if(edge4.getRoad().getOwnerPlayerIndex() == playerId)
-					result = true;
-			}
-		}
-		return result;
-	}
-
-	public boolean locationHasNeighboringSettlement(Vertex thisVertex) {
-		HexTile tile = getHexTileAt(thisVertex.getLocation().getHexLoc());
-		VertexDirection direction = thisVertex.getLocation().getDir();
-		Vertex vertex1 = null;
-		Vertex vertex2 = null;
-		Vertex vertex3 = null;
-		HexLocation neighborVertexHexLocation = null;
-		int thisX = tile.getLocation().getX();
-		int thisY = tile.getLocation().getY();
-		switch(direction) {
-			case NorthEast:
-				vertex1 = tile.getVertexAt(VertexDirection.NorthWest);
-				vertex2 = tile.getVertexAt(VertexDirection.East);
-				neighborVertexHexLocation = new HexLocation(thisX+1, thisY-2);
-				
-				break;
-			case East:
-				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
-				vertex2 = tile.getVertexAt(VertexDirection.SouthEast);
-				neighborVertexHexLocation = new HexLocation(thisX+2, thisY-1);
-				break;
-			case SouthEast:
-				vertex1 = tile.getVertexAt(VertexDirection.East);
-				vertex2 = tile.getVertexAt(VertexDirection.SouthWest);
-				neighborVertexHexLocation = new HexLocation(thisX+1, thisY+1);
-				break;
-			case SouthWest:
-				vertex1 = tile.getVertexAt(VertexDirection.SouthEast);
-				vertex2 = tile.getVertexAt(VertexDirection.West);
-				neighborVertexHexLocation = new HexLocation(thisX-1, thisY+2);
-				break;
-			case West:
-				vertex1 = tile.getVertexAt(VertexDirection.SouthWest);
-				vertex2 = tile.getVertexAt(VertexDirection.NorthWest);
-				neighborVertexHexLocation = new HexLocation(thisX-2, thisY+1);
-				break;
-			case NorthWest:
-				vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
-				vertex2 = tile.getVertexAt(VertexDirection.West);
-				neighborVertexHexLocation = new HexLocation(thisX-1, thisY-1);
-				break;
-			default:
-				break;
-		}
-		if(!isOutOfBound(neighborVertexHexLocation)) {
-			vertex3 = getHexTileAt(neighborVertexHexLocation).getVertexAt(direction.getOppositeDirection());
-			if(vertex1.getHasSettlement() || vertex2.getHasSettlement() || vertex3.getHasSettlement()) {
-				return true;
-			}
-			
-			else {
-				return false;
-			}
-		}
-		else {
-			if(vertex1.getHasSettlement() || vertex2.getHasSettlement()) {
-				return true;
-			}
-			
-			else {
-				return false;
-			}
-		}
-		
-		
+		return false;
 	}
 	
-	public boolean playerHasRoadOnNeighborAt(int playerId, VertexDirection direction, HexTile tile) {
-		Edge edge1 = null;
-		Edge edge2 = null;
-		boolean result = false;
-		switch(direction) {
-			case NorthEast:
-				edge1 = tile.getEdgeAt(EdgeDirection.North);
-				edge2 = tile.getEdgeAt(EdgeDirection.NorthEast);
-				break;
-			case East:
-				edge1 = tile.getEdgeAt(EdgeDirection.NorthEast);
-				edge2 = tile.getEdgeAt(EdgeDirection.SouthEast);
-				break;
-			case SouthEast:
-				edge1 = tile.getEdgeAt(EdgeDirection.SouthEast);
-				edge2 = tile.getEdgeAt(EdgeDirection.South);
-				break;
-			case SouthWest:
-				edge1 = tile.getEdgeAt(EdgeDirection.South);
-				edge2 = tile.getEdgeAt(EdgeDirection.SouthWest);
-				break;
-			case West:
-				edge1 = tile.getEdgeAt(EdgeDirection.NorthWest);
-				edge2 = tile.getEdgeAt(EdgeDirection.SouthWest);
-				break;
-			case NorthWest:
-				edge1 = tile.getEdgeAt(EdgeDirection.North);
-				edge2 = tile.getEdgeAt(EdgeDirection.NorthWest);
-				break;
-			default:
-				break;
-		}
-		
-		if(edge1.getHasRoad()) {
-			if(edge1.getRoad().getOwnerPlayerIndex() == playerId)
-				result = true;
-		}
-		if(edge2.getHasRoad()) {
-			if(edge2.getRoad().getOwnerPlayerIndex() == playerId)
-				result = true;
-		}
-		
-		return result;
-	}
-	
-	public boolean playerHasSettlementOnNeighborAt(int playerId, EdgeDirection direction, HexTile tile) {
-		boolean result = false;
-		
+	private Vertex[] getNeighboringVertices(EdgeLocation eLoc) {
+		HexTile thisTile = getHexTileAt(eLoc.getHexLoc());
 		Vertex vertex1 = null;
 		Vertex vertex2 = null;
-		switch(direction) {
-		case North:
-			vertex1 = tile.getVertexAt(VertexDirection.NorthWest);
-			vertex2 = tile.getVertexAt(VertexDirection.NorthEast);
-			break;
-		case NorthEast:
-			vertex1 = tile.getVertexAt(VertexDirection.NorthEast);
-			vertex2 = tile.getVertexAt(VertexDirection.East);
-			break;
-		case SouthEast:
-			vertex1 = tile.getVertexAt(VertexDirection.East);
-			vertex2 = tile.getVertexAt(VertexDirection.SouthEast);
-			break;
-		case South:
-			vertex1 = tile.getVertexAt(VertexDirection.SouthEast);
-			vertex2 = tile.getVertexAt(VertexDirection.SouthWest);
-			break;
-		case SouthWest:
-			vertex1 = tile.getVertexAt(VertexDirection.West);
-			vertex2 = tile.getVertexAt(VertexDirection.SouthWest);
-			break;
-		case NorthWest:
-			vertex1 = tile.getVertexAt(VertexDirection.NorthWest);
-			vertex2 = tile.getVertexAt(VertexDirection.West);
-			break;
-		default:
-			break;
-		}
-
-		if(vertex1.getHasSettlement()) {
-			if(vertex1.getSettlement().getOwnerPlayerIndex() == playerId)
-				result = true;
-		}
-		if(vertex2.getHasSettlement()) {
-			if(vertex2.getSettlement().getOwnerPlayerIndex() == playerId)
-				result = true;
-		}
 		
-		return result;
+		switch(eLoc.getDir()) {
+			case North:
+				vertex1 = thisTile.getVertexAt(VertexDirection.NorthWest);
+				vertex2 = thisTile.getVertexAt(VertexDirection.NorthEast);
+				break;
+			case NorthEast:
+				vertex1 = thisTile.getVertexAt(VertexDirection.NorthEast);
+				vertex2 = thisTile.getVertexAt(VertexDirection.East);
+				break;
+			case SouthEast:
+				vertex1 = thisTile.getVertexAt(VertexDirection.East);
+				vertex2 = thisTile.getVertexAt(VertexDirection.SouthEast);
+				break;
+			case South:
+				vertex1 = thisTile.getVertexAt(VertexDirection.SouthEast);
+				vertex2 = thisTile.getVertexAt(VertexDirection.SouthWest);
+				break;
+			case SouthWest:
+				vertex1 = thisTile.getVertexAt(VertexDirection.SouthWest);
+				vertex2 = thisTile.getVertexAt(VertexDirection.West);
+				break;
+			case NorthWest:
+				vertex1 = thisTile.getVertexAt(VertexDirection.West);
+				vertex2 = thisTile.getVertexAt(VertexDirection.NorthWest);
+				break;
+		}
+		Vertex[] vertices = new Vertex[2];
+		vertices[0] = vertex1;
+		vertices[1] = vertex2;
+		return vertices;
+	}
+	
+	public boolean playerHasNeighboringSettlementAt(int playerId, EdgeLocation eLoc) {
+		Vertex[] vertices = getNeighboringVertices(eLoc);
+		for(Vertex vertex : vertices) {
+			Piece settlement = getSettlementAt(vertex.getLocation());
+			if(settlement != null) {
+				if(settlement.getOwnerPlayerIndex() == playerId)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean edgeHasNeighboringSettlementOfOthers(int playerId, EdgeLocation eLoc) {
+		Vertex[] vertices = getNeighboringVertices(eLoc);
+		for(Vertex vertex : vertices) {
+			Piece settlement = getSettlementAt(vertex.getLocation());
+			if(settlement != null) {
+				if(settlement.getOwnerPlayerIndex() != playerId)
+					return true;
+			}
+		}
+		return false;
 	}
 
 	public HexTile[][] getHexTiles() {
