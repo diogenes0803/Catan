@@ -311,7 +311,6 @@ public class JsonModelHolder {
 		List<MessageLine> chatReturn = new ArrayList<MessageLine>();
 		if (lines != null) {
 			for (Line thisLine : lines) {
-				System.out.println("Should be chats here after something is sent");
 				MessageLine messageLine = new MessageLine(thisLine.getSource(),
 						thisLine.getMessage());
 				chatReturn.add(messageLine);
