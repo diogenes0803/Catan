@@ -3,7 +3,11 @@ package client.maritime;
 import java.util.Observable;
 
 import shared.definitions.ResourceType;
+import shared.models.CatanModel;
+import shared.models.Game;
+import shared.models.Player;
 import client.base.Controller;
+import client.communication.ServerProxy;
 
 
 /**
