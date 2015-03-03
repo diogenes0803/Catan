@@ -240,18 +240,22 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     catanGame.setId(game_id);
                     catanGame.setTitle(game_name);
                     for(int j=0; j<playerArray.size(); j++) {
-                    	JsonObject player = (JsonObject)playerArray.get(j);
-                    	if (player != null)
+                    	if (playerArray.get(j) != null)
                     	{
-                    		System.out.println("count");
-	                    	int playerId = player.get("id").getAsInt();
-	                    	CatanColor color = CatanColor.getCatanColor(player.get("color").getAsString());
-	                    	String name = player.get("name").getAsString();
-	                    	PlayerInfo thisPlayer = new PlayerInfo();
-	                    	thisPlayer.setId(playerId);
-	                    	thisPlayer.setColor(color);
-	                    	thisPlayer.setName(name);
-	                    	catanGame.addPlayer(thisPlayer);
+                    		//System.out.println("Title: "+game_name + " count: "+j);
+                    		JsonObject player = (JsonObject)playerArray.get(j);
+                    		//Takes care of the case where there's a game waiting for players to join
+                    		if (player.get("id") != null)
+                    		{
+		                    	int playerId = player.get("id").getAsInt();
+		                    	CatanColor color = CatanColor.getCatanColor(player.get("color").getAsString());
+		                    	String name = player.get("name").getAsString();
+		                    	PlayerInfo thisPlayer = new PlayerInfo();
+		                    	thisPlayer.setId(playerId);
+		                    	thisPlayer.setColor(color);
+		                    	thisPlayer.setName(name);
+		                    	catanGame.addPlayer(thisPlayer);
+                    		}
                     	}
                     }
                     games[i] = catanGame;
