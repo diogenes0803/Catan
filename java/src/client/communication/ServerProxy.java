@@ -441,7 +441,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         ListAIResults results = new ListAIResults();
 
         try {
-            results.setSuccess(clientComm.post("/game/listAI", null, playerCookie+"; "+gameCookie));
+        	 HttpURLResponse response = clientComm.get("/game/listAI", null, playerCookie+"; "+gameCookie);
+        		Gson gson = new Gson();
+            	results = gson.fromJson(response.getResponseBody().toString(), ListAIResults.class);
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
@@ -762,8 +764,18 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
     @Override
     public AddAIResults AddAI(String params) {
-        // TODO Auto-generated method stub
-        return null;
+    	AddAIResults results = new AddAIResults();
+        
+    	try {
+    		
+			results.setSuccess(clientComm.post("/moves/Road_Building", params, playerCookie+"; "+gameCookie));
+			
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+        return results;
     }
 
 }
