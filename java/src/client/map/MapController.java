@@ -168,7 +168,7 @@ public class MapController extends Controller implements IMapController {
 		getView().placeRoad(edgeLoc, thisColor);
 		
 		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
-		ServerProxy.getInstance().buildRoad(params);
+		state.buildRoad(this, params);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
