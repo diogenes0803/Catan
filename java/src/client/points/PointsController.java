@@ -50,7 +50,15 @@ public class PointsController extends Controller implements IPointsController {
 
     @Override
     public void update(Observable o, Object arg) {
-        getPointsView().setPoints(CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId())].getVictoryPoint());
+    	int points = CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId())].getVictoryPoint();
+    	if (points >= 10)
+    	{
+    		finishedView.showModal();
+    	}
+    	else
+    	{
+    		getPointsView().setPoints(points);
+    	}
 
     }
 
