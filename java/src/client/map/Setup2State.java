@@ -122,10 +122,10 @@ public class Setup2State implements IState {
 	 */
 	@Override
 	public void finishTurn(MapController controller, FinishTurnParams params) {
+		MapController.setState(RollingState.singleton);
+		controller.setSetup2Finished(true);
 		Game game = ServerProxy.getInstance().finishTurn(params).getGameManager().getGame();
 		CatanModel.getInstance().getGameManager().setGame(game);
-		controller.setState(RollingState.singleton);
-		controller.setSetup2Finished(true);
 	}
 
 	/* (non-Javadoc)

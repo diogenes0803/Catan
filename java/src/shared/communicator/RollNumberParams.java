@@ -8,9 +8,9 @@ package shared.communicator;
  */
 public class RollNumberParams {
 
+    private String type;
     private int playerIndex;
     private int number;
-    private String type;
 
     public RollNumberParams(int playerIndex, int number) {
         this.playerIndex = playerIndex;
