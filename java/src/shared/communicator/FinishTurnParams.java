@@ -1,41 +1,40 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
 /**
  * @author campbeln
- *
  */
 public class FinishTurnParams {
 
-	private int playerIndex;
-	private String type;
-	
-	public FinishTurnParams (int playerIndex) {
-		this.playerIndex = playerIndex;
-		setType("finishTurn");
-	}
+    private int playerIndex;
+    private String type;
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public FinishTurnParams(int playerIndex) {
+        this.playerIndex = playerIndex;
+        setType("finishTurn");
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
@@ -7,54 +7,53 @@ import shared.locations.VertexLocation;
 
 /**
  * @author campbeln
- *
  */
 public class BuildCityParams {
 
-	private String type;
-	private int playerIndex;
-	private JsonFriendlyVertexLocation vertexLocation;
-	
-	public BuildCityParams(int playerIndex, VertexLocation vertexLocation) {
-		this.playerIndex = playerIndex;
-		this.setVertexLocation(new JsonFriendlyVertexLocation(vertexLocation));
-		setType("buildCity");
-	}
+    private String type;
+    private int playerIndex;
+    private JsonFriendlyVertexLocation vertexLocation;
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public BuildCityParams(int playerIndex, VertexLocation vertexLocation) {
+        this.playerIndex = playerIndex;
+        this.setVertexLocation(new JsonFriendlyVertexLocation(vertexLocation));
+        setType("buildCity");
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	/**
-	 * @return the vertexLocation
-	 */
-	public JsonFriendlyVertexLocation getVertexLocation() {
-		return vertexLocation;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	/**
-	 * @param vertexLocation the vertexLocation to set
-	 */
-	public void setVertexLocation(JsonFriendlyVertexLocation vertexLocation) {
-		this.vertexLocation = vertexLocation;
-	}
+    /**
+     * @return the vertexLocation
+     */
+    public JsonFriendlyVertexLocation getVertexLocation() {
+        return vertexLocation;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param vertexLocation the vertexLocation to set
+     */
+    public void setVertexLocation(JsonFriendlyVertexLocation vertexLocation) {
+        this.vertexLocation = vertexLocation;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

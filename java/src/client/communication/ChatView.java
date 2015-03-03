@@ -1,12 +1,14 @@
 package client.communication;
 
 import client.base.PanelView;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  * Chat view implementation
@@ -66,7 +68,7 @@ public class ChatView extends PanelView implements IChatView {
         add(chatScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.PAGE_END);
         
-	setBackground(Color.white);
+        setBackground(Color.white);
     }
 
     @Override
@@ -110,7 +112,7 @@ public class ChatView extends PanelView implements IChatView {
             }
         }
     }
-	
+
 }
 
 

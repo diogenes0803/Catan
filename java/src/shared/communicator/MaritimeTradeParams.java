@@ -1,94 +1,93 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
 /**
  * @author campbeln
- *
  */
 public class MaritimeTradeParams {
 
-	private int playerIndex;
-	private int ratio;
-	private String inputResource;
-	private String outputResource;
-	private String type;
-	
-	public MaritimeTradeParams(int playerIndex, int ratio, String inputResource, String outputResource) {
-		this.playerIndex = playerIndex;
-		this.ratio = ratio;
-		this.inputResource = inputResource;
-		this.outputResource = outputResource;
-		setType("maritimeTrade");
-	}
+    private int playerIndex;
+    private int ratio;
+    private String inputResource;
+    private String outputResource;
+    private String type;
 
-	public MaritimeTradeParams(int i) {
-		playerIndex = i;
-	}
+    public MaritimeTradeParams(int playerIndex, int ratio, String inputResource, String outputResource) {
+        this.playerIndex = playerIndex;
+        this.ratio = ratio;
+        this.inputResource = inputResource;
+        this.outputResource = outputResource;
+        setType("maritimeTrade");
+    }
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public MaritimeTradeParams(int i) {
+        playerIndex = i;
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	/**
-	 * @return the ratio
-	 */
-	public int getRatio() {
-		return ratio;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	/**
-	 * @param ratio the ratio to set (i.e. 3 for 3:1 trade)
-	 */
-	public void setRatio(int ratio) {
-		this.ratio = ratio;
-	}
+    /**
+     * @return the ratio
+     */
+    public int getRatio() {
+        return ratio;
+    }
 
-	/**
-	 * @return the inputResource
-	 */
-	public String getInputResource() {
-		return inputResource;
-	}
+    /**
+     * @param ratio the ratio to set (i.e. 3 for 3:1 trade)
+     */
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
 
-	/**
-	 * @param inputResource the inputResource to set
-	 */
-	public void setInputResource(String inputResource) {
-		this.inputResource = inputResource;
-	}
+    /**
+     * @return the inputResource
+     */
+    public String getInputResource() {
+        return inputResource;
+    }
 
-	/**
-	 * @return the outputResource
-	 */
-	public String getOutputResource() {
-		return outputResource;
-	}
+    /**
+     * @param inputResource the inputResource to set
+     */
+    public void setInputResource(String inputResource) {
+        this.inputResource = inputResource;
+    }
 
-	/**
-	 * @param outputResource the outputResource to set
-	 */
-	public void setOutputResource(String outputResource) {
-		this.outputResource = outputResource;
-	}
+    /**
+     * @return the outputResource
+     */
+    public String getOutputResource() {
+        return outputResource;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param outputResource the outputResource to set
+     */
+    public void setOutputResource(String outputResource) {
+        this.outputResource = outputResource;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

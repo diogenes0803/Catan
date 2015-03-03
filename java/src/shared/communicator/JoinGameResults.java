@@ -1,19 +1,18 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
-public class JoinGameResults extends ResponseBodyContainer{
+public class JoinGameResults extends ResponseBodyContainer {
 
-	public JoinGameResults(String status)
-	{
-		super(status);
-	}
-	
-	public JoinGameResults()
-	{
-		super("");
-	}
+    public JoinGameResults(String status) {
+        super(status);
+    }
+
+    public JoinGameResults() {
+        super("");
+    }
 
 }

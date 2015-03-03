@@ -1,34 +1,34 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class JoinGameParams {
-	private int id;
-	private String color;
-	
-	public JoinGameParams(int id, String color)
-	{
-		this.id = id;
-		this.color = color;
-	}
+    private int id;
+    private String color;
 
-	public int getId() {
-		return id;
-	}
+    public JoinGameParams(int id, String color) {
+        this.id = id;
+        this.color = color;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
-	
-	
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+
 }

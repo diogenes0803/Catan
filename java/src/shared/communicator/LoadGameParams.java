@@ -1,25 +1,24 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class LoadGameParams {
-	String name;
-	
-	public LoadGameParams(String name)
-	{
-		this.name = name;
-	}
+    String name;
 
-	public String getName() {
-		return name;
-	}
+    public LoadGameParams(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
 }

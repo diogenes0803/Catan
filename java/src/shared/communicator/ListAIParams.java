@@ -1,25 +1,24 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class ListAIParams {
-	String aIToAdd;
-	
-	ListAIParams(String aIToAdd)
-	{
-		this.aIToAdd = aIToAdd;
-	}
+    String aIToAdd;
 
-	public String getaIToAdd() {
-		return aIToAdd;
-	}
+    ListAIParams(String aIToAdd) {
+        this.aIToAdd = aIToAdd;
+    }
 
-	public void setaIToAdd(String aIToAdd) {
-		this.aIToAdd = aIToAdd;
-	}
-	
-	
+    public String getaIToAdd() {
+        return aIToAdd;
+    }
+
+    public void setaIToAdd(String aIToAdd) {
+        this.aIToAdd = aIToAdd;
+    }
+
 
 }

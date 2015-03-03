@@ -4,24 +4,26 @@ import shared.definitions.ResourceType;
 
 /**
  * Model for Resource Cards
- * @author HojuneYoo
  *
+ * @author HojuneYoo
  */
 public class ResCard {
-	
-	private ResourceType type;
-	
-	public ResCard(){}
-	public ResCard(ResourceType type) {
-		this.type = type;
-	}
 
-	public ResourceType getType() {
-		return type;
-	}
+    private ResourceType type;
 
-	public void setType(ResourceType type) {
-		this.type = type;
-	}
-	
+    public ResCard() {
+    }
+
+    public ResCard(ResourceType type) {
+        this.type = type;
+    }
+
+    public ResourceType getType() {
+        return type;
+    }
+
+    public void setType(ResourceType type) {
+        this.type = type;
+    }
+
 }

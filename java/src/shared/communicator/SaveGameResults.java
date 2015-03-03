@@ -1,29 +1,28 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class SaveGameResults extends ResponseBodyContainer {
-	String status;
-	
-	public SaveGameResults(String status)
-	{
-		this.status = status;
-	}
+    String status;
 
-	public SaveGameResults() {
-		// TODO Auto-generated constructor stub
-	}
+    public SaveGameResults(String status) {
+        this.status = status;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public SaveGameResults() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
 }

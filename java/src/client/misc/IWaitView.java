@@ -1,20 +1,17 @@
 package client.misc;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 /**
- * Interface for the wait view, which is used to display wait dialogs to the
- * user
+ * Interface for the wait view, which is used to display wait dialogs to the user
  */
-public interface IWaitView extends IOverlayView
-{
-	
-	/**
-	 * Sets the message displayed by the wait view.
-	 * 
-	 * @param message
-	 *            The message to be displayed
-	 */
-	void setMessage(String message);
+public interface IWaitView extends IOverlayView {
+
+    /**
+     * Sets the message displayed by the wait view.
+     *
+     * @param message The message to be displayed
+     */
+    void setMessage(String message);
 }
 

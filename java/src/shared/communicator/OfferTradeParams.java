@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
@@ -7,70 +7,69 @@ import shared.models.ResourceList;
 
 /**
  * @author campbeln
- *
  */
 public class OfferTradeParams {
 
-	private int playerIndex;
-	private ResourceList offer;
-	private int receiver;
-	private String type;
-	
-	public OfferTradeParams(int playerIndex, ResourceList offer, int receiver) {
-		this.playerIndex = playerIndex;
-		this.offer = offer;
-		this.receiver = receiver;
-		setType("offerTrade");
-	}
+    private int playerIndex;
+    private ResourceList offer;
+    private int receiver;
+    private String type;
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public OfferTradeParams(int playerIndex, ResourceList offer, int receiver) {
+        this.playerIndex = playerIndex;
+        this.offer = offer;
+        this.receiver = receiver;
+        setType("offerTrade");
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	/**
-	 * @return the offer
-	 */
-	public ResourceList getOffer() {
-		return offer;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	/**
-	 * @param offer the offer to set
-	 */
-	public void setOffer(ResourceList offer) {
-		this.offer = offer;
-	}
+    /**
+     * @return the offer
+     */
+    public ResourceList getOffer() {
+        return offer;
+    }
 
-	/**
-	 * @return the receiver
-	 */
-	public int getReceiver() {
-		return receiver;
-	}
+    /**
+     * @param offer the offer to set
+     */
+    public void setOffer(ResourceList offer) {
+        this.offer = offer;
+    }
 
-	/**
-	 * @param receiver the receiver to set
-	 */
-	public void setReceiver(int receiver) {
-		this.receiver = receiver;
-	}
+    /**
+     * @return the receiver
+     */
+    public int getReceiver() {
+        return receiver;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param receiver the receiver to set
+     */
+    public void setReceiver(int receiver) {
+        this.receiver = receiver;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

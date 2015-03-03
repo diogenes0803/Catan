@@ -169,12 +169,12 @@
         }
       },
       {
-      	"owner": 1,
-      	"location": {
-      		"direction": "SE",
-      		"x": -1,
-      		"y": -1
-      	}
+        "owner": 1,
+        "location": {
+          "direction": "SE",
+          "x": -1,
+          "y": -1
+        }
       },
       {
         "owner": 3,
@@ -209,12 +209,12 @@
         }
       },
       {
-      	"owner": 0,
-      	"location": {
-      	"direction": "SW",
-      	"x": 0,
-      	"y": 1
-      	}
+        "owner": 0,
+        "location": {
+          "direction": "SW",
+          "x": 0,
+          "y": 1
+        }
       },
       {
         "owner": 2,

@@ -2,35 +2,34 @@ package shared.communicator;
 
 /**
  * Description: Holds the info necessary to login a user
- * @author oxbor
  *
+ * @author oxbor
  */
 public class UserLoginParams {
-	
-	private String username;
-	private String password;
-	
-	public UserLoginParams(String username, String password)
-	{
-		this.username = username;
-		this.password = password;
-	}
 
-	public String getusername() {
-		return username;
-	}
+    private String username;
+    private String password;
 
-	public void setusername(String username) {
-		this.username = username;
-	}
+    public UserLoginParams(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getusername() {
+        return username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
+    public void setusername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 }

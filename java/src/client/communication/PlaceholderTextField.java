@@ -1,17 +1,15 @@
 package client.communication;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * JTextField that supports adding a placeholder text
  */
 public class PlaceholderTextField extends JTextField {
     
-	private static final long serialVersionUID = 1L;
-	private String placeholder = "";
+    private static final long serialVersionUID = 1L;
+    private String placeholder = "";
     
     public String getPlaceholder() {
         return placeholder;
@@ -37,14 +35,14 @@ public class PlaceholderTextField extends JTextField {
         // Render the placeholder text
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.setRenderingHint(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
         );
         g2d.setColor(getDisabledTextColor());
         g2d.drawString(
-            placeholder,
-            getInsets().left,
-            g2d.getFontMetrics().getMaxAscent() + getInsets().top
+                placeholder,
+                getInsets().left,
+                g2d.getFontMetrics().getMaxAscent() + getInsets().top
         );
     }
     

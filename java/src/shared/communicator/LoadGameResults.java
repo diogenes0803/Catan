@@ -1,37 +1,37 @@
 package shared.communicator;
+
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class LoadGameResults {
-	String status;
-	boolean success;
-	
-	public LoadGameResults(String status)
-	{
-		this.status = status;
-	}
+    String status;
+    boolean success;
 
-	public LoadGameResults() {
-		// TODO Auto-generated constructor stub
-	}
+    public LoadGameResults(String status) {
+        this.status = status;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public LoadGameResults() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public boolean isSuccess() {
-		return success;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-	
-	
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+
 }

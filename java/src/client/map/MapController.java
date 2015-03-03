@@ -1,386 +1,339 @@
 package client.map;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Observable;
-
+import client.base.Controller;
+import client.communication.ServerProxy;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
-import shared.models.CatanModel;
-import shared.models.Edge;
-import shared.models.Game;
-import shared.models.HexTile;
-import shared.models.Piece;
-import shared.models.Port;
-import shared.models.TurnTracker;
-import shared.models.Vertex;
-import client.base.Controller;
-import client.communication.ServerProxy;
-import client.data.PlayerInfo;
-import client.data.RobPlayerInfo;
+import shared.locations.*;
+import shared.models.*;
+
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Observable;
 
 
 /**
  * Implementation for the map controller
  */
 public class MapController extends Controller implements IMapController {
-	
-	private IRobView robView;
-	private IState state;
-	
-	public MapController(IMapView view, IRobView robView) {
-		
-		super(view);
-		
-		setRobView(robView);
-	}
-	
-	public IMapView getView() {
-		
-		return (IMapView)super.getView();
-	}
-	
-	private IRobView getRobView() {
-		return robView;
-	}
-	private void setRobView(IRobView robView) {
-		this.robView = robView;
-	}
-	
-	
-	protected void createRoads(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
-					while(itEdge.hasNext()) 
-					{
-						Edge thisEdge = itEdge.next().getValue();
-						if (thisEdge.getHasRoad()) 
-						{
-							Piece thisRoad = thisEdge.getRoad();
-							getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
-	}
 
-	protected void createCities(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
-					while(itVertex.hasNext()) 
-					{
-						Vertex thisVertex = itVertex.next().getValue();
-						if (thisVertex.getHasSettlement()) 
-						{
-							Piece settlement = thisVertex.getSettlement();
-							getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
-	}
+    private IRobView robView;
+    private IState state;
+
+    public MapController(IMapView view, IRobView robView) {
+
+        super(view);
+
+        setRobView(robView);
+    }
+
+    public IMapView getView() {
+
+        return (IMapView) super.getView();
+    }
+
+    private IRobView getRobView() {
+        return robView;
+    }
+
+    private void setRobView(IRobView robView) {
+        this.robView = robView;
+    }
 
 
-	protected void createSettlements(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
-					while(itVertex.hasNext()) 
-					{
-						Vertex thisVertex = itVertex.next().getValue();
-						if (thisVertex.getHasSettlement()) 
-						{
-							Piece settlement = thisVertex.getSettlement();
-							if(settlement.getType() == PieceType.SETTLEMENT)
-							getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
-	}
+    protected void createRoads(Game game) {
+        for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
+            int maxY = game.getMap().getRadius() - x;
+            for (int y = -game.getMap().getRadius(); y <= maxY; y++) {
+                HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+                if (thisTile != null) {
+                    Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
+                    while (itEdge.hasNext()) {
+                        Edge thisEdge = itEdge.next().getValue();
+                        if (thisEdge.getHasRoad()) {
+                            Piece thisRoad = thisEdge.getRoad();
+                            getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected void createCities(Game game) {
+        for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
+            int maxY = game.getMap().getRadius() - x;
+            for (int y = -game.getMap().getRadius(); y <= maxY; y++) {
+                HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+                if (thisTile != null) {
+                    Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
+                    while (itVertex.hasNext()) {
+                        Vertex thisVertex = itVertex.next().getValue();
+                        if (thisVertex.getHasSettlement()) {
+                            Piece settlement = thisVertex.getSettlement();
+                            getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
+    protected void createSettlements(Game game) {
+        for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
+            int maxY = game.getMap().getRadius() - x;
+            for (int y = -game.getMap().getRadius(); y <= maxY; y++) {
+                HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+                if (thisTile != null) {
+                    Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
+                    while (itVertex.hasNext()) {
+                        Vertex thisVertex = itVertex.next().getValue();
+                        if (thisVertex.getHasSettlement()) {
+                            Piece settlement = thisVertex.getSettlement();
+                            if (settlement.getType() == PieceType.SETTLEMENT)
+                                getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	protected void createWater(Game game){
-		for(int y = 0; y <= 3 ; ++y)
-		{
-					getView().addHex(new HexLocation(-3,y), HexType.WATER);
-		}
-		for(int y = -3; y <= 0 ; ++y)
-		{
-					getView().addHex(new HexLocation(3,y), HexType.WATER);
-		}
-		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
-		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
-		getView().addHex(new HexLocation(2,1), HexType.WATER);
-		getView().addHex(new HexLocation(1,2), HexType.WATER);
-		getView().addHex(new HexLocation(1,-3), HexType.WATER);
-		getView().addHex(new HexLocation(2,-3), HexType.WATER);
-		getView().addHex(new HexLocation(-2,3), HexType.WATER);
-		getView().addHex(new HexLocation(-1,3), HexType.WATER);
-		getView().addHex(new HexLocation(0,3), HexType.WATER);
-		getView().addHex(new HexLocation(0,-3), HexType.WATER);
-	}	
 
-	protected void createTitles(Game game){
-		
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {		
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) {
-					HexType hexType = thisTile.getHexType();
-					HexLocation hexLoc = thisTile.getLocation();
-					getView().addHex(hexLoc, hexType);
-				}
-			}
-		}
-	}
-		
-	protected void createTokens(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-					
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) {
-					int token = thisTile.getToken();
-					if(token != 0) {
-						getView().addNumber(thisTile.getLocation(), token);
-					}
-				}
-			}
-		}
-	}
+    protected void createWater(Game game) {
+        for (int y = 0; y <= 3; ++y) {
+            getView().addHex(new HexLocation(-3, y), HexType.WATER);
+        }
+        for (int y = -3; y <= 0; ++y) {
+            getView().addHex(new HexLocation(3, y), HexType.WATER);
+        }
+        getView().addHex(new HexLocation(-2, -1), HexType.WATER);
+        getView().addHex(new HexLocation(-1, -2), HexType.WATER);
+        getView().addHex(new HexLocation(2, 1), HexType.WATER);
+        getView().addHex(new HexLocation(1, 2), HexType.WATER);
+        getView().addHex(new HexLocation(1, -3), HexType.WATER);
+        getView().addHex(new HexLocation(2, -3), HexType.WATER);
+        getView().addHex(new HexLocation(-2, 3), HexType.WATER);
+        getView().addHex(new HexLocation(-1, 3), HexType.WATER);
+        getView().addHex(new HexLocation(0, 3), HexType.WATER);
+        getView().addHex(new HexLocation(0, -3), HexType.WATER);
+    }
 
-	protected void createArbors(Game game)
-	{
-		Iterator<Entry<EdgeLocation, Port>> itPort = game.getMap().getPorts().entrySet().iterator();
-		while(itPort.hasNext()) {
-			Entry<EdgeLocation, Port> thisEntry = itPort.next();
-			Port thisPort = thisEntry.getValue();
-			EdgeLocation thisLoc = thisEntry.getKey();
-			getView().addPort(thisLoc, thisPort.getType());
-		}
-	}
+    protected void createTitles(Game game) {
 
-	protected void createRobber(Game game)
-	{
-		getView().placeRobber(game.getMap().getRobberLocation());
-	}
+        for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
+            int maxY = game.getMap().getRadius() - x;
+            for (int y = -game.getMap().getRadius(); y <= maxY; y++) {
+                HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+                if (thisTile != null) {
+                    HexType hexType = thisTile.getHexType();
+                    HexLocation hexLoc = thisTile.getLocation();
+                    getView().addHex(hexLoc, hexType);
+                }
+            }
+        }
+    }
 
-	protected void initFromModel() {
-		if (CatanModel.getInstance().getGameManager() == null) {
-			return;
-		}
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		
-		if (state == null) {
-			setStateString(TurnTracker.getInstance().getStatus());
-		}
-		
-		createTitles(game);
-		createTokens(game);
-		createCities(game);
-		createSettlements(game);
-		createRoads(game);
-		createArbors(game);
-		createRobber(game);
-		createWater(game);
-		
-		continueGame();
-		
-}
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+    protected void createTokens(Game game) {
+        for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
 
-	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canBuildSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+            int maxY = game.getMap().getRadius() - x;
+            for (int y = -game.getMap().getRadius(); y <= maxY; y++) {
+                HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
+                if (thisTile != null) {
+                    int token = thisTile.getToken();
+                    if (token != 0) {
+                        getView().addNumber(thisTile.getLocation(), token);
+                    }
+                }
+            }
+        }
+    }
 
-	public boolean canPlaceCity(VertexLocation vertLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canUpgradeSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+    protected void createArbors(Game game) {
+        Iterator<Entry<EdgeLocation, Port>> itPort = game.getMap().getPorts().entrySet().iterator();
+        while (itPort.hasNext()) {
+            Entry<EdgeLocation, Port> thisEntry = itPort.next();
+            Port thisPort = thisEntry.getValue();
+            EdgeLocation thisLoc = thisEntry.getKey();
+            getView().addPort(thisLoc, thisPort.getType());
+        }
+    }
 
-	public boolean canPlaceRobber(HexLocation hexLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canMoveRobber(hexLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+    protected void createRobber(Game game) {
+        getView().placeRobber(game.getMap().getRobberLocation());
+    }
 
-	public void placeRoad(EdgeLocation edgeLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeRoad(edgeLoc, thisColor);
-		
-		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
-		state.buildRoad(this, params);
-		if(state.equals(Setup1State.singleton)) {
-			getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
-		}
-	}
+    protected void initFromModel() {
+        if (CatanModel.getInstance().getGameManager() == null) {
+            return;
+        }
+        Game game = CatanModel.getInstance().getGameManager().getGame();
 
-	public void placeSettlement(VertexLocation vertLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeSettlement(vertLoc, thisColor);
-		
-		BuildSettlementParams params = new BuildSettlementParams(playerIndex, vertLoc, true);
-		state.buildSettlement(this, params);
-	}
+        if (state == null) {
+            setStateString(TurnTracker.getInstance().getStatus());
+        }
 
-	public void placeCity(VertexLocation vertLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeCity(vertLoc, thisColor);
-	}
+        createTitles(game);
+        createTokens(game);
+        createCities(game);
+        createSettlements(game);
+        createRoads(game);
+        createArbors(game);
+        createRobber(game);
+        createWater(game);
 
-	public void placeRobber(HexLocation hexLoc) {
-		
-		getView().placeRobber(hexLoc);
-		
-		getRobView().showModal();
-	}
-	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().startDrop(pieceType, thisColor, true);
-	}
-	
-	public void cancelMove() {
-		
-	}
-	
-	public void playSoldierCard() {	
-		
-	}
-	
-	public void playRoadBuildingCard() {	
-		
-	}
-	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
-	}
+        continueGame();
 
-	@Override
-	public void update(Observable o, Object arg) {
-		int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
-		ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
-		initFromModel();
-		
-	}
+    }
 
-	public IState getState() {
-		return state;
-	}
+    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        return game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc);
+    }
 
-	public void setState(IState state) {
-		this.state = state;
-	}
-	
-	public void setStateString(String status) {
-		switch (status) {
-		case "Rolling":	state = RollingState.singleton;
-			break;
-		case "Robbing":	state = RobbingState.singleton;
-			break;
-		case "Playing":	state = PlayingState.singleton;
-			break;
-		case "Discarding":	state = DiscardingState.singleton;
-			break;
-		case "FirstRound":	state = Setup1State.singleton;
-			break;
-		case "SecondRound":	state = Setup2State.singleton;
-			break;
-		default:	state = Setup1State.singleton;
-			break;
-		
-		}
-	}
-	
-	public void continueGame() {
-		if (state.equals(RollingState.singleton)) {
-			
-		}
-		else if (state.equals(Setup1State.singleton)) {
-			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-			
-			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
-				System.out.println(TurnTracker.getInstance().getStatus());
-				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
-			}
-		}
-	}
+    public boolean canPlaceSettlement(VertexLocation vertLoc) {
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        return game.getMap().canBuildSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc);
+    }
+
+    public boolean canPlaceCity(VertexLocation vertLoc) {
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        return game.getMap().canUpgradeSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc);
+    }
+
+    public boolean canPlaceRobber(HexLocation hexLoc) {
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        return game.getMap().canMoveRobber(hexLoc);
+    }
+
+    public void placeRoad(EdgeLocation edgeLoc) {
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+        CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+        getView().placeRoad(edgeLoc, thisColor);
+
+        BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
+        state.buildRoad(this, params);
+        if (state.equals(Setup1State.singleton)) {
+            getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
+        }
+    }
+
+    public void placeSettlement(VertexLocation vertLoc) {
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+        CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+        getView().placeSettlement(vertLoc, thisColor);
+
+        BuildSettlementParams params = new BuildSettlementParams(playerIndex, vertLoc, true);
+        state.buildSettlement(this, params);
+    }
+
+    public void placeCity(VertexLocation vertLoc) {
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+        getView().placeCity(vertLoc, thisColor);
+    }
+
+    public void placeRobber(HexLocation hexLoc) {
+
+        getView().placeRobber(hexLoc);
+
+        getRobView().showModal();
+    }
+
+    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+        CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+        getView().startDrop(pieceType, thisColor, true);
+    }
+
+    public void cancelMove() {
+
+    }
+
+    public void playSoldierCard() {
+
+    }
+
+    public void playRoadBuildingCard() {
+
+    }
+
+    public void robPlayer(RobPlayerInfo victim) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
+        int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
+        ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
+        initFromModel();
+
+    }
+
+    public IState getState() {
+        return state;
+    }
+
+    public void setState(IState state) {
+        this.state = state;
+    }
+
+    public void setStateString(String status) {
+        switch (status) {
+            case "Rolling":
+                state = RollingState.singleton;
+                break;
+            case "Robbing":
+                state = RobbingState.singleton;
+                break;
+            case "Playing":
+                state = PlayingState.singleton;
+                break;
+            case "Discarding":
+                state = DiscardingState.singleton;
+                break;
+            case "FirstRound":
+                state = Setup1State.singleton;
+                break;
+            case "SecondRound":
+                state = Setup2State.singleton;
+                break;
+            default:
+                state = Setup1State.singleton;
+                break;
+
+        }
+    }
+
+    public void continueGame() {
+/*        if (state.equals(RollingState.singleton)) {
+
+        } else*/
+        if (state.equals(Setup1State.singleton)) {
+            PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+
+            if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
+                System.out.println(TurnTracker.getInstance().getStatus());
+                this.getView().startDrop(PieceType.ROAD, playerInfo.getColor(), false);
+            }
+        }
+    }
 }
 

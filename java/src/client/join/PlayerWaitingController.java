@@ -1,11 +1,10 @@
 package client.join;
 
-import java.util.Observable;
-
-import shared.models.CatanModel;
-import shared.models.Game;
 import client.base.Controller;
 import client.communication.ServerPoller;
+import shared.models.CatanModel;
+
+import java.util.Observable;
 
 
 /**
@@ -13,45 +12,44 @@ import client.communication.ServerPoller;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
-	private int playersJoined;
-	
-	public PlayerWaitingController(IPlayerWaitingView view) {
+    private int playersJoined;
 
-		super(view);
-	}
+    public PlayerWaitingController(IPlayerWaitingView view) {
 
-	@Override
-	public IPlayerWaitingView getView() {
+        super(view);
+    }
 
-		return (IPlayerWaitingView)super.getView();
-	}
+    @Override
+    public IPlayerWaitingView getView() {
 
-	@Override
-	public void start() {
+        return (IPlayerWaitingView) super.getView();
+    }
 
-		playersJoined = CatanModel.getInstance().getGameManager().getGame().getPlayers().length;
-		if (playersJoined < 4) {
-			getView().showModal();
-		}
-		else {
-			ServerPoller.getInstance().startTimer();
-			//Game game = CatanModel.getInstance().getGameManager().getGame();
-			CatanModel.getInstance().getGameManager().changed();
-		}
-	}
+    @Override
+    public void start() {
 
-	@Override
-	public void addAI() {
+        playersJoined = CatanModel.getInstance().getGameManager().getGame().getPlayers().length;
+        if (playersJoined < 4) {
+            getView().showModal();
+        } else {
+            ServerPoller.getInstance().startTimer();
+            //Game game = CatanModel.getInstance().getGameManager().getGame();
+            CatanModel.getInstance().getGameManager().changed();
+        }
+    }
 
-		// TEMPORARY
-		getView().closeModal();
-	}
+    @Override
+    public void addAI() {
 
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
+        // TEMPORARY
+        getView().closeModal();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO Auto-generated method stub
+
+    }
 
 }
 

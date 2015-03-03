@@ -4,11 +4,11 @@ import shared.models.CatanModel;
 
 /**
  * For server injection. Allows Launcher to easily switch between using SeverProxy or MockServer.
- * @author dbileter
  *
+ * @author dbileter
  */
 
-public interface ServerStandinInterface{
+public interface ServerStandinInterface {
 
     /**
      * Allows poller to tell server to update Model.

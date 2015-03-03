@@ -5,10 +5,10 @@ package test.catan;
 public class JunitTestDriver {
     public static void main(String[] args) {
 
-        String[] testClasses = new String[] {
-        		"test.ModelInitTest",
-        		"test.ServerCommunicatorTest",
-        		"test.ServerProxyTest",
+        String[] testClasses = new String[]{
+                "test.ModelInitTest",
+                "test.ServerCommunicatorTest",
+                "test.ServerProxyTest",
                 "test.GameTest",
                 "test.ServerPollerTest"
         };

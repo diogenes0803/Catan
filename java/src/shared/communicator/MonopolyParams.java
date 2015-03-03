@@ -1,58 +1,57 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
 /**
  * @author campbeln
- *
  */
 public class MonopolyParams {
 
-	private int playerIndex;
-	private String resource;
-	private String type;
-	
-	public MonopolyParams(int playerIndex, String resource) {
-		this.playerIndex = playerIndex;
-		this.resource = resource;
-		setType("Monopoly");
-	}
+    private int playerIndex;
+    private String resource;
+    private String type;
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public MonopolyParams(int playerIndex, String resource) {
+        this.playerIndex = playerIndex;
+        this.resource = resource;
+        setType("Monopoly");
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	/**
-	 * @return the resource
-	 */
-	public String getResource() {
-		return resource;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	/**
-	 * @param resource the resource to set
-	 */
-	public void setResource(String resource) {
-		this.resource = resource;
-	}
+    /**
+     * @return the resource
+     */
+    public String getResource() {
+        return resource;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param resource the resource to set
+     */
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

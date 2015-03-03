@@ -2,41 +2,38 @@ package shared.communicator;
 
 import java.util.List;
 
-import shared.models.CatanModel;
-
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class GetCommandsResults extends ResponseBodyContainer {
-	List<String> commands;
-	boolean success;
-	
-	public GetCommandsResults(List<String> commands)
-	{
-		this.commands = commands;
-	}
+    List<String> commands;
+    boolean success;
 
-	public GetCommandsResults() {
-		// TODO Auto-generated constructor stub
-	}
+    public GetCommandsResults(List<String> commands) {
+        this.commands = commands;
+    }
 
-	public List<String> getCommands() {
-		return commands;
-	}
+    public GetCommandsResults() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setCommands(List<String> commands) {
-		this.commands = commands;
-	}
+    public List<String> getCommands() {
+        return commands;
+    }
 
-	public boolean isSuccess() {
-		return success;
-	}
+    public void setCommands(List<String> commands) {
+        this.commands = commands;
+    }
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    public boolean isSuccess() {
+        return success;
+    }
 
-	
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+
 }

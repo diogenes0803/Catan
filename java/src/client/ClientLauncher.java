@@ -1,19 +1,10 @@
 package client;
 
 
-import java.awt.EventQueue;
-import java.util.Scanner;
-import java.util.Timer;
-
-import com.google.gson.Gson;
-
-import shared.communicator.JoinGameParams;
-import shared.communicator.JoinGameResults;
-import shared.communicator.UserLoginParams;
-import shared.communicator.UserLoginResults;
-import shared.models.CatanModel;
 import client.communication.ServerProxy;
 import client.main.Catan;
+
+import java.awt.*;
 
 
 //if run from eclipse, eclipse will pass in default port and host of
@@ -22,17 +13,17 @@ import client.main.Catan;
 //<property name="useMockServer" value="false"/>
 public class ClientLauncher {
 
-  //arg0 = host, arg1 = port
+    //arg0 = host, arg1 = port
     
-   public static void main(final String[] args) {
+    public static void main(final String[] args) {
         //final String host = args[0];
         //final String port = args[1];
         //final boolean useMockServer = Boolean.parseBoolean(args[2]);
-        EventQueue.invokeLater(new Runnable(){      
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-            	ServerProxy.getInstance().initClientComm("localhost", "8081");
-            	Catan.main(args);
+                ServerProxy.getInstance().initClientComm("localhost", "8081");
+                Catan.main(args);
                 /*UserLoginResults result = ServerProxy.getInstance().userLogin(new UserLoginParams("Sam","sam"));
                 System.out.println("UserLogin Result: "+ result.isSuccess());
                 if(!result.isSuccess())

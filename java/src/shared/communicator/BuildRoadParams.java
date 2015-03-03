@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package shared.communicator;
 
@@ -7,64 +7,63 @@ import shared.locations.EdgeLocation;
 
 /**
  * @author campbeln
- *
  */
 public class BuildRoadParams {
 
-	private String type;
-	private int playerIndex;
-	private JsonFriendlyEdgeLocation roadLocation;
-	private boolean free;
-	
-	public BuildRoadParams(int playerIndex, EdgeLocation roadLocation, boolean free) {
-		this.playerIndex = playerIndex;
-		this.setRoadLocation(new JsonFriendlyEdgeLocation(roadLocation));
-		this.free = free;
-		setType("buildRoad");
-	}
+    private String type;
+    private int playerIndex;
+    private JsonFriendlyEdgeLocation roadLocation;
+    private boolean free;
 
-	/**
-	 * @return the playerIndex
-	 */
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public BuildRoadParams(int playerIndex, EdgeLocation roadLocation, boolean free) {
+        this.playerIndex = playerIndex;
+        this.setRoadLocation(new JsonFriendlyEdgeLocation(roadLocation));
+        this.free = free;
+        setType("buildRoad");
+    }
 
-	/**
-	 * @param playerIndex the playerIndex to set
-	 */
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+    /**
+     * @return the playerIndex
+     */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	/**
-	 * @return the free
-	 */
-	public boolean isFree() {
-		return free;
-	}
+    /**
+     * @param playerIndex the playerIndex to set
+     */
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
-	/**
-	 * @param free the free to set
-	 */
-	public void setFree(boolean free) {
-		this.free = free;
-	}
+    /**
+     * @return the free
+     */
+    public boolean isFree() {
+        return free;
+    }
 
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param free the free to set
+     */
+    public void setFree(boolean free) {
+        this.free = free;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public JsonFriendlyEdgeLocation getRoadLocation() {
-		return roadLocation;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setRoadLocation(JsonFriendlyEdgeLocation roadLocation) {
-		this.roadLocation = roadLocation;
-	}
-	
+    public JsonFriendlyEdgeLocation getRoadLocation() {
+        return roadLocation;
+    }
+
+    public void setRoadLocation(JsonFriendlyEdgeLocation roadLocation) {
+        this.roadLocation = roadLocation;
+    }
+
 }

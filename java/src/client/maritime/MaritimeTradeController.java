@@ -1,13 +1,9 @@
 package client.maritime;
 
-import java.util.Observable;
-
-import shared.definitions.ResourceType;
-import shared.models.CatanModel;
-import shared.models.Game;
-import shared.models.Player;
 import client.base.Controller;
-import client.communication.ServerProxy;
+import shared.definitions.ResourceType;
+
+import java.util.Observable;
 
 
 /**
@@ -15,71 +11,71 @@ import client.communication.ServerProxy;
  */
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController {
 
-	private IMaritimeTradeOverlay tradeOverlay;
-	
-	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
-		
-		super(tradeView);
+    private IMaritimeTradeOverlay tradeOverlay;
 
-		setTradeOverlay(tradeOverlay);
-	}
-	
-	public IMaritimeTradeView getTradeView() {
-		
-		return (IMaritimeTradeView)super.getView();
-	}
-	
-	public IMaritimeTradeOverlay getTradeOverlay() {
-		return tradeOverlay;
-	}
+    public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 
-	public void setTradeOverlay(IMaritimeTradeOverlay tradeOverlay) {
-		this.tradeOverlay = tradeOverlay;
-	}
+        super(tradeView);
 
-	@Override
-	public void startTrade() {
-		
-		getTradeOverlay().showModal();
-	}
+        setTradeOverlay(tradeOverlay);
+    }
 
-	@Override
-	public void makeTrade() {
+    public IMaritimeTradeView getTradeView() {
 
-		getTradeOverlay().closeModal();
-	}
+        return (IMaritimeTradeView) super.getView();
+    }
 
-	@Override
-	public void cancelTrade() {
+    public IMaritimeTradeOverlay getTradeOverlay() {
+        return tradeOverlay;
+    }
 
-		getTradeOverlay().closeModal();
-	}
+    public void setTradeOverlay(IMaritimeTradeOverlay tradeOverlay) {
+        this.tradeOverlay = tradeOverlay;
+    }
 
-	@Override
-	public void setGetResource(ResourceType resource) {
+    @Override
+    public void startTrade() {
 
-	}
+        getTradeOverlay().showModal();
+    }
 
-	@Override
-	public void setGiveResource(ResourceType resource) {
+    @Override
+    public void makeTrade() {
 
-	}
+        getTradeOverlay().closeModal();
+    }
 
-	@Override
-	public void unsetGetValue() {
+    @Override
+    public void cancelTrade() {
 
-	}
+        getTradeOverlay().closeModal();
+    }
 
-	@Override
-	public void unsetGiveValue() {
+    @Override
+    public void setGetResource(ResourceType resource) {
 
-	}
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setGiveResource(ResourceType resource) {
+
+    }
+
+    @Override
+    public void unsetGetValue() {
+
+    }
+
+    @Override
+    public void unsetGiveValue() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO Auto-generated method stub
+
+    }
 
 }
 

@@ -1,62 +1,61 @@
 package shared.communicator;
 
-import java.util.List;
-
 import shared.models.Player;
+
+import java.util.List;
 
 /**
  * Dumb data holder
- * @author Jonathan
  *
+ * @author Jonathan
  */
 public class CreateGameResults {
-	String title;
-	int id;
-	List<Player> players;
-	boolean success;
-	
-	public CreateGameResults(String title, int id, List<Player> players2)
-	{
-		this.title = title;
-		this.id = id;
-		this.players = players2;
-	}
+    String title;
+    int id;
+    List<Player> players;
+    boolean success;
 
-	public CreateGameResults() {
-		// TODO Auto-generated constructor stub
-	}
+    public CreateGameResults(String title, int id, List<Player> players2) {
+        this.title = title;
+        this.id = id;
+        this.players = players2;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public CreateGameResults() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public List<Player> getPlayers() {
-		return players;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPlayers(List<Player> players) {
-		this.players = players;
-	}
+    public List<Player> getPlayers() {
+        return players;
+    }
 
-	public boolean isSuccess() {
-		return success;
-	}
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-	
-	
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+
 }

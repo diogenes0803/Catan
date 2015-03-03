@@ -1,51 +1,52 @@
 package shared.models;
 
 public class TurnTracker {
-	
-	private static TurnTracker instance = new TurnTracker();
-	private TurnTracker(){}
-	
-	public static TurnTracker getInstance() {
-		return instance;
-	}
-	
-	private String status;
-	private int currentTurn;
-	private int longestRoad;
-	private int largestArmy;
-	public String getStatus() {
-		return status;
-	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    private static TurnTracker instance = new TurnTracker();
 
-	public int getCurrentTurn() {
-		return currentTurn;
-	}
+    private TurnTracker() {
+    }
 
-	public void setCurrentTurn(int currentTurn) {
-		this.currentTurn = currentTurn;
-	}
+    public static TurnTracker getInstance() {
+        return instance;
+    }
 
-	public int getLongestRoad() {
-		return longestRoad;
-	}
+    private String status;
+    private int currentTurn;
+    private int longestRoad;
+    private int largestArmy;
 
-	public void setLongestRoad(int longestRoad) {
-		this.longestRoad = longestRoad;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public int getLargestArmy() {
-		return largestArmy;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setLargestArmy(int largestArmy) {
-		this.largestArmy = largestArmy;
-	}
-	
-	
-	
+    public int getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(int currentTurn) {
+        this.currentTurn = currentTurn;
+    }
+
+    public int getLongestRoad() {
+        return longestRoad;
+    }
+
+    public void setLongestRoad(int longestRoad) {
+        this.longestRoad = longestRoad;
+    }
+
+    public int getLargestArmy() {
+        return largestArmy;
+    }
+
+    public void setLargestArmy(int largestArmy) {
+        this.largestArmy = largestArmy;
+    }
+
 
 }
