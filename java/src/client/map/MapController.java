@@ -367,6 +367,7 @@ public class MapController extends Controller implements IMapController {
 			
 			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
 				System.out.println(TurnTracker.getInstance().getStatus());
+				this.getView().startDrop(PieceType.SETTLEMENT, playerInfo.getColor(), false);
 				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
 			}
 		}
