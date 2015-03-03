@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.Observable;
 
 import shared.communicator.BuildRoadParams;
+import shared.communicator.BuildSettlementParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -209,8 +210,11 @@ public class MapController extends Controller implements IMapController {
 			return;
 		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
-		setStateString(TurnTracker.getInstance().getStatus());
-	
+		
+		if (state == null) {
+			setStateString(TurnTracker.getInstance().getStatus());
+		}
+		
 		createTitles(game);
 		createTokens(game);
 		createCities(game);
@@ -275,13 +279,20 @@ public class MapController extends Controller implements IMapController {
 		
 		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
 		state.buildRoad(this, params);
+		if(state.equals(Setup1State.singleton)) {
+			getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		Game game = CatanModel.getInstance().getGameManager().getGame();
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
 		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
 		getView().placeSettlement(vertLoc, thisColor);
+		
+		BuildSettlementParams params = new BuildSettlementParams(playerIndex, vertLoc, true);
+		state.buildSettlement(this, params);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -367,7 +378,6 @@ public class MapController extends Controller implements IMapController {
 			
 			if (TurnTracker.getInstance().getCurrentTurn() == playerInfo.getPlayerIndex()) {
 				System.out.println(TurnTracker.getInstance().getStatus());
-				this.getView().startDrop(PieceType.SETTLEMENT, playerInfo.getColor(), false);
 				this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
 			}
 		}
