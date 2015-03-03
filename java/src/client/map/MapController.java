@@ -36,6 +36,9 @@ public class MapController extends Controller implements IMapController {
 	private IRobView robView;
 	private IState state;
 	private boolean setup1Initiated;
+	private boolean setup1Finished;
+	private boolean setup2Initiated;
+	private boolean setup2Finished;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -44,6 +47,9 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		
 		setup1Initiated = false;
+		setup1Finished = false;
+		setup2Initiated = false;
+		setup2Finished = false;
 	}
 	
 	public IMapView getView() {
@@ -231,6 +237,11 @@ public class MapController extends Controller implements IMapController {
 			startGame();
 		}
 		
+		System.out.println(Boolean.toString(setup1Finished));
+		if (setup1Finished && !setup2Initiated) {
+			startSetup2();
+		}
+		
 }
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
@@ -383,6 +394,36 @@ public class MapController extends Controller implements IMapController {
 			setup1Initiated = true;
 			this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
 		}
+	}
+	
+	public void startSetup2() {
+		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+		
+		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
+			return;
+		}
+		else if (state.equals(Setup2State.singleton)) {
+			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+			
+			setup2Initiated = true;
+			this.getView().startDrop(PieceType.ROAD, playerInfo.getColor(), false);
+		}
+	}
+
+	public boolean isSetup1Finished() {
+		return setup1Finished;
+	}
+
+	public void setSetup1Finished(boolean setup1Finished) {
+		this.setup1Finished = setup1Finished;
+	}
+
+	public boolean isSetup2Finished() {
+		return setup2Finished;
+	}
+
+	public void setSetup2Finished(boolean setup2Finished) {
+		this.setup2Finished = setup2Finished;
 	}
 }
 

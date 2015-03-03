@@ -17,6 +17,8 @@ import shared.communicator.RoadBuildingParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.communicator.YearOfPlentyParams;
+import shared.definitions.CatanColor;
+import shared.definitions.PieceType;
 import shared.models.CatanModel;
 import shared.models.Game;
 
@@ -64,6 +66,10 @@ public class Setup2State implements IState {
 	public void buildRoad(MapController controller, BuildRoadParams params) {
 		Game game = ServerProxy.getInstance().buildRoad(params).getGameManager().getGame();
 		CatanModel.getInstance().getGameManager().setGame(game);
+		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
+		
+		controller.getView().startDrop(PieceType.SETTLEMENT, thisColor, false);
 	}
 
 	/* (non-Javadoc)
@@ -72,9 +78,11 @@ public class Setup2State implements IState {
 	@Override
 	public void buildSettlement(MapController controller,
 			BuildSettlementParams params) {
-		controller.setState(RollingState.singleton);
 		Game game = ServerProxy.getInstance().buildSettlement(params).getGameManager().getGame();
 		CatanModel.getInstance().getGameManager().setGame(game);
+		
+		FinishTurnParams params2 = new FinishTurnParams(params.getPlayerIndex());
+		finishTurn(controller, params2);
 	}
 
 	/* (non-Javadoc)
@@ -114,7 +122,10 @@ public class Setup2State implements IState {
 	 */
 	@Override
 	public void finishTurn(MapController controller, FinishTurnParams params) {
-		return;
+		Game game = ServerProxy.getInstance().finishTurn(params).getGameManager().getGame();
+		CatanModel.getInstance().getGameManager().setGame(game);
+		controller.setState(RollingState.singleton);
+		controller.setSetup2Finished(true);
 	}
 
 	/* (non-Javadoc)
