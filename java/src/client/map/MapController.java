@@ -65,7 +65,7 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	
-	protected void createRoads(Game game)
+	private void createRoads(Game game)
 	{
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
 		{
@@ -90,7 +90,7 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 
-	protected void createCities(Game game)
+	private void createCities(Game game)
 	{
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
 		{
@@ -115,8 +115,7 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 
-
-	protected void createSettlements(Game game)
+	private void createSettlements(Game game)
 	{
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
 		{
@@ -144,7 +143,7 @@ public class MapController extends Controller implements IMapController {
 
 
 
-	protected void createWater(Game game){
+	private void createWater(Game game){
 		for(int y = 0; y <= 3 ; ++y)
 		{
 					getView().addHex(new HexLocation(-3,y), HexType.WATER);
@@ -153,19 +152,9 @@ public class MapController extends Controller implements IMapController {
 		{
 					getView().addHex(new HexLocation(3,y), HexType.WATER);
 		}
-		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
-		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
-		getView().addHex(new HexLocation(2,1), HexType.WATER);
-		getView().addHex(new HexLocation(1,2), HexType.WATER);
-		getView().addHex(new HexLocation(1,-3), HexType.WATER);
-		getView().addHex(new HexLocation(2,-3), HexType.WATER);
-		getView().addHex(new HexLocation(-2,3), HexType.WATER);
-		getView().addHex(new HexLocation(-1,3), HexType.WATER);
-		getView().addHex(new HexLocation(0,3), HexType.WATER);
-		getView().addHex(new HexLocation(0,-3), HexType.WATER);
 	}	
 
-	protected void createTitles(Game game){
+	private void createTiles(Game game){
 		
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
 			int maxY = game.getMap().getRadius() - x;			
@@ -180,7 +169,7 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 		
-	protected void createTokens(Game game)
+	private void createTokens(Game game)
 	{
 		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
 		{
@@ -198,7 +187,7 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 
-	protected void createArbors(Game game)
+	private void createHarbors(Game game)
 	{
 		Iterator<Entry<EdgeLocation, Port>> itPort = game.getMap().getPorts().entrySet().iterator();
 		while(itPort.hasNext()) {
@@ -209,12 +198,12 @@ public class MapController extends Controller implements IMapController {
 		}
 	}
 
-	protected void createRobber(Game game)
+	private void createRobber(Game game)
 	{
 		getView().placeRobber(game.getMap().getRobberLocation());
 	}
 
-	protected void initFromModel() {
+	private void initFromModel() {
 		if (CatanModel.getInstance().getGameManager() == null) {
 			return;
 		}
@@ -224,12 +213,12 @@ public class MapController extends Controller implements IMapController {
 			setStateString(TurnTracker.getInstance().getStatus());
 		}
 		
-		createTitles(game);
+		createTiles(game);
 		createTokens(game);
 		createCities(game);
 		createSettlements(game);
 		createRoads(game);
-		createArbors(game);
+		createHarbors(game);
 		createRobber(game);
 		createWater(game);
 		
