@@ -140,24 +140,11 @@ public class MapController extends Controller implements IMapController {
 			}
 		}
 	}
-
-
-
-	private void createWater(Game game){
-		for(int y = 0; y <= 3 ; ++y)
-		{
-					getView().addHex(new HexLocation(-3,y), HexType.WATER);
-		}
-		for(int y = -3; y <= 0 ; ++y)
-		{
-					getView().addHex(new HexLocation(3,y), HexType.WATER);
-		}
-	}	
-
+	
 	private void createTiles(Game game){
 		
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) {
-			int maxY = game.getMap().getRadius() - x;			
+		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius()+2; x++) {
+			int maxY = game.getMap().getRadius() - x + 2;
 			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {		
 				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
 				if (thisTile != null) {
@@ -220,7 +207,6 @@ public class MapController extends Controller implements IMapController {
 		createRoads(game);
 		createHarbors(game);
 		createRobber(game);
-		createWater(game);
 		
 		if (!setup1Initiated) {
 			startGame();

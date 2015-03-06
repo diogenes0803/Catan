@@ -51,7 +51,7 @@ public class JsonModelHolder {
         CatanMap mapModel = new CatanMap();
         int radius = map.getRadius();
         mapModel.setRadius(radius);
-        HexTile[][] hexArray = new HexTile[radius * 2 - 1][radius * 2 - 1];
+        HexTile[][] hexArray = new HexTile[radius * 2 + 1][radius * 2 + 1];
         HashMap<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
         for (Hex thisHex : map.getHexes()) {
             int x = thisHex.getLocation().getX();
@@ -64,8 +64,38 @@ public class JsonModelHolder {
             }
             int number = thisHex.getNumber();
             HexTile thisHextile = new HexTile(x, y, type, number);
-            hexArray[thisHextile.getLocation().getX() + radius - 1][thisHextile
-                    .getLocation().getY() + radius - 1] = thisHextile;
+            hexArray[thisHextile.getLocation().getX() + radius][thisHextile
+                    .getLocation().getY() + radius] = thisHextile;
+        }
+        for(int x = 0; x < hexArray.length; x++) {
+        	if (x == 0) {
+    			for(int y = radius; y < hexArray[x].length; y++) {
+    				HexTile thisWater = new HexTile(x-radius, y-radius, HexType.WATER, 0);
+    				hexArray[x][y] = thisWater;
+    			}
+    		}
+        	else if (x == hexArray.length-1) {
+        		for(int y = 0; y <= radius; y++) {
+        			HexTile thisWater = new HexTile(x-radius, y-radius, HexType.WATER, 0);
+    				hexArray[x][y] = thisWater;
+        		}
+        	}
+        	else if (x <= radius) {
+        		int y1 = radius-x;
+				HexTile TopWater = new HexTile(x-radius, y1-radius, HexType.WATER, 0);
+				hexArray[x][y1] = TopWater;
+				int y2 = hexArray[x].length-1;
+				HexTile BottomWater = new HexTile(x-radius, y2-radius, HexType.WATER, 0);
+				hexArray[x][y2] = BottomWater;
+        	}
+        	else {
+        		int y1 = hexArray[x].length-1-x+radius;
+				HexTile BottomWater = new HexTile(x-radius, y1-radius, HexType.WATER, 0);
+				hexArray[x][y1] = BottomWater;
+				int y2 = 0;
+				HexTile TopWater = new HexTile(x-radius, y2-radius, HexType.WATER, 0);
+				hexArray[x][y2] = TopWater;
+        	}
         }
         for (Road thisRoad : map.getRoads()) {
             int x = thisRoad.getLocation().getX();
@@ -73,9 +103,9 @@ public class JsonModelHolder {
             EdgeDirection thisDirection = stringToEdgeDirection(thisRoad
                     .getLocation().getDirection());
             Piece road = new Piece(PieceType.ROAD, thisRoad.getOwner());
-            hexArray[x + radius - 1][y + radius - 1].getEdgeAt(thisDirection)
+            hexArray[x + radius][y + radius].getEdgeAt(thisDirection)
                     .setRoad(road);
-            hexArray[x + radius - 1][y + radius - 1].getEdgeAt(thisDirection)
+            hexArray[x + radius][y + radius].getEdgeAt(thisDirection)
                     .setHasRoad(true);
         }
         for (City thisCity : map.getCities()) {
@@ -84,9 +114,9 @@ public class JsonModelHolder {
             VertexDirection thisDirection = stringToVertexDirection(thisCity
                     .getLocation().getDirection());
             Piece city = new Piece(PieceType.CITY, thisCity.getOwner());
-            hexArray[x + radius - 1][y + radius - 1].getVertexAt(thisDirection)
+            hexArray[x + radius][y + radius].getVertexAt(thisDirection)
                     .setSettlement(city);
-            hexArray[x + radius - 1][y + radius - 1].getVertexAt(thisDirection)
+            hexArray[x + radius][y + radius].getVertexAt(thisDirection)
                     .setHasSettlement(true);
         }
         for (Settlement thisSettlement : map.getSettlements()) {
@@ -96,9 +126,9 @@ public class JsonModelHolder {
                     .getLocation().getDirection());
             Piece city = new Piece(PieceType.SETTLEMENT,
                     thisSettlement.getOwner());
-            hexArray[x + radius - 1][y + radius - 1].getVertexAt(thisDirection)
+            hexArray[x + radius][y + radius].getVertexAt(thisDirection)
                     .setSettlement(city);
-            hexArray[x + radius - 1][y + radius - 1].getVertexAt(thisDirection)
+            hexArray[x + radius][y + radius].getVertexAt(thisDirection)
                     .setHasSettlement(true);
         }
         for (JsonPort thisPort : map.getPorts()) {
@@ -125,7 +155,7 @@ public class JsonModelHolder {
         HexLocation hexLoc = new HexLocation(x, y);
         Piece robber = new Piece(PieceType.ROBBER, -1);
         mapModel.setRobberLocation(hexLoc);
-        hexArray[x + radius - 1][y + radius - 1].setRobber(robber);
+        hexArray[x + radius][y + radius].setRobber(robber);
 
         return mapModel;
     }

@@ -2,6 +2,7 @@ package shared.models;
 
 import java.util.HashMap;
 
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -32,8 +33,12 @@ public class CatanMap {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildRoadAt(int playerId, EdgeLocation edgeLocation) {
-		if(getRoadAt(edgeLocation) != null)
+		if(isSea(edgeLocation)) {
 			return false;
+		}
+		if(getRoadAt(edgeLocation) != null) {
+			return false;
+		}
 		else {
 			if(TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {
 				if(playerHasNeighboringRoad(playerId, edgeLocation))
@@ -209,6 +214,22 @@ public class CatanMap {
 			}
 		}
 		return false;
+	}
+	
+	private boolean isSea(EdgeLocation eLoc) {
+		HexTile thisTile = getHexTileAt(eLoc.getHexLoc());
+		if(thisTile == null) {
+			return true;
+		}
+		HexTile neighborTile = getHexTileAt(thisTile.getLocation().getNeighborLoc(eLoc.getDir()));
+		if(neighborTile == null) {
+			return true;
+		}
+		if(thisTile.getHexType() == HexType.WATER && neighborTile.getHexType() == HexType.WATER) {
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	private boolean playerHasNeighboringRoad(int playerId, VertexLocation vLoc) {
@@ -490,24 +511,12 @@ public class CatanMap {
 	}
 
 	public HexTile getHexTileAt(HexLocation location) {
-		int x = location.getX() + radius-1;
-		int y = location.getY() + radius-1;
+		int x = location.getX() + radius;
+		int y = location.getY() + radius;
 		if (!(x > hexTiles.length-1 || y > hexTiles.length-1 || x < 0 || y < 0)) {
 			return hexTiles[x][y];
 		} else {
 			return null;
-		}
-	}
-	
-	private boolean isOutOfBound(HexLocation location) {
-		if((location.getX()+radius-1) < 0 || (location.getY() + radius-1) < 0) {
-			return true;
-		}
-		else if((location.getX()+radius-1) > hexTiles.length-1 || (location.getY()+radius-1) > hexTiles.length-1) {
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 
