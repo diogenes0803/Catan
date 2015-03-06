@@ -66,6 +66,8 @@ public class CatanMap {
 	 * @return true if possible false if not
 	 */
 	public boolean canBuildSettlementAt(int playerId, VertexLocation vertexLocation) {
+		if(getHexTileAt(vertexLocation.getHexLoc()) == null)
+			return false;
 		if(getSettlementAt(vertexLocation) != null)
 			return false;
 		else {
@@ -211,6 +213,9 @@ public class CatanMap {
 				Piece settlement = getSettlementAt(thisVertex.getLocation());
 				if(settlement != null)
 					return true;
+			}
+			else {
+				return true;
 			}
 		}
 		return false;
