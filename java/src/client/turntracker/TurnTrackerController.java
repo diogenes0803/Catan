@@ -3,8 +3,8 @@ package client.turntracker;
 import client.base.Controller;
 import client.communication.ServerProxy;
 import shared.definitions.CatanColor;
+import shared.models.CatanModel;
 import shared.models.Game;
-import shared.models.TurnTracker;
 
 import java.util.Observable;
 
@@ -40,7 +40,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
     @Override
     public void update(Observable o, Object arg) {
-    	Game thisGame = (Game)arg;
+    	Game thisGame = CatanModel.getInstance().getGameManager().getGame();
     	getView().setLocalPlayerColor(thisGame.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getColor());
     	
     	boolean largestArmy = false;

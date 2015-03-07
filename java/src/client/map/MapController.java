@@ -3,8 +3,10 @@ package client.map;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Observable;
+
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
+import shared.communicator.DiscardCardsParams;
 import shared.communicator.RollNumberParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -20,6 +22,7 @@ import shared.models.Game;
 import shared.models.HexTile;
 import shared.models.Piece;
 import shared.models.Port;
+import shared.models.ResourceList;
 import shared.models.TurnTracker;
 import shared.models.Vertex;
 import client.base.Controller;
@@ -198,6 +201,8 @@ public class MapController extends Controller implements IMapController {
 		
 		if (state == null) {
 			setStateString(TurnTracker.getInstance().getStatus());
+			CatanModel.getInstance().getGameManager().changed();
+			CatanModel.getInstance().getGameManager().notifyObservers();
 		}
 		
 		createTiles(game);
@@ -216,12 +221,15 @@ public class MapController extends Controller implements IMapController {
 			startSetup2();
 		}
 		
-		if (state == RollingState.singleton) {
-			System.out.println("rolling");
+		/*if (state == RollingState.singleton) {
 			CatanModel.getInstance().getGameManager().changed();
 			CatanModel.getInstance().getGameManager().notifyObservers();
 		}
 		
+		if (state == DiscardingState.singleton) { 
+			CatanModel.getInstance().getGameManager().changed();
+			CatanModel.getInstance().getGameManager().notifyObservers();
+		}*/
 }
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
@@ -348,6 +356,12 @@ public class MapController extends Controller implements IMapController {
 		
 		RollNumberParams params = new RollNumberParams(playerIndex, number);
 		state.rollNumber(null, params);
+	}
+	
+	public static void discardCards(int playerIndex, ResourceList resourceList) {
+		DiscardCardsParams params = new DiscardCardsParams(playerIndex, resourceList);
+		
+		state.discardCards(null, params);
 	}
 	
 	public void setStateString(String status) {

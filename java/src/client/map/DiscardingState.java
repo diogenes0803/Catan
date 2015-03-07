@@ -3,6 +3,7 @@ package client.map;
 import client.communication.ServerProxy;
 import shared.communicator.*;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -28,10 +29,10 @@ public class DiscardingState implements IState {
      */
     @Override
     public void discardCards(MapController controller, DiscardCardsParams params) {
-        // TODO Auto-generated method stub
 
-        CatanModel.setInstance(ServerProxy.getInstance().discardCards(params));
-        controller.setState(RobbingState.singleton);
+        Game game = ServerProxy.getInstance().discardCards(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
+        MapController.setState(RobbingState.singleton);
     }
 
     /* (non-Javadoc)

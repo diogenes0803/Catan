@@ -5,10 +5,9 @@ import client.base.IAction;
 import client.communication.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.models.CatanModel;
 import shared.models.DevCard;
 import shared.models.Game;
-import shared.models.Player;
-
 import java.util.Observable;
 
 
@@ -108,7 +107,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void update(Observable o, Object arg) {
-    	Game thisGame = (Game)arg;
+    	Game thisGame = CatanModel.getInstance().getGameManager().getGame();
     	getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, thisGame.getPlayers()[ServerProxy.getInstance()
     	                                 .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.MONOPOLY));
     	getPlayCardView().setCardEnabled(DevCardType.SOLDIER, thisGame.getPlayers()[ServerProxy.getInstance()
