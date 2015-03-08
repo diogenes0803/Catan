@@ -5,6 +5,7 @@ import client.base.IAction;
 import client.communication.ServerProxy;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
+import shared.models.CatanModel;
 import shared.models.Game;
 import shared.models.Piece;
 
@@ -80,7 +81,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     @Override
     public void update(Observable o, Object arg) {
 
-        Game game = (Game) arg;
+    	
+        Game game = CatanModel.getInstance().getGameManager().getGame();
+        if (game == null) {
+        	System.out.println("tis the problem");
+        }
 //Resource
         getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WOOD));
         getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.BRICK));
