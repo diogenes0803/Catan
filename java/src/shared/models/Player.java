@@ -14,7 +14,10 @@ import java.util.List;
 
 public class Player {
 
+    public static final int NO_PLAYER = -1; // a player index that represents a null player
+
     private int playerId;
+    private int playerIndex;
     private String name;
     private List<ResCard> resCards;
     private List<DevCard> devCards;
@@ -129,6 +132,14 @@ public class Player {
 
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
+    }
+
+    public int getIndex() {
+        return playerIndex;
+    }
+
+    public void setIndex(int i) {
+        playerIndex = i;
     }
 
     public List<ResCard> getResCards() {
