@@ -36,17 +36,19 @@ public class ChatController extends Controller implements IChatController {
 
     @Override
     public void update(Observable o, Object arg) {
-        Game thisGame = CatanModel.getInstance().getGameManager().getGame();
-        ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
-        for (MessageLine line : thisGame.getChats()) {
-            String message = line.getMessage();
-            String playerName = line.getSource();
-            CatanColor color = thisGame.getPlayerColorByPlayerName(playerName);
-
-            LogEntry entry = new LogEntry(color, message);
-            entries.add(entry);
-        }
-        getView().setEntries(entries);
+    	if(arg instanceof Game) {
+	        Game thisGame = CatanModel.getInstance().getGameManager().getGame();
+	        ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
+	        for (MessageLine line : thisGame.getChats()) {
+	            String message = line.getMessage();
+	            String playerName = line.getSource();
+	            CatanColor color = thisGame.getPlayerColorByPlayerName(playerName);
+	
+	            LogEntry entry = new LogEntry(color, message);
+	            entries.add(entry);
+	        }
+	        getView().setEntries(entries);
+    	}
     }
 
 }

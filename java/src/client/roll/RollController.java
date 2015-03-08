@@ -1,14 +1,14 @@
 package client.roll;
 
+import java.util.Observable;
+import java.util.Random;
+
+import shared.models.Game;
+import shared.models.TurnTracker;
 import client.base.Controller;
 import client.communication.ServerProxy;
 import client.map.MapController;
 import client.map.RollingState;
-
-import java.util.Observable;
-import java.util.Random;
-
-import shared.models.TurnTracker;
 
 
 /**
@@ -58,12 +58,13 @@ public class RollController extends Controller implements IRollController {
 
     @Override
     public void update(Observable o, Object arg) {
-        
-        int currentTurn = TurnTracker.getInstance().getCurrentTurn();
-        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-        
-        if (MapController.state == RollingState.singleton  && playerIndex == currentTurn) {
-        	getRollView().showModal();
+        if(arg instanceof Game) {
+	        int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+	        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+	        
+	        if (MapController.state == RollingState.singleton  && playerIndex == currentTurn) {
+	        	getRollView().showModal();
+	        }
         }
     }
 

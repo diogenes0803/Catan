@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URLDecoder;
 
 import shared.communicator.AcceptTradeParams;
+import shared.communicator.AddAIParams;
 import shared.communicator.AddAIResults;
 import shared.communicator.BuildCityParams;
 import shared.communicator.BuildRoadParams;
@@ -104,6 +105,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         playerCookie = "";
         gameCookie = "";
         version = UNINITIALIZED_MODEL;
+        currentGameId = -1;
 	}
 	
 	public static ServerProxy getInstance() {
@@ -762,9 +764,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
 
 
     @Override
-    public AddAIResults AddAI(String params) {
+    public AddAIResults AddAI(String selectedAI) {
     	AddAIResults result = new AddAIResults();
-        
+        AddAIParams params = new AddAIParams(selectedAI);
     	try {
     		HttpURLResponse response = clientComm.post("/game/addAI", params, playerCookie+"; "+gameCookie);
             result.setSuccess(response.getResponseCode() == HTTP_OK);

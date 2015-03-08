@@ -3,6 +3,7 @@ package client.points;
 import client.base.Controller;
 import client.communication.ServerProxy;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 import java.util.Observable;
 
@@ -50,14 +51,16 @@ public class PointsController extends Controller implements IPointsController {
 
     @Override
     public void update(Observable o, Object arg) {
-    	int points = CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId())].getVictoryPoint();
-    	if (points >= 10)
-    	{
-    		finishedView.showModal();
-    	}
-    	else
-    	{
-    		getPointsView().setPoints(points);
+    	if(arg instanceof Game) {
+	    	int points = CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId())].getVictoryPoint();
+	    	if (points >= 10)
+	    	{
+	    		finishedView.showModal();
+	    	}
+	    	else
+	    	{
+	    		getPointsView().setPoints(points);
+	    	}
     	}
 
     }

@@ -1,19 +1,19 @@
 package shared.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
+
+import client.data.GameInfo;
 
 public class GameManager extends Observable {
 
     private boolean isJoinedGame;
     private Game game;
-    private List<GameInfo> availableGames;
+    private GameInfo[] availableGames;
 
     public GameManager() {
         isJoinedGame = false;
         game = null;
-        availableGames = new ArrayList<GameInfo>();
+        availableGames = null;
     }
 
 
@@ -31,12 +31,14 @@ public class GameManager extends Observable {
         notifyObservers(game);
     }
 
-    public List<GameInfo> getAvailableGames() {
+    public GameInfo[] getAvailableGames() {
         return availableGames;
     }
 
-    public void setAvailableGames(List<GameInfo> availableGames) {
+    public void setAvailableGames(GameInfo[] availableGames) {
         this.availableGames = availableGames;
+        setChanged();
+        notifyObservers(availableGames);
     }
 
     public void setJoinedGame(boolean isJoinedGame) {
@@ -45,6 +47,15 @@ public class GameManager extends Observable {
 
     public void changed() {
         setChanged();
+    }
+    
+    public GameInfo findGameInfoById(int gameId) {
+    	for(GameInfo gameInfo : availableGames) {
+    		if(gameInfo.getId() == gameId) {
+    			return gameInfo;
+    		}
+    	}
+    	return null;
     }
 
 

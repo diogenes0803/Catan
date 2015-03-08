@@ -1,12 +1,14 @@
 package client.join;
 
+import java.util.List;
 import java.util.Observable;
 
 import shared.models.CatanModel;
-import shared.models.Player;
+import shared.models.Game;
 import client.base.Controller;
 import client.communication.ServerPoller;
 import client.communication.ServerProxy;
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 
 
@@ -15,7 +17,7 @@ import client.data.PlayerInfo;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
-	private int playersJoined;
+	private int playersJoined = 0;
 	
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
@@ -31,62 +33,60 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 
-		playersJoined = CatanModel.getInstance().getGameManager().getGame().getNumberOfPlayers();
-		if (playersJoined < 4) {
-			getView().showModal();
-			
-			/*
-			String[] values = new String[ServerProxy.getInstance().listAI().getaITypes().size()];
-			int i = 0;
-			for (String value : ServerProxy.getInstance().listAI().getaITypes())
-			{
-				values[i] = value;
-				i++;
-			}
-			*/
-			//Hack because I know that this is the only working value currently
-			String[] values = new String[1];
-			values[0] = "LARGEST_ARMY";
-			
-			getView().setAIChoices(values);
-			
-			PlayerInfo[] playerInfo = new PlayerInfo[playersJoined];
-			Player[] players = CatanModel.getInstance().getGameManager().getGame().getPlayers();
-			
-			for (int j = 0; j < playersJoined; j++)
-			{
-				PlayerInfo info = new PlayerInfo();
-				info.setColor(players[j].getColor());
-				info.setId(players[j].getPlayerId());
-				info.setName(players[j].getName());
-				info.setPlayerIndex(j);
-				playerInfo[j] = info;
-			}
-			
-			getView().setPlayers(playerInfo);
+		getView().showModal();
+		/*
+		String[] values = new String[ServerProxy.getInstance().listAI().getaITypes().size()];
+		int i = 0;
+		for (String value : ServerProxy.getInstance().listAI().getaITypes())
+		{
+			values[i] = value;
+			i++;
 		}
-		else {
-			//was poller
-			CatanModel.getInstance().getGameManager().changed();
-		}
-		ServerPoller.getInstance().startTimer();
+		*/
+		//Hack because I know that this is the only working value currently
+		String[] values = new String[1];
+		values[0] = "LARGEST_ARMY";
+		
+		getView().setAIChoices(values);
 	}
 
 	@Override
 	public void addAI() {
 
 		ServerProxy.getInstance().AddAI(getView().getSelectedAI());
-
-		playersJoined = CatanModel.getInstance().getGameManager().getGame().getNumberOfPlayers();
-		if (playersJoined == 4) {
-			getView().closeModal();
+		
+	}
+	
+	private void refreshPlayers() {
+		int joinedGameId = ServerProxy.getInstance().getCurrentGameId();
+		List<PlayerInfo> playerInfoList = CatanModel.getInstance().getGameManager().findGameInfoById(joinedGameId).getPlayers();
+		PlayerInfo[] playerInfoArray = new PlayerInfo[playerInfoList.size()];
+		for(int i = 0; i < playerInfoList.size(); i++) {
+			playerInfoArray[i] = playerInfoList.get(i);
 		}
+		
+		getView().setPlayers(playerInfoArray);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("running");
-		start();
+		int currentGameId = ServerProxy.getInstance().getCurrentGameId();
+		if(arg instanceof GameInfo[] && currentGameId != -1) {
+			GameInfo currentGame = CatanModel.getInstance().getGameManager().findGameInfoById(currentGameId);
+			System.out.println("running");
+			if(playersJoined < currentGame.getPlayers().size()) {
+				playersJoined = currentGame.getPlayers().size();
+				refreshPlayers();
+				getView().showModal();
+				if(playersJoined >= 4) {
+					int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
+					GameInfo thisGame = CatanModel.getInstance().getGameManager().findGameInfoById(ServerProxy.getInstance().getCurrentGameId());
+					ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(thisGame.findPlayerIndexById(playerId));
+					ServerPoller.getInstance().stopGameListTimer();
+					ServerPoller.getInstance().startGameTimer();
+				}
+			}
+		}
 		
 	}
 

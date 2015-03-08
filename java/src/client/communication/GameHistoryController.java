@@ -30,7 +30,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
     @Override
     public void update(Observable o, Object arg) {
-        updateFromModel();
+    	if(arg instanceof Game) {
+    		updateFromModel();
+    	}
     }
 
     private void updateFromModel() {

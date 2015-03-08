@@ -59,7 +59,7 @@ public class ServerPollerTest {
         System.out.println("Now testing update model with the poller");
 
         //Starts the poller timer
-        poller.startTimer();
+        poller.startGameTimer();
         Timer timer = new Timer();
         
         timer.schedule(new TimerTask() {
@@ -73,7 +73,7 @@ public class ServerPollerTest {
         try {
             Thread.sleep(1 * 10 * 1000 + 500);                 //1000 milliseconds is one second.
             count = serverProxy.getPollerCallCount();
-            poller.stopTimer();
+            poller.stopGameTimer();
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

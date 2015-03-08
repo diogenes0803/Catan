@@ -175,25 +175,27 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void update(Observable o, Object arg) {
-        logger.entering("client.domestic.DomesticTradeController", "update");
-
-        if (!CatanModel.getInstance().getGameManager().getGame().isStarted()) {
-            logger.finer("Game has not started yet, not initializing.");
-            logger.exiting("client.domestic.DomesticTradeController", "update");
-            return;
-        }
-
-        // initialize players list only once
-        // TODO: what if player changes color?
-        if (m_needToInitializePlayersList) {
-            getTradeOverlay().setPlayers(PlayerInfo.fromPlayers(Arrays.asList(CatanModel.getInstance().getGameManager().getGame().getPlayers())));
-            m_needToInitializePlayersList = false;
-            getTradeOverlay().setCancelEnabled(true); //just to be sure -- this never needs to be disabled
-        }
-
-        initializeDialogs();
-
-        logger.exiting("client.domestic.DomesticTradeController", "update");
+    	if(arg instanceof Game) {
+	        logger.entering("client.domestic.DomesticTradeController", "update");
+	
+	        if (!CatanModel.getInstance().getGameManager().getGame().isStarted()) {
+	            logger.finer("Game has not started yet, not initializing.");
+	            logger.exiting("client.domestic.DomesticTradeController", "update");
+	            return;
+	        }
+	
+	        // initialize players list only once
+	        // TODO: what if player changes color?
+	        if (m_needToInitializePlayersList) {
+	            getTradeOverlay().setPlayers(PlayerInfo.fromPlayers(Arrays.asList(CatanModel.getInstance().getGameManager().getGame().getPlayers())));
+	            m_needToInitializePlayersList = false;
+	            getTradeOverlay().setCancelEnabled(true); //just to be sure -- this never needs to be disabled
+	        }
+	
+	        initializeDialogs();
+	
+	        logger.exiting("client.domestic.DomesticTradeController", "update");
+    	}
     }
 
     private void initializeDialogs() {

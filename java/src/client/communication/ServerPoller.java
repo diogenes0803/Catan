@@ -6,21 +6,27 @@ package client.communication;
  * @author Nate Campbell, dbilleter
  */
 
-import shared.models.CatanModel;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import shared.models.CatanModel;
+import shared.models.Game;
+import client.data.GameInfo;
+
 public class ServerPoller {
 
-    private Timer timer;
+    private Timer gameListTimer;
+    private Timer gameTimer;
     private static ServerPoller instance = new ServerPoller();
 
     public final int START_DELAY = 1 * 1000; //Waits 1 second to start running
     public final int CHECK_FREQUENCY = 1 * 1000; //check every 1 second
 
     public ServerPoller() {
-        timer = new Timer();
+    	gameListTimer = new Timer();
+    	gameTimer = new Timer();
 
 
     }
@@ -43,19 +49,38 @@ public class ServerPoller {
      *
      * @pre to be called when client Jframe exits.
      */
-    public void stopTimer() {
-        timer.cancel();
-        timer.purge();
+    public void stopGameListTimer() {
+    	gameListTimer.cancel();
+    	gameListTimer.purge();
+    }
+    
+    public void stopGameTimer() {
+    	gameTimer.cancel();
+    	gameTimer.purge();
     }
 
-    public void startTimer() {
-        timer.schedule(new TimerTask() {
+    public void startGameTimer() {
+    	gameTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 updateModel();
             }
         }, START_DELAY, CHECK_FREQUENCY);
 
+    }
+    
+    public void startGameListTimer() {
+    	gameListTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+            	updateGameList();
+            }
+        }, START_DELAY, CHECK_FREQUENCY);
+    }
+    
+    public void updateGameList() {
+    	GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
+    	CatanModel.getInstance().getGameManager().setAvailableGames(games);
     }
 
     public static ServerPoller getInstance() {

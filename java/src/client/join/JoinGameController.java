@@ -1,10 +1,7 @@
 package client.join;
 
-import client.base.Controller;
-import client.base.IAction;
-import client.communication.ServerProxy;
-import client.data.GameInfo;
-import client.misc.IMessageView;
+import java.util.Observable;
+
 import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
 import shared.communicator.JoinGameParams;
@@ -12,8 +9,12 @@ import shared.communicator.JoinGameResults;
 import shared.definitions.CatanColor;
 import shared.models.CatanModel;
 import shared.models.Game;
-
-import java.util.Observable;
+import client.base.Controller;
+import client.base.IAction;
+import client.communication.ServerPoller;
+import client.communication.ServerProxy;
+import client.data.GameInfo;
+import client.misc.IMessageView;
 
 
 /**
@@ -103,6 +104,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
         GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
+        CatanModel.getInstance().getGameManager().setAvailableGames(games);
         getJoinGameView().showModal();
         getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
     }
@@ -160,22 +162,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             // If join succeeded
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
-
-            Game game = ServerProxy.getInstance().getModel().getGameManager().getGame();
-			int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-			ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(game.getPlayerIndexByPlayerId(playerId));
-			CatanModel.getInstance().getGameManager().setGame(game);
 			CatanModel.getInstance().getGameManager().setJoinedGame(true);
 
             joinAction.execute();
+            ServerPoller.getInstance().startGameListTimer();
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         // TODO Auto-generated method stub
-        GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
-        getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
+    	if(arg instanceof GameInfo[]) {
+	        getJoinGameView().setGames((GameInfo[]) arg, ServerProxy.getInstance().getlocalPlayer());
+    	}
     }
 
 }

@@ -42,5 +42,15 @@ public class GameInfo {
     public List<PlayerInfo> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+    
+    public int findPlayerIndexById(int playerId) {
+    	for(int i = 0; i < players.size(); i++) {
+    		PlayerInfo info = players.get(i);
+    		if(playerId == info.getId()) {
+    			return i;
+    		}
+    	}
+    	return -1;
+    }
 }
 

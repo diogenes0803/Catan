@@ -7,6 +7,7 @@ import client.map.MapController;
 import client.misc.IWaitView;
 import shared.definitions.ResourceType;
 import shared.models.CatanModel;
+import shared.models.Game;
 import shared.models.Player;
 import shared.models.ResourceList;
 
@@ -197,62 +198,64 @@ public class DiscardController extends Controller implements IDiscardController 
 
     @Override
     public void update(Observable o, Object arg) {
-        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-        Player[] players = CatanModel.getInstance().getGameManager().getGame().getPlayers();
-        cardCount = players[playerIndex].getResCards().size();
-        
-        System.out.println(cardCount);
-        if (MapController.state == DiscardingState.singleton && cardCount > 7) {
-        	System.out.println("See me?");
-        	
-        	oreCount = players[playerIndex].getResCount(ResourceType.ORE);
-        	woodCount = players[playerIndex].getResCount(ResourceType.WOOD);
-        	brickCount = players[playerIndex].getResCount(ResourceType.BRICK);
-        	sheepCount = players[playerIndex].getResCount(ResourceType.SHEEP);
-        	wheatCount = players[playerIndex].getResCount(ResourceType.WHEAT);
-        	
-        	discardAmount = cardCount / 2;
-        	getDiscardView().setStateMessage(currentDiscardCount + "/" + discardAmount);
-        	getDiscardView().setResourceMaxAmount(ResourceType.ORE, oreCount);
-        	getDiscardView().setResourceMaxAmount(ResourceType.WOOD, woodCount);
-        	getDiscardView().setResourceMaxAmount(ResourceType.BRICK, brickCount);
-        	getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, sheepCount);
-        	getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, wheatCount);
-        	
-        	if (oreCount > 0) {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, true, false);
-        	}
-        	else {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
-        	}
-        	if (woodCount > 0) {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, true, false);
-        	}
-        	else {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
-        	}
-        	if (brickCount > 0) {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, true, false);
-        	}
-        	else {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
-        	}
-        	if (sheepCount > 0) {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, true, false);
-        	}
-        	else {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
-        	}
-        	if (wheatCount > 0) {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, true, false);
-        	}
-        	else {
-        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
-        	}
-        	
-        	getDiscardView().setDiscardButtonEnabled(false);
-        	getDiscardView().showModal();
-        }
+    	if(arg instanceof Game) {
+	        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+	        Player[] players = CatanModel.getInstance().getGameManager().getGame().getPlayers();
+	        cardCount = players[playerIndex].getResCards().size();
+	        
+	        System.out.println(cardCount);
+	        if (MapController.state == DiscardingState.singleton && cardCount > 7) {
+	        	System.out.println("See me?");
+	        	
+	        	oreCount = players[playerIndex].getResCount(ResourceType.ORE);
+	        	woodCount = players[playerIndex].getResCount(ResourceType.WOOD);
+	        	brickCount = players[playerIndex].getResCount(ResourceType.BRICK);
+	        	sheepCount = players[playerIndex].getResCount(ResourceType.SHEEP);
+	        	wheatCount = players[playerIndex].getResCount(ResourceType.WHEAT);
+	        	
+	        	discardAmount = cardCount / 2;
+	        	getDiscardView().setStateMessage(currentDiscardCount + "/" + discardAmount);
+	        	getDiscardView().setResourceMaxAmount(ResourceType.ORE, oreCount);
+	        	getDiscardView().setResourceMaxAmount(ResourceType.WOOD, woodCount);
+	        	getDiscardView().setResourceMaxAmount(ResourceType.BRICK, brickCount);
+	        	getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, sheepCount);
+	        	getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, wheatCount);
+	        	
+	        	if (oreCount > 0) {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, true, false);
+	        	}
+	        	else {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
+	        	}
+	        	if (woodCount > 0) {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, true, false);
+	        	}
+	        	else {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
+	        	}
+	        	if (brickCount > 0) {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, true, false);
+	        	}
+	        	else {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
+	        	}
+	        	if (sheepCount > 0) {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, true, false);
+	        	}
+	        	else {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
+	        	}
+	        	if (wheatCount > 0) {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, true, false);
+	        	}
+	        	else {
+	        		getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
+	        	}
+	        	
+	        	getDiscardView().setDiscardButtonEnabled(false);
+	        	getDiscardView().showModal();
+	        }
+    	}
 
     }
     

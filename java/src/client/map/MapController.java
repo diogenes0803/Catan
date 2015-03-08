@@ -335,10 +335,12 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
-		ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
-		initFromModel();
+		if(arg instanceof Game) {
+			int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
+			int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
+			ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
+			initFromModel();
+		}
 		
 	}
 

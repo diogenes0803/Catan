@@ -81,46 +81,47 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     @Override
     public void update(Observable o, Object arg) {
 
-    	
-        Game game = CatanModel.getInstance().getGameManager().getGame();
-        if (game == null) {
-        	System.out.println("tis the problem");
-        }
-//Resource
-        getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WOOD));
-        getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.BRICK));
-        getView().setElementAmount(ResourceBarElement.SHEEP, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.SHEEP));
-        getView().setElementAmount(ResourceBarElement.WHEAT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WHEAT));
-        getView().setElementAmount(ResourceBarElement.ORE, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.ORE));
-//Contructions
-        int cityNum = 0;
-        int settleNum = 0;
-        int roadNum = 0;
-        for (Piece piece : game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getAvailablePieces()) {
-            if (piece.getType() == PieceType.CITY) {
-                cityNum++;
-            } else if (piece.getType() == PieceType.SETTLEMENT) {
-                settleNum++;
-            } else if (piece.getType() == PieceType.ROAD) {
-                roadNum++;
-            } else if (piece.getType() == PieceType.ROBBER) {
-                roadNum++;
-            }
-        }
-
-        getView().setElementAmount(ResourceBarElement.ROAD, roadNum);
-        getView().setElementAmount(ResourceBarElement.SETTLEMENT, settleNum);
-        getView().setElementAmount(ResourceBarElement.CITY, cityNum);
-//Cards
-
-        getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
-        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getNumMonumentPlayed());
-
-        /**
-         * For PLAY_CARD I don't know what to do, it seem
-         */
-
-        //WOOD, BRICK, SHEEP, WHEAT, ORE, ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, SOLDIERS
+    	if(arg instanceof Game) {
+	        Game game = CatanModel.getInstance().getGameManager().getGame();
+	        if (game == null) {
+	        	System.out.println("tis the problem");
+	        }
+	//Resource
+	        getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WOOD));
+	        getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.BRICK));
+	        getView().setElementAmount(ResourceBarElement.SHEEP, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.SHEEP));
+	        getView().setElementAmount(ResourceBarElement.WHEAT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WHEAT));
+	        getView().setElementAmount(ResourceBarElement.ORE, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.ORE));
+	//Contructions
+	        int cityNum = 0;
+	        int settleNum = 0;
+	        int roadNum = 0;
+	        for (Piece piece : game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getAvailablePieces()) {
+	            if (piece.getType() == PieceType.CITY) {
+	                cityNum++;
+	            } else if (piece.getType() == PieceType.SETTLEMENT) {
+	                settleNum++;
+	            } else if (piece.getType() == PieceType.ROAD) {
+	                roadNum++;
+	            } else if (piece.getType() == PieceType.ROBBER) {
+	                roadNum++;
+	            }
+	        }
+	
+	        getView().setElementAmount(ResourceBarElement.ROAD, roadNum);
+	        getView().setElementAmount(ResourceBarElement.SETTLEMENT, settleNum);
+	        getView().setElementAmount(ResourceBarElement.CITY, cityNum);
+	//Cards
+	
+	        getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
+	        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getNumMonumentPlayed());
+	
+	        /**
+	         * For PLAY_CARD I don't know what to do, it seem
+	         */
+	
+	        //WOOD, BRICK, SHEEP, WHEAT, ORE, ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, SOLDIERS
+	    }
     }
 
 }
