@@ -43,9 +43,10 @@ public class ClientCommunicator {
      * @return boolean true meaning message sent, or Exception thrown indicating error.
      * @post
      */
-    public boolean post(String urlCommand, Object params, String cookie) throws ClientException {
+    public HttpURLResponse post(String urlCommand, Object params, String cookie) throws ClientException {
         URL url;
         HttpURLConnection connection = null;
+        HttpURLResponse result = new HttpURLResponse();
         try {
             //Create connection
             url = new URL("http://" + host + ":" + port + urlCommand);
@@ -84,27 +85,37 @@ public class ClientCommunicator {
             requestBody.close();//closing the stream causes the msg to be sent.
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return true;
+                // return the object returned by the server
+                String e_result = convertStreamToString(new BufferedInputStream(
+                        connection.getInputStream()));
+                result.setResponseBody(e_result);
+                result.setResponseLength(e_result.length());
+                result.setResponseCode(connection.getResponseCode());
+                result.setHeaderFields(connection.getHeaderFields());
+                //System.out.println("e_result = \""+e_result+"\"");
 
             } else {
                 // SERVER RETURNED AN ERROR
-                String result = convertStreamToString(new BufferedInputStream(
+                String e_result = convertStreamToString(new BufferedInputStream(
                         connection.getErrorStream()));
-                throw new Exception("Server Response was " + connection.getResponseCode() + ".\n" +
-                        result);
+
+                result.setResponseBody(e_result);
+                result.setResponseLength(e_result.length());
+                result.setResponseCode(connection.getResponseCode());
+                //System.out.println("e_result = \""+e_result+"\"");
             }
 
         } catch (Exception e) {
-            //e.printStackTrace();
-            throw new ClientException("ClientCommunicator.post() Error:\n" + e.toString());
-
-
+            throw new ClientException("ClientCommunicator.get() Error:\n" + e.toString());
         } finally {
             if (connection != null) {
                 connection.disconnect();
+                //System.out.println("Connection closed.");
             }
         }
-    }//end post
+        return result;
+    }//end get
+
 
 
     /**
@@ -113,14 +124,13 @@ public class ClientCommunicator {
      * @params urlCommand  string like "/players/ return <p>a string containing json response</p>
      * @post
      */
-    public HttpURLResponse get(String urlCommand, Object params, String cookie) throws ClientException {
+    public HttpURLResponse get(String urlCommand, String cookie) throws ClientException {
         HttpURLConnection connection = null;
         assert urlCommand != null;
         
         HttpURLResponse result = new HttpURLResponse();
         try {
             // Write request body to OutputStream ...
-            String message = serializeObject(params);
 
 
             String recent_url = "http://" + host + ":" + port + urlCommand;
@@ -132,9 +142,6 @@ public class ClientCommunicator {
             connection.setRequestMethod("GET");
             
             connection.setDoOutput(true);
-            
-            connection.setRequestProperty("Content-Length", "" +
-                    Integer.toString(message.getBytes().length));
             
             connection.setRequestProperty("Content-Language", "en-US");
             
@@ -150,8 +157,6 @@ public class ClientCommunicator {
             //System.out.println("Connection.connect successful.");
             BufferedOutputStream requestBody = new BufferedOutputStream(
                     connection.getOutputStream());
-
-            requestBody.write(message.getBytes());
 
             requestBody.close();
             //System.out.println("RequetBody.close was successful.");

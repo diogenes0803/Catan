@@ -306,17 +306,19 @@ public class Game {
             for (int j = 0; j < hexArray[i].length; j++) {
                 if (hexArray[i][j] != null) {
                     HexTile thisTile = hexArray[i][j];
-                    Hex hex = new Hex();
                     int x = thisTile.getLocation().getX();
                     int y = thisTile.getLocation().getY();
-                    if (thisTile.getHexType() != null) {
-                        hex.setResource(hexTypeToString(thisTile.getHexType()));
+                    if(thisTile.getHexType() != HexType.WATER) {
+	                    Hex hex = new Hex();
+	                    if (thisTile.getHexType() != null) {
+	                        hex.setResource(hexTypeToString(thisTile.getHexType()));
+	                    }
+	                    if (thisTile.getToken() != -1) {
+	                        hex.setNumber(thisTile.getToken());
+	                    }
+	                    hex.setLocation(new Location(x, y));
+	                    hexes.add(hex);
                     }
-                    if (thisTile.getToken() != -1) {
-                        hex.setNumber(thisTile.getToken());
-                    }
-                    hex.setLocation(new Location(x, y));
-                    hexes.add(hex);
                     for (Map.Entry<EdgeDirection, Edge> entry : thisTile.getEdges().entrySet()) {
                         EdgeDirection key = entry.getKey();
                         Edge value = entry.getValue();
