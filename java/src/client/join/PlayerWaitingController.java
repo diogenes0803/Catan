@@ -84,6 +84,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 					ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(thisGame.findPlayerIndexById(playerId));
 					ServerPoller.getInstance().stopGameListTimer();
 					ServerPoller.getInstance().startGameTimer();
+					getView().closeModal();
 				}
 			}
 		}
