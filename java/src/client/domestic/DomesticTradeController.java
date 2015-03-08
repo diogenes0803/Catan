@@ -3,10 +3,14 @@ package client.domestic;
 import client.communication.ServerProxy;
 import client.data.PlayerInfo;
 import client.main.Catan;
+import client.map.MapController;
+import client.map.PlayingState;
+import shared.communicator.AcceptTradeParams;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
 import shared.models.*;
+import shared.models.jsonholder.JsonModelHolder;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -161,16 +165,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         getAcceptOverlay().closeModal();
         getAcceptOverlay().reset();
 
-       /* try {
+        try {
             //ServerModelFacade.getInstance().acceptTrade(willAccept);
-            if (willAccept)
-// FINISH HERE FOR THE NIGHT///                CatanModel.getInstance().getGameManager().getGame().
-            else
-                throw new Exception();
+            PlayingState.singleton.acceptTrade(null ,new AcceptTradeParams(m_recipient,willAccept));
         }
         catch (Exception e) {
             logger.log(Level.WARNING, "Failed to %s trade".format(willAccept ? "accept" : "reject"), e);
-        }*/
+        }
     }
 
     @Override
