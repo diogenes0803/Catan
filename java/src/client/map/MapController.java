@@ -43,6 +43,7 @@ public class MapController extends Controller implements IMapController {
 	private boolean setup1Finished;
 	private boolean setup2Initiated;
 	private boolean setup2Finished;
+	private boolean robbingInitiated;
 	private HexLocation robberLocation;
 	
 	public MapController(IMapView view, IRobView robView) {
@@ -55,6 +56,8 @@ public class MapController extends Controller implements IMapController {
 		setup1Finished = false;
 		setup2Initiated = false;
 		setup2Finished = false;
+		robbingInitiated = false;
+		state = null;
 	}
 	
 	public IMapView getView() {
@@ -200,9 +203,11 @@ public class MapController extends Controller implements IMapController {
 			return;
 		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
-		
-		if (state == null) {
+		//System.out.println(state.toString());
+
+		if (state == null || !state.toString().equals(TurnTracker.getInstance().getStatus())) {
 			setStateString(TurnTracker.getInstance().getStatus());
+			System.out.println(TurnTracker.getInstance().getStatus());
 			CatanModel.getInstance().getGameManager().changed();
 			CatanModel.getInstance().getGameManager().notifyObservers(game);
 		}
@@ -223,8 +228,10 @@ public class MapController extends Controller implements IMapController {
 			startSetup2();
 		}
 		
-		if (state == RobbingState.singleton) {
+		if (state.equals(RobbingState.singleton) && !robbingInitiated) {
+			System.out.println("here");
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+			robbingInitiated = true;
 			getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
 		}
 }
@@ -305,6 +312,9 @@ public class MapController extends Controller implements IMapController {
 		getView().placeRobber(hexLoc);
 		robberLocation = hexLoc;
 		
+		RobPlayerInfo[] candidateVictims = CatanModel.getInstance().getGameManager().getGame().getRobberVictims(hexLoc);
+		System.out.println(candidateVictims.length);
+		getRobView().setPlayers(candidateVictims);
 		getRobView().showModal();
 	}
 	

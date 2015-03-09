@@ -38,13 +38,13 @@ public class RollingState implements IState {
     @Override
     public void rollNumber(MapController controller, RollNumberParams params) {
     	Game game = ServerProxy.getInstance().rollNumber(params).getGameManager().getGame();
-    	int diceNumber = params.getNumber();
-    	 if (diceNumber != 7) {
+    	//int diceNumber = params.getNumber();
+    	 /*if (diceNumber != 7) {
              MapController.setState(PlayingState.singleton);
          } 
     	 else {
              MapController.setState(DiscardingState.singleton);
-         }
+         }*/
 		CatanModel.getInstance().getGameManager().setGame(game);
 
     }
@@ -154,4 +154,8 @@ public class RollingState implements IState {
         return;
     }
 
+    @Override
+    public String toString() {
+    	return "Rolling";
+    }
 }

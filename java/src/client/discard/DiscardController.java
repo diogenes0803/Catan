@@ -254,8 +254,15 @@ public class DiscardController extends Controller implements IDiscardController 
 	        	getDiscardView().setDiscardButtonEnabled(false);
 	        	getDiscardView().showModal();
 	        }
-	        else {
-	        	MapController.state = RobbingState.singleton;
+	        else if (MapController.state == DiscardingState.singleton && cardCount <= 7) {
+	        	//MapController.state = RobbingState.singleton;
+	        	getWaitView().showModal();
+	        }
+	        
+	        if (MapController.state == RobbingState.singleton) {
+	        	if (getWaitView().isModalShowing()) {
+	        		getWaitView().closeModal();
+	        	}
 	        }
     	}
 

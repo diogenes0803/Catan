@@ -1,6 +1,7 @@
 package shared.models;
 
-import client.data.PlayerInfo;
+import client.communication.ServerProxy;
+import client.data.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.models.jsonholder.*;
@@ -753,5 +754,62 @@ public class Game {
 		this.numberOfPlayers = numberOfPlayers;
 	}
 
+	public RobPlayerInfo[] getRobberVictims(HexLocation hexLoc) {
+		ArrayList<RobPlayerInfo> robVictims = new ArrayList<RobPlayerInfo>();
+		
+		HexTile tile = map.getHexTileAt(hexLoc);
+		VertexDirection[] values = VertexDirection.values();
+		for (VertexDirection vertDir : values) {
+			System.out.println("1/6");
+			Vertex vertex = tile.getVertexAt(vertDir);
+			if (vertex.getHasSettlement()) {
+				System.out.println("yes");
+				RobPlayerInfo playerInfo = new RobPlayerInfo();
+				
+				int playerIndex = vertex.getSettlement().getOwnerPlayerIndex();
+				int playerID = players[playerIndex].getPlayerId();
+				String playerName = players[playerIndex].getName();
+				CatanColor color = players[playerIndex].getColor();
+				int numResCards = 0;
+				for (ResourceType cardType : ResourceType.values()) {
+					numResCards += players[playerIndex].getResCount(cardType);
+				}
+				
+				System.out.println(playerIndex);
+				System.out.println(playerID);
+				System.out.println(playerName);
+				System.out.println(color.toString());
+				System.out.println(numResCards);
+				
+				playerInfo.setPlayerIndex(playerIndex);
+				playerInfo.setId(playerID);
+				playerInfo.setColor(color);
+				playerInfo.setName(playerName);
+				playerInfo.setNumCards(numResCards);
+				
+				//Don't add someone twice
+				boolean alreadyAdded = false;
+				for (int i = 0; i < robVictims.size(); i++) {
+					if (robVictims.get(i).getPlayerIndex() == playerIndex) {
+						alreadyAdded = true;
+					}
+				}
+				
+				//Don't add self to robVictims
+				if (playerIndex != ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() && !alreadyAdded) {
+					robVictims.add(playerInfo);
+				}
+			}
+			
+		}
+		
+		int arraySize = robVictims.size();
+		RobPlayerInfo[] robPlayerInfo = new RobPlayerInfo[arraySize];
+		for (int i = 0; i < arraySize; i++) {
+			robPlayerInfo[i] = robVictims.get(i);
+		}
+		
+		return robPlayerInfo;
+	}
 
 }

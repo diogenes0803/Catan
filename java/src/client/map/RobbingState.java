@@ -146,5 +146,10 @@ public class RobbingState implements IState {
     public void monument(MapController controller, MonumentParams params) {
         return;
     }
+    
+    @Override
+    public String toString() {
+    	return "Robbing";
+    }
 
 }

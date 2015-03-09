@@ -146,4 +146,8 @@ public class PlayingState implements IState {
         CatanModel.setInstance(ServerProxy.getInstance().monument(params));
     }
 
+    @Override
+    public String toString() {
+    	return "Playing";
+    }
 }

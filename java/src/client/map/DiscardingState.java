@@ -32,7 +32,7 @@ public class DiscardingState implements IState {
 
         Game game = ServerProxy.getInstance().discardCards(params).getGameManager().getGame();
         CatanModel.getInstance().getGameManager().setGame(game);
-        MapController.setState(RobbingState.singleton);
+        //MapController.setState(RobbingState.singleton);
     }
 
     /* (non-Javadoc)
@@ -146,6 +146,11 @@ public class DiscardingState implements IState {
     @Override
     public void monument(MapController controller, MonumentParams params) {
         return;
+    }
+    
+    @Override
+    public String toString() {
+    	return "Discarding";
     }
 
 }

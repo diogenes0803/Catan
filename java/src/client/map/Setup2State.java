@@ -176,4 +176,8 @@ public class Setup2State implements IState {
 		return;
 	}
 
+	@Override
+	public String toString() {
+		return "SecondRound";
+	}
 }

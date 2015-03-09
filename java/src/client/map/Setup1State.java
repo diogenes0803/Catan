@@ -176,4 +176,8 @@ public class Setup1State implements IState {
 		return;
 	}
 
+	@Override
+	public String toString() {
+		return "FirstRound";
+	}
 }
