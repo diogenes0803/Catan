@@ -3,6 +3,7 @@ package client.map;
 import client.communication.ServerProxy;
 import shared.communicator.*;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -85,8 +86,9 @@ public class RobbingState implements IState {
      */
     @Override
     public void robPlayer(MapController controller, RobPlayerParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().robPlayer(params));
-        controller.setState(PlayingState.singleton);
+        Game game = ServerProxy.getInstance().robPlayer(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
+        MapController.setState(PlayingState.singleton);
     }
 
     /* (non-Javadoc)

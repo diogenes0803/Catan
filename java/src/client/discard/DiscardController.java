@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.communication.ServerProxy;
 import client.map.DiscardingState;
 import client.map.MapController;
+import client.map.RobbingState;
 import client.misc.IWaitView;
 import shared.definitions.ResourceType;
 import shared.models.CatanModel;
@@ -203,9 +204,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	        Player[] players = CatanModel.getInstance().getGameManager().getGame().getPlayers();
 	        cardCount = players[playerIndex].getResCards().size();
 	        
-	        System.out.println(cardCount);
 	        if (MapController.state == DiscardingState.singleton && cardCount > 7) {
-	        	System.out.println("See me?");
 	        	
 	        	oreCount = players[playerIndex].getResCount(ResourceType.ORE);
 	        	woodCount = players[playerIndex].getResCount(ResourceType.WOOD);
@@ -254,6 +253,9 @@ public class DiscardController extends Controller implements IDiscardController 
 	        	
 	        	getDiscardView().setDiscardButtonEnabled(false);
 	        	getDiscardView().showModal();
+	        }
+	        else {
+	        	MapController.state = RobbingState.singleton;
 	        }
     	}
 

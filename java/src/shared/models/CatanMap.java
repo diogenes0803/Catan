@@ -108,7 +108,7 @@ public class CatanMap {
 		if (getHexTileAt(hexLocation).getHasRobber()) {
 			return false;
 		} else {
-			return false;
+			return true;
 		}
 	}
 	

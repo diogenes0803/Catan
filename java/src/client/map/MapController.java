@@ -7,6 +7,7 @@ import java.util.Observable;
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
 import shared.communicator.DiscardCardsParams;
+import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -42,6 +43,7 @@ public class MapController extends Controller implements IMapController {
 	private boolean setup1Finished;
 	private boolean setup2Initiated;
 	private boolean setup2Finished;
+	private HexLocation robberLocation;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -202,7 +204,7 @@ public class MapController extends Controller implements IMapController {
 		if (state == null) {
 			setStateString(TurnTracker.getInstance().getStatus());
 			CatanModel.getInstance().getGameManager().changed();
-			CatanModel.getInstance().getGameManager().notifyObservers();
+			CatanModel.getInstance().getGameManager().notifyObservers(game);
 		}
 		
 		createTiles(game);
@@ -221,15 +223,10 @@ public class MapController extends Controller implements IMapController {
 			startSetup2();
 		}
 		
-		/*if (state == RollingState.singleton) {
-			CatanModel.getInstance().getGameManager().changed();
-			CatanModel.getInstance().getGameManager().notifyObservers();
+		if (state == RobbingState.singleton) {
+			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+			getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
 		}
-		
-		if (state == DiscardingState.singleton) { 
-			CatanModel.getInstance().getGameManager().changed();
-			CatanModel.getInstance().getGameManager().notifyObservers();
-		}*/
 }
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
@@ -306,6 +303,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		
 		getView().placeRobber(hexLoc);
+		robberLocation = hexLoc;
 		
 		getRobView().showModal();
 	}
@@ -330,7 +328,11 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		
+		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+		int victimIndex = victim.getPlayerIndex();
+
+		RobPlayerParams params = new RobPlayerParams(playerIndex, victimIndex, robberLocation);
+		state.robPlayer(this, params);
 	}
 
 	@Override

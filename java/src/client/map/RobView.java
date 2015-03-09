@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Implementation for the rob view, which lets the user select a player to rob
  */
-@SuppressWarnings({"serial", "unused"})
+@SuppressWarnings({"serial"})
 public class RobView extends OverlayView implements IRobView {
 
     private final int LABEL_TEXT_SIZE = 40;

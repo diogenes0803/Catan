@@ -11,7 +11,7 @@ import java.util.HashMap;
  * @author HojuneYoo Model for HexTile, HexTile contains Edges and Vertexes. It can also has robber piece
  * @author KentCoble
  *         <p/>
- *         Assisstant in editing
+ *         Assistant in editing
  */
 public class HexTile {
 

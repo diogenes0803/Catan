@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Observable;
 
 import shared.models.CatanModel;
-import shared.models.Game;
 import client.base.Controller;
 import client.communication.ServerPoller;
 import client.communication.ServerProxy;
@@ -72,7 +71,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		int currentGameId = ServerProxy.getInstance().getCurrentGameId();
 		if(arg instanceof GameInfo[] && currentGameId != -1) {
 			GameInfo currentGame = CatanModel.getInstance().getGameManager().findGameInfoById(currentGameId);
-			System.out.println("running");
 			if(playersJoined < currentGame.getPlayers().size()) {
 				playersJoined = currentGame.getPlayers().size();
 				refreshPlayers();
