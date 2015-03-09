@@ -32,7 +32,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-
 		getView().showModal();
 		/*
 		String[] values = new String[ServerProxy.getInstance().listAI().getaITypes().size()];
@@ -77,6 +76,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			if(playersJoined < currentGame.getPlayers().size()) {
 				playersJoined = currentGame.getPlayers().size();
 				refreshPlayers();
+				getView().closeModal();
 				getView().showModal();
 				if(playersJoined >= 4) {
 					int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
