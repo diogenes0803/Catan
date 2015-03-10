@@ -3,11 +3,13 @@ package client.devcards;
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ServerProxy;
+import client.map.MapController;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.models.CatanModel;
 import shared.models.DevCard;
 import shared.models.Game;
+
 import java.util.Observable;
 
 
@@ -62,7 +64,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void buyCard() {
-
+    	int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+    	
+    	MapController.buyDevCard(playerIndex);
         getBuyCardView().closeModal();
     }
 

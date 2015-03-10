@@ -113,7 +113,11 @@ public class RobbingState implements IState {
      */
     @Override
     public void playSoldier(MapController controller, PlaySoldierParams params) {
-        return;
+    	Game game = ServerProxy.getInstance().playSoldier(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
+        MapController.setState(PlayingState.singleton);
+        controller.setRobbingInitiated(false);
+        controller.setSoldierRobbing(false);
     }
 
     /* (non-Javadoc)

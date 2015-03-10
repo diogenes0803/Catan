@@ -6,8 +6,10 @@ import java.util.Observable;
 
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
+import shared.communicator.BuyDevCardParams;
 import shared.communicator.DiscardCardsParams;
 import shared.communicator.FinishTurnParams;
+import shared.communicator.PlaySoldierParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.definitions.CatanColor;
@@ -46,6 +48,7 @@ public class MapController extends Controller implements IMapController {
 	private boolean setup2Finished;
 	private boolean robbingInitiated;
 	private HexLocation robberLocation;
+	private boolean soldierRobbing;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -58,6 +61,7 @@ public class MapController extends Controller implements IMapController {
 		setup2Initiated = false;
 		setup2Finished = false;
 		robbingInitiated = false;
+		soldierRobbing = false;
 		state = null;
 	}
 	
@@ -313,7 +317,6 @@ public class MapController extends Controller implements IMapController {
 		robberLocation = hexLoc;
 		
 		RobPlayerInfo[] candidateVictims = CatanModel.getInstance().getGameManager().getGame().getRobberVictims(hexLoc);
-		System.out.println(candidateVictims.length);
 		getRobView().setPlayers(candidateVictims);
 		getRobView().showModal();
 	}
@@ -331,6 +334,13 @@ public class MapController extends Controller implements IMapController {
 	
 	public void playSoldierCard() {	
 		
+		soldierRobbing = true;
+		state = RobbingState.singleton;
+		
+		PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+		robbingInitiated = true;
+		getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
+		
 	}
 	
 	public void playRoadBuildingCard() {	
@@ -340,9 +350,15 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
 		int victimIndex = victim.getPlayerIndex();
-
-		RobPlayerParams params = new RobPlayerParams(playerIndex, victimIndex, robberLocation);
-		state.robPlayer(this, params);
+		
+		if (soldierRobbing) {
+			PlaySoldierParams params = new PlaySoldierParams(playerIndex, victimIndex, robberLocation);
+			state.playSoldier(this, params);
+		}
+		else {
+			RobPlayerParams params = new RobPlayerParams(playerIndex, victimIndex, robberLocation);
+			state.robPlayer(this, params);
+		}
 	}
 
 	@Override
@@ -382,6 +398,12 @@ public class MapController extends Controller implements IMapController {
 		FinishTurnParams params = new FinishTurnParams(playerIndex);
 		
 		state.finishTurn(null, params);
+	}
+	
+	public static void buyDevCard(int playerIndex) {
+		BuyDevCardParams params = new BuyDevCardParams(playerIndex);
+		
+		state.buyDevCard(null, params);
 	}
 	
 	public void setStateString(String status) {
@@ -454,6 +476,14 @@ public class MapController extends Controller implements IMapController {
 
 	public void setRobbingInitiated(boolean robbingInitiated) {
 		this.robbingInitiated = robbingInitiated;
+	}
+
+	public boolean isSoldierRobbing() {
+		return soldierRobbing;
+	}
+
+	public void setSoldierRobbing(boolean soldierRobbing) {
+		this.soldierRobbing = soldierRobbing;
 	}
 }
 

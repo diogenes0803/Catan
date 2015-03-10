@@ -45,7 +45,8 @@ public class PlayingState implements IState {
      */
     @Override
     public void buildRoad(MapController controller, BuildRoadParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().buildRoad(params));
+        Game game = ServerProxy.getInstance().buildRoad(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
     }
 
     /* (non-Javadoc)
@@ -54,7 +55,8 @@ public class PlayingState implements IState {
     @Override
     public void buildSettlement(MapController controller,
                                 BuildSettlementParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().buildSettlement(params));
+    	Game game = ServerProxy.getInstance().buildSettlement(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
     }
 
     /* (non-Javadoc)
@@ -62,7 +64,8 @@ public class PlayingState implements IState {
      */
     @Override
     public void buildCity(MapController controller, BuildCityParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().buildCity(params));
+    	Game game = ServerProxy.getInstance().buildCity(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
     }
 
     /* (non-Javadoc)
@@ -103,7 +106,8 @@ public class PlayingState implements IState {
      */
     @Override
     public void buyDevCard(MapController controller, BuyDevCardParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().buyDevCard(params));
+    	Game game = ServerProxy.getInstance().buyDevCard(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
     }
 
     /* (non-Javadoc)
@@ -111,8 +115,7 @@ public class PlayingState implements IState {
      */
     @Override
     public void playSoldier(MapController controller, PlaySoldierParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().playSoldier(params));
-        controller.setState(RobbingState.singleton);
+    	return;
     }
 
     /* (non-Javadoc)
