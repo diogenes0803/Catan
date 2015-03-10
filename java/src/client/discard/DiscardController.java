@@ -1,18 +1,17 @@
 package client.discard;
 
-import client.base.Controller;
-import client.communication.ServerProxy;
-import client.map.DiscardingState;
-import client.map.MapController;
-import client.map.RobbingState;
-import client.misc.IWaitView;
+import java.util.Observable;
+
 import shared.definitions.ResourceType;
 import shared.models.CatanModel;
 import shared.models.Game;
 import shared.models.Player;
 import shared.models.ResourceList;
-
-import java.util.Observable;
+import client.base.Controller;
+import client.communication.ServerProxy;
+import client.map.DiscardingState;
+import client.map.MapController;
+import client.misc.IWaitView;
 
 
 /**
@@ -194,7 +193,9 @@ public class DiscardController extends Controller implements IDiscardController 
     	ResourceList resourceList = new ResourceList(brickDiscardCount, oreDiscardCount, sheepDiscardCount, wheatDiscardCount, woodDiscardCount);
     	MapController.discardCards(playerIndex, resourceList);
     	
-        getDiscardView().closeModal();
+    	while(getDiscardView().isModalShowing()) {
+    		getDiscardView().closeModal();
+    	}
     }
 
     @Override
@@ -252,14 +253,17 @@ public class DiscardController extends Controller implements IDiscardController 
 	        	}
 	        	
 	        	getDiscardView().setDiscardButtonEnabled(false);
-	        	getDiscardView().showModal();
+	        	if(!getDiscardView().isModalShowing())
+	        		getDiscardView().showModal();
 	        }
 	        else if (MapController.state == DiscardingState.singleton && cardCount <= 7) {
 	        	//MapController.state = RobbingState.singleton;
-	        	getWaitView().showModal();
+	        	if(!getWaitView().isModalShowing()) {
+	        		getWaitView().showModal();
+	        	}
 	        }
 	        
-	        if (MapController.state == RobbingState.singleton) {
+	        if (MapController.state != DiscardingState.singleton) {
 	        	if (getWaitView().isModalShowing()) {
 	        		getWaitView().closeModal();
 	        	}

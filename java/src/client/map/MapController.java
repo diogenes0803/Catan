@@ -359,6 +359,7 @@ public class MapController extends Controller implements IMapController {
 			RobPlayerParams params = new RobPlayerParams(playerIndex, victimIndex, robberLocation);
 			state.robPlayer(this, params);
 		}
+		robbingInitiated = false;
 	}
 
 	@Override
