@@ -108,7 +108,10 @@ public class CatanMap {
 		if (getHexTileAt(hexLocation).getHasRobber()) {
 			return false;
 		} else {
-			return true;
+			if(getHexTileAt(hexLocation).getHexType() == HexType.WATER)
+				return false;
+			else
+				return true;
 		}
 	}
 	
