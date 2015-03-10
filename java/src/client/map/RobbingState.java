@@ -89,6 +89,7 @@ public class RobbingState implements IState {
         Game game = ServerProxy.getInstance().robPlayer(params).getGameManager().getGame();
         CatanModel.getInstance().getGameManager().setGame(game);
         MapController.setState(PlayingState.singleton);
+        controller.setRobbingInitiated(false);
     }
 
     /* (non-Javadoc)

@@ -204,7 +204,6 @@ public class MapController extends Controller implements IMapController {
 			return;
 		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
-		//System.out.println(state.toString());
 
 		if (state == null || !state.toString().equals(TurnTracker.getInstance().getStatus())) {
 			setStateString(TurnTracker.getInstance().getStatus());
@@ -229,9 +228,11 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		if (state.equals(RobbingState.singleton) && !robbingInitiated) {
-			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-			robbingInitiated = true;
-			getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
+			if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() == TurnTracker.getInstance().getCurrentTurn()) {
+				PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
+				robbingInitiated = true;
+				getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
+			}
 		}
 }
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -445,6 +446,14 @@ public class MapController extends Controller implements IMapController {
 
 	public void setSetup2Finished(boolean setup2Finished) {
 		this.setup2Finished = setup2Finished;
+	}
+
+	public boolean isRobbingInitiated() {
+		return robbingInitiated;
+	}
+
+	public void setRobbingInitiated(boolean robbingInitiated) {
+		this.robbingInitiated = robbingInitiated;
 	}
 }
 
