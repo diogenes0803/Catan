@@ -32,7 +32,7 @@ public class Game {
     private int numberOfPlayers = 0;
 
     public boolean canBuildRoad(EdgeLocation location) {
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()];
         if (thisPlayer.canBuildRoad() && map.canBuildRoadAt(thisPlayer.getPlayerId(), location))
             return true;
         else

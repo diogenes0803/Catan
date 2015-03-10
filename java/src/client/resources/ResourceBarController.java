@@ -83,9 +83,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
     	if(arg instanceof Game) {
 	        Game game = CatanModel.getInstance().getGameManager().getGame();
-	        if (game == null) {
-	        	System.out.println("tis the problem");
-	        }
+
 	//Resource
 	        getView().setElementAmount(ResourceBarElement.WOOD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.WOOD));
 	        getView().setElementAmount(ResourceBarElement.BRICK, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getResCount(ResourceType.BRICK));
@@ -103,8 +101,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	                settleNum++;
 	            } else if (piece.getType() == PieceType.ROAD) {
 	                roadNum++;
-	            } else if (piece.getType() == PieceType.ROBBER) {
-	                roadNum++;
 	            }
 	        }
 	
@@ -112,16 +108,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	        getView().setElementAmount(ResourceBarElement.SETTLEMENT, settleNum);
 	        getView().setElementAmount(ResourceBarElement.CITY, cityNum);
 	//Cards
+	        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getNumSoldierPlayed());
 	
-	        getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
-	        getView().setElementAmount(ResourceBarElement.SOLDIERS, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getNumMonumentPlayed());
-	
-	        /**
-	         * For PLAY_CARD I don't know what to do, it seem
-	         */
+	        updateBuildables();
 	
 	        //WOOD, BRICK, SHEEP, WHEAT, ORE, ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, SOLDIERS
 	    }
+    }
+    
+    private void updateBuildables() {
+    	Game game = CatanModel.getInstance().getGameManager().getGame();
+    	getView().setElementEnabled(ResourceBarElement.ROAD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildRoad());
+    	getView().setElementEnabled(ResourceBarElement.SETTLEMENT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildSettlement());
+    	getView().setElementEnabled(ResourceBarElement.CITY, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildCity());
+    	getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
     }
 
 }
