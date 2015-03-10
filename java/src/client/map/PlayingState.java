@@ -3,6 +3,7 @@ package client.map;
 import client.communication.ServerProxy;
 import shared.communicator.*;
 import shared.models.CatanModel;
+import shared.models.Game;
 
 /**
  * @author campbeln
@@ -93,8 +94,8 @@ public class PlayingState implements IState {
      */
     @Override
     public void finishTurn(MapController controller, FinishTurnParams params) {
-        CatanModel.setInstance(ServerProxy.getInstance().finishTurn(params));
-        controller.setState(RollingState.singleton);
+        Game game = ServerProxy.getInstance().finishTurn(params).getGameManager().getGame();
+        CatanModel.getInstance().getGameManager().setGame(game);
     }
 
     /* (non-Javadoc)

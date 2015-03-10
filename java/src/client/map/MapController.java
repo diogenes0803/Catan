@@ -7,6 +7,7 @@ import java.util.Observable;
 import shared.communicator.BuildRoadParams;
 import shared.communicator.BuildSettlementParams;
 import shared.communicator.DiscardCardsParams;
+import shared.communicator.FinishTurnParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
 import shared.definitions.CatanColor;
@@ -207,7 +208,6 @@ public class MapController extends Controller implements IMapController {
 
 		if (state == null || !state.toString().equals(TurnTracker.getInstance().getStatus())) {
 			setStateString(TurnTracker.getInstance().getStatus());
-			System.out.println(TurnTracker.getInstance().getStatus());
 			CatanModel.getInstance().getGameManager().changed();
 			CatanModel.getInstance().getGameManager().notifyObservers(game);
 		}
@@ -229,7 +229,6 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		if (state.equals(RobbingState.singleton) && !robbingInitiated) {
-			System.out.println("here");
 			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
 			robbingInitiated = true;
 			getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
@@ -376,6 +375,12 @@ public class MapController extends Controller implements IMapController {
 		DiscardCardsParams params = new DiscardCardsParams(playerIndex, resourceList);
 		
 		state.discardCards(null, params);
+	}
+	
+	public static void finishTurn(int playerIndex) {
+		FinishTurnParams params = new FinishTurnParams(playerIndex);
+		
+		state.finishTurn(null, params);
 	}
 	
 	public void setStateString(String status) {

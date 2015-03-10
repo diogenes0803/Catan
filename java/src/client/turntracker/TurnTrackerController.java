@@ -2,9 +2,12 @@ package client.turntracker;
 
 import client.base.Controller;
 import client.communication.ServerProxy;
+import client.map.MapController;
 import shared.definitions.CatanColor;
 import shared.models.CatanModel;
 import shared.models.Game;
+import shared.models.Player;
+import shared.models.TurnTracker;
 
 import java.util.Observable;
 
@@ -29,13 +32,17 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
     @Override
     public void endTurn() {
-
+    	int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
+    	
+    	MapController.finishTurn(playerIndex);
     }
 
     private void initFromModel() {
         //<temp>
         getView().setLocalPlayerColor(CatanColor.RED);
         //</temp>
+        
+        
     }
 
     @Override
@@ -44,63 +51,32 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	    	Game thisGame = CatanModel.getInstance().getGameManager().getGame();
 	    	getView().setLocalPlayerColor(thisGame.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getColor());
 	    	
-	    	boolean largestArmy = false;
-	    	boolean longestRoad = false;
-	    	
-	    	//Need to know when the TurnTacker Initialize
-	    	if(thisGame.getTurnTracker()!=null)
-	    	{
+	    	Player[] players = CatanModel.getInstance().getGameManager().getGame().getPlayers();
+	    	for (int i = 0; i < 4; i++) {
+	    		String playerName = players[i].getName();
+	    		CatanColor color = players[i].getColor();
 	    		
-	    		getView().initializePlayer(thisGame.getTurnTracker().getCurrentTurn(), thisGame.getPlayers()[thisGame.getTurnTracker().getCurrentTurn()].getName(),
-	    				thisGame.getPlayers()[thisGame.getTurnTracker().getCurrentTurn()].getColor());
+	    		getView().initializePlayer(i, playerName, color);
 	    		
+	    		boolean highlight = false;
+	    		if (i == TurnTracker.getInstance().getCurrentTurn()) {
+	    			highlight = true;
+	    		}
+	    		boolean largestArmy = false;
+	    		boolean longestRoad = false;
 	    		
-	    		
-	    		
-	    		
-	        	if(thisGame.getTurnTracker().getCurrentTurn()==thisGame.getTurnTracker().getLargestArmy())
-	        	{
-	        		largestArmy = true;
-	        	}
-	        	
-	        	if(thisGame.getTurnTracker().getCurrentTurn()==thisGame.getTurnTracker().getLongestRoad())
-	        	{
-	        		longestRoad = true;
-	        	}
-	        	System.out.println("AAAAAAAAAAAAAAAAAaa" + thisGame.getTurnTracker().getCurrentTurn());
-	        	getView().updatePlayer(
-	        			thisGame.getTurnTracker().getCurrentTurn(), 
-	        			thisGame.getPlayers()[thisGame.getTurnTracker().getCurrentTurn()].getVictoryPoint(), 
-	        			true, 
-	        			largestArmy,
-	        			longestRoad);
-	        
-	        	
-	        	
-	        /**
-	       	  * I can only find two messages
-	       	  * "Waiting for others player"
-	       	  * "Finish Turn"
-	       	  * Finish Turn
-	       	  * getView().updateGameState("Game State Button", true);
-	       	  * 
-	       	  **/
-	        	
-	        	if(ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()!=thisGame.getTurnTracker().getCurrentTurn())
-	        		
-	        	{
-	        		getView().updateGameState("Waiting for others players", true);
-	        	}
-	        	else
-	        	{
-	        		getView().updateGameState("End the turn", true);
-	        	}
+	    		getView().updatePlayer(i, players[i].getVictoryPoint(), highlight, largestArmy, longestRoad);
 	    	}
 	    	
-	    	 
-	    			
+	    	if(ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != TurnTracker.getInstance().getCurrentTurn())
+        	{
+        		getView().updateGameState("Waiting for other Players", false);
+        	}
+        	else
+        	{
+        		getView().updateGameState("Finish Turn", true);
+        	}		
 	    }
     }
-
 }
 
