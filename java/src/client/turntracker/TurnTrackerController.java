@@ -62,6 +62,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	    		if (i == TurnTracker.getInstance().getCurrentTurn()) {
 	    			highlight = true;
 	    		}
+	    		//What are these??? How do I populate them?
 	    		boolean largestArmy = false;
 	    		boolean longestRoad = false;
 	    		
