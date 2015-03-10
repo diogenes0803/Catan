@@ -369,6 +369,7 @@ public class MapController extends Controller implements IMapController {
 			int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
 			ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
 			initFromModel();
+			System.out.println(state);
 		}
 		
 	}

@@ -80,8 +80,9 @@ public class RollResultView extends OverlayView implements IRollResultView {
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == okayButton) {
-
-                closeModal();
+            	while(isModalShowing()) {
+            		closeModal();
+            	}
             }
         }
     };

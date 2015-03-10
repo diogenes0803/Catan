@@ -62,7 +62,7 @@ public class RollController extends Controller implements IRollController {
 	        int currentTurn = TurnTracker.getInstance().getCurrentTurn();
 	        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
 	        
-	        if (MapController.state == RollingState.singleton  && playerIndex == currentTurn) {
+	        if (TurnTracker.getInstance().getStatus().equals("Rolling") && playerIndex == currentTurn) {
 	        	getRollView().showModal();
 	        }
         }
