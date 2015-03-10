@@ -760,13 +760,13 @@ public class Game {
 		HexTile tile = map.getHexTileAt(hexLoc);
 		VertexDirection[] values = VertexDirection.values();
 		for (VertexDirection vertDir : values) {
-			System.out.println("1/6");
 			Vertex vertex = tile.getVertexAt(vertDir);
-			if (vertex.getHasSettlement()) {
-				System.out.println("yes");
+			VertexLocation vLoc = vertex.getLocation();
+			if (map.getSettlementAt(vLoc) != null) {
+				Piece settlement = map.getSettlementAt(vLoc);
 				RobPlayerInfo playerInfo = new RobPlayerInfo();
 				
-				int playerIndex = vertex.getSettlement().getOwnerPlayerIndex();
+				int playerIndex = settlement.getOwnerPlayerIndex();
 				int playerID = players[playerIndex].getPlayerId();
 				String playerName = players[playerIndex].getName();
 				CatanColor color = players[playerIndex].getColor();
@@ -774,12 +774,6 @@ public class Game {
 				for (ResourceType cardType : ResourceType.values()) {
 					numResCards += players[playerIndex].getResCount(cardType);
 				}
-				
-				System.out.println(playerIndex);
-				System.out.println(playerID);
-				System.out.println(playerName);
-				System.out.println(color.toString());
-				System.out.println(numResCards);
 				
 				playerInfo.setPlayerIndex(playerIndex);
 				playerInfo.setId(playerID);

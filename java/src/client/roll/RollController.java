@@ -48,8 +48,8 @@ public class RollController extends Controller implements IRollController {
 		Random rng = new Random();
 		int dice1 = rng.nextInt(6) + 1;
 		int dice2 = rng.nextInt(6) + 1;
-		//int number = dice1 + dice2;
-		int number = 7;
+		int number = dice1 + dice2;
+		//int number = 7;
     	MapController.rollNumber(number);
     	
     	getResultView().setRollValue(number);

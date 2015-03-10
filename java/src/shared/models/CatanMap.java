@@ -116,7 +116,7 @@ public class CatanMap {
 	}
 	
 	
-	private Piece getSettlementAt(VertexLocation vLoc) {
+	public Piece getSettlementAt(VertexLocation vLoc) {
 		HexTile hexTile1 = getHexTileAt(vLoc.getHexLoc());
 		HexTile hexTile2 = null;
 		HexTile hexTile3 = null;
