@@ -40,8 +40,11 @@ public class CatanMap {
 			return false;
 		}
 		else {
-			if(TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {
-				if(playerHasNeighboringRoad(playerId, edgeLocation))
+			if(TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {	
+				if(!checkIfSettlementCanBeBuiltOnNeighboringVertices(edgeLocation)) {
+					return false;
+				}
+				else if(playerHasNeighboringRoad(playerId, edgeLocation))
 					return true;
 				else if(edgeHasNeighboringSettlementOfOthers(playerId, edgeLocation))
 					return false;
@@ -220,6 +223,15 @@ public class CatanMap {
 			else {
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	private boolean checkIfSettlementCanBeBuiltOnNeighboringVertices(EdgeLocation eLoc) {
+		Vertex[] vertices = getNeighboringVertices(eLoc);
+		for(Vertex thisVertex : vertices) {
+			if(!vertexHasNeighboringSettlement(thisVertex.getLocation()))
+				return true;
 		}
 		return false;
 	}
