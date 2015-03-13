@@ -18,7 +18,7 @@ import shared.communicator.SaveGameResults;
  */
 public class GamesFacade implements Facade {
 
-public GamesFacade(){}
+	public GamesFacade(){}
 	
 	public void list() {
 		
