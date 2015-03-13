@@ -1,12 +1,56 @@
 package shared.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import shared.communicator.AcceptTradeParams;
+import shared.communicator.BuildCityParams;
+import shared.communicator.BuildRoadParams;
+import shared.communicator.BuildSettlementParams;
+import shared.communicator.BuyDevCardParams;
+import shared.communicator.DiscardCardsParams;
+import shared.communicator.FinishTurnParams;
+import shared.communicator.MaritimeTradeParams;
+import shared.communicator.MonopolyParams;
+import shared.communicator.MonumentParams;
+import shared.communicator.OfferTradeParams;
+import shared.communicator.PlaySoldierParams;
+import shared.communicator.RoadBuildingParams;
+import shared.communicator.RobPlayerParams;
+import shared.communicator.RollNumberParams;
+import shared.communicator.SendChatParams;
+import shared.communicator.YearOfPlentyParams;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.models.jsonholder.Chat;
+import shared.models.jsonholder.City;
+import shared.models.jsonholder.Deck;
+import shared.models.jsonholder.Hex;
+import shared.models.jsonholder.JsonBank;
+import shared.models.jsonholder.JsonMap;
+import shared.models.jsonholder.JsonModelHolder;
+import shared.models.jsonholder.JsonPlayer;
+import shared.models.jsonholder.JsonPort;
+import shared.models.jsonholder.JsonTurnTracker;
+import shared.models.jsonholder.Line;
+import shared.models.jsonholder.Location;
+import shared.models.jsonholder.Log;
+import shared.models.jsonholder.Resources;
+import shared.models.jsonholder.Road;
+import shared.models.jsonholder.Robber;
+import shared.models.jsonholder.Settlement;
 import client.communication.ServerProxy;
 import client.data.RobPlayerInfo;
-import shared.definitions.*;
-import shared.locations.*;
-import shared.models.jsonholder.*;
-
-import java.util.*;
 
 /**
  * Model for on going game
@@ -636,6 +680,142 @@ public class Game {
         }
 
         return null;
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void sendChat(SendChatParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void rollNumber(RollNumberParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void robPlayer(RobPlayerParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void finishTurn(FinishTurnParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void buyDevCard(BuyDevCardParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void yearOfPlenty(YearOfPlentyParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void roadBuilding(RoadBuildingParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void soldier(PlaySoldierParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void monopoly(MonopolyParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void monument(MonumentParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void buildRoad(BuildRoadParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void buildSettlement(BuildSettlementParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void buildCity(BuildCityParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void offerTrade(OfferTradeParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void acceptTrade(AcceptTradeParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void maritimeTrade(MaritimeTradeParams params) {
+    	
+    }
+    
+    /**
+     * Server updates model with received parameters
+     * @param params
+     */
+    public void discardCards(DiscardCardsParams params) {
+    	
     }
 
 
