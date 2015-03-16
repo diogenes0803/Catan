@@ -985,5 +985,23 @@ public class Game {
 		
 		return robPlayerInfo;
 	}
+	
+	/**
+	 * A Method that returns the player who has the most roads and a minimum of (4)?
+	 * @return
+	 */
+	public Player getMostRoads()
+	{
+		return null;
+	}
+	
+	/**
+	 * A Method that returns the player who has the most armies and a minimum of (4)?
+	 * @return
+	 */
+	public Player getMostArmies()
+	{
+		return null;
+	}
 
 }
