@@ -9,7 +9,7 @@ import shared.models.*;
  * @author kentcoble
  */
 
-public class GameFacade {
+public class GameFacade implements Facade {
 
     private GameManager m_gameManager;
 
@@ -75,11 +75,31 @@ public class GameFacade {
     //@Override
     public boolean addAI(AddAIRequestParams params) throws ModelException {
 
-        //Game game = m_gameManager.getGame(params.getGameId());
-        //game.joinGame(new User("Hal 9000", "", 9000), shared.definitions.CatanColor.RED);
-        //game.joinGame(new User("GLaDOS", "", 1234567), shared.definitions.CatanColor.BLUE);
-        //game.joinGame(new User("The MCP", "", 1980), shared.definitions.CatanColor.WHITE);
-        return true;
+       // Game game = m_gameManager.getGame(params.getGameId());
+        if (!m_gameManager.isJoinedGame()) {    // I'm assuming that the player is not yet added because the game technically hasn't started yet, therefore this request is legal
+            Game game = m_gameManager.getGame();
+
+            Player[] players = {null,
+                    new Player(),
+                    new Player(),
+                    new Player()};
+            players[1].setPlayerId(900);
+            players[1].setName("Hal 9000");
+
+            players[2].setPlayerId(1234567);
+            players[2].setName("GLaDOS");
+
+            players[3].setPlayerId(1980);
+            players[3].setName("The MCP");
+
+            game.setNumberOfPlayers(3);
+            game.setPlayers(players);
+            //game.joinGame(new User("Hal 9000", 9000), shared.definitions.CatanColor.RED);
+            //game.joinGame(new User("GLaDOS", 1234567), shared.definitions.CatanColor.BLUE);
+            //game.joinGame(new User("The MCP", 1980), shared.definitions.CatanColor.WHITE);
+            return true;
+        }
+        return false;
     }
 
     /**
