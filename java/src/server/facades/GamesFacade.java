@@ -3,10 +3,12 @@
  */
 package server.facades;
 
+import server.commands.ListGamesCommand;
 import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
 import shared.communicator.JoinGameParams;
 import shared.communicator.JoinGameResults;
+import shared.communicator.ListGamesResults;
 import shared.communicator.LoadGameParams;
 import shared.communicator.LoadGameResults;
 import shared.communicator.SaveGameParams;
@@ -20,8 +22,10 @@ public class GamesFacade implements Facade {
 
 	public GamesFacade(){}
 	
-	public void list() {
-		
+	public ListGamesResults list() {
+		ListGamesCommand command = new ListGamesCommand();
+		command.execute();
+		return null;
 	}
 	
 	/**

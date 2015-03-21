@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author campbeln
  */
-public class MockServer implements ServerStandinInterface, ServerInterface {
+public class MockServer implements ServerInterface {
     
 
     private CatanModel model_ptr;
