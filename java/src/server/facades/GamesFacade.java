@@ -26,7 +26,6 @@ public class GamesFacade implements Facade {
 	public GamesFacade(){}
 	
 	public ListGamesResults list() {
-		ListGamesCommand command = new ListGamesCommand();
 		int gamesSize = Server.models.size();
 		GameInfo[] games = new GameInfo[gamesSize];
 		ServerModel[] models = (ServerModel[])Server.models.values().toArray();

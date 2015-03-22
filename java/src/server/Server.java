@@ -38,7 +38,7 @@ public class Server
 	
 	public static void main(String[] args) throws NumberFormatException, FileNotFoundException, ClassNotFoundException, SQLException 
 	{
-		new Server(Integer.parseInt(args[0])).run();
+		new Server(SERVER_PORT_NUMBER).run();
 	}
 	
 	static
