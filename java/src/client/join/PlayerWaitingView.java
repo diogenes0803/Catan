@@ -1,10 +1,12 @@
 package client.join;
 
 import client.base.OverlayView;
-import client.data.PlayerInfo;
 import client.utils.FontUtils;
 
 import javax.swing.*;
+
+import shared.data.PlayerInfo;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,7 +1,7 @@
 package client.join;
 
+import shared.data.PlayerInfo;
 import client.base.IOverlayView;
-import client.data.PlayerInfo;
 
 /**
  * Interface for the player waiting view, which is displayed when the user is waiting for other players to join their

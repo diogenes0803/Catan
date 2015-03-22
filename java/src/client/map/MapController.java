@@ -12,6 +12,7 @@ import shared.communicator.FinishTurnParams;
 import shared.communicator.PlaySoldierParams;
 import shared.communicator.RobPlayerParams;
 import shared.communicator.RollNumberParams;
+import shared.data.PlayerInfo;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -31,7 +32,6 @@ import shared.models.TurnTracker;
 import shared.models.Vertex;
 import client.base.Controller;
 import client.communication.ServerProxy;
-import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 
 

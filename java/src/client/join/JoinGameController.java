@@ -6,6 +6,7 @@ import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
 import shared.communicator.JoinGameParams;
 import shared.communicator.JoinGameResults;
+import shared.data.GameInfo;
 import shared.definitions.CatanColor;
 import shared.models.CatanModel;
 import shared.models.Game;
@@ -13,7 +14,6 @@ import client.base.Controller;
 import client.base.IAction;
 import client.communication.ServerPoller;
 import client.communication.ServerProxy;
-import client.data.GameInfo;
 import client.misc.IMessageView;
 
 

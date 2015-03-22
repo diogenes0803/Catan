@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import shared.data.GameInfo;
 import shared.models.CatanModel;
 import shared.models.Game;
-import client.data.GameInfo;
 
 public class ServerPoller {
 

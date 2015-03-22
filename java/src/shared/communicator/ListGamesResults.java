@@ -1,6 +1,6 @@
 package shared.communicator;
 
-import client.data.GameInfo;
+import shared.data.GameInfo;
 
 /**
  * Dumb data holder

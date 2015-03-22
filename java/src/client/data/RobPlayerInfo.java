@@ -1,5 +1,7 @@
 package client.data;
 
+import shared.data.PlayerInfo;
+
 /**
  * Used to pass player information into the rob view<br> <br> PROPERTIES:<br> <ul> <li>Id: Unique player ID</li>
  * <li>PlayerIndex: Player's order in the game [0-3]</li> <li>Name: Player's name (non-empty string)</li> <li>Color:

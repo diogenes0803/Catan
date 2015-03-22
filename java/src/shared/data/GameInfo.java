@@ -1,4 +1,4 @@
-package client.data;
+package shared.data;
 
 import java.util.ArrayList;
 import java.util.Collections;

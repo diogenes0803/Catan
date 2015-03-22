@@ -2,7 +2,7 @@ package shared.models;
 
 import java.util.Observable;
 
-import client.data.GameInfo;
+import shared.data.GameInfo;
 
 public class GameManager extends Observable {
 

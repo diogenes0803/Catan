@@ -3,7 +3,9 @@
  */
 package server.facades;
 
+import server.Server;
 import server.commands.ListGamesCommand;
+import server.model.ServerModel;
 import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
 import shared.communicator.JoinGameParams;
@@ -13,6 +15,7 @@ import shared.communicator.LoadGameParams;
 import shared.communicator.LoadGameResults;
 import shared.communicator.SaveGameParams;
 import shared.communicator.SaveGameResults;
+import shared.data.GameInfo;
 
 /**
  * @author campbeln
@@ -24,8 +27,16 @@ public class GamesFacade implements Facade {
 	
 	public ListGamesResults list() {
 		ListGamesCommand command = new ListGamesCommand();
-		command.execute();
-		return null;
+		int gamesSize = Server.models.size();
+		GameInfo[] games = new GameInfo[gamesSize];
+		ServerModel[] models = (ServerModel[])Server.models.values().toArray();
+		for(int i = 0; i < models.length; i++) {
+			games[i] = models[i].toGameInfo();
+		}
+		ListGamesResults results = new ListGamesResults();
+		results.setGames(games);
+		results.setSuccess(true);
+		return results;
 	}
 	
 	/**

@@ -1,11 +1,11 @@
 package client.domestic;
 
 import client.communication.ServerProxy;
-import client.data.PlayerInfo;
 import client.main.Catan;
 import client.map.MapController;
 import client.map.PlayingState;
 import shared.communicator.AcceptTradeParams;
+import shared.data.PlayerInfo;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;

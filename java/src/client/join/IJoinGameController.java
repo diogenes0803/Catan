@@ -1,7 +1,7 @@
 package client.join;
 
 import client.base.IController;
-import client.data.GameInfo;
+import shared.data.GameInfo;
 import shared.definitions.CatanColor;
 
 /**

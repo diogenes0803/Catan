@@ -1,7 +1,7 @@
 package client.domestic;
 
 import client.base.IOverlayView;
-import client.data.PlayerInfo;
+import shared.data.PlayerInfo;
 import shared.definitions.ResourceType;
 
 /**

@@ -3,12 +3,12 @@ package client.join;
 import java.util.List;
 import java.util.Observable;
 
+import shared.data.GameInfo;
+import shared.data.PlayerInfo;
 import shared.models.CatanModel;
 import client.base.Controller;
 import client.communication.ServerPoller;
 import client.communication.ServerProxy;
-import client.data.GameInfo;
-import client.data.PlayerInfo;
 
 
 /**

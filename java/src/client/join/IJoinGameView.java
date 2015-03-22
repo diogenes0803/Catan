@@ -1,8 +1,8 @@
 package client.join;
 
+import shared.data.GameInfo;
+import shared.data.PlayerInfo;
 import client.base.IOverlayView;
-import client.data.GameInfo;
-import client.data.PlayerInfo;
 
 /**
  * Interface for the join game view, which lets the user select a game to join

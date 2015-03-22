@@ -41,13 +41,13 @@ import shared.communicator.SendChatParams;
 import shared.communicator.UserLoginParams;
 import shared.communicator.UserLoginResults;
 import shared.communicator.YearOfPlentyParams;
+import shared.data.GameInfo;
+import shared.data.PlayerInfo;
 import shared.definitions.CatanColor;
 import shared.models.CatanModel;
 import shared.models.Game;
 import shared.models.GameManager;
 import shared.models.jsonholder.JsonModelHolder;
-import client.data.GameInfo;
-import client.data.PlayerInfo;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
