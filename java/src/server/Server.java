@@ -15,6 +15,7 @@ import java.util.logging.SimpleFormatter;
 
 import server.data.User;
 import server.handlers.GamesListHandler;
+import server.handlers.Handlers;
 import server.model.ServerModel;
 
 import com.sun.net.httpserver.HttpHandler;
@@ -90,11 +91,14 @@ public class Server
 		server.setExecutor(null);
 		
 		server.createContext("/games/list", GamesListHandler);
+		server.createContext("/docs/api/data", new Handlers.JSONAppender("")); 
+		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
 		logger.info("Starts HTTP Server");
 
 		server.start();
 	}
 	private HttpHandler GamesListHandler = new GamesListHandler();
+	
 	
 }
