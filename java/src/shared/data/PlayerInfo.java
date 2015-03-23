@@ -16,16 +16,16 @@ public class PlayerInfo {
     private int id;
     private int playerIndex;
     private String name;
-    private CatanColor color;
+    private String color;
 
     public PlayerInfo() {
         setId(-1);
         setPlayerIndex(-1);
         setName("");
-        setColor(CatanColor.WHITE);
+        setColor("white");
     }
 
-    public PlayerInfo(int id, int index, String name, CatanColor color) {
+    public PlayerInfo(int id, int index, String name, String color) {
         setId(id);
         setPlayerIndex(index);
         setName(name);
@@ -33,7 +33,7 @@ public class PlayerInfo {
     }
 
     public PlayerInfo(Player player) {
-        this(player.getPlayerId(), player.getIndex(), player.getName(), player.getColor());
+        this(player.getPlayerId(), player.getIndex(), player.getName(), CatanColor.getStringColor(player.getColor()));
     }
 
     /**
@@ -74,10 +74,10 @@ public class PlayerInfo {
     }
 
     public CatanColor getColor() {
-        return color;
+        return CatanColor.getCatanColor(color);
     }
 
-    public void setColor(CatanColor color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

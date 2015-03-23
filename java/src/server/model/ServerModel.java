@@ -2,6 +2,7 @@ package server.model;
 
 import shared.data.GameInfo;
 import shared.data.PlayerInfo;
+import shared.definitions.CatanColor;
 import shared.models.Game;
 import shared.models.Player;
 
@@ -12,7 +13,7 @@ public class ServerModel extends Game {
 		thisGameInfo.setTitle(this.getGameTitle());
 		for(Player thisPlayer : this.getPlayers()) {
 			PlayerInfo thisPlayerInfo = new PlayerInfo();
-			thisPlayerInfo.setColor(thisPlayer.getColor());
+			thisPlayerInfo.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
 			thisPlayerInfo.setId(thisPlayer.getPlayerId());
 			thisPlayerInfo.setName(thisPlayer.getName());
 			thisPlayerInfo.setPlayerIndex(thisPlayer.getIndex());

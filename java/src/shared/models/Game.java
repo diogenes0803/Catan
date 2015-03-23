@@ -957,7 +957,7 @@ public class Game {
 				
 				playerInfo.setPlayerIndex(playerIndex);
 				playerInfo.setId(playerID);
-				playerInfo.setColor(color);
+				playerInfo.setColor(CatanColor.getStringColor(color));
 				playerInfo.setName(playerName);
 				playerInfo.setNumCards(numResCards);
 				

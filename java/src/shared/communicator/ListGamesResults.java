@@ -8,11 +8,11 @@ import shared.data.GameInfo;
  * @author Jonathan
  */
 public class ListGamesResults extends ResponseBodyContainer {
-    GameInfo[] games;
+    GameInfo[] Game;
 
     public ListGamesResults(GameInfo[] games) {
         super("SUCCESS");
-        this.games = games;
+        this.Game = games;
         setSuccess(true);
     }
 
@@ -21,11 +21,11 @@ public class ListGamesResults extends ResponseBodyContainer {
     }
 
     public GameInfo[] getGames() {
-        return games;
+        return Game;
     }
 
     public void setGames(GameInfo[] games) {
-        this.games = games;
+        this.Game = games;
     }
 
 

@@ -249,7 +249,7 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     		if (player.get("id") != null)
                     		{
 		                    	int playerId = player.get("id").getAsInt();
-		                    	CatanColor color = CatanColor.getCatanColor(player.get("color").getAsString());
+		                    	String color = player.get("color").getAsString();
 		                    	String name = player.get("name").getAsString();
 		                    	PlayerInfo thisPlayer = new PlayerInfo();
 		                    	thisPlayer.setId(playerId);
