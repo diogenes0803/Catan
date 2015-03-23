@@ -16,6 +16,8 @@ import java.util.logging.SimpleFormatter;
 import server.data.User;
 import server.handlers.GamesListHandler;
 import server.handlers.Handlers;
+import server.handlers.UserLoginHandler;
+import server.handlers.UserRegisterHandler;
 import server.model.ServerModel;
 
 import com.sun.net.httpserver.HttpHandler;
@@ -101,6 +103,8 @@ public class Server
 		server.start();
 	}
 	private HttpHandler GamesListHandler = new GamesListHandler();
+	private HttpHandler userLoginHandler = new UserLoginHandler();
+	private HttpHandler userRegisterHandler = new UserRegisterHandler();
 	
 	
 }
