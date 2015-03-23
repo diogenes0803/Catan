@@ -90,6 +90,8 @@ public class Server
 		
 		server.setExecutor(null);
 		
+		server.createContext("/user/login", userLoginHandler);
+		server.createContext("/user/register", userRegisterHandler);
 		server.createContext("/games/list", GamesListHandler);
 		server.createContext("/docs/api/data", new Handlers.JSONAppender("")); 
 		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
