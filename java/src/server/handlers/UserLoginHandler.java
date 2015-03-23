@@ -5,9 +5,12 @@ import java.io.OutputStream;
 
 import server.facades.UserFacade;
 import shared.communicator.ListGamesResults;
+import shared.communicator.UserLoginParams;
 import shared.communicator.UserLoginResults;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -17,7 +20,7 @@ public class UserLoginHandler implements HttpHandler  {
 	@Override
 	public void handle(HttpExchange ex) throws IOException 
 	{
-		UserLoginResults result = thisFacade.userLogin();
+		UserLoginResults result = thisFacade.userLogin((UserLoginParams)ex.getResponseBody());
 		Gson gson = new Gson();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result);
