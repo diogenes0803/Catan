@@ -2,8 +2,6 @@ package shared.communicator;
 
 import shared.models.Player;
 
-import java.util.List;
-
 /**
  * Dumb data holder
  *
@@ -12,10 +10,9 @@ import java.util.List;
 public class CreateGameResults {
     String title;
     int id;
-    List<Player> players;
-    boolean success;
+    Player[] players = new Player[4];
 
-    public CreateGameResults(String title, int id, List<Player> players2) {
+    public CreateGameResults(String title, int id, Player[] players2) {
         this.title = title;
         this.id = id;
         this.players = players2;
@@ -41,20 +38,12 @@ public class CreateGameResults {
         this.id = id;
     }
 
-    public List<Player> getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Player[] players) {
         this.players = players;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
 

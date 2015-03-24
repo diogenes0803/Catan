@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import server.data.User;
+import server.handlers.CreateGameHandler;
 import server.handlers.GamesListHandler;
 import server.handlers.Handlers;
-import server.handlers.UserLoginHandler;
-import server.handlers.UserRegisterHandler;
+import server.handlers.JoinGameHandler;
 import server.model.ServerModel;
 
 import com.sun.net.httpserver.HttpHandler;
@@ -92,9 +92,9 @@ public class Server
 		
 		server.setExecutor(null);
 		
-		server.createContext("/user/login", userLoginHandler);
-		server.createContext("/user/register", userRegisterHandler);
-		server.createContext("/games/list", GamesListHandler);
+		server.createContext("/games/list", gamesListHandler);
+		server.createContext("/games/create", createGameHandler);
+		server.createContext("/games/join", joinGameHandler);
 		server.createContext("/docs/api/data", new Handlers.JSONAppender("")); 
 		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
@@ -102,9 +102,9 @@ public class Server
 
 		server.start();
 	}
-	private HttpHandler GamesListHandler = new GamesListHandler();
-	private HttpHandler userLoginHandler = new UserLoginHandler();
-	private HttpHandler userRegisterHandler = new UserRegisterHandler();
+	private HttpHandler gamesListHandler = new GamesListHandler();
+	private HttpHandler createGameHandler = new CreateGameHandler();
+	private HttpHandler joinGameHandler = new JoinGameHandler();
 	
 	
 }

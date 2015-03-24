@@ -312,7 +312,6 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
-            results.setSuccess(false);
         }
 
 

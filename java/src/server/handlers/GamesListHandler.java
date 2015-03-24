@@ -26,4 +26,5 @@ public class GamesListHandler implements HttpHandler
 		out.flush();
 		out.close();
 	}
+
 }

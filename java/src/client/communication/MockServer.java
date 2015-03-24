@@ -180,7 +180,7 @@ public class MockServer implements ServerStandinInterface, ServerInterface {
     @Override
     public CreateGameResults createGame(CreateGameParams params) {
 
-        ArrayList<Player> players = new ArrayList<Player>();
+        Player[] players = new Player[4];
 
         CreateGameResults results = new CreateGameResults("Fun Game", 3, players);
 

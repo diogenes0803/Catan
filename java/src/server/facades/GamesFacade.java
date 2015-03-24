@@ -15,7 +15,8 @@ import shared.communicator.LoadGameResults;
 import shared.communicator.SaveGameParams;
 import shared.communicator.SaveGameResults;
 import shared.data.GameInfo;
-import shared.data.PlayerInfo;
+import shared.definitions.CatanColor;
+import shared.models.Player;
 
 /**
  * @author campbeln
@@ -27,18 +28,7 @@ public class GamesFacade implements Facade {
 	
 	public ListGamesResults list() {
 		int gamesSize = Server.models.size();
-		GameInfo[] games = new GameInfo[1];
-		//GameInfo[] games = new GameInfo[gameSize];
-		GameInfo testGame = new GameInfo();
-		testGame.setTitle("test");
-		testGame.setId(0);
-		PlayerInfo testPlayer = new PlayerInfo();
-		testPlayer.setColor("orange");
-		testPlayer.setId(0);
-		testPlayer.setName("Jack");
-		testPlayer.setPlayerIndex(0);
-		testGame.addPlayer(new PlayerInfo());
-		games[0] = testGame;
+		GameInfo[] games = new GameInfo[gamesSize];
 		if(Server.models.size() > 0) {
 			ServerModel[] models = (ServerModel[])Server.models.values().toArray();
 			for(int i = 0; i < models.length; i++) {
@@ -59,6 +49,12 @@ public class GamesFacade implements Facade {
 	 */
 	public CreateGameResults create(CreateGameParams thisParams) {
 		CreateGameResults thisResult = new CreateGameResults();
+		ServerModel game = new ServerModel();
+		game.setGameTitle(thisParams.getName());
+		game.setGameId(Server.models.size());
+		Server.models.put(game.getGameId(), game);
+		thisResult.setId(game.getGameId());
+		thisResult.setTitle(game.getGameTitle());
 		return thisResult;
 	}
 	
@@ -69,6 +65,9 @@ public class GamesFacade implements Facade {
 	 */
 	public JoinGameResults join(JoinGameParams thisParams) {
 		JoinGameResults thisResult = new JoinGameResults();
+		Player player = new Player();
+		player.setColor(CatanColor.getCatanColor(thisParams.getColor()));
+		thisResult.setSuccess(Server.models.get(thisParams.getId()).addPlayer(player));
 		return thisResult;
 	}
 	

@@ -22,4 +22,17 @@ public class ServerModel extends Game {
 		
 		return thisGameInfo;
 	}
+	
+	public boolean addPlayer(Player thisPlayer) {
+		int currentNumPlayers = this.getNumberOfPlayers();
+		if(currentNumPlayers > 3) {
+			return false;
+		}
+		thisPlayer.setIndex(currentNumPlayers);
+		Player[] tempPlayers = this.getPlayers();
+		tempPlayers[currentNumPlayers] = thisPlayer;
+		setPlayers(tempPlayers);
+		setNumberOfPlayers(currentNumPlayers++);
+		return true;
+	}
 }

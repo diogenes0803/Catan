@@ -1,0 +1,56 @@
+package server.handlers;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+
+import server.facades.GamesFacade;
+import shared.communicator.JoinGameParams;
+import shared.communicator.JoinGameResults;
+
+import com.google.gson.Gson;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+public class JoinGameHandler implements HttpHandler 
+{
+	private GamesFacade thisFacade = new GamesFacade();
+	@Override
+	public void handle(HttpExchange ex) throws IOException 
+	{
+		List<String> user = ex.getRequestHeaders().get("Cookie");
+		
+		Gson gson = new Gson();
+		String qry;
+		String encoding = "ISO-8859-1";
+		InputStream in = ex.getRequestBody();
+		try {
+		    ByteArrayOutputStream out = new ByteArrayOutputStream();
+		    byte buf[] = new byte[4096];
+		    for (int n = in.read(buf); n > 0; n = in.read(buf)) {
+		        out.write(buf, 0, n);
+		    }
+		    qry = new String(out.toByteArray(), encoding);
+		} finally {
+		    in.close();
+		}
+		JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
+		JoinGameResults result = thisFacade.join(params);
+		OutputStream out = ex.getResponseBody();
+		ex.getResponseHeaders().add("Content-Type", "text/html");
+		String body = "";
+		if(result.isSuccess()) {
+			body = "Success";
+			ex.sendResponseHeaders(200, body.length());
+		}
+		else {
+			body = "The player could not be added to the specified game.";
+			ex.sendResponseHeaders(400, body.length());
+		}
+		out.write(body.getBytes());
+		out.flush();
+		out.close();
+	}
+}
