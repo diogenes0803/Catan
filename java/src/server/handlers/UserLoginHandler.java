@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import server.facades.UserFacade;
+import server.jsonConverters.UserLoginConverter;
 import shared.communicator.ListGamesResults;
 import shared.communicator.UserLoginParams;
 import shared.communicator.UserLoginResults;
@@ -20,7 +21,9 @@ public class UserLoginHandler implements HttpHandler  {
 	@Override
 	public void handle(HttpExchange ex) throws IOException 
 	{
-		UserLoginResults result = thisFacade.userLogin((UserLoginParams)ex.getResponseBody());
+		UserLoginConverter converter = new UserLoginConverter();
+		
+		UserLoginResults result = thisFacade.userLogin(converter.convert(ex.getRequestBody()));
 		Gson gson = new Gson();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result);

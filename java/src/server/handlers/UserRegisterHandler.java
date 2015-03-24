@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import server.facades.UserFacade;
+import server.jsonConverters.RegisterUserConverter;
+import server.jsonConverters.UserLoginConverter;
 import shared.communicator.UserLoginResults;
 
 import com.google.gson.Gson;
@@ -16,7 +18,9 @@ public class UserRegisterHandler implements HttpHandler  {
 	@Override
 	public void handle(HttpExchange ex) throws IOException 
 	{
-		UserLoginResults result = thisFacade.registerUser();
+		RegisterUserConverter converter = new RegisterUserConverter();
+		
+		UserLoginResults result = thisFacade.registerUser(converter.convert(ex.getRequestBody()));
 		Gson gson = new Gson();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result);
