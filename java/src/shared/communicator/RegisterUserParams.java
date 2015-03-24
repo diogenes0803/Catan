@@ -14,7 +14,11 @@ public class RegisterUserParams {
         this.password = password;
     }
 
-    public String getusername() {
+    public RegisterUserParams() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getusername() {
         return username;
     }
 

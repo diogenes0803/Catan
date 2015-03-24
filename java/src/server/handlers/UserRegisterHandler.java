@@ -19,8 +19,8 @@ public class UserRegisterHandler implements HttpHandler  {
 	public void handle(HttpExchange ex) throws IOException 
 	{
 		RegisterUserConverter converter = new RegisterUserConverter();
-		
 		UserLoginResults result = thisFacade.registerUser(converter.convert(ex.getRequestBody()));
+		
 		Gson gson = new Gson();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result);

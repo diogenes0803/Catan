@@ -22,8 +22,8 @@ public class UserLoginHandler implements HttpHandler  {
 	public void handle(HttpExchange ex) throws IOException 
 	{
 		UserLoginConverter converter = new UserLoginConverter();
-		
 		UserLoginResults result = thisFacade.userLogin(converter.convert(ex.getRequestBody()));
+		
 		Gson gson = new Gson();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result);
