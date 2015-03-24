@@ -31,7 +31,7 @@ public class Server
 	public static Logger logger;
 	
 	public static Map<Integer, ServerModel> models = new HashMap<Integer, ServerModel>();
-	public static Map<Integer, User> users = new HashMap<Integer, User>();
+	public static Map<String, User> users = new HashMap<String, User>();
 	
 	private Server(int port) 
 	{
