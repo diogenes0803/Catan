@@ -14,7 +14,7 @@ public class GameFacade implements Facade {
 
     private GameManager m_gameManager;
     
-
+    
     public GameFacade(GameManager m_gameManager, Server server) {
         this.m_gameManager = m_gameManager;
         
