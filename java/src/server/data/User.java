@@ -6,23 +6,23 @@ package server.data;
  *
  */
 public class User {
-	private String userName;
+	private String name;
 	private String password;
-	private int userID;
+	private int playerID;
 	
-	public User(String userName, String password, int UserID)
+	public User(String name, String password, int playerID)
 	{
-		this.userName = userName;
+		this.name = name;
 		this.password = password;
-		this.userID = userID;
+		this.playerID = playerID;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {
@@ -33,14 +33,13 @@ public class User {
 		this.password = password;
 	}
 
-	public int getUserID() {
-		return userID;
+	public int getPlayerID() {
+		return playerID;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
 	}
-	
-	
-
 }
+
+	
