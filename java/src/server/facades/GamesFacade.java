@@ -91,9 +91,4 @@ public class GamesFacade implements Facade {
 		return thisResult;
 	}
 
-	@Override
-	public void setServer(Server server) {
-		// TODO Auto-generated method stub
-		
-	}
 }

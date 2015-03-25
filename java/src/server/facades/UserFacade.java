@@ -15,22 +15,32 @@ import shared.communicator.UserLoginResults;
  */
 public class UserFacade implements Facade {
 	
-	
-	private Server server;
+
 	 /**
 	 * @param params
 	 * @return
 	 */
 	public UserLoginResults userLogin(UserLoginParams params) {
-		 UserLoginResults result = new UserLoginResults();
+		UserLoginResults result = new UserLoginResults();
 		 
-		 
-		 
-		 result.setName("Sam");
-		 result.setPassword("Sam");
-		 result.setPlayerId(0);
-		 
-		 return result;
+		//Sees if the user exists, if not returns null
+		if ( Server.users.get(params.getusername()) != null)
+		{
+			 if (Server.users.get(params.getusername()).getPassword().equals(params.getPassword()))
+			 {
+				 //The user should be able to log in now
+			 }
+			 else
+			 {
+				 return null;
+			 }
+		}
+		else
+		{
+			result = null;
+		}
+				 
+		return result;
 	 }
 	 
 	 /**
@@ -41,11 +51,5 @@ public class UserFacade implements Facade {
 	        RegisterUserResults result = new RegisterUserResults();
 	        return result;
 	 }
-
-	@Override
-	public void setServer(Server server) {
-		
-		this.server = server;
-	}
 
 }

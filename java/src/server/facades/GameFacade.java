@@ -117,9 +117,4 @@ public class GameFacade implements Facade {
         return new String[]{"Hal 9000", "The MCP", "GLaDOS"};
     }
 
-	@Override
-	public void setServer(Server server) {
-		
-		
-	}
 }
