@@ -90,4 +90,10 @@ public class GamesFacade implements Facade {
 		LoadGameResults thisResult = new LoadGameResults();
 		return thisResult;
 	}
+
+	@Override
+	public void setServer(Server server) {
+		// TODO Auto-generated method stub
+		
+	}
 }

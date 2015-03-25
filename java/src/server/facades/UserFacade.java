@@ -3,6 +3,7 @@
  */
 package server.facades;
 
+import server.Server;
 import shared.communicator.RegisterUserParams;
 import shared.communicator.RegisterUserResults;
 import shared.communicator.UserLoginParams;
@@ -33,5 +34,11 @@ public class UserFacade implements Facade {
 	        RegisterUserResults result = new RegisterUserResults();
 	        return result;
 	 }
+
+	@Override
+	public void setServer(Server server) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

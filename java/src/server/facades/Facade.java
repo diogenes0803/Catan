@@ -6,6 +6,7 @@ package server.facades;
 import java.util.HashMap;
 import java.util.Map;
 
+import server.Server;
 import server.data.ServerInterface;
 import shared.models.Game;
 
@@ -15,8 +16,7 @@ import shared.models.Game;
  */
 public interface Facade {
 	
-	ServerInterface server = null;
-
 	static Map<Integer, Game> games = new HashMap<Integer, Game>();
 	
+	public void setServer(Server server);
 }

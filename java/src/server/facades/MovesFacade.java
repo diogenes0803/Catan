@@ -3,6 +3,7 @@
  */
 package server.facades;
 
+import server.Server;
 import shared.communicator.*;
 import shared.models.CatanModel;
 
@@ -164,4 +165,10 @@ public class MovesFacade implements Facade {
 		 //TODO discardCards method
 		 return null;
 	 }
+
+	@Override
+	public void setServer(Server server) {
+		// TODO Auto-generated method stub
+		
+	}
 }

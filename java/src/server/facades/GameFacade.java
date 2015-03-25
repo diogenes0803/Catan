@@ -1,5 +1,6 @@
 package server.facades;
 
+import server.Server;
 import shared.communicator.AddAIRequestParams;
 import shared.communicator.GameModelParam;
 import shared.models.*;
@@ -12,9 +13,11 @@ import shared.models.*;
 public class GameFacade implements Facade {
 
     private GameManager m_gameManager;
+    
 
-    public GameFacade(GameManager m_gameManager) {
+    public GameFacade(GameManager m_gameManager, Server server) {
         this.m_gameManager = m_gameManager;
+        
     }
 
     /**
@@ -113,4 +116,10 @@ public class GameFacade implements Facade {
     public String[] listAI() {
         return new String[]{"Hal 9000", "The MCP", "GLaDOS"};
     }
+
+	@Override
+	public void setServer(Server server) {
+		
+		
+	}
 }
