@@ -16,8 +16,9 @@ public class GameFacade implements Facade {
     
     
     public GameFacade(GameManager m_gameManager, Server server) {
-        this.m_gameManager = m_gameManager;
-        
+
+            this.m_gameManager = m_gameManager;
+
     }
 
     /**
@@ -30,7 +31,10 @@ public class GameFacade implements Facade {
     //@Override
     public Game model(GameModelParam param) throws ModelException {
         //return m_gameManager.getGame(param.getGameId());
-        return m_gameManager.getGame();
+        if (this.m_gameManager.isJoinedGame())
+            return m_gameManager.getGame();
+        else
+            throw new IllegalArgumentException("Client is not in a game");
     }
 
     /**
