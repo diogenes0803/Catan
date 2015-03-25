@@ -17,6 +17,5 @@ import shared.models.Game;
 public interface Facade {
 	
 	static Map<Integer, Game> games = new HashMap<Integer, Game>();
-	
-	public void setServer(Server server);
+
 }

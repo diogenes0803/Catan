@@ -18,6 +18,8 @@ import server.handlers.CreateGameHandler;
 import server.handlers.GamesListHandler;
 import server.handlers.Handlers;
 import server.handlers.JoinGameHandler;
+import server.handlers.UserLoginHandler;
+import server.handlers.UserRegisterHandler;
 import server.model.ServerModel;
 
 import com.sun.net.httpserver.HttpHandler;
@@ -92,6 +94,8 @@ public class Server
 		
 		server.setExecutor(null);
 		
+		server.createContext("/user/login", userLoginHandler);
+		server.createContext("/user/register", userRegisterHandler);
 		server.createContext("/games/list", gamesListHandler);
 		server.createContext("/games/create", createGameHandler);
 		server.createContext("/games/join", joinGameHandler);
@@ -105,6 +109,8 @@ public class Server
 	private HttpHandler gamesListHandler = new GamesListHandler();
 	private HttpHandler createGameHandler = new CreateGameHandler();
 	private HttpHandler joinGameHandler = new JoinGameHandler();
+	private HttpHandler userLoginHandler = new UserLoginHandler();
+	private HttpHandler userRegisterHandler = new UserRegisterHandler();
 	
 	
 }

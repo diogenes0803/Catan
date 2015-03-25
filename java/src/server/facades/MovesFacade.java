@@ -166,9 +166,4 @@ public class MovesFacade implements Facade {
 		 return null;
 	 }
 
-	@Override
-	public void setServer(Server server) {
-		// TODO Auto-generated method stub
-		
-	}
 }
