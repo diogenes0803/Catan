@@ -15,6 +15,8 @@ import shared.communicator.UserLoginResults;
  */
 public class UserFacade implements Facade {
 	
+	
+	private Server server;
 	 /**
 	 * @param params
 	 * @return
@@ -22,6 +24,11 @@ public class UserFacade implements Facade {
 	public UserLoginResults userLogin(UserLoginParams params) {
 		 UserLoginResults result = new UserLoginResults();
 		 
+		 
+		 
+		 result.setName("Sam");
+		 result.setPassword("Sam");
+		 result.setPlayerId(0);
 		 
 		 return result;
 	 }
@@ -37,8 +44,8 @@ public class UserFacade implements Facade {
 
 	@Override
 	public void setServer(Server server) {
-		// TODO Auto-generated method stub
 		
+		this.server = server;
 	}
 
 }
