@@ -22,7 +22,6 @@ public class UserFacade implements Facade {
 		 UserLoginResults result = new UserLoginResults();
 		 
 		 
-		 
 		 return result;
 	 }
 	 
