@@ -25,18 +25,33 @@ public class UserLoginHandler implements HttpHandler  {
 		UserLoginConverter converter = new UserLoginConverter();
 		UserLoginResults result = thisFacade.userLogin(converter.convert(ex.getRequestBody()));
 		
-	
 		Gson gson = new Gson();
-		OutputStream out = ex.getResponseBody();
-		
-		//String gsonObject = gson.toJson(result, UserLoginResults.class);
-		
 		
 		ex.getResponseHeaders().add("Content-Type", "application/json");
-		ex.sendResponseHeaders(200, 0);
-		//out.write(gsonObject.getBytes());
+		String body = "";
+		if (result != null)
+		{
+			//also need to set the cookie look at http://www.programcreek.com/java-api-examples/index.php?api=com.sun.net.httpserver.Headers
+			body = "Success";
+			ex.sendResponseHeaders(200, body.length());
+		}
+		else
+		{
+			body = "Invalid request/bad username or password";
+			ex.sendResponseHeaders(400, body.length());
+		}
+		
+		String gsonObject = gson.toJson(body);
+		
+		//This method must be called after sendResponseHeaders
+		OutputStream out = ex.getResponseBody();
+		
+		out.write(gsonObject.getBytes()); 
+		System.out.println("I'm here"); //Not getting here
 		out.flush();	
 		out.close();
+		
+		
 
 	}
 }
