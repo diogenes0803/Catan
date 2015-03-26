@@ -32,6 +32,10 @@ public class UserFacade implements Facade {
 		{
 			 if (Server.users.get(params.getusername()).getPassword().equals(params.getPassword()))
 			 {
+				 result.setName(params.getusername());
+				 result.setPassword(params.getPassword());
+				 result.setPlayerId(Server.users.get(params.getusername()).getPlayerID());
+				 result.setSuccess(true);
 				 //The user should be able to log in now
 			 }
 			 else

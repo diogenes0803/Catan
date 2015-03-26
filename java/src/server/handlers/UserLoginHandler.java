@@ -2,16 +2,14 @@ package server.handlers;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import server.facades.UserFacade;
 import server.jsonConverters.UserLoginConverter;
-import shared.communicator.ListGamesResults;
-import shared.communicator.UserLoginParams;
 import shared.communicator.UserLoginResults;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -34,6 +32,11 @@ public class UserLoginHandler implements HttpHandler  {
 		if (result != null)
 		{
 			//also need to set the cookie look at http://www.programcreek.com/java-api-examples/index.php?api=com.sun.net.httpserver.Headers
+			List<String> cookies = new ArrayList<String>();
+			cookies.add("catan.user=%7B%22name%22%3A%22"+result.getName()+
+					"%22%2C%22password%22%3A%22"+result.getPassword()+"%22%2C%22playerID%22%3A"
+					+result.getPlayerId()+"%7D;Path=/;");
+			ex.getResponseHeaders().put("Set-cookie", cookies);
 			body = "Success";
 			gsonObject = gson.toJson(body);
 			ex.sendResponseHeaders(200, gsonObject.length());
@@ -49,10 +52,7 @@ public class UserLoginHandler implements HttpHandler  {
 		
 		//This method must be called after sendResponseHeaders
 		OutputStream out = ex.getResponseBody();
-		
-		System.out.println("I'm here first"); //Not getting here
 		out.write(gsonObject.getBytes()); 
-		System.out.println("I'm here"); //Not getting here
 		out.flush();	
 		out.close();
 		
