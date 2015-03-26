@@ -30,9 +30,17 @@ public class ServerModel extends Game {
 		}
 		thisPlayer.setIndex(currentNumPlayers);
 		Player[] tempPlayers = this.getPlayers();
+		for(Player player : tempPlayers) {
+			if(thisPlayer.getName() == player.getName()) {
+				return true;
+			}
+			else if(thisPlayer.getColor() == player.getColor()) {
+				return false;
+			}
+		}
 		tempPlayers[currentNumPlayers] = thisPlayer;
 		setPlayers(tempPlayers);
-		setNumberOfPlayers(currentNumPlayers++);
+		setNumberOfPlayers(currentNumPlayers+1);
 		return true;
 	}
 }

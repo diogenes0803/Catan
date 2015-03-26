@@ -4,6 +4,7 @@
 package server.facades;
 
 import server.Server;
+import server.data.User;
 import server.model.ServerModel;
 import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
@@ -16,6 +17,7 @@ import shared.communicator.SaveGameParams;
 import shared.communicator.SaveGameResults;
 import shared.data.GameInfo;
 import shared.definitions.CatanColor;
+import shared.models.Game;
 import shared.models.Player;
 
 /**
@@ -63,11 +65,18 @@ public class GamesFacade implements Facade {
 	 * @param thisParams
 	 * @return JoinGameResults
 	 */
-	public JoinGameResults join(JoinGameParams thisParams) {
+	public JoinGameResults join(JoinGameParams thisParams, User userInfo) {
 		JoinGameResults thisResult = new JoinGameResults();
 		Player player = new Player();
 		player.setColor(CatanColor.getCatanColor(thisParams.getColor()));
-		thisResult.setSuccess(Server.models.get(thisParams.getId()).addPlayer(player));
+		Game thisGame = Server.models.get(thisParams.getId());
+		if(thisGame != null) {
+			thisResult.setSuccess(Server.models.get(thisParams.getId()).addPlayer(player));
+		}
+		
+		else {
+			thisResult.setSuccess(false);
+		}
 		return thisResult;
 	}
 	

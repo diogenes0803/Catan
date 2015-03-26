@@ -48,7 +48,7 @@ public class JoinGameHandler implements HttpHandler
 			    in.close();
 			}
 			JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
-			JoinGameResults result = thisFacade.join(params);
+			JoinGameResults result = thisFacade.join(params, userInfo);
 			OutputStream out = ex.getResponseBody();
 			ex.getResponseHeaders().add("Content-Type", "text/html");
 			String body = "";
