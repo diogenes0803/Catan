@@ -29,23 +29,28 @@ public class UserLoginHandler implements HttpHandler  {
 		
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		String body = "";
+		String gsonObject = gson.toJson(body);
+		
 		if (result != null)
 		{
 			//also need to set the cookie look at http://www.programcreek.com/java-api-examples/index.php?api=com.sun.net.httpserver.Headers
 			body = "Success";
-			ex.sendResponseHeaders(200, body.length());
+			gsonObject = gson.toJson(body);
+			ex.sendResponseHeaders(200, gsonObject.length());
 		}
 		else
 		{
 			body = "Invalid request/bad username or password";
-			ex.sendResponseHeaders(400, body.length());
+			gsonObject = gson.toJson(body);
+			ex.sendResponseHeaders(400, gsonObject.length());
 		}
 		
-		String gsonObject = gson.toJson(body);
+		
 		
 		//This method must be called after sendResponseHeaders
 		OutputStream out = ex.getResponseBody();
 		
+		System.out.println("I'm here first"); //Not getting here
 		out.write(gsonObject.getBytes()); 
 		System.out.println("I'm here"); //Not getting here
 		out.flush();	

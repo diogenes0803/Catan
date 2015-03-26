@@ -1,4 +1,4 @@
-3월 25, 2015 4:09:32 오전 server.Server run
-정보: Initializing HTTP Server
-3월 25, 2015 4:09:33 오전 server.Server run
-정보: Starts HTTP Server
+Mar 25, 2015 5:54:36 PM server.Server run
+INFO: Initializing HTTP Server
+Mar 25, 2015 5:54:36 PM server.Server run
+INFO: Starts HTTP Server
