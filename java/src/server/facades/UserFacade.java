@@ -16,7 +16,7 @@ import shared.communicator.UserLoginResults;
  */
 public class UserFacade implements Facade {
 	
-
+	private int userID = 0;
 	 /**
 	 * @param params
 	 * @return
@@ -24,7 +24,7 @@ public class UserFacade implements Facade {
 	public UserLoginResults userLogin(UserLoginParams params) {
 		UserLoginResults result = new UserLoginResults();
 		
-		User user = new User("Sam", "sam", 0);
+		User user = new User("Sam", "sam", addUserID());
 		
 		Server.users.put("Sam", user);
 		//Sees if the user exists, if not returns null
@@ -51,7 +51,13 @@ public class UserFacade implements Facade {
 		return result;
 	 }
 	 
-	 /**
+	 private int addUserID() {
+		int currentID = userID;
+		userID++;
+		return currentID;
+	}
+
+	/**
 	 * @param params
 	 * @return
 	 */
@@ -62,7 +68,7 @@ public class UserFacade implements Facade {
 			if ( Server.users.get(params.getusername()) == null)
 			{
 				//How to set userID correctly?
-				User user = new User(params.getusername(), params.getPassword(), 0);
+				User user = new User(params.getusername(), params.getPassword(), addUserID());
 				Server.users.put(params.getusername(), user);
 			}
 			else
