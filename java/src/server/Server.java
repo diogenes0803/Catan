@@ -70,11 +70,6 @@ public class Server
 		consoleHandler.setLevel(logLevel);
 		consoleHandler.setFormatter(new SimpleFormatter());
 		logger.addHandler(consoleHandler);
-
-		FileHandler fileHandler = new FileHandler("log.txt", false);
-		fileHandler.setLevel(logLevel);
-		fileHandler.setFormatter(new SimpleFormatter());
-		logger.addHandler(fileHandler);
 	}
 	
 	private void run() throws FileNotFoundException, ClassNotFoundException, SQLException
