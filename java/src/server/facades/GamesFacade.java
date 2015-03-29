@@ -66,10 +66,15 @@ public class GamesFacade implements Facade {
 	 * @return JoinGameResults
 	 */
 	public JoinGameResults join(JoinGameParams thisParams, User userInfo) {
+		
 		JoinGameResults thisResult = new JoinGameResults();
 		Player player = new Player();
 		player.setColor(CatanColor.getCatanColor(thisParams.getColor()));
-		Game thisGame = Server.models.get(thisParams.getId());
+
+
+		ServerModel thisGame = Server.models.get(thisParams.getId());
+
+
 		if(thisGame != null) {
 			thisResult.setSuccess(Server.models.get(thisParams.getId()).addPlayer(player));
 		}
@@ -77,6 +82,8 @@ public class GamesFacade implements Facade {
 		else {
 			thisResult.setSuccess(false);
 		}
+		
+
 		return thisResult;
 	}
 	
