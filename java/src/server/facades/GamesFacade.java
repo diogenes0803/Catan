@@ -76,7 +76,6 @@ public class GamesFacade implements Facade {
 
 
 		if(thisGame != null) {
-			System.out.println(thisParams.getId());
 			thisResult.setSuccess(Server.models.get(thisParams.getId()).addPlayer(player));
 		}
 		
