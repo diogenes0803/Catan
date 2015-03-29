@@ -18,22 +18,20 @@ public class GetModelHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange ex) throws IOException {
 		Gson gson = new Gson();
-		List<String> cookies = ex.getRequestHeaders().get("Cookie");
+		String cookies = ex.getRequestHeaders().get("Cookie").get(0);
 		User userInfo = null;
 		int gameId = -1;
-		for(String cookie : cookies) {
-			if(cookie.contains("catan.user=")) {
-				String rawCookie = cookie.substring(11, cookie.length());
-				String[] splitedCookie = rawCookie.split(";");
-				String userCookie = splitedCookie[0];
-				String decodedUser = URLDecoder.decode(userCookie);
-				if(cookie.contains("catan.game=")) {
-					String gameCookie = splitedCookie[1];
-					gameId = Integer.parseInt(gameCookie.substring(11, gameCookie.length()));
-				}
-				
-				userInfo = gson.fromJson(decodedUser, User.class);
+		String[] cookiesArray = cookies.split(";");
+		for(String thisCookie : cookiesArray) {
+			if(thisCookie.contains("catan.user=")) {
+				String userCookie = thisCookie.substring(11, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				userInfo = gson.fromJson(decoded, User.class);
 			}
+			else if(thisCookie.contains("catan.game=")) {
+				gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+			}
+				
 		}
 		Game model = Server.models.get(gameId);
 		for(int i=0; i < 4; i++) {

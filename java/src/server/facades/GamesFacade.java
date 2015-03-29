@@ -17,7 +17,6 @@ import shared.communicator.SaveGameParams;
 import shared.communicator.SaveGameResults;
 import shared.data.GameInfo;
 import shared.definitions.CatanColor;
-import shared.models.Game;
 import shared.models.Player;
 
 /**

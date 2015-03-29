@@ -24,14 +24,20 @@ public class JoinGameHandler implements HttpHandler
 	public void handle(HttpExchange ex) throws IOException 
 	{
 		Gson gson = new Gson();
-		List<String> cookies = ex.getRequestHeaders().get("Cookie");
+		String cookies = ex.getRequestHeaders().get("Cookie").get(0);
 		User userInfo = null;
-		for(String cookie : cookies) {
-			if(cookie.contains("catan.user=")) {
-				String userCookie = cookie.substring(11, cookie.length());
+		int gameId = -1;
+		String[] cookiesArray = cookies.split(";");
+		for(String thisCookie : cookiesArray) {
+			if(thisCookie.contains("catan.user=")) {
+				String userCookie = thisCookie.substring(11, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
+			else if(thisCookie.contains("catan.game=")) {
+				gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+			}
+				
 		}
 		
 		if(userInfo != null) {
@@ -55,7 +61,7 @@ public class JoinGameHandler implements HttpHandler
 			String body = "";
 			if(result.isSuccess()) {
 				List<String> gameCookies = new ArrayList<String>();
-				gameCookies.add(" catan.game="+params.getId()+";Path=/;");
+				gameCookies.add("catan.game="+params.getId()+";Path=/;");
 				ex.getResponseHeaders().put("Set-cookie", gameCookies);
 				body = "Success";
 				ex.sendResponseHeaders(200, body.length());
