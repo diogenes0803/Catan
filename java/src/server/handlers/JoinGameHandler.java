@@ -49,7 +49,7 @@ public class JoinGameHandler implements HttpHandler
 			}
 			JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
 			JoinGameResults result = thisFacade.join(params, userInfo);
-			OutputStream out = ex.getResponseBody();
+			
 			ex.getResponseHeaders().add("Content-Type", "text/html");
 			String body = "";
 			if(result.isSuccess()) {
@@ -60,6 +60,7 @@ public class JoinGameHandler implements HttpHandler
 				body = "The player could not be added to the specified game.";
 				ex.sendResponseHeaders(400, body.length());
 			}
+			OutputStream out = ex.getResponseBody();
 			out.write(body.getBytes());
 			out.flush();
 			out.close();

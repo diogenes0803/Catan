@@ -26,16 +26,21 @@ public class ServerModel extends Game {
 	public boolean addPlayer(Player thisPlayer) {
 		int currentNumPlayers = this.getNumberOfPlayers();
 		if(currentNumPlayers > 3) {
+			
 			return false;
 		}
+		
 		thisPlayer.setIndex(currentNumPlayers);
 		Player[] tempPlayers = this.getPlayers();
 		for(Player player : tempPlayers) {
-			if(thisPlayer.getName() == player.getName()) {
-				return true;
-			}
-			else if(thisPlayer.getColor() == player.getColor()) {
-				return false;
+			if (player != null)
+			{
+				if(thisPlayer.getName().equals(player.getName())) {
+					return true;
+				}
+				else if(thisPlayer.getColor() == player.getColor()) {
+					return false;
+				}
 			}
 		}
 		tempPlayers[currentNumPlayers] = thisPlayer;

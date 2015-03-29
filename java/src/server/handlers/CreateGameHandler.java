@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import server.facades.GamesFacade;
 import shared.communicator.CreateGameParams;
@@ -35,10 +36,12 @@ public class CreateGameHandler implements HttpHandler
 		}
 		CreateGameParams params = gson.fromJson(qry, CreateGameParams.class);
 		CreateGameResults result = thisFacade.create(params);
-		OutputStream out = ex.getResponseBody();
+		
 		String gsonObject = gson.toJson(result);
+
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		ex.sendResponseHeaders(200, gsonObject.length());
+		OutputStream out = ex.getResponseBody();
 		out.write(gsonObject.getBytes());
 		out.flush();
 		out.close();
