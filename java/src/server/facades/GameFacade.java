@@ -21,7 +21,11 @@ public class GameFacade implements Facade {
 
     }
 
-    /**
+    public GameFacade() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Fetch the model
      * Swagger URL Equivalent: /game/model (get request)
      *
