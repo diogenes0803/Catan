@@ -6,8 +6,6 @@ package server.facades;
 import java.util.HashMap;
 import java.util.Map;
 
-import server.Server;
-import server.data.ServerInterface;
 import shared.models.Game;
 
 /**

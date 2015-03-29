@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.data.User;
@@ -53,6 +54,9 @@ public class JoinGameHandler implements HttpHandler
 			ex.getResponseHeaders().add("Content-Type", "text/html");
 			String body = "";
 			if(result.isSuccess()) {
+				List<String> gameCookies = new ArrayList<String>();
+				gameCookies.add(" catan.game="+params.getId()+";Path=/;");
+				ex.getResponseHeaders().put("Set-cookie", gameCookies);
 				body = "Success";
 				ex.sendResponseHeaders(200, body.length());
 			}

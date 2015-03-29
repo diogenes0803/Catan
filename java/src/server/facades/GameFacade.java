@@ -1,9 +1,9 @@
 package server.facades;
 
-import server.Server;
 import shared.communicator.AddAIRequestParams;
 import shared.communicator.GameModelParam;
-import shared.models.*;
+import shared.models.Game;
+import shared.models.ModelException;
 
 /**
  * A facade to support /game operations
@@ -11,13 +11,8 @@ import shared.models.*;
  */
 
 public class GameFacade implements Facade {
-
-    private GameManager m_gameManager;
     
-    
-    public GameFacade(GameManager m_gameManager, Server server) {
-
-            this.m_gameManager = m_gameManager;
+    public GameFacade() {
 
     }
 
@@ -29,12 +24,8 @@ public class GameFacade implements Facade {
      * @return Game object containing a pointer to the model
      */
     //@Override
-    public Game model(GameModelParam param) throws ModelException {
-        //return m_gameManager.getGame(param.getGameId());
-        if (this.m_gameManager.isJoinedGame())
-            return m_gameManager.getGame();
-        else
-            throw new IllegalArgumentException("Client is not in a game");
+    public Game model(GameModelParam param) {
+    	return null;
     }
 
     /**
@@ -81,31 +72,6 @@ public class GameFacade implements Facade {
 
     //@Override
     public boolean addAI(AddAIRequestParams params) throws ModelException {
-
-       // Game game = m_gameManager.getGame(params.getGameId());
-        if (!m_gameManager.isJoinedGame()) {    // I'm assuming that the player is not yet added because the game technically hasn't started yet, therefore this request is legal
-            Game game = m_gameManager.getGame();
-
-            Player[] players = {null,
-                    new Player(),
-                    new Player(),
-                    new Player()};
-            players[1].setPlayerId(900);
-            players[1].setName("Hal 9000");
-
-            players[2].setPlayerId(1234567);
-            players[2].setName("GLaDOS");
-
-            players[3].setPlayerId(1980);
-            players[3].setName("The MCP");
-
-            game.setNumberOfPlayers(3);
-            game.setPlayers(players);
-            //game.joinGame(new User("Hal 9000", 9000), shared.definitions.CatanColor.RED);
-            //game.joinGame(new User("GLaDOS", 1234567), shared.definitions.CatanColor.BLUE);
-            //game.joinGame(new User("The MCP", 1980), shared.definitions.CatanColor.WHITE);
-            return true;
-        }
         return false;
     }
 
