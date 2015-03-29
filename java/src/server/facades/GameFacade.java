@@ -13,10 +13,6 @@ import shared.models.ModelException;
 public class GameFacade implements Facade {
     
     public GameFacade() {
-
-    }
-
-    public GameFacade() {
 		// TODO Auto-generated constructor stub
 	}
 
