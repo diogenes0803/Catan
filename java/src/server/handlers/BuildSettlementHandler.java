@@ -52,7 +52,7 @@ public class BuildSettlementHandler implements HttpHandler {
 		CatanModel result = movesFacade.buildSettlement(params);
 		String resultGson = gson.toJson(result);
 		
-		OutputStream out = exchange.getResponseBody();
+		
 		exchange.getResponseHeaders().add("Content-Type", "text/html");
 		String body = "";
 		if(result != null) {  //Facade passes back null if command is invalid
@@ -63,6 +63,7 @@ public class BuildSettlementHandler implements HttpHandler {
 			body = "Invalid Command";
 			exchange.sendResponseHeaders(400, body.length());
 		}
+		OutputStream out = exchange.getResponseBody();
 		out.write(body.getBytes());
 		out.flush();
 		out.close();
