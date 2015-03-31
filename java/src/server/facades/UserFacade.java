@@ -70,6 +70,9 @@ public class UserFacade implements Facade {
 				//How to set userID correctly?
 				User user = new User(params.getusername(), params.getPassword(), addUserID());
 				Server.users.put(params.getusername(), user);
+				result.setName(params.getusername());
+				result.setPassword(params.getPassword());
+				result.setPlayerId(user.getPlayerID());
 			}
 			else
 			{

@@ -23,6 +23,7 @@ public class JoinGameHandler implements HttpHandler
 	@Override
 	public void handle(HttpExchange ex) throws IOException 
 	{
+		
 		Gson gson = new Gson();
 		String body = "";
 		String cookies = ex.getRequestHeaders().get("Cookie").get(0);
@@ -31,16 +32,22 @@ public class JoinGameHandler implements HttpHandler
 		String[] cookiesArray = cookies.split(";");
 		for(String thisCookie : cookiesArray) {
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(11, thisCookie.length());
+				String userCookie = thisCookie.substring(12, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
-				gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+				//gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+				//for some reason there's already a catan.game cookie, I'm not sure if that's actually supposed to be there
+			}
+			else
+			{
+
 			}
 				
 		}
 		
+		System.out.println("Before the first if");
 		if(userInfo != null && gameId == -1) {
 			String qry;
 			String encoding = "ISO-8859-1";
