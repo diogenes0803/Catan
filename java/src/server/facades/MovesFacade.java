@@ -117,7 +117,7 @@ public class MovesFacade implements Facade {
 	 * @return CatanModel object containing the updated Game model
 	 */
 	public CatanModel buildSettlement(BuildSettlementParams params) {
-		 //TODO buildSettlement method
+		 
 		 return null;
 	 }
 	 
