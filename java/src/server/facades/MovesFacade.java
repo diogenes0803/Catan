@@ -3,7 +3,13 @@
  */
 package server.facades;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import server.Server;
+import server.commands.BuildSettlementCommand;
+import server.commands.Command;
+import server.model.ServerModel;
 import shared.communicator.*;
 import shared.models.CatanModel;
 
@@ -12,6 +18,8 @@ import shared.models.CatanModel;
  * @author campbeln
  */
 public class MovesFacade implements Facade {
+	
+	private ArrayList<Command> commands = new ArrayList<Command>();
 	
 	/**
 	 * @param params Data holder containing schema required for this function
@@ -114,10 +122,15 @@ public class MovesFacade implements Facade {
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel buildSettlement(BuildSettlementParams params) {
+	public CatanModel buildSettlement(BuildSettlementParams params, int gameId) {
 		 
+		BuildSettlementCommand command = new BuildSettlementCommand(params, gameId);
+		
+		command.execute();
+		
 		 return null;
 	 }
 	 

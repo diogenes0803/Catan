@@ -1,5 +1,9 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
+
 /**
  * 
  * @author oxbor
@@ -7,9 +11,17 @@ package server.commands;
  */
 public class BuildSettlementCommand implements Command {
 
+	BuildSettlementParams params;
+	int gameId;
+	
+	public BuildSettlementCommand(BuildSettlementParams params, int gameId) {
+		this.params = params;
+		this.gameId = gameId;
+	}
 	@Override
 	public void execute() {
 		
+		ServerModel game = Server.models.get(gameId);
 
 	}
 
