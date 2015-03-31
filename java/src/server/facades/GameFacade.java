@@ -1,5 +1,7 @@
 package server.facades;
 
+import server.Server;
+import server.commands.ResetGameCommand;
 import shared.communicator.AddAIRequestParams;
 import shared.communicator.GameModelParam;
 import shared.models.Game;
@@ -25,7 +27,18 @@ public class GameFacade implements Facade {
      */
     //@Override
     public Game model(GameModelParam param) {
-    	return null;
+        return this.getGameByID(param.version);
+    	//return null;
+    }
+
+    private Game getGameByID(int gameID) {
+        Game result = null;
+        try {
+            result = this.games.get(gameID);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+        return result;
     }
 
     /**
@@ -35,8 +48,12 @@ public class GameFacade implements Facade {
      *
      * @return Game object containing a pointer to the model
      */
-    public Game reset() {
-        return null;
+    public Game reset(int gameID) {
+        ResetGameCommand command = new ResetGameCommand();
+        command.execute();
+        if(command.wasSuccessful()){
+            return Server.models.get(games.get(gameID));
+        } else return null;
     }
 
     /**
