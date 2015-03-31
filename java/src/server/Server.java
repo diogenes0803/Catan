@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import server.data.User;
+import server.handlers.BuildSettlementHandler;
 import server.handlers.CreateGameHandler;
 import server.handlers.GamesListHandler;
 import server.handlers.GetModelHandler;
@@ -95,8 +96,10 @@ public class Server
 		server.createContext("/games/create", createGameHandler);
 		server.createContext("/games/join", joinGameHandler);
 		server.createContext("/game/model", getModelHandler);
+		server.createContext("/moves/buildSettlement", buildSettlementHandler);
 		server.createContext("/docs/api/data", new Handlers.JSONAppender("")); 
 		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+		
 		
 		logger.info("Starts HTTP Server");
 
@@ -108,6 +111,7 @@ public class Server
 	private HttpHandler userLoginHandler = new UserLoginHandler();
 	private HttpHandler userRegisterHandler = new UserRegisterHandler();
 	private HttpHandler getModelHandler = new GetModelHandler();
+	private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
 	
 	
 }

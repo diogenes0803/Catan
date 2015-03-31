@@ -12,6 +12,7 @@ import server.commands.Command;
 import server.model.ServerModel;
 import shared.communicator.*;
 import shared.models.CatanModel;
+import shared.models.GameManager;
 
 /**
  * Facade containing the server's implementation of all Move methods
@@ -129,9 +130,19 @@ public class MovesFacade implements Facade {
 		 
 		BuildSettlementCommand command = new BuildSettlementCommand(params, gameId);
 		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
 		command.execute();
 		
-		 return null;
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
