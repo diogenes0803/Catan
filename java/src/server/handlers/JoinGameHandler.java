@@ -24,6 +24,7 @@ public class JoinGameHandler implements HttpHandler
 	public void handle(HttpExchange ex) throws IOException 
 	{
 		Gson gson = new Gson();
+		String body = "";
 		String cookies = ex.getRequestHeaders().get("Cookie").get(0);
 		User userInfo = null;
 		int gameId = -1;
@@ -40,7 +41,7 @@ public class JoinGameHandler implements HttpHandler
 				
 		}
 		
-		if(userInfo != null) {
+		if(userInfo != null && gameId == -1) {
 			String qry;
 			String encoding = "ISO-8859-1";
 			InputStream in = ex.getRequestBody();
@@ -58,7 +59,7 @@ public class JoinGameHandler implements HttpHandler
 			JoinGameResults result = thisFacade.join(params, userInfo);
 			
 			ex.getResponseHeaders().add("Content-Type", "text/html");
-			String body = "";
+			
 			if(result.isSuccess()) {
 				List<String> gameCookies = new ArrayList<String>();
 				gameCookies.add("catan.game="+params.getId()+";Path=/;");
@@ -70,6 +71,14 @@ public class JoinGameHandler implements HttpHandler
 				body = "The player could not be added to the specified game.";
 				ex.sendResponseHeaders(400, body.length());
 			}
+			OutputStream out = ex.getResponseBody();
+			out.write(body.getBytes());
+			out.flush();
+			out.close();
+		}
+		else {
+			body = "The player could not be added to the specified game.";
+			ex.sendResponseHeaders(400, body.length());
 			OutputStream out = ex.getResponseBody();
 			out.write(body.getBytes());
 			out.flush();

@@ -7,17 +7,23 @@ import shared.models.Game;
 import shared.models.Player;
 
 public class ServerModel extends Game {
+	public ServerModel() {
+		super();
+	}
 	public GameInfo toGameInfo() {
 		GameInfo thisGameInfo = new GameInfo();
 		thisGameInfo.setId(this.getGameId());
 		thisGameInfo.setTitle(this.getGameTitle());
-		for(Player thisPlayer : this.getPlayers()) {
-			PlayerInfo thisPlayerInfo = new PlayerInfo();
-			thisPlayerInfo.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
-			thisPlayerInfo.setId(thisPlayer.getPlayerId());
-			thisPlayerInfo.setName(thisPlayer.getName());
-			thisPlayerInfo.setPlayerIndex(thisPlayer.getIndex());
-			thisGameInfo.addPlayer(thisPlayerInfo);
+		Player[] players = this.getPlayers();
+		for(Player thisPlayer : players) {
+			if(thisPlayer != null) {
+				PlayerInfo thisPlayerInfo = new PlayerInfo();
+				thisPlayerInfo.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
+				thisPlayerInfo.setId(thisPlayer.getPlayerId());
+				thisPlayerInfo.setName(thisPlayer.getName());
+				thisPlayerInfo.setPlayerIndex(thisPlayer.getIndex());
+				thisGameInfo.addPlayer(thisPlayerInfo);
+			}
 		}
 		
 		return thisGameInfo;

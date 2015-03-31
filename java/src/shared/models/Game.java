@@ -74,6 +74,14 @@ public class Game {
     private TradeOffer tradeOffer;
     private int version = -1;
     private int numberOfPlayers = 0;
+    
+    public Game() {
+    	gameTitle = "";
+    	logs = new ArrayList<MessageLine>();
+    	chats = new ArrayList<MessageLine>();
+    	
+    	
+    }
 
     public boolean canBuildRoad(EdgeLocation location) {
         Player thisPlayer = players[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()];

@@ -3,6 +3,8 @@
  */
 package server.facades;
 
+import java.util.Iterator;
+
 import server.Server;
 import server.data.User;
 import server.model.ServerModel;
@@ -31,9 +33,11 @@ public class GamesFacade implements Facade {
 		int gamesSize = Server.models.size();
 		GameInfo[] games = new GameInfo[gamesSize];
 		if(Server.models.size() > 0) {
-			ServerModel[] models = (ServerModel[])Server.models.values().toArray();
-			for(int i = 0; i < models.length; i++) {
-				games[i] = models[i].toGameInfo();
+			Iterator<ServerModel> it = Server.models.values().iterator();
+			int i=0;
+			while(it.hasNext()) {
+				games[i] = it.next().toGameInfo();
+				i++;
 			}
 		}
 		ListGamesResults results = new ListGamesResults();
