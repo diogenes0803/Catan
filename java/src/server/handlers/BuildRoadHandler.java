@@ -7,9 +7,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 
+import server.Server;
+import server.data.User;
 import server.facades.MovesFacade;
 import shared.communicator.BuildRoadParams;
+import shared.communicator.BuildSettlementParams;
 import shared.models.CatanModel;
 
 import com.google.gson.Gson;
@@ -29,9 +33,26 @@ public class BuildRoadHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 
 		Gson gson = new Gson(); 
+		
+		String cookies = exchange.getRequestHeaders().get("Cookie").get(0);
+		User userInfo = null;
+		int gameId = -1;
+		String[] cookiesArray = cookies.split(";");
+		for(String thisCookie : cookiesArray) {
+			if(thisCookie.contains("catan.user=")) {
+				String userCookie = thisCookie.substring(11, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				userInfo = gson.fromJson(decoded, User.class);
+			}
+			else if(thisCookie.contains("catan.game=")) {
+				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				gameId = gson.fromJson(decoded, Integer.class);
+			}
+				
+		}
 		
 		String qry;
 		String encoding = "ISO-8859-1";
@@ -48,8 +69,8 @@ public class BuildRoadHandler implements HttpHandler {
 		}
 		
 		BuildRoadParams params = gson.fromJson(qry, BuildRoadParams.class);
-		CatanModel result = movesFacade.buildRoad(params);
-		String resultGson = gson.toJson(result);
+		CatanModel result = movesFacade.buildRoad(params, gameId);
+		String resultGson = gson.toJson(Server.models.get(gameId));
 		
 		
 		exchange.getResponseHeaders().add("Content-Type", "text/html");

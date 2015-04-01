@@ -7,8 +7,24 @@ import java.awt.List;
 import java.util.ArrayList;
 
 import server.Server;
+import server.commands.AcceptTradeCommand;
+import server.commands.BuildCityCommand;
+import server.commands.BuildRoadCommand;
 import server.commands.BuildSettlementCommand;
+import server.commands.BuyDevCardCommand;
 import server.commands.Command;
+import server.commands.DiscardCardsCommand;
+import server.commands.FinishTurnCommand;
+import server.commands.MaritimeTradeCommand;
+import server.commands.MonopolyCommand;
+import server.commands.MonumentCommand;
+import server.commands.OfferTradeCommand;
+import server.commands.PlaySoldierCommand;
+import server.commands.RoadBuildingCommand;
+import server.commands.RobPlayerCommand;
+import server.commands.RollNumberCommand;
+import server.commands.SendChatCommand;
+import server.commands.YearOfPlentyCommand;
 import server.model.ServerModel;
 import shared.communicator.*;
 import shared.models.CatanModel;
@@ -24,101 +40,266 @@ public class MovesFacade implements Facade {
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel sendChat(SendChatParams params) {
-		//TODO sendChat method
-		return null;
+	public CatanModel sendChat(SendChatParams params, int gameId) {
+		 
+		SendChatCommand command = new SendChatCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel rollNumber(RollNumberParams params) {
-		//TODO rollNumber method
-		return null;
+	public CatanModel rollNumber(RollNumberParams params, int gameId) {
+		 
+		RollNumberCommand command = new RollNumberCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel robPlayer(RobPlayerParams params) {
-		//TODO robPlayer method
-		return null;
+	public CatanModel robPlayer(RobPlayerParams params, int gameId) {
+		 
+		RobPlayerCommand command = new RobPlayerCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel finishTurn(FinishTurnParams params) {
-		//TODO finishTurn method
-		return null;
+	public CatanModel finishTurn(FinishTurnParams params, int gameId) {
+		 
+		FinishTurnCommand command = new FinishTurnCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel buyDevCard(BuyDevCardParams params) {
-		//TODO buyDevCard method
-		return null;
+	public CatanModel buyDevCard(BuyDevCardParams params, int gameId) {
+		 
+		BuyDevCardCommand command = new BuyDevCardCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel yearOfPlenty(YearOfPlentyParams params) {
-		//TODO yearOfPlenty method
-		return null;
+	public CatanModel yearOfPlenty(YearOfPlentyParams params, int gameId) {
+		 
+		YearOfPlentyCommand command = new YearOfPlentyCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel roadBuilding(RoadBuildingParams params) {
-		//TODO roadBuilding method
-		return null;
+	public CatanModel roadBuilding(RoadBuildingParams params, int gameId) {
+		 
+		RoadBuildingCommand command = new RoadBuildingCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel playSoldier(PlaySoldierParams params) {
-		//TODO playSoldier method
-		return null;
+	public CatanModel playSoldier(PlaySoldierParams params, int gameId) {
+		 
+		PlaySoldierCommand command = new PlaySoldierCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 
 	/**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel monopoly(MonopolyParams params) {
-		//TODO monopoly method
-		return null;
+	public CatanModel monopoly(MonopolyParams params, int gameId) {
+		 
+		MonopolyCommand command = new MonopolyCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	}
 	
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel monument(MonumentParams params) {
-		 //TODO monument method
-		 return null;
+	public CatanModel monument(MonumentParams params, int gameId) {
+		 
+		MonumentCommand command = new MonumentCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel buildRoad(BuildRoadParams params) {
-		 //TODO buildRoad method
-		return null;
+	public CatanModel buildRoad(BuildRoadParams params, int gameId) {
+		
+		BuildRoadCommand command = new BuildRoadCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
@@ -147,47 +328,122 @@ public class MovesFacade implements Facade {
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel buildCity(BuildCityParams params) {
-		 //TODO buildCity method
-		 return null;
+	public CatanModel buildCity(BuildCityParams params, int gameId) {
+		 
+		BuildCityCommand command = new BuildCityCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel offerTrade(OfferTradeParams params) {
-		 //TODO offerTrade method
-		 return null;
+	public CatanModel offerTrade(OfferTradeParams params, int gameId) {
+		 
+		OfferTradeCommand command = new OfferTradeCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel acceptTrade(AcceptTradeParams params) {
-		 //TODO acceptTrade method
-		 return null;
+	public CatanModel acceptTrade(AcceptTradeParams params, int gameId) {
+		 
+		AcceptTradeCommand command = new AcceptTradeCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel maritimeTrade(MaritimeTradeParams params) {
-		 //TODO maritimeTrade method
-		 return null;
+	public CatanModel maritimeTrade(MaritimeTradeParams params, int gameId) {
+		 
+		MaritimeTradeCommand command = new MaritimeTradeCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 	 
 	 /**
 	 * @param params Data holder containing schema required for this function
+	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel discardCards(DiscardCardsParams params) {
-		 //TODO discardCards method
-		 return null;
+	public CatanModel discardCards(DiscardCardsParams params, int gameId) {
+		 
+		DiscardCardsCommand command = new DiscardCardsCommand(params, gameId);
+		
+		//should probably check canDo() stuff here
+		ServerModel game = Server.models.get(gameId);
+		
+		command.execute();
+		
+		//Need to figure how to pass the game stuff and model back
+		CatanModel model = new CatanModel();
+		GameManager manager = new GameManager();
+		manager.setGame(game);
+		model.setGameManager(manager);
+		
+		
+		 return model;
 	 }
 
 }

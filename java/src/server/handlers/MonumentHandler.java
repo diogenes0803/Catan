@@ -7,8 +7,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 
+import server.Server;
+import server.data.User;
 import server.facades.MovesFacade;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.MonumentParams;
 import shared.models.CatanModel;
 
@@ -21,8 +25,7 @@ import com.sun.net.httpserver.HttpHandler;
  *
  */
 public class MonumentHandler implements HttpHandler {
-
-	private MovesFacade movesFacade = new MovesFacade();
+MovesFacade movesFacade = new MovesFacade();
 	
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
@@ -32,6 +35,24 @@ public class MonumentHandler implements HttpHandler {
 		// TODO Auto-generated method stub
 
 		Gson gson = new Gson(); 
+		
+		String cookies = exchange.getRequestHeaders().get("Cookie").get(0);
+		User userInfo = null;
+		int gameId = -1;
+		String[] cookiesArray = cookies.split(";");
+		for(String thisCookie : cookiesArray) {
+			if(thisCookie.contains("catan.user=")) {
+				String userCookie = thisCookie.substring(11, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				userInfo = gson.fromJson(decoded, User.class);
+			}
+			else if(thisCookie.contains("catan.game=")) {
+				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				gameId = gson.fromJson(decoded, Integer.class);
+			}
+				
+		}
 		
 		String qry;
 		String encoding = "ISO-8859-1";
@@ -48,10 +69,10 @@ public class MonumentHandler implements HttpHandler {
 		}
 		
 		MonumentParams params = gson.fromJson(qry, MonumentParams.class);
-		CatanModel result = movesFacade.monument(params);
-		String resultGson = gson.toJson(result);
+		CatanModel result = movesFacade.monument(params, gameId);
+		String resultGson = gson.toJson(Server.models.get(gameId));
 		
-		OutputStream out = exchange.getResponseBody();
+		
 		exchange.getResponseHeaders().add("Content-Type", "text/html");
 		String body = "";
 		if(result != null) {  //Facade passes back null if command is invalid
@@ -62,6 +83,7 @@ public class MonumentHandler implements HttpHandler {
 			body = "Invalid Command";
 			exchange.sendResponseHeaders(400, body.length());
 		}
+		OutputStream out = exchange.getResponseBody();
 		out.write(body.getBytes());
 		out.flush();
 		out.close();
