@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Used to pass game information into views<br> <br> PROPERTIES:<br> <ul> <li>Id: Unique game ID</li> <li>Title: Game
  * title (non-empty string)</li> <li>Players: List of players who have joined the game (can be empty)</li> </ul>
  */
 public class GameInfo {
-    private int id;
-    private String title;
-    private List<PlayerInfo> players;
+    @Expose private int id;
+    @Expose private String title;
+    @Expose private List<PlayerInfo> players;
 
     public GameInfo() {
         setId(-1);

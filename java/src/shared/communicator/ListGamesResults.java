@@ -1,5 +1,7 @@
 package shared.communicator;
 
+import com.google.gson.annotations.Expose;
+
 import shared.data.GameInfo;
 
 /**
@@ -8,7 +10,7 @@ import shared.data.GameInfo;
  * @author Jonathan
  */
 public class ListGamesResults extends ResponseBodyContainer {
-    GameInfo[] Game;
+    @Expose GameInfo[] Game;
 
     public ListGamesResults(GameInfo[] games) {
         super("SUCCESS");
