@@ -60,6 +60,12 @@ public class GamesFacade implements Facade {
 		Server.models.put(game.getGameId(), game);
 		thisResult.setId(game.getGameId());
 		thisResult.setTitle(game.getGameTitle());
+		
+		Player[] players = new Player[4];
+		for (int i = 0; i < players.length; i++) {
+			players[i] = new Player();
+		}
+		thisResult.setPlayers(players);
 		return thisResult;
 	}
 	

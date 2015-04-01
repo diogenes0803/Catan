@@ -6,6 +6,8 @@ import shared.models.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Used to pass player information into views<br> <br> PROPERTIES:<br> <ul> <li>Id: Unique player ID</li>
  * <li>PlayerIndex: Player's order in the game [0-3]</li> <li>Name: Player's name (non-empty string)</li> <li>Color:
@@ -13,10 +15,10 @@ import java.util.Collection;
  */
 public class PlayerInfo {
 
-    private int id;
-    private int playerIndex;
-    private String name;
-    private String color;
+    @Expose private int id;
+    @Expose private int playerIndex;
+    @Expose private String name;
+    @Expose private String color;
 
     public PlayerInfo() {
         setId(-1);

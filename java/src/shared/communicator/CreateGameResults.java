@@ -1,5 +1,7 @@
 package shared.communicator;
 
+import com.google.gson.annotations.Expose;
+
 import shared.models.Player;
 
 /**
@@ -8,9 +10,9 @@ import shared.models.Player;
  * @author Jonathan
  */
 public class CreateGameResults {
-    String title;
-    int id;
-    Player[] players = new Player[4];
+    @Expose String title;
+    @Expose int id;
+    @Expose Player[] players = new Player[4];
 
     public CreateGameResults(String title, int id, Player[] players2) {
         this.title = title;

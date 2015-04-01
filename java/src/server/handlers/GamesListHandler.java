@@ -7,6 +7,7 @@ import server.facades.GamesFacade;
 import shared.communicator.ListGamesResults;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -17,7 +18,7 @@ public class GamesListHandler implements HttpHandler
 	public void handle(HttpExchange ex) throws IOException 
 	{
 		ListGamesResults result = thisFacade.list();
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result.getGames());
 		ex.getResponseHeaders().add("Content-Type", "application/json");

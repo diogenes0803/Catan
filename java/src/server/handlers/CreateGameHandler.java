@@ -10,6 +10,7 @@ import shared.communicator.CreateGameParams;
 import shared.communicator.CreateGameResults;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -36,7 +37,8 @@ public class CreateGameHandler implements HttpHandler
 		CreateGameParams params = gson.fromJson(qry, CreateGameParams.class);
 		CreateGameResults result = thisFacade.create(params);
 		
-		String gsonObject = gson.toJson(result);
+		Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		String gsonObject = gson2.toJson(result);
 		
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		ex.sendResponseHeaders(200, gsonObject.length());
