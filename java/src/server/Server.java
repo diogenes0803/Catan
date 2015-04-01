@@ -13,14 +13,30 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import server.data.User;
+import server.handlers.AcceptTradeHandler;
+import server.handlers.BuildCityHandler;
+import server.handlers.BuildRoadHandler;
 import server.handlers.BuildSettlementHandler;
+import server.handlers.BuyDevCardHandler;
 import server.handlers.CreateGameHandler;
+import server.handlers.DiscardCardsHandler;
+import server.handlers.FinishTurnHandler;
 import server.handlers.GamesListHandler;
 import server.handlers.GetModelHandler;
 import server.handlers.Handlers;
 import server.handlers.JoinGameHandler;
+import server.handlers.MaritimeTradehandler;
+import server.handlers.MonopolyHandler;
+import server.handlers.MonumentHandler;
+import server.handlers.OfferTradeHandler;
+import server.handlers.PlaySoldierHandler;
+import server.handlers.RoadBuildingHandler;
+import server.handlers.RobPlayerHandler;
+import server.handlers.RollNumberHandler;
+import server.handlers.SendChatHandler;
 import server.handlers.UserLoginHandler;
 import server.handlers.UserRegisterHandler;
+import server.handlers.YearOfPlentyHandler;
 import server.model.ServerModel;
 
 import com.sun.net.httpserver.HttpHandler;
@@ -97,6 +113,22 @@ public class Server
 		server.createContext("/games/join", joinGameHandler);
 		server.createContext("/game/model", getModelHandler);
 		server.createContext("/moves/buildSettlement", buildSettlementHandler);
+		server.createContext("/moves/buildRoad", buildRoadHandler);
+		server.createContext("/moves/sendChat", sendChatHandler);
+		server.createContext("/moves/rollNumber", rollNumberHandler);
+		server.createContext("/moves/robPlayer", robPlayerHandler);
+		server.createContext("/moves/finishTurn", finishTurnHandler);
+		server.createContext("/moves/buyDevCard", buyDevCardHandler);
+		server.createContext("/moves/Year_of_Plenty", yearOfPlentyHandler);
+		server.createContext("/moves/Road_Building", roadBuildingHandler);
+		server.createContext("/moves/Soldier", soldierHandler);
+		server.createContext("/moves/Monopoly", monopolyHandler);
+		server.createContext("/moves/Monument", monumentHandler);
+		server.createContext("/moves/buildCity", buildCityHandler);
+		server.createContext("/moves/offerTrade", offerTradeHandler);
+		server.createContext("/moves/acceptTrade", acceptTradeHandler);
+		server.createContext("/moves/maritimeTrade", maritimeTradeHandler);
+		server.createContext("/moves/discardCards", discardCardsHandler);
 		server.createContext("/docs/api/data", new Handlers.JSONAppender("")); 
 		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
@@ -112,6 +144,22 @@ public class Server
 	private HttpHandler userRegisterHandler = new UserRegisterHandler();
 	private HttpHandler getModelHandler = new GetModelHandler();
 	private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
+	private HttpHandler buildRoadHandler = new BuildRoadHandler();
+	private HttpHandler rollNumberHandler = new RollNumberHandler();
+	private HttpHandler sendChatHandler = new SendChatHandler();
+	private HttpHandler robPlayerHandler = new RobPlayerHandler();
+	private HttpHandler finishTurnHandler = new FinishTurnHandler();
+	private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
+	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
+	private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
+	private HttpHandler soldierHandler = new PlaySoldierHandler();
+	private HttpHandler monopolyHandler = new MonopolyHandler();
+	private HttpHandler monumentHandler = new MonumentHandler();
+	private HttpHandler buildCityHandler = new BuildCityHandler();
+	private HttpHandler offerTradeHandler = new OfferTradeHandler();
+	private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
+	private HttpHandler maritimeTradeHandler = new MaritimeTradehandler();
+	private HttpHandler discardCardsHandler = new DiscardCardsHandler();
 	
 	
 }

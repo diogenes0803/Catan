@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 
+import server.Server;
 import server.data.User;
 import server.facades.MovesFacade;
 import shared.communicator.BuildSettlementParams;
@@ -47,7 +48,9 @@ public class BuildSettlementHandler implements HttpHandler {
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
-				gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				gameId = gson.fromJson(decoded, Integer.class);
 			}
 				
 		}
@@ -68,7 +71,7 @@ public class BuildSettlementHandler implements HttpHandler {
 		
 		BuildSettlementParams params = gson.fromJson(qry, BuildSettlementParams.class);
 		CatanModel result = movesFacade.buildSettlement(params, gameId);
-		String resultGson = gson.toJson(result);
+		String resultGson = gson.toJson(Server.models.get(gameId));
 		
 		
 		exchange.getResponseHeaders().add("Content-Type", "text/html");

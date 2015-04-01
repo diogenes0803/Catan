@@ -23,6 +23,7 @@ public class BuildSettlementCommand implements Command {
 		
 		ServerModel game = Server.models.get(gameId);
 		game.buildSettlement(params);
+		Server.models.put(gameId, game);
 
 	}
 

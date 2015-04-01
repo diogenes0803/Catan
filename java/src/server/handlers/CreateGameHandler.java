@@ -37,7 +37,7 @@ public class CreateGameHandler implements HttpHandler
 		CreateGameResults result = thisFacade.create(params);
 		
 		String gsonObject = gson.toJson(result);
-
+		
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		ex.sendResponseHeaders(200, gsonObject.length());
 		OutputStream out = ex.getResponseBody();
