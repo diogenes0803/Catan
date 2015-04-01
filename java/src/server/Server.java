@@ -6,11 +6,7 @@ import java.net.InetSocketAddress;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 import server.data.User;
 import server.handlers.AcceptTradeHandler;
@@ -47,7 +43,7 @@ public class Server
 	private static int SERVER_PORT_NUMBER = 8081;
 	private static final int MAX_WAITING_CONNECTIONS = 10;
 	private HttpServer server;
-	public static Logger logger;
+	private static Logger logger;
 	
 	public static Map<Integer, ServerModel> models = new HashMap<Integer, ServerModel>();
 	public static Map<String, User> users = new HashMap<String, User>();
@@ -87,7 +83,14 @@ public class Server
 		consoleHandler.setLevel(logLevel);
 		consoleHandler.setFormatter(new SimpleFormatter());
 		logger.addHandler(consoleHandler);
+
+        FileHandler fileHandler = new FileHandler("log.txt", false);
+        fileHandler.setLevel(logLevel);
+        fileHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(fileHandler);
+
 	}
+
 	
 	private void run() throws FileNotFoundException, ClassNotFoundException, SQLException
 	{
@@ -133,9 +136,11 @@ public class Server
 		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
 		
-		logger.info("Starts HTTP Server");
+		logger.info("Attempting to start. . .");
 
 		server.start();
+
+        logger.info("Server is up.");
 	}
 	private HttpHandler gamesListHandler = new GamesListHandler();
 	private HttpHandler createGameHandler = new CreateGameHandler();

@@ -3,7 +3,10 @@ package client.communication;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import server.Server;
 import shared.communicator.AcceptTradeParams;
 import shared.communicator.AddAIParams;
 import shared.communicator.AddAIResults;
@@ -53,6 +56,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import shared.models.jsonholder.Log;
+
 
 /**
  * Description: Holds the Client Communicator and the Server Facade
@@ -64,7 +69,8 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     public static final int UNINITIALIZED_MODEL = -1;//-1 mean model not yet initialized
     public static final String PATH = "; Path=/";
     private final int HTTP_OK = HttpURLConnection.HTTP_OK;
-    
+
+    private Logger logger;
     
     private ClientCommunicator clientComm;  
     
@@ -106,7 +112,8 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         gameCookie = "";
         version = UNINITIALIZED_MODEL;
         currentGameId = -1;
-	}
+        logger = Logger.getLogger("serverhandler");
+    }
 	
 	public static ServerProxy getInstance() {
 		return instance;
@@ -132,7 +139,10 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             result.setResponseBody(result.getResponseBody());
             if(result.isSuccess()){
                 String new_cookie = response.getCookie("catan.user");
-                
+
+
+                logger.info("Successful login...");
+
                 playerCookie = "catan.user="+new_cookie;
                 
                 //System.out.println("playerCookie:\n\t"+playerCookie);
@@ -142,6 +152,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     
                     JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
                     result.setName(je.get("name").getAsString());
+
+                    logger.info("User is: " + result.getName());
+
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
                     localPlayer = new PlayerInfo();
@@ -156,12 +169,16 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         }catch(ClientException e){
             result.setResponseBody(e.toString());
             result.setSuccess(false);
-            System.out.println(e.toString());
+            //logger.warning("A client exception has occured: \n" + result.getResponseBody());
+            logger.log(Level.WARNING, e.getMessage(), e);
+            //System.out.println(e.toString());
 
         }catch(Exception e1){
             result.setResponseBody(e1.toString());
             result.setSuccess(false);
-            System.out.println(e1.toString());
+            //logger.severe("Uncategorized error: \n" + result.getResponseBody());
+            logger.log(Level.SEVERE, e1.getMessage(), e1);
+            //System.out.println(e1.toString());
         }
         return result;
     }
@@ -182,12 +199,16 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             if(result.isSuccess()){
                 String new_cookie = response.getCookie("catan.user");
                 playerCookie = "catan.user="+new_cookie;
+                logger.info("Registration success. . .");
                
                 try {
                     String json_cookie = URLDecoder.decode(new_cookie, "UTF-8");
 
                     JsonObject je = (JsonObject)new JsonParser().parse(json_cookie);
                     result.setName(je.get("name").getAsString());
+
+                    logger.info("New user: " + result.getName());
+
                     result.setPassword(je.get("password").getAsString());
                     result.setPlayerId(je.get("playerID").getAsInt());
                     localPlayer = new PlayerInfo();
@@ -204,7 +225,8 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         }catch(ClientException e){
             result.setResponseBody(e.toString());
             result.setSuccess(false);
-            System.out.println(e.toString());
+            logger.log(Level.FINE, e.getMessage(), e);
+            //System.out.println(e.toString());
 
         }
        
@@ -289,11 +311,14 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             currentGameId = params.getId();
             result.setResponseBody(response.getResponseBody());
 
+            logger.fine("User (ID) " + params.getId() + " has joined a game.");
+
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
             System.out.println(e.toString());
             result.setSuccess(false);
+            logger.log(Level.FINE, e.getMessage(), e);
         }
 
         return result;
@@ -377,8 +402,9 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
             result_model = getCatanModel(response);
         } catch (ClientException e) {
                       
-            System.out.println(e);
-            
+            //System.out.println(e);
+            logger.log(Level.WARNING, e.getMessage(), e);
+
         }
         pollerCallCount++;
 
@@ -389,14 +415,19 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
     private CatanModel getCatanModel(HttpURLResponse response) {
         CatanModel result_model = new CatanModel();
     	Gson gson = new Gson();
-        if(response.getResponseBody().equals("\"true\""))
-        	return null;
+        if(response.getResponseBody().equals("\"true\"")) {
+            logger.warning("Could not retrieve a Catan Model.");
+            return null;
+        }
 		JsonModelHolder modelHolder = gson.fromJson(response.getResponseBody().toString(), JsonModelHolder.class);
 		Game thisGame = modelHolder.buildCatanGame();
 		GameManager manager = new GameManager();
 		result_model.setGameManager(manager);
 		result_model.getGameManager().setGame(thisGame);
 		version = result_model.getGameManager().getGame().getVersion();
+
+        logger.finer("Catan Model " + thisGame.getGameTitle() + "successfully fetched.");
+
         return result_model;
     }
     
@@ -407,10 +438,12 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
         try {
             HttpURLResponse response = clientComm.post("/game/reset", null, playerCookie+"; "+gameCookie);
             results = getCatanModel(response);
-            
+            logger.fine(localPlayer.getName() + " has reset their game.");
         } catch (ClientException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
+            logger.info("Attempt to reset " + localPlayer.getName() + "\'s game failed.");
+
         }
 
         return results;
