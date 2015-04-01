@@ -47,7 +47,6 @@ public class JoinGameHandler implements HttpHandler
 				
 		}
 		
-		System.out.println("Before the first if");
 		if(userInfo != null && gameId == -1) {
 			String qry;
 			String encoding = "ISO-8859-1";

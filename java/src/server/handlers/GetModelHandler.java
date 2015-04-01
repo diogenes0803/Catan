@@ -17,34 +17,46 @@ public class GetModelHandler implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange ex) throws IOException {
+		
 		Gson gson = new Gson();
 		String cookies = ex.getRequestHeaders().get("Cookie").get(0);
 		User userInfo = null;
 		int gameId = -1;
 		String[] cookiesArray = cookies.split(";");
 		for(String thisCookie : cookiesArray) {
+			
 			if(thisCookie.contains("catan.user=")) {
 				String userCookie = thisCookie.substring(11, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
-				gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
+				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				gameId = gson.fromJson(decoded, Integer.class);
+
 			}
 				
 		}
+
 		Game model = Server.models.get(gameId);
-		for(int i=0; i < 4; i++) {
-			if(model.getPlayers()[i].getPlayerId() == userInfo.getPlayerID()) {
-				OutputStream out = ex.getResponseBody();
+		//for(int i=0; i < 4; i++) {
+			//if(model.getPlayers()[i].getPlayerId() == userInfo.getPlayerID()) {
+				
 				ex.getResponseHeaders().add("Content-Type", "application/json");
+				System.out.println("hey");
 				String jsonObject = gson.toJson(model.toJsonModel());
+				System.out.println("hey after");
+				System.out.println(jsonObject);
+				
 				ex.sendResponseHeaders(200, jsonObject.length());
+				
+				OutputStream out = ex.getResponseBody();
 				out.write(jsonObject.getBytes());
 				out.flush();
 				out.close();
-			}
-		}
+			//}
+		//}
 		
 	}
 

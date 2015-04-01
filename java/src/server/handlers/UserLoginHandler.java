@@ -48,8 +48,6 @@ public class UserLoginHandler implements HttpHandler  {
 			ex.sendResponseHeaders(400, gsonObject.length());
 		}
 		
-		
-		
 		//This method must be called after sendResponseHeaders
 		OutputStream out = ex.getResponseBody();
 		out.write(gsonObject.getBytes()); 
