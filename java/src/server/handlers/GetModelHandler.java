@@ -8,6 +8,7 @@ import java.util.List;
 import server.Server;
 import server.data.User;
 import shared.models.Game;
+import shared.models.jsonholder.JsonModelHolder;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -44,11 +45,8 @@ public class GetModelHandler implements HttpHandler {
 			//if(model.getPlayers()[i].getPlayerId() == userInfo.getPlayerID()) {
 				
 				ex.getResponseHeaders().add("Content-Type", "application/json");
-				System.out.println("hey");
-				String jsonObject = gson.toJson(model.toJsonModel());
-				System.out.println("hey after");
-				System.out.println(jsonObject);
-				
+				String jsonObject = gson.toJson(model, Game.class);
+
 				ex.sendResponseHeaders(200, jsonObject.length());
 				
 				OutputStream out = ex.getResponseBody();
