@@ -246,16 +246,11 @@ public class ServerProxy implements ServerStandinInterface, ServerInterface{
                     	{
                     		JsonObject player = (JsonObject)playerArray.get(j);
                     		//Takes care of the case where there's a game waiting for players to join
-                    		if (player.get("id") != null) //if (player.get("id") != null && !player.get("id").toString().isEmpty()) //Is it possible for ID to be an empty string instead of an uninitialized one?
+                    		if (player.get("id") != null)
                     		{
 		                    	int playerId = player.get("id").getAsInt();
 		                    	String color = player.get("color").getAsString();
-//                                String name = player.get("name").getAsString(); //Error is being thrown here, NullPointerException
-                                String name;
-                                if (player.get("name") == null)                     //Temporary solution for debugging
-                                    name = "NULL";
-                                else
-                                    name = player.get("name").getAsString();
+		                    	String name = player.get("name").getAsString();
 		                    	PlayerInfo thisPlayer = new PlayerInfo();
 		                    	thisPlayer.setId(playerId);
 		                    	thisPlayer.setColor(color);
