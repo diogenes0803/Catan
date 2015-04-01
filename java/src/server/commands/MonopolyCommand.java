@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.MonopolyParams;
 
 /**
@@ -9,13 +12,21 @@ import shared.communicator.MonopolyParams;
  */
 public class MonopolyCommand implements Command {
 
+	MonopolyParams params;
+	int gameId;
+	
 	public MonopolyCommand(MonopolyParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.monopoly(params);
+		Server.models.put(gameId, game);
+
 
 	}
 

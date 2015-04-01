@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.RoadBuildingParams;
 
 /**
@@ -9,13 +12,20 @@ import shared.communicator.RoadBuildingParams;
  */
 public class RoadBuildingCommand implements Command {
 
+	RoadBuildingParams params;
+	int gameId;
+	
 	public RoadBuildingCommand(RoadBuildingParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.roadBuilding(params);
+		Server.models.put(gameId, game);
 
 	}
 

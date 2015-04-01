@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.SendChatParams;
 
 /**
@@ -9,13 +12,20 @@ import shared.communicator.SendChatParams;
  */
 public class SendChatCommand implements Command {
 
+	SendChatParams params;
+	int gameId;
+	
 	public SendChatCommand(SendChatParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.sendChat(params);
+		Server.models.put(gameId, game);
 
 	}
 

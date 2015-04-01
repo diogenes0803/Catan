@@ -1,5 +1,7 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
 import shared.communicator.AcceptTradeParams;
 
 /**
@@ -9,13 +11,20 @@ import shared.communicator.AcceptTradeParams;
  */
 public class AcceptTradeCommand implements Command {
 
+	AcceptTradeParams params;
+	int gameId;
+	
 	public AcceptTradeCommand(AcceptTradeParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.acceptTrade(params);
+		Server.models.put(gameId, game);
 
 	}
 

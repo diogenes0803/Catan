@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.YearOfPlentyParams;
 
 /**
@@ -9,13 +12,20 @@ import shared.communicator.YearOfPlentyParams;
  */
 public class YearOfPlentyCommand implements Command {
 
+	YearOfPlentyParams params;
+	int gameId;
+	
 	public YearOfPlentyCommand(YearOfPlentyParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.yearOfPlenty(params);
+		Server.models.put(gameId, game);
 
 	}
 

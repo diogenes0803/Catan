@@ -1,6 +1,9 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
 import shared.communicator.BuildCityParams;
+import shared.communicator.BuildSettlementParams;
 
 /**
  * 
@@ -9,14 +12,20 @@ import shared.communicator.BuildCityParams;
  */
 public class BuildCityCommand implements Command {
 
+	BuildCityParams params;
+	int gameId;
+	
 	public BuildCityCommand(BuildCityParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		
+		ServerModel game = Server.models.get(gameId);
+		game.buildCity(params);
+		Server.models.put(gameId, game);
 	}
 
 }

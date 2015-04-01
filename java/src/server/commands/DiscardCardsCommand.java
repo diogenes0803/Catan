@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.DiscardCardsParams;
 
 /**
@@ -9,13 +12,20 @@ import shared.communicator.DiscardCardsParams;
  */
 public class DiscardCardsCommand implements Command {
 
+	DiscardCardsParams params;
+	int gameId;
+	
 	public DiscardCardsCommand(DiscardCardsParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.discardCards(params);
+		Server.models.put(gameId, game);
 
 	}
 

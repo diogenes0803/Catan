@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.RollNumberParams;
 
 /**
@@ -9,13 +12,20 @@ import shared.communicator.RollNumberParams;
  */
 public class RollNumberCommand implements Command {
 
+	RollNumberParams params;
+	int gameId;
+	
 	public RollNumberCommand(RollNumberParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.rollNumber(params);
+		Server.models.put(gameId, game);
 
 	}
 

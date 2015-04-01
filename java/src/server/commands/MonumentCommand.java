@@ -1,5 +1,8 @@
 package server.commands;
 
+import server.Server;
+import server.model.ServerModel;
+import shared.communicator.BuildSettlementParams;
 import shared.communicator.MonumentParams;
 
 /**
@@ -9,13 +12,21 @@ import shared.communicator.MonumentParams;
  */
 public class MonumentCommand implements Command {
 
+	MonumentParams params;
+	int gameId;
+	
 	public MonumentCommand(MonumentParams params, int gameId) {
-		// TODO Auto-generated constructor stub
+		this.params = params;
+		this.gameId = gameId;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		ServerModel game = Server.models.get(gameId);
+		game.monument(params);
+		Server.models.put(gameId, game);
+
 
 	}
 
