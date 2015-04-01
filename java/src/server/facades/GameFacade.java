@@ -36,7 +36,7 @@ public class GameFacade implements Facade {
         try {
             result = this.games.get(gameID);
         } catch (IndexOutOfBoundsException e) {
-            return null;
+            throw new IllegalArgumentException("Game is not in Map \'games\'.\n" + e.toString());
         }
         return result;
     }
@@ -89,6 +89,8 @@ public class GameFacade implements Facade {
 
     //@Override
     public boolean addAI(AddAIRequestParams params) throws ModelException {
+        if (params.AIType.equals("LARGEST_ARMY"))
+            return true;
         return false;
     }
 
@@ -101,7 +103,7 @@ public class GameFacade implements Facade {
      */
 
     public String[] listAI() {
-        return new String[]{"Hal 9000", "The MCP", "GLaDOS"};
+        return new String[]{"LARGEST_ARMY"};
     }
 
 }
