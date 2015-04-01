@@ -32,7 +32,7 @@ public class JoinGameHandler implements HttpHandler
 		String[] cookiesArray = cookies.split(";");
 		for(String thisCookie : cookiesArray) {
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String userCookie = thisCookie.substring(11, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
