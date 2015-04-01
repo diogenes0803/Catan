@@ -19,10 +19,10 @@ public class GamesListHandler implements HttpHandler
 	{
 		ListGamesResults result = thisFacade.list();
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		OutputStream out = ex.getResponseBody();
 		String gsonObject = gson.toJson(result.getGames());
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		ex.sendResponseHeaders(200, gsonObject.length());
+		OutputStream out = ex.getResponseBody();
 		out.write(gsonObject.getBytes());
 		out.flush();
 		out.close();
