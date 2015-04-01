@@ -23,6 +23,7 @@ import shared.communicator.RollNumberParams;
 import shared.communicator.SendChatParams;
 import shared.communicator.YearOfPlentyParams;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -695,7 +696,12 @@ public class Game {
      * @param params
      */
     public void sendChat(SendChatParams params) {
-    	
+    	String chat = params.getContent();
+    	String name = players[params.getPlayerIndex()].getName();
+    	MessageLine message = new MessageLine(name, chat);
+
+    	chats.add(message);
+    	version++;
     }
     
     /**
@@ -703,6 +709,8 @@ public class Game {
      * @param params
      */
     public void rollNumber(RollNumberParams params) {
+    	dice = params.getNumber();
+    	version++;
     	
     }
     
@@ -711,7 +719,27 @@ public class Game {
      * @param params
      */
     public void robPlayer(RobPlayerParams params) {
+    	List<ResCard> cards = players[params.getVictimIndex()].getResCards();
+
+    	boolean cardFound = false;
+    	int index = 0;
     	
+    	if (cards.size() != 0)
+    	{
+	    	while (!cardFound)
+	    	{
+	    		if (cards.get(index).getType().name() == params.getType())
+	    		{
+	    			cards.remove(index);
+	    			cardFound = true;
+	    		}
+	    		index++;
+	    	}
+    	}
+    	
+    	players[params.getPlayerIndex()].setResCards(cards);
+    	
+    	version++;
     }
     
     /**
@@ -720,6 +748,16 @@ public class Game {
      */
     public void finishTurn(FinishTurnParams params) {
     	
+    	if (params.getPlayerIndex() < 3)
+    	{
+    		turnTracker.setCurrentTurn(params.getPlayerIndex()+1);
+    	}
+    	else
+    	{
+    		turnTracker.setCurrentTurn(0);
+    	}
+    	
+    	version++;
     }
     
     /**
@@ -728,6 +766,43 @@ public class Game {
      */
     public void buyDevCard(BuyDevCardParams params) {
     	
+    	List<ResCard> cards = players[params.getPlayerIndex()].getResCards();
+
+    	ResCard cardOre = new ResCard();
+    	cardOre.setType(ResourceType.ORE);
+    	
+    	ResCard cardSheep = new ResCard();
+    	cardOre.setType(ResourceType.SHEEP);
+    	
+    	ResCard cardGrain = new ResCard();
+    	cardOre.setType(ResourceType.WHEAT);
+    	
+    	if (cards.contains(cardOre))
+    	{
+    		cards.remove(cards.indexOf(cardOre));
+    	}
+    	if (cards.contains(cardSheep))
+    	{
+    		cards.remove(cards.indexOf(cardSheep));
+    	}
+    	if (cards.contains(cardGrain))
+    	{
+    		cards.remove(cards.indexOf(cardGrain));
+    	}
+    	
+    	List<DevCard> devCards = players[params.getPlayerIndex()].getDevCards();
+    	
+    	devCards.add(bank.getDevCards().get(0));
+    	
+    	bank.getResCards().add(cardOre);
+    	bank.getResCards().add(cardGrain);
+    	bank.getResCards().add(cardSheep);
+    	
+    	
+    	players[params.getPlayerIndex()].setResCards(cards);
+    	players[params.getPlayerIndex()].setDevCards(devCards);
+    	
+    	version++;
     }
     
     /**
@@ -736,6 +811,17 @@ public class Game {
      */
     public void yearOfPlenty(YearOfPlentyParams params) {
     	
+    	ResCard card1 = new ResCard(params.getResource1());
+    	ResCard card2 = new ResCard(params.getResource2());
+    	
+    	bank.getResCards().remove(card1);
+    	bank.getResCards().remove(card2);
+    	
+    	players[params.getPlayerIndex()].getResCards().add(card1);
+    	players[params.getPlayerIndex()].getResCards().add(card2);
+    	
+    	version++;
+    	
     }
     
     /**
@@ -743,6 +829,15 @@ public class Game {
      * @param params
      */
     public void roadBuilding(RoadBuildingParams params) {
+    	
+    	bank.getDevCards().remove(DevCardType.ROAD_BUILD);
+    	
+    	params.getSpot1();
+    	params.getSpot2();
+    	
+    	//params.g
+    	
+    	version++;
     	
     }
     
