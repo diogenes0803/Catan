@@ -30,9 +30,10 @@ public class JoinGameHandler implements HttpHandler
 		User userInfo = null;
 		int gameId = -1;
 		String[] cookiesArray = cookies.split(";");
+		
 		for(String thisCookie : cookiesArray) {
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String userCookie = thisCookie.substring(11, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie, "UTF-8");
 				userInfo = gson.fromJson(decoded, User.class);
 			}
@@ -42,7 +43,7 @@ public class JoinGameHandler implements HttpHandler
 			}
 				
 		}
-		
+
 		if(userInfo != null && gameId == -1) {
 			
 			String qry;
@@ -62,13 +63,11 @@ public class JoinGameHandler implements HttpHandler
 			JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
 			JoinGameResults result = thisFacade.join(params, userInfo);
 			ex.getResponseHeaders().add("Content-Type", "text/html");
-			
 			if(result.isSuccess()) {
 				
 				List<String> gameCookies = new ArrayList<String>();
 				gameCookies.add("catan.game="+params.getId()+";Path=/;");
 				ex.getResponseHeaders().put("Set-cookie", gameCookies);
-				body = "Success";
 				ex.sendResponseHeaders(200, body.length());
 			}
 			else {

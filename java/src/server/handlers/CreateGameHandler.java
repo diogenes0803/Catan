@@ -46,5 +46,6 @@ public class CreateGameHandler implements HttpHandler
 		out.write(gsonObject.getBytes());
 		out.flush();
 		out.close();
+		
 	}
 }
