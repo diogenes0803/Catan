@@ -9,9 +9,7 @@ import shared.model.User;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Spencer Weight - 12/6/2014.
- */
+
 public class FolderDAOTests {
     @Test
     public void folderUserDAOTest() {

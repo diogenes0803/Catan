@@ -451,9 +451,9 @@ public class GameModelFacadeTest {
         assertTrue("Should be a free round.", facade.isFreeRound());
     }
 
-    //************************//
+    //
     // private helper methods //
-    //************************//
+    //
 
     private IGame initAGame(String jsonTestFile) throws Exception {
         String emptyBoardJSON = new String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(jsonTestFile)));

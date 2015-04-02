@@ -7,9 +7,7 @@ import shared.model.*;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by jeffreybacon on 11/24/14.
- */
+
 public class BuyDevCardCommandTest {
     IGame game;
     IPlayer player;

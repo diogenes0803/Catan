@@ -6,9 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author Wyatt
- */
+
 public class UserTest {
     String name;
     String password;

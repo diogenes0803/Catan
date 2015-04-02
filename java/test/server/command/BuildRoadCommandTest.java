@@ -11,9 +11,7 @@ import shared.model.*;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by jeffreybacon on 11/16/14.
- */
+
 public class BuildRoadCommandTest {
     IGame game;
     IPlayer player;

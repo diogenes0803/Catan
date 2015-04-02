@@ -11,9 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Spencer Weight - 11/23/2014.
- */
+
 public class UserFacadeTest {
 
     private IGameAdministrator m_gameAdmin;
@@ -57,9 +55,9 @@ public class UserFacadeTest {
         assertTrue("The user was unable to login after successfully being registered", loginAttempt(user2, pass2));
     }
 
-    //************************//
+    //
     // private helper methods //
-    //************************//
+    //
 
     private boolean createAUser(String u, String p) {
         boolean successfulRegister = false;

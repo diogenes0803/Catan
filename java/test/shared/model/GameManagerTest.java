@@ -9,9 +9,7 @@ import shared.definitions.CatanColor;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Spencer Weight - 11/19/2014.
- */
+
 public class GameManagerTest {
 
     private IGameAdministrator m_gameAdmin;
@@ -74,9 +72,9 @@ public class GameManagerTest {
         System.out.println("Joined game " + gameTitle);
     }
 
-    //************************//
+    //
     // private helper methods //
-    //************************//
+    //
 
     private void createAUser(String u, String p) throws Exception {
         m_gameAdmin.register(u, p);

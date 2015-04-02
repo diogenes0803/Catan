@@ -15,7 +15,7 @@ public class CatanMapTest {
     private IPlayer player1 = null;
     private IPlayer player2 = null;
 
-    /* Generate hex types based on the location */
+
     private HexType calculateType(HexLocation loc) {
         switch (loc.hashCode() % 6) {
             case 0: return HexType.BRICK;
@@ -30,7 +30,7 @@ public class CatanMapTest {
         }
     }
 
-    /* Generate a tile for testing */
+
     private IHex generateTile(HexLocation hex) {
         if (calculateType(hex) == HexType.DESERT) {
             return new Hex(calculateType(hex), hex, Hex.DESERT_NUMBER);
@@ -214,7 +214,7 @@ public class CatanMapTest {
         assertFalse(map.canPlaceRoad(player1, new EdgeLocation(-1, -1, EdgeDirection.North)));
     }
 
-    /* Test canPlaceSettlement method */
+
     @Test
     public void testCanPlaceSettlement() throws Exception {
         // cannot place a settlement with no roads

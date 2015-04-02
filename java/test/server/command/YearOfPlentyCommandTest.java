@@ -8,9 +8,7 @@ import shared.model.*;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by jeffreybacon on 11/22/14.
- */
+
 public class YearOfPlentyCommandTest {
     IGame game;
     IPlayer player;

@@ -6,9 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/**
- * @author Wyatt
- */
+
 public class LargestArmyTest {
     private IGame m_game;
     private IModelInitializer m_modelInitializer;

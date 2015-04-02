@@ -8,9 +8,7 @@ import java.lang.reflect.Field;
 
 import static org.junit.Assert.*;
 
-/**
- * @author Wyatt
- */
+
 public class UserManagerTest {
     private IUserManager userManager;
     String name;

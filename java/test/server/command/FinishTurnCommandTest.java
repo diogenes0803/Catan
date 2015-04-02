@@ -12,9 +12,7 @@ import shared.model.ModelInitializer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Spencer Weight - 11/24/2014.
- */
+
 public class FinishTurnCommandTest {
     IGame game;
     IPlayer player;
