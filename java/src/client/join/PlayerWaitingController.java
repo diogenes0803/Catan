@@ -1,26 +1,32 @@
 package client.join;
 
-import java.util.List;
-import java.util.Observable;
+import client.base.*;
+import client.data.PlayerInfo;
+import client.network.*;
+import client.poller.ServerPoller;
+import shared.model.Game;
+import shared.model.GameModelFacade;
+import shared.model.IPlayer;
+import shared.model.ServerModelFacade;
 
-import shared.data.GameInfo;
-import shared.data.PlayerInfo;
-import shared.models.CatanModel;
-import client.base.Controller;
-import client.communication.ServerPoller;
-import client.communication.ServerProxy;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-/**
- * Implementation for the player waiting controller
- */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
-	private int playersJoined = 0;
-	
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
+    private final static Logger logger = Logger.getLogger("catan");
+
+    PlayerInfo[] m_previousPlayers;
+
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
+
+        m_previousPlayers = null;
+
+        GameModelFacade.instance().getGame().addObserver(this);
 	}
 
 	@Override
@@ -31,63 +37,48 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-		getView().showModal();
-		/*
-		String[] values = new String[ServerProxy.getInstance().listAI().getaITypes().size()];
-		int i = 0;
-		for (String value : ServerProxy.getInstance().listAI().getaITypes())
-		{
-			values[i] = value;
-			i++;
-		}
-		*/
-		//Hack because I know that this is the only working value currently
-		String[] values = new String[1];
-		values[0] = "LARGEST_ARMY";
-		
-		getView().setAIChoices(values);
+        try {
+            getView().setAIChoices(GameAdministrator.getInstance().listAI());
+        } catch (NetworkException e) {
+            logger.log(Level.WARNING, "When attempting to list AI's, this error was thrown: " + e.getMessage(), e);
+        }
+
+        if (!GameModelFacade.instance().getGame().gameHasStarted()) {
+            getView().showModal();
+        }
 	}
 
 	@Override
 	public void addAI() {
-
-		ServerProxy.getInstance().AddAI(getView().getSelectedAI());
-		
-	}
-	
-	private void refreshPlayers() {
-		int joinedGameId = ServerProxy.getInstance().getCurrentGameId();
-		List<PlayerInfo> playerInfoList = CatanModel.getInstance().getGameManager().findGameInfoById(joinedGameId).getPlayers();
-		PlayerInfo[] playerInfoArray = new PlayerInfo[playerInfoList.size()];
-		for(int i = 0; i < playerInfoList.size(); i++) {
-			playerInfoArray[i] = playerInfoList.get(i);
-		}
-		
-		getView().setPlayers(playerInfoArray);
+        try {
+            GameAdministrator.getInstance().addAI(getView().getSelectedAI());
+            ServerPoller.getInstance().updateGame();
+        } catch (NetworkException ex) {
+            logger.log(Level.WARNING, "When adding an AI, this error was thrown: " + ex.getMessage(), ex);
+        }
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		int currentGameId = ServerProxy.getInstance().getCurrentGameId();
-		if(arg instanceof GameInfo[] && currentGameId != -1) {
-			GameInfo currentGame = CatanModel.getInstance().getGameManager().findGameInfoById(currentGameId);
-			if(playersJoined < currentGame.getPlayers().size()) {
-				playersJoined = currentGame.getPlayers().size();
-				refreshPlayers();
-				getView().closeModal();
-				getView().showModal();
-				if(playersJoined >= 4) {
-					int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-					GameInfo thisGame = CatanModel.getInstance().getGameManager().findGameInfoById(ServerProxy.getInstance().getCurrentGameId());
-					ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(thisGame.findPlayerIndexById(playerId));
-					ServerPoller.getInstance().stopGameListTimer();
-					ServerPoller.getInstance().startGameTimer();
-					getView().closeModal();
-				}
-			}
-		}
-		
-	}
+    @Override
+    public void update(Observable o, Object arg) {
+        initFromModel();
+    }
 
+    private void initFromModel() {
+        if (GameModelFacade.instance().getGame().gameHasStarted()) {
+            if (getView().isModalShowing()) {
+                getView().closeThisModal();
+                m_previousPlayers = null;
+            }
+        }
+        else {
+            List<IPlayer> playerList = GameModelFacade.instance().getGame().getPlayers();
+            PlayerInfo[] players = PlayerInfo.fromPlayers(playerList);
+            if (m_previousPlayers == null || !Arrays.equals(m_previousPlayers, players)) {
+                getView().setPlayers(players);
+                m_previousPlayers = players;
+            }
+            getView().refresh();
+        }
+    }
 }
 

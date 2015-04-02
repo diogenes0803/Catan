@@ -1,67 +1,34 @@
 package client.join;
 
-import client.base.IOverlayView;
+import client.base.*;
 
-/**
- * Interface for the new game view, which lets the user enter parameters for a new game
- */
-public interface INewGameView extends IOverlayView {
 
-    /**
-     * Sets the value of the title field
-     *
-     * @param value New value
-     */
-    void setTitle(String value);
+public interface INewGameView extends IOverlayView
+{
+	
 
-    /**
-     * Gets the value of the title field
-     *
-     * @return Current value
-     */
-    String getTitle();
+	void setTitle(String value);
+	
 
-    /**
-     * Sets the value of the randomly place numbers check box
-     *
-     * @param value New value
-     */
-    void setRandomlyPlaceNumbers(boolean value);
+	String getTitle();
+	
 
-    /**
-     * Gets the value of the randomly place numbers check box
-     *
-     * @return Current value
-     */
-    boolean getRandomlyPlaceNumbers();
+	void setRandomlyPlaceNumbers(boolean value);
+	
 
-    /**
-     * Sets the value of the randomly place hexes check box
-     *
-     * @param value New value
-     */
-    void setRandomlyPlaceHexes(boolean value);
+	boolean getRandomlyPlaceNumbers();
+	
 
-    /**
-     * Gets the value of the randomly place hexes check box
-     *
-     * @return Current value
-     */
-    boolean getRandomlyPlaceHexes();
+	void setRandomlyPlaceHexes(boolean value);
+	
 
-    /**
-     * Sets the value of the use random ports check box
-     *
-     * @param value New value
-     */
-    void setUseRandomPorts(boolean value);
+	boolean getRandomlyPlaceHexes();
+	
 
-    /**
-     * Gets the value of the use random ports check box
-     *
-     * @return Current value
-     */
-    boolean getUseRandomPorts();
+	void setUseRandomPorts(boolean value);
+	
 
+	boolean getUseRandomPorts();
+	
 }
 

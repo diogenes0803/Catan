@@ -1,30 +1,20 @@
 package client.base;
 
-import javax.swing.*;
+import java.util.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.MouseAdapter;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.awt.event.*;
+import javax.swing.*;
 
-/**
- * Base class for overlay views
- */
+
 @SuppressWarnings("serial")
 public class OverlayView extends PanelView implements IOverlayView {
-    /**
-     * The frame window for the overlays
-     */
+
     private static JFrame window;
 
-    /**
-     * Default glass pane component (displayed when no overlays are visible)
-     */
+
     private static Component defaultGlassPane;
 
-    /**
-     * Stack of overlays that are currently displayed
-     */
+
     private static Deque<OverlayInfo> overlayStack;
 
     public static void setWindow(JFrame window) {
@@ -37,9 +27,7 @@ public class OverlayView extends PanelView implements IOverlayView {
         super();
     }
 
-    /**
-     * Displays the overlay. The overlay is displayed on top of any other overlays that are already visible.
-     */
+
     public void showModal() {
         // Open the new overlay
         JPanel overlayPanel = new JPanel();
@@ -90,12 +78,10 @@ public class OverlayView extends PanelView implements IOverlayView {
         overlayStack.push(new OverlayInfo(this, overlayPanel));
     }
 
-    /**
-     * Hides the top-most overlay
-     */
-    public void closeModal() {
 
-        assert overlayStack.size() > 0;
+    public void closeTopModal() {
+        //assert overlayStack.size() > 0;
+        if (overlayStack.size() == 0) return;
         assert window.getGlassPane() == overlayStack.peek().getOverlayPanel();
 
         if (overlayStack.size() > 0) {
@@ -113,53 +99,104 @@ public class OverlayView extends PanelView implements IOverlayView {
         }
     }
 
-    /**
-     * Is the overlay currently showing?
-     *
-     * @return True if overlay is showing, false otherwise
-     */
-    @Override
-    public boolean isModalShowing() {
-
+    public static void closeAllModals() {
         for (OverlayInfo info : overlayStack) {
-
-            if (info.getOverlayView() == this)
-                return true;
+            info.getOverlayPanel().setVisible(false);
         }
 
-        return false;
+        window.setGlassPane(defaultGlassPane);
+        window.getGlassPane().setVisible(false);
+
+        overlayStack = new ArrayDeque<>();
     }
 
-    private static class OverlayInfo {
-        private OverlayView overlayView;
-        private JPanel overlayPanel;
 
-        public OverlayInfo(OverlayView overlayView, JPanel overlayPanel) {
+    @Override
+	public void closeThisModal() {
+		if (overlayStack.size() == 0) return;
+		//assert window.getGlassPane() == overlayStack.peek().getOverlayPanel();
 
-            setOverlayView(overlayView);
-            setOverlayPanel(overlayPanel);
-        }
+		if (this == overlayStack.peek().getOverlayView()) {
+			overlayStack.pop().getOverlayPanel().setVisible(false);
 
-        public OverlayView getOverlayView() {
+			if (overlayStack.size() > 0) {
+				window.setGlassPane(overlayStack.peek().getOverlayPanel());
+				overlayStack.peek().getOverlayPanel().setVisible(true);
+			}
+			else {
+				window.setGlassPane(defaultGlassPane);
+				window.getGlassPane().setVisible(false);
+			}
+		}
 
-            return overlayView;
-        }
+        // If there are any other pointers to this dialog in the stack, remove them
+        Iterator<OverlayInfo> infoIterator = overlayStack.iterator();
+        if (infoIterator.hasNext()) {
+            infoIterator.next(); // skipped the first -- already checked it
 
-        public void setOverlayView(OverlayView overlayView) {
-
-            this.overlayView = overlayView;
-        }
-
-        public JPanel getOverlayPanel() {
-
-            return overlayPanel;
-        }
-
-        public void setOverlayPanel(JPanel overlayPanel) {
-
-            this.overlayPanel = overlayPanel;
+            while (infoIterator.hasNext()) {
+                OverlayInfo info = infoIterator.next();
+                if (this == info.getOverlayView()) {
+                    infoIterator.remove();
+                    info.getOverlayPanel().setVisible(false);
+                    break;
+                    // not affecting what's on top of the stack -- don't shouldn't change anything else's visibility
+                }
+            }
         }
     }
 
+
+	@Override
+	public boolean isModalShowing()
+	{
+		
+		for (OverlayInfo info : overlayStack)
+		{
+			
+			if(info.getOverlayView() == this)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	private static class OverlayInfo
+	{
+		private OverlayView overlayView;
+		private JPanel overlayPanel;
+		
+		public OverlayInfo(OverlayView overlayView, JPanel overlayPanel)
+		{
+			
+			setOverlayView(overlayView);
+			setOverlayPanel(overlayPanel);
+		}
+		
+		public OverlayView getOverlayView()
+		{
+			
+			return overlayView;
+		}
+		
+		public void setOverlayView(OverlayView overlayView)
+		{
+			
+			this.overlayView = overlayView;
+		}
+		
+		public JPanel getOverlayPanel()
+		{
+			
+			return overlayPanel;
+		}
+		
+		public void setOverlayPanel(JPanel overlayPanel)
+		{
+			
+			this.overlayPanel = overlayPanel;
+		}
+	}
+	
 }
 

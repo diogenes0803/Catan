@@ -1,32 +1,19 @@
 package client.devcards;
 
-import client.base.IOverlayView;
-import shared.definitions.DevCardType;
+import client.base.*;
+import shared.definitions.*;
 
-/**
- * "Play dev card" view interface
- */
-public interface IPlayDevCardView extends IOverlayView {
 
-    /**
-     * Resets the view to its initial state.
-     */
-    void reset();
+public interface IPlayDevCardView extends IOverlayView
+{
+	
 
-    /**
-     * Sets the enable/disable state for the specified card type.
-     *
-     * @param cardType The card type being enabled or disabled
-     * @param enabled  Whether or not to enable the card type
-     */
-    void setCardEnabled(DevCardType cardType, boolean enabled);
+	void reset();
+	
 
-    /**
-     * Sets the amount for the specified card type.
-     *
-     * @param cardType The card type the amount is being set for
-     * @param amount   The new card amount
-     */
-    void setCardAmount(DevCardType cardType, int amount);
+	void setCardEnabled(DevCardType cardType, boolean enabled);
+	
+
+	void setCardAmount(DevCardType cardType, int amount);
 }
 

@@ -1,72 +1,90 @@
 package client.roll;
 
+import client.base.*;
+import shared.model.GameModelFacade;
+import shared.model.ModelException;
+import shared.model.ServerModelFacade;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Random;
-
-import shared.models.Game;
-import shared.models.TurnTracker;
-import client.base.Controller;
-import client.communication.ServerProxy;
-import client.map.MapController;
-import client.map.RollingState;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-/**
- * Implementation for the roll controller
- */
+
 public class RollController extends Controller implements IRollController {
+    private final static Logger logger = Logger.getLogger("catan");
 
-    private IRollResultView resultView;
+	private IRollResultView resultView;
+    private Timer m_rollTimer;
 
-    /**
-     * RollController constructor
-     *
-     * @param view       Roll view
-     * @param resultView Roll result view
-     */
-    public RollController(IRollView view, IRollResultView resultView) {
+    private static final int TIMEOUT_MS = 4000;
 
-        super(view);
 
-        setResultView(resultView);
+	public RollController(IRollView view, IRollResultView resultView) {
+
+		super(view);
+		
+		setResultView(resultView);
+
+        m_rollTimer = new Timer(TIMEOUT_MS, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rollDice();
+            }
+        });
+
+        GameModelFacade.instance().getGame().addObserver(this);
     }
+	
+	public IRollResultView getResultView() {
+		return resultView;
+	}
+	public void setResultView(IRollResultView resultView) {
+		this.resultView = resultView;
+	}
 
-    public IRollResultView getResultView() {
-        return resultView;
-    }
+	public IRollView getRollView() {
+		return (IRollView)getView();
+	}
+	
+	@Override
+	public void rollDice() {
+        logger.entering("client.roll.RollController", "RollDice");
 
-    public void setResultView(IRollResultView resultView) {
-        this.resultView = resultView;
-    }
+        getRollView().closeThisModal();
+        m_rollTimer.stop();
 
-    public IRollView getRollView() {
-        return (IRollView) getView();
-    }
-
-    @Override
-    public void rollDice() {
-		Random rng = new Random();
-		int dice1 = rng.nextInt(6) + 1;
-		int dice2 = rng.nextInt(6) + 1;
-		int number = dice1 + dice2;
-		//int number = 7;
-    	MapController.rollNumber(number);
-    	
-    	getResultView().setRollValue(number);
-        getResultView().showModal();
-    }
+        try {
+            int rollValue = ServerModelFacade.getInstance().rollNumber();
+            getResultView().setRollValue(rollValue);
+            getResultView().showModal();
+        }
+        catch (ModelException e) {
+            logger.log(Level.WARNING, "Rolling failed.", e);
+        }
+        logger.exiting("client.roll.RollController", "RollDice");
+	}
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof Game) {
-	        int currentTurn = TurnTracker.getInstance().getCurrentTurn();
-	        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-	        
-	        if (TurnTracker.getInstance().getStatus().equals("Rolling") && playerIndex == currentTurn) {
-	        	getRollView().showModal();
-	        }
-        }
-    }
+        logger.entering("client.roll.RollController", "update", o);
 
+        if (GameModelFacade.instance().localPlayerIsRolling()) {
+            if (!m_rollTimer.isRunning()) {
+                m_rollTimer.restart();
+            }
+
+            IRollView view = getRollView();
+            if (!view.isModalShowing()) {
+                view.setMessage("Roll the dice!");
+                view.showModal();
+            }
+        }
+
+        logger.exiting("client.roll.RollController", "update");
+    }
 }
 

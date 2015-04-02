@@ -1,69 +1,70 @@
 package client.points;
 
-import client.base.Controller;
-import client.communication.ServerProxy;
-import shared.models.CatanModel;
-import shared.models.Game;
+import client.base.*;
+import shared.model.*;
 
 import java.util.Observable;
+import java.util.logging.Logger;
 
 
-/**
- * Implementation for the points controller
- */
+
 public class PointsController extends Controller implements IPointsController {
 
-    private IGameFinishedView finishedView;
+    private final static Logger logger = Logger.getLogger("catan");
 
-    /**
-     * PointsController constructor
-     *
-     * @param view         Points view
-     * @param finishedView Game finished view, which is displayed when the game is over
-     */
-    public PointsController(IPointsView view, IGameFinishedView finishedView) {
+	private IGameFinishedView finishedView;
+	
 
-        super(view);
+	public PointsController(IPointsView view, IGameFinishedView finishedView) {
+		
+		super(view);
+		
+		setFinishedView(finishedView);
 
-        setFinishedView(finishedView);
+        GameModelFacade.instance().getGame().addObserver(this);
+	}
+	
+	public IPointsView getPointsView() {
+		
+		return (IPointsView)super.getView();
+	}
+	
+	public IGameFinishedView getFinishedView() {
+		return finishedView;
+	}
+	public void setFinishedView(IGameFinishedView finishedView) {
+		this.finishedView = finishedView;
+	}
 
-        initFromModel();
+    @Override
+    public void gameFinishedModalClosed() {
+        client.main.Catan.leaveGame();
     }
 
-    public IPointsView getPointsView() {
+	private void initFromModel() {
+        if (GameModelFacade.instance().getGame().getWinner() != null) {
+            getFinishedView().setWinner(GameModelFacade.instance().getGame().getWinner().getName(), GameModelFacade.instance().getGame().getWinner().equals(GameModelFacade.instance().getLocalPlayer()));
 
-        return (IPointsView) super.getView();
-    }
+            if (!getFinishedView().isModalShowing()) {
+                getFinishedView().showModal();
+            }
+        }
 
-    public IGameFinishedView getFinishedView() {
-        return finishedView;
-    }
+        // only set up to 10 points so that the view doesn't get angry at us
+        int points = GameModelFacade.instance().getLocalPlayer().getVictoryPoints();
+        assert points >= 0;
 
-    public void setFinishedView(IGameFinishedView finishedView) {
-        this.finishedView = finishedView;
-    }
-
-    private void initFromModel() {
-        //<temp>
-        getPointsView().setPoints(0);
-        //</temp>
+        if (points <= CatanConstants.VICTORY_POINTS_TO_WIN) {
+            getPointsView().setPoints(points);
+        }
+        else {
+            getPointsView().setPoints(CatanConstants.VICTORY_POINTS_TO_WIN);
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
-    	if(arg instanceof Game) {
-	    	int points = CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(ServerProxy.getInstance().getlocalPlayer().getId())].getVictoryPoint();
-	    	if (points >= 10)
-	    	{
-	    		finishedView.showModal();
-	    	}
-	    	else
-	    	{
-	    		getPointsView().setPoints(points);
-	    	}
-    	}
-
+        initFromModel();
     }
-
 }
 

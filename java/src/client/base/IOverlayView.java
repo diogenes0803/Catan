@@ -1,25 +1,19 @@
 package client.base;
 
-/**
- * Base interface for overlay views
- */
-public interface IOverlayView extends IView {
 
-    /**
-     * Displays the modal overlay view.
-     */
-    void showModal();
+public interface IOverlayView extends IView
+{
+	
 
-    /**
-     * Closes the modal overlay view.
-     */
-    void closeModal();
+	void showModal();
+	
 
-    /**
-     * Indicates whether or not the overlay is currently showing.
-     *
-     * @return True if the overlay is showing, false otherwise
-     */
-    boolean isModalShowing();
+	void closeTopModal();
+
+
+    void closeThisModal();
+
+
+	boolean isModalShowing();
 }
 

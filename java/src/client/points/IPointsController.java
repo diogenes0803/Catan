@@ -1,12 +1,10 @@
 package client.points;
 
-import client.base.IController;
+import client.base.*;
 
-/**
- * Interface for the points controller
- */
-public interface IPointsController extends IController {
 
-    // EMPTY
+public interface IPointsController extends IController
+{   
+	public void gameFinishedModalClosed();
 }
 

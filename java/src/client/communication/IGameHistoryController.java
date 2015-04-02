@@ -1,12 +1,11 @@
 package client.communication;
 
-import client.base.IController;
+import client.base.*;
 
-/**
- * Game history controller interface
- */
-public interface IGameHistoryController extends IController {
 
-    // EMPTY
+public interface IGameHistoryController extends IController
+{   
+	
+	// EMPTY
 }
 

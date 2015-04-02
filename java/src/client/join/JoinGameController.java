@@ -1,181 +1,259 @@
 package client.join;
 
-import java.util.Observable;
-
-import shared.communicator.CreateGameParams;
-import shared.communicator.CreateGameResults;
-import shared.communicator.JoinGameParams;
-import shared.communicator.JoinGameResults;
-import shared.data.GameInfo;
+import client.data.GameInfo;
+import client.network.*;
 import shared.definitions.CatanColor;
-import shared.models.CatanModel;
-import shared.models.Game;
-import client.base.Controller;
-import client.base.IAction;
-import client.communication.ServerPoller;
-import client.communication.ServerProxy;
-import client.misc.IMessageView;
+import client.base.*;
+import client.data.*;
+import client.misc.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.List;
+import javax.swing.Timer;
+import java.util.Arrays;
 
 
-/**
- * Implementation for the join game controller
- */
+
 public class JoinGameController extends Controller implements IJoinGameController {
+    private final static Logger logger = Logger.getLogger("catan");
 
-    private INewGameView newGameView;
-    private ISelectColorView selectColorView;
-    private IMessageView messageView;
-    private IAction joinAction;
-    private GameInfo gameToJoin;
+	private INewGameView newGameView;
+	private ISelectColorView selectColorView;
+	private IMessageView messageView;
+	private IAction joinAction;
+    private IGameAdministrator m_admin;
+    private GameInfo m_joinGame;
 
-    /**
-     * JoinGameController constructor
-     *
-     * @param view            Join game view
-     * @param newGameView     New game view
-     * @param selectColorView Select color view
-     * @param messageView     Message view (used to display error messages that occur while the user is joining a game)
-     */
-    public JoinGameController(IJoinGameView view, INewGameView newGameView,
-                              ISelectColorView selectColorView, IMessageView messageView) {
+    private static final int c_millisecondsPerSecond = 1000;
+    private static final int c_defaultPollingSeconds = 3;
+    private Timer m_timer;
+    private GameInfo[] prevGames = null;
+    private List<PlayerInfo> prevPlayers = null;
+	
 
-        super(view);
+	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
+								ISelectColorView selectColorView, IMessageView messageView) {
 
-        setNewGameView(newGameView);
-        setSelectColorView(selectColorView);
-        setMessageView(messageView);
-    }
+		super(view);
 
-    public IJoinGameView getJoinGameView() {
+		setNewGameView(newGameView);
+		setSelectColorView(selectColorView);
+		setMessageView(messageView);
 
-        return (IJoinGameView) super.getView();
-    }
+        m_admin = GameAdministrator.getInstance();
+        m_timer = new Timer(c_defaultPollingSeconds * c_millisecondsPerSecond, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getGames();
 
-    /**
-     * Returns the action to be executed when the user joins a game
-     *
-     * @return The action to be executed when the user joins a game
-     */
-    public IAction getJoinAction() {
+                if (prevGames != null && m_joinGame != null && getSelectColorView().isModalShowing()) {
+                    for (int i = 0; i < prevGames.length; i++) {
+                        if (prevGames[i].getId() == m_joinGame.getId()) {
+                            if (!prevGames[i].equals(m_joinGame)) {
+                                m_joinGame = prevGames[i];
+//                            getSelectColorView().closeThisModal();
+                                getColors();
+//                            getSelectColorView().showModal();
+                                getSelectColorView().refresh();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+	}
+	
+	public IJoinGameView getJoinGameView() {
+		
+		return (IJoinGameView)super.getView();
+	}
+	
 
-        return joinAction;
-    }
+	public IAction getJoinAction() {
+		
+		return joinAction;
+	}
 
-    /**
-     * Sets the action to be executed when the user joins a game
-     *
-     * @param value The action to be executed when the user joins a game
-     */
-    public void setJoinAction(IAction value) {
 
-        joinAction = value;
-    }
+	public void setJoinAction(IAction value) {	
+		
+		joinAction = value;
+	}
+	
+	public INewGameView getNewGameView() {
+		
+		return newGameView;
+	}
 
-    public INewGameView getNewGameView() {
+	public void setNewGameView(INewGameView newGameView) {
+		
+		this.newGameView = newGameView;
+	}
+	
+	public ISelectColorView getSelectColorView() {
+		
+		return selectColorView;
+	}
+	public void setSelectColorView(ISelectColorView selectColorView) {
+		
+		this.selectColorView = selectColorView;
+	}
+	
+	public IMessageView getMessageView() {
+		
+		return messageView;
+	}
+	public void setMessageView(IMessageView messageView) {
+		
+		this.messageView = messageView;
+	}
 
-        return newGameView;
-    }
+	@Override
+	public void start() {
+        m_timer.start();
 
-    public void setNewGameView(INewGameView newGameView) {
+        getGames();
 
-        this.newGameView = newGameView;
-    }
+		getJoinGameView().showModal();
+	}
 
-    public ISelectColorView getSelectColorView() {
+	@Override
+	public void startCreateNewGame() {
+        getNewGameView().setUseRandomPorts(false);
+        getNewGameView().setRandomlyPlaceHexes(false);
+        getNewGameView().setRandomlyPlaceNumbers(false);
+        getNewGameView().setTitle("");
+		getNewGameView().showModal();
+	}
 
-        return selectColorView;
-    }
+	@Override
+	public void cancelCreateNewGame() {
+        getGames();
+		
+		getNewGameView().closeTopModal();
+	}
 
-    public void setSelectColorView(ISelectColorView selectColorView) {
-
-        this.selectColorView = selectColorView;
-    }
-
-    public IMessageView getMessageView() {
-
-        return messageView;
-    }
-
-    public void setMessageView(IMessageView messageView) {
-
-        this.messageView = messageView;
-    }
-
-    @Override
-    public void start() {
-        GameInfo[] games = ServerProxy.getInstance().listGames().getGames();
-        CatanModel.getInstance().getGameManager().setAvailableGames(games);
-        getJoinGameView().showModal();
-        getJoinGameView().setGames(games, ServerProxy.getInstance().getlocalPlayer());
-    }
-
-    @Override
-    public void startCreateNewGame() {
-
-        getNewGameView().showModal();
-    }
-
-    @Override
-    public void cancelCreateNewGame() {
-
-        getNewGameView().closeModal();
-    }
-
-    @Override
-    public void createNewGame() {
-        boolean randomTiles = getNewGameView().getRandomlyPlaceHexes();
-        boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
-        boolean randomPorts = getNewGameView().getUseRandomPorts();
-        String name = getNewGameView().getTitle();
-        CreateGameParams params = new CreateGameParams(randomTiles, randomNumbers, randomPorts, name);
-
-        CreateGameResults result = ServerProxy.getInstance().createGame(params);
-        GameInfo game = new GameInfo();
-        game.setId(result.getId());
-        game.setTitle(result.getTitle());
-
-        getNewGameView().closeModal();
-        startJoinGame(game);
-    }
-
-    @Override
-    public void startJoinGame(GameInfo game) {
-
-        gameToJoin = game;
-        getSelectColorView().showModal();
-    }
-
-    @Override
-    public void cancelJoinGame() {
-
-        getJoinGameView().closeModal();
-    }
-
-    @Override
-    public void joinGame(CatanColor color) {
-        int id = gameToJoin.getId();
-        String colorString = CatanColor.getStringColor(color);
-        JoinGameParams params = new JoinGameParams(id, colorString);
-        JoinGameResults result = ServerProxy.getInstance().joinGame(params);
-
-        if (result.isSuccess()) {
-            // If join succeeded
-            getSelectColorView().closeModal();
-            getJoinGameView().closeModal();
-			CatanModel.getInstance().getGameManager().setJoinedGame(true);
-
-            joinAction.execute();
-            ServerPoller.getInstance().startGameListTimer();
+	@Override
+	public void createNewGame() {
+        if (!getNewGameView().getTitle().equals("")) {
+            try {
+                GameInfo newGame = m_admin.createGame(getNewGameView().getRandomlyPlaceHexes(), getNewGameView().getRandomlyPlaceNumbers(), getNewGameView().getUseRandomPorts(), getNewGameView().getTitle());
+                getNewGameView().closeTopModal();
+                getGames();
+                m_admin.joinGame(newGame.getId(), CatanColor.RED);
+                getGames();
+            } catch (NetworkException e) {
+                logger.log(Level.WARNING, "Create game failed. - Network Exception", e);
+                getMessageView().showModal();
+                getMessageView().setTitle("Error!");
+                getMessageView().setMessage("Create game failed.");
+            } catch (IOException e) {
+                logger.log(Level.WARNING, "Create game failed. - I/O Exception", e);
+                getMessageView().showModal();
+                getMessageView().setTitle("Error!");
+                getMessageView().setMessage("Create game failed.");
+            }
+        } else {
+            getMessageView().showModal();
+            getMessageView().setTitle("Warning!");
+            getMessageView().setMessage("The game title is empty.");
         }
-    }
+	}
+
+	@Override
+	public void startJoinGame(GameInfo game) {
+        m_joinGame = game;
+        prevPlayers = null;
+
+        getColors();
+		getSelectColorView().showModal();
+	}
+
+	@Override
+	public void cancelJoinGame() {
+
+		getJoinGameView().closeTopModal();
+	}
+
+	@Override
+	public void joinGame(CatanColor color) {
+        if (color != null) {
+            boolean success = false;
+            try {
+                success = m_admin.joinGame(m_joinGame.getId(), color);
+            } catch (NetworkException e) {
+                logger.log(Level.WARNING, "Join game failed. - Network Exception", e);
+            }
+            // If join succeeded
+            if (success) {
+                getSelectColorView().closeThisModal();
+                getJoinGameView().closeThisModal();
+                m_timer.stop();
+                joinAction.execute();
+            } else {
+                getMessageView().showModal();
+                getMessageView().setTitle("Error!");
+                getMessageView().setMessage("Join game failed.");
+            }
+        } else {
+            getMessageView().showModal();
+            getMessageView().setTitle("Warning!");
+            getMessageView().setMessage("Please choose a color.");
+        }
+	}
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO Auto-generated method stub
-    	if(arg instanceof GameInfo[]) {
-	        getJoinGameView().setGames((GameInfo[]) arg, ServerProxy.getInstance().getlocalPlayer());
-    	}
+
     }
 
+    private void getGames() {
+        try {
+            List<GameInfo> gameList = m_admin.listGames();
+            GameInfo[] games = new GameInfo[gameList.size()];
+            for (int i = 0; i < games.length; i++) {
+                GameInfo tempGame = new GameInfo();
+                tempGame.setId(gameList.get(i).getId());
+                tempGame.setTitle(gameList.get(i).getTitle());
+                List<PlayerInfo> players = gameList.get(i).getPlayers();
+                for (int j = 0; j < players.size(); j++) {
+                    if (players.get(j).getId() != -1) {
+                        tempGame.addPlayer(new PlayerInfo(players.get(j).getId(), players.get(j).getPlayerIndex(), players.get(j).getName(), players.get(j).getColor()));
+                    }
+                }
+                games[i] = tempGame;
+            }
+
+            PlayerInfo player = new PlayerInfo(m_admin.getLocalPlayerId(), -1, m_admin.getLocalPlayerName(), null);
+
+            if (!Arrays.equals(games, prevGames)) {
+                getJoinGameView().setGames(games, player);
+                prevGames = games;
+            }
+
+        } catch (NetworkException e) {
+            logger.log(Level.WARNING, "Update failed. - Network Exception", e);
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Update failed. - I/O Exception", e);
+        }
+    }
+
+    private void getColors() {
+        for (CatanColor color : CatanColor.values()) {
+            getSelectColorView().setColorEnabled(color, true);
+        }
+
+        for (PlayerInfo player : m_joinGame.getPlayers()) {
+            if (player.getId() != m_admin.getLocalPlayerId()) {
+                getSelectColorView().setColorEnabled(player.getColor(), false);
+            }
+        }
+    }
 }
 

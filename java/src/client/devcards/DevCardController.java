@@ -1,171 +1,138 @@
 package client.devcards;
 
-import client.base.Controller;
-import client.base.IAction;
-import client.communication.ServerProxy;
-import client.map.MapController;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-import shared.models.CatanModel;
-import shared.models.DevCard;
-import shared.models.Game;
+import client.base.*;
+import shared.model.*;
 
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-/**
- * "Dev card" controller implementation
- */
+
 public class DevCardController extends Controller implements IDevCardController {
+    private final static Logger logger = Logger.getLogger("catan");
 
-    private IBuyDevCardView buyCardView;
-    private IAction soldierAction;
-    private IAction roadAction;
+	private IBuyDevCardView buyCardView;
+	private IAction soldierAction;
+	private IAction roadAction;
+    private IServerModelFacade m_facade;
+	
 
-    /**
-     * DevCardController constructor
-     *
-     * @param view          "Play dev card" view
-     * @param buyCardView   "Buy dev card" view
-     * @param soldierAction Action to be executed when the user plays a soldier card.  It calls
-     *                      "mapController.playSoldierCard()".
-     * @param roadAction    Action to be executed when the user plays a road building card.  It calls
-     *                      "mapController.playRoadBuildingCard()".
-     */
-    public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView,
-                             IAction soldierAction, IAction roadAction) {
+	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
+								IAction soldierAction, IAction roadAction) {
 
-        super(view);
+		super(view);
+		
+		this.buyCardView = buyCardView;
+		this.soldierAction = soldierAction;
+		this.roadAction = roadAction;
 
-        this.buyCardView = buyCardView;
-        this.soldierAction = soldierAction;
-        this.roadAction = roadAction;
-    }
+        GameModelFacade.instance().getGame().addObserver(this);
+        m_facade = ServerModelFacade.getInstance();
+	}
 
-    public IPlayDevCardView getPlayCardView() {
-        return (IPlayDevCardView) super.getView();
-    }
+	public IPlayDevCardView getPlayCardView() {
+		return (IPlayDevCardView)super.getView();
+	}
 
-    public IBuyDevCardView getBuyCardView() {
-        return buyCardView;
-    }
+	public IBuyDevCardView getBuyCardView() {
+		return buyCardView;
+	}
 
-    @Override
-    public void startBuyCard() {
+	@Override
+	public void startBuyCard() {
+		
+		getBuyCardView().showModal();
+	}
 
-        getBuyCardView().showModal();
-    }
+	@Override
+	public void cancelBuyCard() {
+		
+		getBuyCardView().closeTopModal();
+	}
 
-    @Override
-    public void cancelBuyCard() {
+	@Override
+	public void buyCard() {
+        try {
+            m_facade.buyDevCard();
+        } catch (ModelException e) {
+            logger.log(Level.WARNING, "Buy card failed.", e);
+        }
+		getBuyCardView().closeTopModal();
+	}
 
-        getBuyCardView().closeModal();
-    }
+	@Override
+	public void startPlayCard() {
+		
+		getPlayCardView().showModal();
+	}
 
-    @Override
-    public void buyCard() {
-    	int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-    	
-    	MapController.buyDevCard(playerIndex);
-        getBuyCardView().closeModal();
-    }
+	@Override
+	public void cancelPlayCard() {
 
-    @Override
-    public void startPlayCard() {
+		getPlayCardView().closeTopModal();
+	}
 
-        getPlayCardView().showModal();
-    }
+	@Override
+	public void playMonopolyCard(ResourceType resource) {
+        try {
+            m_facade.playMonopoly(resource);
+        } catch (ModelException e) {
+            logger.log(Level.WARNING, "Play monopoly card failed. - Model Exception", e);
+        }
+	}
 
-    @Override
-    public void cancelPlayCard() {
+	@Override
+	public void playMonumentCard() {
+        try {
+            m_facade.playMonument();
+        } catch (ModelException e) {
+            logger.log(Level.WARNING, "Play monument card failed. - Model Exception", e);
+        }
+	}
 
-        getPlayCardView().closeModal();
-    }
+	@Override
+	public void playRoadBuildCard() {
+		roadAction.execute();
+	}
 
-    @Override
-    public void playMonopolyCard(ResourceType resource) {
+	@Override
+	public void playSoldierCard() {
+		soldierAction.execute();
+	}
 
-    }
-
-    @Override
-    public void playMonumentCard() {
-
-    }
-
-    @Override
-    public void playRoadBuildCard() {
-
-        roadAction.execute();
-    }
-
-    @Override
-    public void playSoldierCard() {
-
-        soldierAction.execute();
-    }
-
-    @Override
-    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-
-    }
+	@Override
+	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+        try {
+            m_facade.playYearOfPlenty(resource1, resource2);
+        } catch (ModelException e) {
+            logger.log(Level.WARNING, "Play year of plenty card failed. - Model Exception", e);
+        }
+	}
 
     @Override
     public void update(Observable o, Object arg) {
-    	if(arg instanceof Game) {
-	    	Game thisGame = CatanModel.getInstance().getGameManager().getGame();
-	    	getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, thisGame.getPlayers()[ServerProxy.getInstance()
-	    	                                 .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.MONOPOLY));
-	    	getPlayCardView().setCardEnabled(DevCardType.SOLDIER, thisGame.getPlayers()[ServerProxy.getInstance()
-	    	                                 .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.SOLDIER));
-	    	getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, thisGame.getPlayers()[ServerProxy.getInstance()
-	                                         .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.YEAR_OF_PLENTY));
-	    	getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, thisGame.getPlayers()[ServerProxy.getInstance()
-	    	                                 .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.ROAD_BUILD));
-	    	getPlayCardView().setCardEnabled(DevCardType.MONUMENT, thisGame.getPlayers()[ServerProxy.getInstance()
-	    	                                 .getlocalPlayer().getPlayerIndex()].canPlayerDevCardType(DevCardType.MONUMENT));
-	    	int monoNum  = 0;
-	    	int soldNum  = 0;
-	    	int yearNum  = 0;
-	    	int roadNum  = 0;
-	    	int monuNum  = 0;
-	    	
-	    	for(DevCard  devCard: thisGame.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].getDevCards())
-	    	{
-	    		switch (devCard.getType()) {
-				case MONOPOLY:
-					monoNum++;
-					break;
-	
-				case SOLDIER:
-					soldNum++;
-					break;
-				case YEAR_OF_PLENTY:
-					yearNum++;
-					break;
-				case ROAD_BUILD:
-					yearNum++;
-					break;
-				case MONUMENT:
-					roadNum++;
-					break;
-	
-				default:
-					break;
-				}
-	    	}
-	
-	    	getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monoNum);
-	    	getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldNum);
-	    	getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearNum);
-	    	getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadNum);
-	    	getPlayCardView().setCardAmount(DevCardType.MONUMENT, monuNum);
-	    	
-	    	/**
-	    	 * I don't know what to do with the reset function
-	    	 */
-	
-	    }
+        initFromModel();
     }
 
+    public void initFromModel() {
+        logger.entering("client.devcards.DevCardController", "initFromModel");
+
+        if (GameModelFacade.instance().getGame().isNotInitialized()) {
+            logger.fine("Not intializing DevCardController: the game object has not been initialized");
+            return; // do nothing if the game object has not been created yet
+        }
+
+        IPlayer player = GameModelFacade.instance().getLocalPlayer();
+        IDevCardHand totalDevCards = player.getAllDevCards();
+        //for each card type set enabled and amount
+        for (DevCardType type : DevCardType.values()) {
+            getPlayCardView().setCardEnabled(type, GameModelFacade.instance().localPlayerIsPlaying() && player.canPlayDevCard(type));
+            getPlayCardView().setCardAmount(type, totalDevCards.getCount(type));
+        }
+        logger.exiting("client.devcards.DevCardController", "initFromModel");
+    }
 }
 

@@ -1,35 +1,24 @@
 package client.resources;
 
-import client.base.IController;
+import client.base.*;
 
-/**
- * Interface for the resource bar controller
- */
-public interface IResourceBarController extends IController {
 
-    /**
-     * Called by the view then the user requests to build a road
-     */
-    void buildRoad();
+public interface IResourceBarController extends IController
+{
+	
 
-    /**
-     * Called by the view then the user requests to build a settlement
-     */
-    void buildSettlement();
+	void buildRoad();
+	
 
-    /**
-     * Called by the view then the user requests to build a city
-     */
-    void buildCity();
+	void buildSettlement();
+	
 
-    /**
-     * Called by the view then the user requests to buy a card
-     */
-    void buyCard();
+	void buildCity();
+	
 
-    /**
-     * Called by the view then the user requests to play a card
-     */
-    void playCard();
+	void buyCard();
+	
+
+	void playCard();
 }
 

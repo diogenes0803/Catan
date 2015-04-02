@@ -1,66 +1,40 @@
 package client.devcards;
 
-import client.base.IController;
-import shared.definitions.ResourceType;
+import client.base.*;
+import shared.definitions.*;
 
-/**
- * "Dev card" controller interface
- */
-public interface IDevCardController extends IController {
 
-    /**
-     * This method displays the "buy dev card" view.
-     */
-    void startBuyCard();
+public interface IDevCardController extends IController
+{
+	
 
-    /**
-     * This method is called when the user cancels out of buying a development card.
-     */
-    void cancelBuyCard();
+	void startBuyCard();
+	
 
-    /**
-     * This method is called when the user buys a development card.
-     */
-    void buyCard();
+	void cancelBuyCard();
+	
 
-    /**
-     * This method displays the "play dev card" view.
-     */
-    void startPlayCard();
+	void buyCard();
+	
 
-    /**
-     * This method is called when the user cancels out of playing a development card.
-     */
-    void cancelPlayCard();
+	void startPlayCard();
+	
 
-    /**
-     * This method is called when the user plays a monopoly development card.
-     *
-     * @param resource The resource to take from other players
-     */
-    void playMonopolyCard(ResourceType resource);
+	void cancelPlayCard();
+	
 
-    /**
-     * This method is called when the user plays a monument development card.
-     */
-    void playMonumentCard();
+	void playMonopolyCard(ResourceType resource);
+	
 
-    /**
-     * This method is called when the user plays a road build development card.
-     */
-    void playRoadBuildCard();
+	void playMonumentCard();
+	
 
-    /**
-     * This method is called when the user plays a soldier development card.
-     */
-    void playSoldierCard();
+	void playRoadBuildCard();
+	
 
-    /**
-     * This method is called when the user plays a year of plenty development card.
-     *
-     * @param resource1 The first resource to gain
-     * @param resource2 The second resource to gain
-     */
-    void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
+	void playSoldierCard();
+	
+
+	void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
 }
 

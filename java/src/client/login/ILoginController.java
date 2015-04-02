@@ -1,26 +1,19 @@
 package client.login;
 
-import client.base.IController;
+import client.base.*;
 
-/**
- * Interface for the login controller
- */
-public interface ILoginController extends IController {
 
-    /**
-     * Displays the login view
-     */
-    void start();
+public interface ILoginController extends IController
+{
+	
 
-    /**
-     * Called when the user clicks the "Sign in" button in the login view
-     */
-    void signIn();
+	void start();
+	
 
-    /**
-     * Called when the user clicks the "Register" button in the login view
-     */
-    void register();
+	void signIn();
+	
 
+	void register();
+	
 }
 

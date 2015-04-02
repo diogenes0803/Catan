@@ -1,491 +1,215 @@
 package client.map;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Observable;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import shared.communicator.BuildRoadParams;
-import shared.communicator.BuildSettlementParams;
-import shared.communicator.BuyDevCardParams;
-import shared.communicator.DiscardCardsParams;
-import shared.communicator.FinishTurnParams;
-import shared.communicator.PlaySoldierParams;
-import shared.communicator.RobPlayerParams;
-import shared.communicator.RollNumberParams;
-import shared.data.PlayerInfo;
-import shared.definitions.CatanColor;
-import shared.definitions.HexType;
-import shared.definitions.PieceType;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
-import shared.models.CatanModel;
-import shared.models.Edge;
-import shared.models.Game;
-import shared.models.HexTile;
-import shared.models.Piece;
-import shared.models.Port;
-import shared.models.ResourceList;
-import shared.models.TurnTracker;
-import shared.models.Vertex;
-import client.base.Controller;
-import client.communication.ServerProxy;
-import client.data.RobPlayerInfo;
+import client.map.state.IMapState;
+import client.map.state.MapState;
+import client.map.state.NotPlayingState;
+import shared.definitions.*;
+import shared.locations.*;
+import client.base.*;
+import client.data.*;
+import shared.model.*;
 
 
-/**
- * Implementation for the map controller
- */
+
 public class MapController extends Controller implements IMapController {
-	
+    private final static Logger logger = Logger.getLogger("catan");
+
 	private IRobView robView;
-	public static IState state;
-	private boolean setup1Initiated;
-	private boolean setup1Finished;
-	private boolean setup2Initiated;
-	private boolean setup2Finished;
-	private boolean robbingInitiated;
-	private HexLocation robberLocation;
-	private boolean soldierRobbing;
-	
+    private IMapState m_state;
+
 	public MapController(IMapView view, IRobView robView) {
-		
 		super(view);
 		
 		setRobView(robView);
-		
-		setup1Initiated = false;
-		setup1Finished = false;
-		setup2Initiated = false;
-		setup2Finished = false;
-		robbingInitiated = false;
-		soldierRobbing = false;
-		state = null;
+
+        GameModelFacade.instance().getGame().addObserver(this);
+        m_state = new NotPlayingState();
 	}
 	
 	public IMapView getView() {
 		
 		return (IMapView)super.getView();
 	}
-	
-	private IRobView getRobView() {
+
+	public IRobView getRobView() {
 		return robView;
 	}
+
 	private void setRobView(IRobView robView) {
 		this.robView = robView;
 	}
 	
-	
-	private void createRoads(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<EdgeDirection, Edge>> itEdge = thisTile.getEdges().entrySet().iterator();
-					while(itEdge.hasNext()) 
-					{
-						Edge thisEdge = itEdge.next().getValue();
-						if (thisEdge.getHasRoad()) 
-						{
-							Piece thisRoad = thisEdge.getRoad();
-							getView().placeRoad(thisEdge.getLocation(), game.getPlayers()[thisRoad.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
+	protected void initFromModel() {
+        logger.entering("client.map.MapController", "initFromModel");
+
+        IGame game = GameModelFacade.instance().getGame();
+        assert GameModelFacade.instance().getGame() != null;
+        if (GameModelFacade.instance().getGame().isNotInitialized()) {
+            logger.fine("Not intializing MapController: the game object has not been initialized");
+            return; // do nothing if the game object has not been created yet
+        }
+        logger.finer("Initializing MapController.");
+
+        ICatanMap map = GameModelFacade.instance().getGame().getMap();
+
+        // add the tiles
+        for (IHex tile : map.getTiles()) {
+            getView().addHex(tile.location(), tile.type());
+
+            int numberToken = tile.numberToken();
+            if (numberToken != Hex.DESERT_NUMBER) {
+                getView().addNumber(tile.location(), numberToken);
+            }
+        }
+
+        // add the ports
+        for (Map.Entry<EdgeLocation, PortType> port : map.getPorts().entrySet()) {
+            getView().addPort(port.getKey(), port.getValue());
+        }
+
+        // add the settlements
+        for (ITown settlement : map.getSettlements()) {
+            getView().placeSettlement(settlement.getLocation(), settlement.getOwner().getColor());
+        }
+
+        // add the cities
+        for (ITown city : map.getCities()) {
+            getView().placeCity(city.getLocation(), city.getOwner().getColor());
+        }
+
+        // add the roads
+        for (IRoad road : map.getRoads()) {
+            getView().placeRoad(road.getLocation(), road.getOwner().getColor());
+        }
+
+        getView().placeRobber(map.getRobber());
+
+        // drop the island in the ocean
+        addWaterTiles();
+
+        // determine the state
+        IMapState nextState = MapState.determineState();
+        if (nextState.getClass() != m_state.getClass()) {
+            m_state = nextState;
+        }
+        m_state.initializeDialogs(this);
+        logger.exiting("client.map.MapController", "initFromModel");
 	}
 
-	private void createCities(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
-					while(itVertex.hasNext()) 
-					{
-						Vertex thisVertex = itVertex.next().getValue();
-						if (thisVertex.getHasSettlement()) 
-						{
-							Piece settlement = thisVertex.getSettlement();
-							getView().placeCity(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private void createSettlements(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) 
-			{			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) 
-				{
-					Iterator<Entry<VertexDirection, Vertex>> itVertex = thisTile.getVertices().entrySet().iterator();
-					while(itVertex.hasNext()) 
-					{
-						Vertex thisVertex = itVertex.next().getValue();
-						if (thisVertex.getHasSettlement()) 
-						{
-							Piece settlement = thisVertex.getSettlement();
-							if(settlement.getType() == PieceType.SETTLEMENT)
-							getView().placeSettlement(thisVertex.getLocation(), game.getPlayers()[settlement.getOwnerPlayerIndex()].getColor());
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	private void createTiles(Game game){
-		
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius()+2; x++) {
-			int maxY = game.getMap().getRadius() - x + 2;
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {		
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) {
-					HexType hexType = thisTile.getHexType();
-					HexLocation hexLoc = thisTile.getLocation();
-					getView().addHex(hexLoc, hexType);
-				}
-			}
-		}
-	}
-		
-	private void createTokens(Game game)
-	{
-		for (int x = -game.getMap().getRadius(); x <= game.getMap().getRadius(); x++) 
-		{
-					
-			int maxY = game.getMap().getRadius() - x;			
-			for (int y = -game.getMap().getRadius(); y <= maxY; y++) {			
-				HexTile thisTile = game.getMap().getHexTileAt(new HexLocation(x, y));
-				if (thisTile != null) {
-					int token = thisTile.getToken();
-					if(token != 0) {
-						getView().addNumber(thisTile.getLocation(), token);
-					}
-				}
-			}
-		}
-	}
-
-	private void createHarbors(Game game)
-	{
-		Iterator<Entry<EdgeLocation, Port>> itPort = game.getMap().getPorts().entrySet().iterator();
-		while(itPort.hasNext()) {
-			Entry<EdgeLocation, Port> thisEntry = itPort.next();
-			Port thisPort = thisEntry.getValue();
-			EdgeLocation thisLoc = thisEntry.getKey();
-			getView().addPort(thisLoc, thisPort.getType());
-		}
-	}
-
-	private void createRobber(Game game)
-	{
-		getView().placeRobber(game.getMap().getRobberLocation());
-	}
-
-	private void initFromModel() {
-		if (CatanModel.getInstance().getGameManager() == null) {
-			return;
-		}
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-
-		if (state == null || !state.toString().equals(TurnTracker.getInstance().getStatus())) {
-			setStateString(TurnTracker.getInstance().getStatus());
-			CatanModel.getInstance().getGameManager().changed();
-			CatanModel.getInstance().getGameManager().notifyObservers(game);
-		}
-		
-		createTiles(game);
-		createTokens(game);
-		createCities(game);
-		createSettlements(game);
-		createRoads(game);
-		createHarbors(game);
-		createRobber(game);
-		
-		if (!setup1Initiated) {
-			startGame();
-		}
-		
-		if (setup1Finished && !setup2Initiated) {
-			startSetup2();
-		}
-		
-		if (state.equals(RobbingState.singleton) && !robbingInitiated) {
-			if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() == TurnTracker.getInstance().getCurrentTurn()) {
-				PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-				robbingInitiated = true;
-				getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
-			}
-		}
-}
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return m_state.canPlaceRoad(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canBuildSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return m_state.canPlaceSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canUpgradeSettlementAt(game.getPlayerIndexByPlayerId(playerId), vertLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return m_state.canPlaceCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canMoveRobber(hexLoc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return m_state.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeRoad(edgeLoc, thisColor);
-		
-		BuildRoadParams params = new BuildRoadParams(playerIndex, edgeLoc, true);
-		state.buildRoad(this, params);
-	}
+        try {
+            m_state.placeRoad(this, edgeLoc);
+        }
+        catch (ModelException e) {
+            // TODO: should we display a popup to the user?
+            logger.log(Level.WARNING, "Placing road failed.", e);
+        }
+    }
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeSettlement(vertLoc, thisColor);
-		
-		BuildSettlementParams params = new BuildSettlementParams(playerIndex, vertLoc, true);
-		state.buildSettlement(this, params);
-	}
+        try {
+            m_state.placeSettlement(vertLoc);
+        }
+        catch (ModelException e) {
+            logger.log(Level.WARNING, "Placing settlement failed.", e);
+        }
+    }
 
 	public void placeCity(VertexLocation vertLoc) {
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().placeCity(vertLoc, thisColor);
+        try {
+            m_state.placeCity(vertLoc);
+        }
+        catch (ModelException e) {
+            logger.log(Level.WARNING, "Placing settlement failed.", e);
+        }
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
-		getView().placeRobber(hexLoc);
-		robberLocation = hexLoc;
-		
-		RobPlayerInfo[] candidateVictims = CatanModel.getInstance().getGameManager().getGame().getRobberVictims(hexLoc);
-		getRobView().setPlayers(candidateVictims);
-		getRobView().showModal();
+        m_state.placeRobber(this, hexLoc);
 	}
 	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		Game game = CatanModel.getInstance().getGameManager().getGame();
-		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
-		CatanColor thisColor = game.getPlayers()[game.getPlayerIndexByPlayerId(playerId)].getColor();
-		getView().startDrop(pieceType, thisColor, true);
+	public void startMove(PieceType pieceType) {
+        m_state.startMove(this, pieceType);
 	}
 	
 	public void cancelMove() {
-		
+        m_state.cancelMove(this);
 	}
 	
 	public void playSoldierCard() {	
-		
-		soldierRobbing = true;
-		state = RobbingState.singleton;
-		
-		PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-		robbingInitiated = true;
-		getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
-		
+        m_state.playSoldierCard(this);
 	}
 	
 	public void playRoadBuildingCard() {	
-		
+		m_state.playRoadBuildingCard(this);
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		int victimIndex = victim.getPlayerIndex();
-		
-		if (soldierRobbing) {
-			PlaySoldierParams params = new PlaySoldierParams(playerIndex, victimIndex, robberLocation);
-			state.playSoldier(this, params);
-		}
-		else {
-			RobPlayerParams params = new RobPlayerParams(playerIndex, victimIndex, robberLocation);
-			state.robPlayer(this, params);
-		}
-		robbingInitiated = false;
-	}
+	public void robPlayer(RobPlayerInfo victim) {
+        try {
+            m_state.robPlayer(victim);
+        }
+        catch (ModelException e) {
+            logger.log(Level.WARNING, "Robbing player failed.", e);
+        }
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		if(arg instanceof Game) {
-			int playerID = ServerProxy.getInstance().getlocalPlayer().getId();
-			int playerIndex = CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(playerID);
-			ServerProxy.getInstance().getlocalPlayer().setPlayerIndex(playerIndex);
-			initFromModel();
-			System.out.println(state);
-		}
-		
-	}
+    @Override
+    public void update(Observable o, Object arg) {
+        logger.entering("client.map.MapController", "update", o);
+        initFromModel();
+        logger.exiting("client.map.MapController", "update");
+    }
 
-	public static IState getState() {
-		return state;
-	}
 
-	public static void setState(IState state) {
-		MapController.state = state;
-	}
-	
-	public static void rollNumber(int number) {
-		
-		int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
-		
-		RollNumberParams params = new RollNumberParams(playerIndex, number);
-		state.rollNumber(null, params);
-	}
-	
-	public static void discardCards(int playerIndex, ResourceList resourceList) {
-		DiscardCardsParams params = new DiscardCardsParams(playerIndex, resourceList);
-		
-		state.discardCards(null, params);
-	}
-	
-	public static void finishTurn(int playerIndex) {
-		FinishTurnParams params = new FinishTurnParams(playerIndex);
-		
-		state.finishTurn(null, params);
-	}
-	
-	public static void buyDevCard(int playerIndex) {
-		BuyDevCardParams params = new BuyDevCardParams(playerIndex);
-		
-		state.buyDevCard(null, params);
-	}
-	
-	public void setStateString(String status) {
-		switch (status) {
-		case "Rolling":	state = RollingState.singleton;
-			break;
-		case "Robbing":	state = RobbingState.singleton;
-			break;
-		case "Playing":	state = PlayingState.singleton;
-			break;
-		case "Discarding":	state = DiscardingState.singleton;
-			break;
-		case "FirstRound":	state = Setup1State.singleton;
-			break;
-		case "SecondRound":	state = Setup2State.singleton;
-			break;
-		default:	state = Setup1State.singleton;
-			break;
-		
-		}
-	}
-	
-	public void startGame() {
-		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
-		
-		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
-			return;
-		}
-		else if (state.equals(Setup1State.singleton)) {
-			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-			
-			setup1Initiated = true;
-			this.getView().startDrop(PieceType.ROAD,playerInfo.getColor() , false);
-		}
-	}
-	
-	public void startSetup2() {
-		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
-		
-		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
-			return;
-		}
-		else if (state.equals(Setup2State.singleton)) {
-			PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
-			
-			setup2Initiated = true;
-			this.getView().startDrop(PieceType.ROAD, playerInfo.getColor(), false);
-		}
-	}
+    private void addWaterTiles() {
+        final int MAX = 3;
+        final int MIN = -3;
 
-	public boolean isSetup1Finished() {
-		return setup1Finished;
-	}
+        // the east shore
+        for (int y = 0; y >= MIN; --y) {
+            getView().addHex(new HexLocation(MAX, y), HexType.WATER);
+        }
 
-	public void setSetup1Finished(boolean setup1Finished) {
-		this.setup1Finished = setup1Finished;
-	}
+        // the west shore
+        for (int y = 0; y <= MAX; ++y) {
+            getView().addHex(new HexLocation(MIN, y), HexType.WATER);
+        }
 
-	public boolean isSetup2Finished() {
-		return setup2Finished;
-	}
+        // NE and SW water, excluding completed corners
+        for (int x = 0; x <= MAX-1; ++x) {
+            getView().addHex(new HexLocation( x, MIN), HexType.WATER);
+            getView().addHex(new HexLocation(-x, MAX), HexType.WATER);
+        }
 
-	public void setSetup2Finished(boolean setup2Finished) {
-		this.setup2Finished = setup2Finished;
-	}
-
-	public boolean isRobbingInitiated() {
-		return robbingInitiated;
-	}
-
-	public void setRobbingInitiated(boolean robbingInitiated) {
-		this.robbingInitiated = robbingInitiated;
-	}
-
-	public boolean isSoldierRobbing() {
-		return soldierRobbing;
-	}
-
-	public void setSoldierRobbing(boolean soldierRobbing) {
-		this.soldierRobbing = soldierRobbing;
-	}
+        // NW and SE, excluding completed corners
+        int y = MAX-1;
+        int x = 1;
+        while (x <= MAX-1 && y >= 1) {
+            getView().addHex(new HexLocation( x,  y), HexType.WATER);
+            getView().addHex(new HexLocation(-x, -y), HexType.WATER);
+            --y;
+            ++x;
+        }
+    }
 }
 

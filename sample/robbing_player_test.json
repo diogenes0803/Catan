@@ -1,0 +1,335 @@
+{
+  "deck": {
+    "yearOfPlenty": 2,
+    "monopoly": 2,
+    "soldier": 14,
+    "roadBuilding": 2,
+    "monument": 5
+  },
+  "map": {
+    "hexes": [
+      {
+        "location": {
+          "x": 0,
+          "y": -2
+        }
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 1,
+          "y": -2
+        },
+        "number": 4
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 2,
+          "y": -2
+        },
+        "number": 11
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": -1,
+          "y": -1
+        },
+        "number": 8
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 0,
+          "y": -1
+        },
+        "number": 3
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": 1,
+          "y": -1
+        },
+        "number": 9
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 2,
+          "y": -1
+        },
+        "number": 12
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -2,
+          "y": 0
+        },
+        "number": 5
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": -1,
+          "y": 0
+        },
+        "number": 10
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 0,
+          "y": 0
+        },
+        "number": 11
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 1,
+          "y": 0
+        },
+        "number": 5
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 2,
+          "y": 0
+        },
+        "number": 6
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": -2,
+          "y": 1
+        },
+        "number": 2
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": -1,
+          "y": 1
+        },
+        "number": 9
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 0,
+          "y": 1
+        },
+        "number": 4
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 1,
+          "y": 1
+        },
+        "number": 10
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": -2,
+          "y": 2
+        },
+        "number": 6
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -1,
+          "y": 2
+        },
+        "number": 3
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 0,
+          "y": 2
+        },
+        "number": 8
+      }
+    ],
+    "roads": [],
+    "cities": [],
+    "settlements": [],
+    "radius": 3,
+    "ports": [],
+    "robber": {
+      "x": 0,
+      "y": -2
+    }
+  },
+  "players": [
+    {
+      "resources": {
+        "brick": 5,
+        "wood": 5,
+        "sheep": 5,
+        "wheat": 5,
+        "ore": 5
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 15,
+      "cities": 4,
+      "settlements": 5,
+      "soldiers": 1,
+      "victoryPoints": 0,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 0,
+      "playerIndex": 0,
+      "name": "Sam",
+      "color": "orange"
+    },
+    {
+      "resources": {
+        "brick": 0,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 0,
+        "ore": 0
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 15,
+      "cities": 4,
+      "settlements": 5,
+      "soldiers": 4,
+      "victoryPoints": 0,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 1,
+      "playerIndex": 1,
+      "name": "Brooke",
+      "color": "puce"
+    },
+    {
+      "resources": {
+        "brick": 5,
+        "wood": 5,
+        "sheep": 5,
+        "wheat": 5,
+        "ore": 5
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 15,
+      "cities": 4,
+      "settlements": 5,
+      "soldiers": 2,
+      "victoryPoints": 0,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 10,
+      "playerIndex": 2,
+      "name": "Pete",
+      "color": "red"
+    },
+    {
+      "resources": {
+        "brick": 5,
+        "wood": 5,
+        "sheep": 5,
+        "wheat": 5,
+        "ore": 5
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 15,
+      "cities": 4,
+      "settlements": 5,
+      "soldiers": 3,
+      "victoryPoints": 0,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 11,
+      "playerIndex": 3,
+      "name": "Mark",
+      "color": "green"
+    }
+  ],
+  "log": {
+    "lines": []
+  },
+  "chat": {
+    "lines": []
+  },
+  "bank": {
+    "brick": 4,
+    "wood": 4,
+    "sheep": 4,
+    "wheat": 4,
+    "ore": 4
+  },
+  "turnTracker": {
+    "status": "Playing",
+    "currentTurn": 0,
+    "longestRoad": -1,
+    "largestArmy": -1
+  },
+  "winner": -1,
+  "version": 0
+}

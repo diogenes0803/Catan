@@ -1,124 +1,131 @@
 package client.login;
 
-import client.base.Controller;
-import client.base.IAction;
-import client.communication.ServerProxy;
-import client.misc.IMessageView;
-import shared.communicator.RegisterUserParams;
-import shared.communicator.RegisterUserResults;
-import shared.communicator.UserLoginParams;
-import shared.communicator.UserLoginResults;
+import client.base.*;
+import client.misc.*;
+import client.network.*;
 
-import java.util.Observable;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
-/**
- * Implementation for the login controller
- */
+
+
 public class LoginController extends Controller implements ILoginController {
+    private final static Logger logger = Logger.getLogger("catan");
 
-    private IMessageView messageView;
-    private IAction loginAction;
+	private IMessageView messageView;
+	private IAction loginAction;
+    private IGameAdministrator m_admin;
+	
 
-    /**
-     * LoginController constructor
-     *
-     * @param view        Login view
-     * @param messageView Message view (used to display error messages that occur during the login process)
-     */
-    public LoginController(ILoginView view, IMessageView messageView) {
+	public LoginController(ILoginView view, IMessageView messageView) {
 
-        super(view);
+		super(view);
+		
+		this.messageView = messageView;
 
-        this.messageView = messageView;
-    }
+        m_admin = GameAdministrator.getInstance();
+	}
+	
+	public ILoginView getLoginView() {
+		
+		return (ILoginView)super.getView();
+	}
+	
+	public IMessageView getMessageView() {
+		
+		return messageView;
+	}
+	
 
-    public ILoginView getLoginView() {
+	public void setLoginAction(IAction value) {
+		
+		loginAction = value;
+	}
+	
 
-        return (ILoginView) super.getView();
-    }
+	public IAction getLoginAction() {
+		
+		return loginAction;
+	}
 
-    public IMessageView getMessageView() {
+	@Override
+	public void start() {
+		
+		getLoginView().showModal();
+	}
 
-        return messageView;
-    }
-
-    /**
-     * Sets the action to be executed when the user logs in
-     *
-     * @param value The action to be executed when the user logs in
-     */
-    public void setLoginAction(IAction value) {
-
-        loginAction = value;
-    }
-
-    /**
-     * Returns the action to be executed when the user logs in
-     *
-     * @return The action to be executed when the user logs in
-     */
-    public IAction getLoginAction() {
-
-        return loginAction;
-    }
-
-    @Override
-    public void start() {
-
-        getLoginView().showModal();
-    }
-
-    @Override
-    public void signIn() {
-
-        // TODO: log in user
+	@Override
+	public void signIn() {
         String username = getLoginView().getLoginUsername();
         String password = getLoginView().getLoginPassword();
-        UserLoginResults result = ServerProxy.getInstance().userLogin(new UserLoginParams(username, password));
-        if (result.isSuccess()) {
 
-            // If log in succeeded
-            getLoginView().closeModal();
+        boolean success = false;
+        try {
+            success = m_admin.login(username, password);
+        } catch (NetworkException e) {
+            logger.log(Level.WARNING, "Sign in failed.", e);
+        }
+
+		// If log in succeeded
+        if (success) {
+            getLoginView().closeTopModal();
             loginAction.execute();
         } else {
-            messageView.setTitle("Error!");
-            messageView.setMessage("Sign in failed.");
-            messageView.showModal();
+            getMessageView().showModal();
+            getMessageView().setTitle("Error!");
+            getMessageView().setMessage("Sign in failed.");
         }
+	}
 
-    }
+	@Override
+	public void register() {
+        String username = getLoginView().getRegisterUsername();
+        String password = getLoginView().getRegisterPassword();
+        String passwordRepeat = getLoginView().getRegisterPasswordRepeat();
 
-    @Override
-    public void register() {
+        final Pattern usernamePattern = Pattern.compile("^[a-zA-Z0-9_-]{3,7}$");
+        final Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9_-]{5,}$");
 
-        // TODO: register new user (which, if successful, also logs them in)
-        if (getLoginView().getRegisterPassword().equals(getLoginView().getRegisterPasswordRepeat())) {
-            String username = getLoginView().getRegisterUsername();
-            String password = getLoginView().getRegisterPassword();
-            RegisterUserResults result = ServerProxy.getInstance().registerUser(new RegisterUserParams(username, password));
-            if (result.isSuccess()) {
+        Matcher usernameMatch = usernamePattern.matcher(username);
+        Matcher passwordMatch = passwordPattern.matcher(password);
+
+        if(usernameMatch.matches() && passwordMatch.matches()) {
+            if (password.equals(passwordRepeat)) {
+                boolean success = false;
+                try {
+                    success = m_admin.register(username, password);
+                } catch (NetworkException e) {
+                    logger.log(Level.WARNING, "Register failed.", e);
+                }
+
                 // If register succeeded
-                getLoginView().closeModal();
-                loginAction.execute();
+                if (success) {
+                    getLoginView().closeTopModal();
+                    loginAction.execute();
+                } else {
+                    getMessageView().showModal();
+                    getMessageView().setTitle("Error!");
+                    getMessageView().setMessage("Register failed.");
+                }
             } else {
-                messageView.setTitle("Warning!");
-                messageView.setMessage("Invalid username or password.");
-                messageView.showModal();
+                getMessageView().showModal();
+                getMessageView().setTitle("Warning!");
+                getMessageView().setMessage("Passwords don't match.");
             }
         } else {
-            messageView.setTitle("Warning!");
-            messageView.setMessage("Invalid username or password.");
-            messageView.showModal();
+            getMessageView().showModal();
+            getMessageView().setTitle("Warning!");
+            getMessageView().setMessage("Invalid username or password.");
         }
-
-    }
+	}
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO Auto-generated method stub
 
     }
-
 }
 

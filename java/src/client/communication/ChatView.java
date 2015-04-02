@@ -1,18 +1,14 @@
 package client.communication;
 
 import client.base.PanelView;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
-/**
- * Chat view implementation
- */
+
 @SuppressWarnings("serial")
 public class ChatView extends PanelView implements IChatView {
     
@@ -22,9 +18,7 @@ public class ChatView extends PanelView implements IChatView {
     private JButton sendChatBtn;
     private PlaceholderTextField chatTextInput;
 
-    /**
-     * Creates a new chat view component.
-     */
+
     public ChatView() {
         // Create the components
         chatPanel = new LogComponent();
@@ -68,7 +62,7 @@ public class ChatView extends PanelView implements IChatView {
         add(chatScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.PAGE_END);
         
-        setBackground(Color.white);
+	setBackground(Color.white);
     }
 
     @Override
@@ -81,9 +75,7 @@ public class ChatView extends PanelView implements IChatView {
         chatPanel.setEntries(entries);
     }
     
-    /**
-     * Calls the send message function on the registered IChatController.
-     */
+
     private void sendMessage() {
         String message = chatTextInput.getText();
         if (!message.isEmpty()) {
@@ -94,9 +86,7 @@ public class ChatView extends PanelView implements IChatView {
         }
     }
     
-    /**
-     * Handles events that occur on the chat view.
-     */
+
     private class EventListener extends KeyAdapter implements ActionListener {
 
         @Override
@@ -112,7 +102,7 @@ public class ChatView extends PanelView implements IChatView {
             }
         }
     }
-
+	
 }
 
 

@@ -1,92 +1,79 @@
 package client.domestic;
 
-import client.communication.ServerProxy;
-import client.main.Catan;
-import client.map.MapController;
-import client.map.PlayingState;
-import shared.communicator.AcceptTradeParams;
-import shared.data.PlayerInfo;
+import client.data.PlayerInfo;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
-import shared.models.*;
-import shared.models.jsonholder.JsonModelHolder;
+import shared.model.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
 
-/**
- * Domestic trade controller implementation
- */
+
 public class DomesticTradeController extends Controller implements IDomesticTradeController {
     private final static Logger logger = Logger.getLogger("catan");
 
-    private IDomesticTradeOverlay tradeOverlay;
-    private IWaitView waitOverlay;
-    private IAcceptTradeOverlay acceptOverlay;
+	private IDomesticTradeOverlay tradeOverlay;
+	private IWaitView waitOverlay;
+	private IAcceptTradeOverlay acceptOverlay;
 
     private PendingOffer m_tradeOffer;
     private int m_recipient;
     private boolean m_needToInitializePlayersList;
 
-    /**
-     * DomesticTradeController constructor
-     *
-     * @param tradeView Domestic trade view (i.e., view that contains the "Domestic Trade" button)
-     * @param tradeOverlay Domestic trade overlay (i.e., view that lets the user propose a domestic trade)
-     * @param waitOverlay Wait overlay used to notify the user they are waiting for another player to accept a trade
-     * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
-     */
-    public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-                                   IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
 
-        super(tradeView);
+	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
+									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
 
-        setTradeOverlay(tradeOverlay);
-        setWaitOverlay(waitOverlay);
-        setAcceptOverlay(acceptOverlay);
+		super(tradeView);
+		
+		setTradeOverlay(tradeOverlay);
+		setWaitOverlay(waitOverlay);
+		setAcceptOverlay(acceptOverlay);
 
         m_tradeOffer = null;
         m_recipient = Player.NO_PLAYER;
         m_needToInitializePlayersList = true;
-        CatanModel.getInstance().getGameManager().addObserver(this);
 
+        GameModelFacade.instance().getGame().addObserver(this);
     }
+	
+	public IDomesticTradeView getTradeView() {
+		return (IDomesticTradeView)super.getView();
+	}
 
-    public IDomesticTradeView getTradeView() {
-        return (IDomesticTradeView)super.getView();
-    }
+	public IDomesticTradeOverlay getTradeOverlay() {
+		return tradeOverlay;
+	}
 
-    public IDomesticTradeOverlay getTradeOverlay() {
-        return tradeOverlay;
-    }
+	public void setTradeOverlay(IDomesticTradeOverlay tradeOverlay) {
+		this.tradeOverlay = tradeOverlay;
+	}
 
-    public void setTradeOverlay(IDomesticTradeOverlay tradeOverlay) {
-        this.tradeOverlay = tradeOverlay;
-    }
+	public IWaitView getWaitOverlay() {
+		return waitOverlay;
+	}
 
-    public IWaitView getWaitOverlay() {
-        return waitOverlay;
-    }
+	public void setWaitOverlay(IWaitView waitView) {
+		this.waitOverlay = waitView;
+	}
 
-    public void setWaitOverlay(IWaitView waitView) {
-        this.waitOverlay = waitView;
-    }
+	public IAcceptTradeOverlay getAcceptOverlay() {
+		return acceptOverlay;
+	}
 
-    public IAcceptTradeOverlay getAcceptOverlay() {
-        return acceptOverlay;
-    }
+	public void setAcceptOverlay(IAcceptTradeOverlay acceptOverlay) {
+		this.acceptOverlay = acceptOverlay;
+	}
 
-    public void setAcceptOverlay(IAcceptTradeOverlay acceptOverlay) {
-        this.acceptOverlay = acceptOverlay;
-    }
-
-    @Override
-    public void startTrade() {
+	@Override
+	public void startTrade() {
         logger.entering("client.domestic.DomesticTradeController", "startTrade");
 
         getTradeOverlay().reset();
@@ -95,129 +82,125 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         m_tradeOffer = new PendingOffer();
         updateButtons();
 
-        getTradeOverlay().showModal();
+		getTradeOverlay().showModal();
         logger.exiting("client.domestic.DomesticTradeController", "startTrade");
-    }
+	}
 
-    @Override
-    public void decreaseResourceAmount(ResourceType resource) {
+	@Override
+	public void decreaseResourceAmount(ResourceType resource) {
         m_tradeOffer.decrement(resource);
         updateButtons();
-    }
+	}
 
-    @Override
-    public void increaseResourceAmount(ResourceType resource) {
+	@Override
+	public void increaseResourceAmount(ResourceType resource) {
         m_tradeOffer.increment(resource);
         updateButtons();
-    }
+	}
 
-    @Override
-    public void sendTradeOffer() {
-        getTradeOverlay().closeModal();
+	@Override
+	public void sendTradeOffer() {
+		getTradeOverlay().closeTopModal();
 
-        //try {
-            //ServerModelFacade.getInstance().offerTrade(m_tradeOffer.toResourceBank(), m_recipient);
-            CatanModel.getInstance().getGameManager().getGame().setTradeOffer(new TradeOffer(CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId()),m_recipient,m_tradeOffer.toResourceBank().toResourceList()));
+        try {
+            ServerModelFacade.getInstance().offerTrade(m_tradeOffer.toResourceBank(), m_recipient);
             // waiting modal is opened automatically when the new client model initializes
             m_recipient = Player.NO_PLAYER;
             m_tradeOffer = null;
-        //}
-        //catch (ModelException e) {
-        //   logger.log(Level.WARNING, "Sending trade offer failed.", e);
-        //}
-    }
+        }
+        catch (ModelException e) {
+            logger.log(Level.WARNING, "Sending trade offer failed.", e);
+        }
+	}
 
-    @Override
-    public void setPlayerToTradeWith(int playerIndex) {
+	@Override
+	public void setPlayerToTradeWith(int playerIndex) {
         assert playerIndex >= Player.NO_PLAYER && playerIndex < 4;
         m_recipient = playerIndex;
         updateButtons();
-    }
+	}
 
-    @Override
-    public void setResourceToReceive(ResourceType resource) {
+	@Override
+	public void setResourceToReceive(ResourceType resource) {
         m_tradeOffer.setOfferType(resource, OfferType.RECEIVE);
         updateButtons();
-    }
+	}
 
-    @Override
-    public void setResourceToSend(ResourceType resource) {
+	@Override
+	public void setResourceToSend(ResourceType resource) {
         m_tradeOffer.setOfferType(resource, OfferType.SEND);
         updateButtons();
-    }
+	}
 
-    @Override
-    public void unsetResource(ResourceType resource) {
+	@Override
+	public void unsetResource(ResourceType resource) {
         m_tradeOffer.setOfferType(resource, OfferType.NONE);
         updateButtons();
-    }
+	}
 
-    @Override
-    public void cancelTrade() {
-        getTradeOverlay().closeModal();
+	@Override
+	public void cancelTrade() {
+		getTradeOverlay().closeTopModal();
         getTradeOverlay().reset();
         m_tradeOffer = null;
         m_recipient = Player.NO_PLAYER;
-    }
+	}
 
-    @Override
-    public void acceptTrade(boolean willAccept) {
-        getAcceptOverlay().closeModal();
+	@Override
+	public void acceptTrade(boolean willAccept) {
+        getAcceptOverlay().closeTopModal();
         getAcceptOverlay().reset();
 
         try {
-            //ServerModelFacade.getInstance().acceptTrade(willAccept);
-            PlayingState.singleton.acceptTrade(null ,new AcceptTradeParams(m_recipient,willAccept));
+            ServerModelFacade.getInstance().acceptTrade(willAccept);
         }
-        catch (Exception e) {
+        catch (ModelException e) {
             logger.log(Level.WARNING, "Failed to %s trade".format(willAccept ? "accept" : "reject"), e);
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
-    	if(arg instanceof Game) {
-	        logger.entering("client.domestic.DomesticTradeController", "update");
-	
-	        if (!CatanModel.getInstance().getGameManager().getGame().isStarted()) {
-	            logger.finer("Game has not started yet, not initializing.");
-	            logger.exiting("client.domestic.DomesticTradeController", "update");
-	            return;
-	        }
-	
-	        // initialize players list only once
-	        // TODO: what if player changes color?
-	        if (m_needToInitializePlayersList) {
-	            getTradeOverlay().setPlayers(PlayerInfo.fromPlayers(Arrays.asList(CatanModel.getInstance().getGameManager().getGame().getPlayers())));
-	            m_needToInitializePlayersList = false;
-	            getTradeOverlay().setCancelEnabled(true); //just to be sure -- this never needs to be disabled
-	        }
-	
-	        initializeDialogs();
-	
-	        logger.exiting("client.domestic.DomesticTradeController", "update");
-    	}
+        logger.entering("client.domestic.DomesticTradeController", "update");
+
+        if (!GameModelFacade.instance().getGame().gameHasStarted()) {
+            logger.finer("Game has not started yet, not initializing.");
+            logger.exiting("client.domestic.DomesticTradeController", "update");
+            return;
+        }
+
+        // initialize players list only once
+        // TODO: what if player changes color?
+        if (m_needToInitializePlayersList) {
+            getTradeOverlay().setPlayers(PlayerInfo.fromPlayers(GameModelFacade.instance().getNonLocalPlayers()));
+            m_needToInitializePlayersList = false;
+            getTradeOverlay().setCancelEnabled(true); //just to be sure -- this never needs to be disabled
+        }
+
+        initializeDialogs();
+
+        logger.exiting("client.domestic.DomesticTradeController", "update");
     }
 
     private void initializeDialogs() {
         // initialize the buttons and dialogs
-        if (TurnTracker.getInstance().getCurrentTurn() == CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId())) {
+        if (GameModelFacade.instance().localPlayerIsPlaying()) {
             getTradeView().enableDomesticTrade(true);
 
             // player sent a trade: keep the dialog open
-            if (CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId()) == m_recipient){   //GameModelFacade.instance().localPlayerIsOfferingTrade()) {
+            if (GameModelFacade.instance().localPlayerIsOfferingTrade()) {
                 if (!waitOverlay.isModalShowing()) {
                     waitOverlay.showModal();
                 }
             }
             else if (waitOverlay.isModalShowing()) {
-                waitOverlay.closeModal();
+                waitOverlay.closeTopModal();
             }
         }
         else {
             getTradeView().enableDomesticTrade(false);
 
-            if (CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId()) == m_recipient){   //GameModelFacade.instance().localPlayerIsBeingOfferedTrade()) {
+            if (GameModelFacade.instance().localPlayerIsBeingOfferedTrade()) {
                 // if the accept modal is not showing yet, initialize it and show it
                 initializeAcceptOverlay();
             }
@@ -230,12 +213,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         }
 
         acceptOverlay.reset();
-        Game game = CatanModel.getInstance().getGameManager().getGame();
-        acceptOverlay.setAcceptEnabled(game.canAcceptTrade(game.getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId())));
-        // acceptOverlay.setAcceptEnabled(GameModelFacade.instance().canAcceptTrade());
+        acceptOverlay.setAcceptEnabled(GameModelFacade.instance().canAcceptTrade());
 
-        IResourceBank tradeResources = new ResourceBank(game.getBank());
-        // IResourceBank tradeResources = GameModelFacade.instance().getGame().getTradeOffer().getOffer();
+        IResourceBank tradeResources = GameModelFacade.instance().getGame().getTradeOffer().getOffer();
 
         for (ResourceType resourceType : ResourceType.values()) {
             int resourceCount = tradeResources.getCount(resourceType);
@@ -273,7 +253,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     }
 
     private void updateResourceButtons() {
-        IResourceBank playerResources = new ResourceBank(CatanModel.getInstance().getGameManager().getGame().getPlayers()[CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId())].getResCards());
+        IResourceBank playerResourcees = GameModelFacade.instance().getLocalPlayerResources();
 
         // look at each resource in the current offer and decide if buttons should be enabled
         for (Map.Entry<ResourceType, PendingResourceOffer> entry : m_tradeOffer.entrySet()) {
@@ -281,7 +261,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             PendingResourceOffer offer = entry.getValue();
 
             // set the amount here, not in the view...
-            getTradeOverlay().setResourceAmount(resource, Integer.toString(offer.amount));
+            getTradeOverlay().setResourceAmount(resource, offer.amount);
 
             // now determine the up/down state of the buttons
             if (offer.type == OfferType.NONE) {
@@ -292,7 +272,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
                 boolean canIncrease;
 
                 if (offer.type == OfferType.SEND) {
-                    canIncrease = (offer.amount < playerResources.getCount(resource));
+                    canIncrease = (offer.amount < playerResourcees.getCount(resource));
                 }
                 else { // type is RECEIVE
                     assert offer.type == OfferType.RECEIVE;
@@ -308,14 +288,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     // Inner classes that represent and control the state of the pending trade offer
     //
 
-    /** What the local player will do with the resources */
+
     private enum OfferType {
         SEND,
         NONE,
         RECEIVE,
     }
 
-    /** A resource and a type (sending / receiving) */
+
     private static class PendingResourceOffer {
         public int amount;
         public OfferType type;
@@ -326,7 +306,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         }
     }
 
-    /** the current state of the trade offer */
+
     private static class PendingOffer extends HashMap<ResourceType, PendingResourceOffer> {
         public PendingOffer() {
             for (ResourceType resourceType : ResourceType.values()) {
