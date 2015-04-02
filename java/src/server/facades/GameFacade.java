@@ -88,7 +88,7 @@ public class GameFacade implements Facade {
      */
 
     //@Override
-    public boolean addAI(AddAIRequestParams params) throws ModelException {
+    public boolean addAI(AddAIRequestParams params) {
         if (params.AIType.equals("LARGEST_ARMY"))
             return true;
         return false;
