@@ -59,14 +59,9 @@ public class JoinGameHandler implements HttpHandler
 			    in.close();
 			}
 			
-			System.out.println("first place");
 			JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
-			System.out.println("Second place");
 			JoinGameResults result = thisFacade.join(params, userInfo);
-			System.out.println("Succes if");
-			
 			ex.getResponseHeaders().add("Content-Type", "text/html");
-			
 			
 			if(result.isSuccess()) {
 				
