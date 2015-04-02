@@ -12,7 +12,6 @@ import java.net.URLDecoder;
 import server.Server;
 import server.data.User;
 import server.facades.MovesFacade;
-import shared.communicator.BuildSettlementParams;
 import shared.communicator.SendChatParams;
 import shared.models.CatanModel;
 

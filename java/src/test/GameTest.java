@@ -40,7 +40,7 @@ public class GameTest {
                 thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
 
         System.out.println("Testing User has enough resources but there is a road already.");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertFalse("Error: User was permitted to build road ontop of an exsting road.",
                 thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)));
 
@@ -48,12 +48,12 @@ public class GameTest {
         assertTrue("Error: user could not build road.", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.SouthWest)));
 
         System.out.println("Testing User has no resources, but valid location in setup round 1");
-        TurnTracker.getInstance().setStatus("FirstRound");
-        TurnTracker.getInstance().setCurrentTurn(3);
+        thisGame.getTurnTracker().setStatus("FirstRound");
+        thisGame.getTurnTracker().setCurrentTurn(3);
         assertTrue("Error: user could not build road during setup phase 1.", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, 1), EdgeDirection.South)));
 
         System.out.println("Testing User has no resources, but valid location in setup round 2");
-        TurnTracker.getInstance().setStatus("SecondRound");
+        thisGame.getTurnTracker().setStatus("SecondRound");
         assertTrue("Error: user could not build road during setup phase 2.", thisGame.canBuildRoad(new EdgeLocation(new HexLocation(-1, 1), EdgeDirection.South)));
 
         System.out.println("Testing setup round 2, but invalid location");
@@ -83,11 +83,11 @@ public class GameTest {
         assertFalse("Error: user was allowed to play a Development Card.",
                 thisGame.canPlayDevCard());
         System.out.println("Testing User has a new Devlopment Card");
-        TurnTracker.getInstance().setCurrentTurn(2);
+        thisGame.getTurnTracker().setCurrentTurn(2);
         assertFalse("Error: user was allowed to play a new Development Card.",
                 thisGame.canPlayDevCard());
         System.out.println("Testing user has Development Cards");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertTrue("Error: user was not permitted to play a Development Card.",
                 thisGame.canPlayDevCard());
         System.out.println("");
@@ -115,7 +115,7 @@ public class GameTest {
         assertFalse("Error: user was permitted to offer an invalid trade.",
                 thisGame.canOfferTrade(offer));
         System.out.println("Testing user has enough cards.");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertTrue("Error: user was not permitted to offer a valid trade.",
                 thisGame.canOfferTrade(offer));
         System.out.println("");
@@ -175,7 +175,7 @@ public class GameTest {
         assertFalse("Error: user was permitted to roll during the wrong phase.",
                 thisGame.canRollDice());
         System.out.println("Testing status is Rolling");
-        TurnTracker.getInstance().setStatus("Rolling");
+        thisGame.getTurnTracker().setStatus("Rolling");
         assertTrue("Error: user wasn't permitted to roll during the rolling phase.",
                 thisGame.canRollDice());
         System.out.println("");
@@ -203,7 +203,7 @@ public class GameTest {
         assertFalse("Error: user was permitted to build settlement with insufficient resources.",
                 thisGame.canBuildSettlement(new VertexLocation(new HexLocation(0, 1), VertexDirection.West)));
         System.out.println("Testing user has enough resources, but there's already a settlement there");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertFalse("Error: user was permitted to build settlement on pre-existing settlement.",
                 thisGame.canBuildSettlement(new VertexLocation(new HexLocation(-1, -1), VertexDirection.SouthWest)));
         System.out.println("Testing user building settlement too close to friendly settlement");
@@ -237,7 +237,7 @@ public class GameTest {
         assertFalse("Error: user was permitted to build settlement with insufficient resources.",
                 thisGame.canUpgradeToCity(new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast)));
         System.out.println("Testing user has enough resources, but no settlement exists");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertFalse("Error: user was permitted to build a city in invalid location.",
                 thisGame.canUpgradeToCity(new VertexLocation(new HexLocation(-1, -1), VertexDirection.East)));
         System.out.println("Testing user has enough resources and valid location");
@@ -269,7 +269,7 @@ public class GameTest {
         assertFalse("Error: user was permitted to buy a Devolepment Card.",
                 thisGame.canBuyDevCard());
         System.out.println("Testing user has enough resources");
-        TurnTracker.getInstance().setCurrentTurn(1);
+        thisGame.getTurnTracker().setCurrentTurn(1);
         assertTrue("Error: user was not permitted to buy a Development Card.",
                 thisGame.canBuyDevCard());
         System.out.println("Testing User has enough resources, but there are no Devlopment cards");
@@ -355,11 +355,11 @@ public class GameTest {
         System.out.println("Testing CanFinishTurn");
         System.out.println("--------------------------------------------");
         System.out.println("Testing status isn't Playing");
-        TurnTracker.getInstance().setStatus("Rolling");
+        thisGame.getTurnTracker().setStatus("Rolling");
         assertFalse("Error: user was permitted to end turn during incorrect phase.",
                 thisGame.canFinishTurn());
         System.out.println("Testing status is Playing");
-        TurnTracker.getInstance().setStatus("Playing");
+        thisGame.getTurnTracker().setStatus("Playing");
         assertTrue("Error: user was not permitted to end turn.",
                 thisGame.canFinishTurn());
         System.out.println("");
@@ -387,11 +387,11 @@ public class GameTest {
 
         System.out.println("Testing it is the user's turn");
         assertTrue("Error: game indicated it was not user's turn.",
-                TurnTracker.getInstance().getCurrentTurn() == playerId);
+        		 thisGame.getTurnTracker().getCurrentTurn() == playerId);
         System.out.println("Testing it is not the user's turn");
         playerId = 1;
         assertFalse("Error: game indicated it was the user's turn",
-                TurnTracker.getInstance().getCurrentTurn() == playerId);
+        		 thisGame.getTurnTracker().getCurrentTurn() == playerId);
         System.out.println("");
         System.out.println("");
     }

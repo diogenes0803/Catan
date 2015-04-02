@@ -40,10 +40,10 @@ public class JsonModelHolder {
                     tradeOffer.getReceiver(), tradeOffer.getOffer()));
         }
         game.setVersion(version);
-        TurnTracker.getInstance().setStatus(turnTracker.getStatus());
-        TurnTracker.getInstance().setCurrentTurn(turnTracker.getCurrentTurn());
-        TurnTracker.getInstance().setLongestRoad(turnTracker.getLongestRoad());
-        TurnTracker.getInstance().setLargestArmy(turnTracker.getLargestArmy());
+        game.getTurnTracker().setStatus(turnTracker.getStatus());
+        game.getTurnTracker().setCurrentTurn(turnTracker.getCurrentTurn());
+        game.getTurnTracker().setLongestRoad(turnTracker.getLongestRoad());
+        game.getTurnTracker().setLargestArmy(turnTracker.getLargestArmy());
         return game;
     }
 

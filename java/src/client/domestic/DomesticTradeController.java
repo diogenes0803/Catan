@@ -201,7 +201,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     private void initializeDialogs() {
         // initialize the buttons and dialogs
-        if (TurnTracker.getInstance().getCurrentTurn() == CatanModel.getInstance().getGameManager().getGame().getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId())) {
+    	Game thisGame = CatanModel.getInstance().getGameManager().getGame();
+        if (thisGame.getTurnTracker().getCurrentTurn() == thisGame.getPlayerIndexByPlayerId(CatanModel.getInstance().getUserManager().getLoggedInUser().getUserId())) {
             getTradeView().enableDomesticTrade(true);
 
             // player sent a trade: keep the dialog open

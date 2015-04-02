@@ -3,6 +3,7 @@ package client.roll;
 import java.util.Observable;
 import java.util.Random;
 
+import shared.models.CatanModel;
 import shared.models.Game;
 import shared.models.TurnTracker;
 import client.base.Controller;
@@ -59,10 +60,11 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof Game) {
-	        int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+        	Game game = CatanModel.getInstance().getGameManager().getGame();
+	        int currentTurn = game.getTurnTracker().getCurrentTurn();
 	        int playerIndex = ServerProxy.getInstance().getlocalPlayer().getPlayerIndex();
 	        
-	        if (TurnTracker.getInstance().getStatus().equals("Rolling") && playerIndex == currentTurn) {
+	        if (game.getTurnTracker().getStatus().equals("Rolling") && playerIndex == currentTurn) {
 	        	getRollView().showModal();
 	        }
         }

@@ -2,13 +2,7 @@ package shared.models;
 
 public class TurnTracker {
 
-    private static TurnTracker instance = new TurnTracker();
-
-    private TurnTracker() {
-    }
-
-    public static TurnTracker getInstance() {
-        return instance;
+    public TurnTracker() {
     }
 
     private String status;

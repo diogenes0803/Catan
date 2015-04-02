@@ -32,7 +32,7 @@ public class CatanMap {
 	 * @param edgeLocation
 	 * @return true if possible false if not
 	 */
-	public boolean canBuildRoadAt(int playerId, EdgeLocation edgeLocation) {
+	public boolean canBuildRoadAt(int playerId, EdgeLocation edgeLocation, TurnTracker turnTracker) {
 		if(isSea(edgeLocation)) {
 			return false;
 		}
@@ -40,7 +40,7 @@ public class CatanMap {
 			return false;
 		}
 		else {
-			if(TurnTracker.getInstance().getStatus().equals("FirstRound") || TurnTracker.getInstance().getStatus().equals("SecondRound")) {	
+			if(turnTracker.getStatus().equals("FirstRound") || turnTracker.getStatus().equals("SecondRound")) {	
 				if(!checkIfSettlementCanBeBuiltOnNeighboringVertices(edgeLocation)) {
 					return false;
 				}

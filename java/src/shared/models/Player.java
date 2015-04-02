@@ -35,12 +35,12 @@ public class Player {
      *
      * @return true if possible false if not
      */
-    public boolean canBuildRoad() {
+    public boolean canBuildRoad(TurnTracker turnTracker) {
         int brick = getResCount(ResourceType.BRICK);
         int wood = getResCount(ResourceType.WOOD);
         int roadBuildCard = getOldDevCount(DevCardType.ROAD_BUILD);
-        if ((brick > 0 && wood > 0) || (roadBuildCard > 0) || TurnTracker.getInstance().getStatus().equals("FirstRound")
-                || TurnTracker.getInstance().getStatus().equals("SecondRound")) {
+        if ((brick > 0 && wood > 0) || (roadBuildCard > 0) || turnTracker.getStatus().equals("FirstRound")
+                || turnTracker.getStatus().equals("SecondRound")) {
             return true;
         } else {
             return false;

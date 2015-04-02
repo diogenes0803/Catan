@@ -59,7 +59,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	    		getView().initializePlayer(i, playerName, color);
 	    		
 	    		boolean highlight = false;
-	    		if (i == TurnTracker.getInstance().getCurrentTurn()) {
+	    		if (i == thisGame.getTurnTracker().getCurrentTurn()) {
 	    			highlight = true;
 	    		}
 	    		//What are these??? How do I populate them?
@@ -69,7 +69,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	    		getView().updatePlayer(i, players[i].getVictoryPoint(), highlight, largestArmy, longestRoad);
 	    	}
 	    	
-	    	if(ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != TurnTracker.getInstance().getCurrentTurn())
+	    	if(ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != thisGame.getTurnTracker().getCurrentTurn())
         	{
         		getView().updateGameState("Waiting for other Players", false);
         	}

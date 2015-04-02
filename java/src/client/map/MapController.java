@@ -209,8 +209,8 @@ public class MapController extends Controller implements IMapController {
 		}
 		Game game = CatanModel.getInstance().getGameManager().getGame();
 
-		if (state == null || !state.toString().equals(TurnTracker.getInstance().getStatus())) {
-			setStateString(TurnTracker.getInstance().getStatus());
+		if (state == null || !state.toString().equals(game.getTurnTracker().getStatus())) {
+			setStateString(game.getTurnTracker().getStatus());
 			CatanModel.getInstance().getGameManager().changed();
 			CatanModel.getInstance().getGameManager().notifyObservers(game);
 		}
@@ -232,7 +232,7 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		if (state.equals(RobbingState.singleton) && !robbingInitiated) {
-			if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() == TurnTracker.getInstance().getCurrentTurn()) {
+			if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() == game.getTurnTracker().getCurrentTurn()) {
 				PlayerInfo playerInfo = ServerProxy.getInstance().getlocalPlayer();
 				robbingInitiated = true;
 				getView().startDrop(PieceType.ROBBER, playerInfo.getColor(), false);
@@ -242,7 +242,7 @@ public class MapController extends Controller implements IMapController {
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		int playerId = ServerProxy.getInstance().getlocalPlayer().getId();
 		Game game = CatanModel.getInstance().getGameManager().getGame();
-		if(game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc)) {
+		if(game.getMap().canBuildRoadAt(game.getPlayerIndexByPlayerId(playerId), edgeLoc, game.getTurnTracker())) {
 			return true;
 		}
 		else {
@@ -429,7 +429,8 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startGame() {
-		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int currentTurn = game.getTurnTracker().getCurrentTurn();
 		
 		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
 			return;
@@ -443,7 +444,8 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startSetup2() {
-		int currentTurn = TurnTracker.getInstance().getCurrentTurn();
+		Game game = CatanModel.getInstance().getGameManager().getGame();
+		int currentTurn = game.getTurnTracker().getCurrentTurn();
 		
 		if (ServerProxy.getInstance().getlocalPlayer().getPlayerIndex() != currentTurn) {
 			return;

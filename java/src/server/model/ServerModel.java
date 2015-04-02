@@ -1,6 +1,7 @@
 package server.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import shared.data.GameInfo;
@@ -8,13 +9,20 @@ import shared.data.PlayerInfo;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.models.Bank;
 import shared.models.CatanMap;
 import shared.models.DevCard;
 import shared.models.Game;
 import shared.models.HexTile;
+import shared.models.Piece;
 import shared.models.Player;
+import shared.models.Port;
 import shared.models.ResCard;
 
 public class ServerModel extends Game {
@@ -24,6 +32,12 @@ public class ServerModel extends Game {
 	}
 	private void initialization() {
 		this.setBank(createBank());
+		this.setMap(createMap());
+		this.getTurnTracker().setCurrentTurn(0);
+		this.getTurnTracker().setLongestRoad(-1);
+		this.getTurnTracker().setLargestArmy(-1);
+		this.setWinner(-1);
+		this.setVersion(0);
 		
 	}
 	
@@ -57,10 +71,69 @@ public class ServerModel extends Game {
 	
 	private CatanMap createMap() {
 		CatanMap newMap = new CatanMap();
+		newMap.setHexTiles(createHexTiles());
+		newMap.setPorts(createPorts());
+		newMap.setRadius(3);
+		newMap.setRobberLocation(new HexLocation(0, -2));
+		newMap.getHexTileAt(new HexLocation(0, -2)).setHasRobber(true);
+		newMap.getHexTileAt(new HexLocation(0, -2)).setRobber(new Piece(PieceType.ROBBER, -1));
+		return newMap;
+	}
+	
+	private HexTile[][] createHexTiles() {
 		HexTile[][] newHexArray = new HexTile[7][7];
 		newHexArray[0+3][-2+3] = new HexTile(0, -2, HexType.DESERT, 0);
-		newHexArray[0+3][-2+3] = new HexTile(0, -2, HexType.DESERT, 0);
-		return newMap;
+		newHexArray[1+3][-2+3] = new HexTile(1, -2, HexType.BRICK, 4);
+		newHexArray[2+3][-2+3] = new HexTile(2, -2, HexType.WOOD, 11);
+		newHexArray[-1+3][-1+3] = new HexTile(-1, -1, HexType.BRICK, 8);
+		newHexArray[0+3][-1+3] = new HexTile(0, -1, HexType.WOOD, 3);
+		newHexArray[1+3][-1+3] = new HexTile(1, -1, HexType.ORE, 9);
+		newHexArray[2+3][-1+3] = new HexTile(2, -1, HexType.SHEEP, 12);
+		newHexArray[-2+3][0+3] = new HexTile(-2, 0, HexType.ORE, 5);
+		newHexArray[-1+3][0+3] = new HexTile(-1, 0, HexType.SHEEP, 10);
+		newHexArray[0+3][0+3] = new HexTile(0, 0, HexType.WHEAT, 11);
+		newHexArray[1+3][0+3] = new HexTile(1, 0, HexType.BRICK, 5);
+		newHexArray[2+3][0+3] = new HexTile(2, 0, HexType.WHEAT, 6);
+		newHexArray[-2+3][1+3] = new HexTile(-2, 1, HexType.WHEAT, 2);
+		newHexArray[-1+3][1+3] = new HexTile(-1, 1, HexType.SHEEP, 9);
+		newHexArray[0+3][1+3] = new HexTile(0, 1, HexType.WOOD, 4);
+		newHexArray[1+3][1+3] = new HexTile(1, 1, HexType.SHEEP, 10);
+		newHexArray[-2+3][2+3] = new HexTile(-2, 2, HexType.WOOD, 6);
+		newHexArray[-1+3][2+3] = new HexTile(-1, 2, HexType.ORE, 3);
+		newHexArray[0+3][0+3] = new HexTile(0, 2, HexType.WHEAT, 8);
+		return newHexArray;
+	}
+	
+	private HashMap<EdgeLocation, Port> createPorts() {
+		HashMap<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
+		ports.put(new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast), 
+				new Port(2, PortType.WOOD, new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast)));
+		
+		ports.put(new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 
+				new Port(2, PortType.BRICK, new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast)));
+		
+		ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 
+				new Port(2, PortType.ORE, new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South)));
+		
+		ports.put(new EdgeLocation(new HexLocation(0,3), EdgeDirection.North), 
+				new Port(3, null, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North)));
+		
+		ports.put(new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 
+				new Port(3, null, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest)));
+		
+		ports.put(new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 
+				new Port(2, PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest)));
+		
+		ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 
+				new Port(3, null, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast)));
+		
+		ports.put(new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 
+				new Port(2, PortType.WHEAT, new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South)));
+		
+		ports.put(new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 
+				new Port(3, PortType.WHEAT, new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest)));
+		
+		return ports;
 	}
 	
 	public GameInfo toGameInfo() {

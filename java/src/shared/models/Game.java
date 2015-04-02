@@ -86,7 +86,7 @@ public class Game {
 
     public boolean canBuildRoad(EdgeLocation location) {
         Player thisPlayer = players[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()];
-        if (thisPlayer.canBuildRoad() && map.canBuildRoadAt(thisPlayer.getPlayerId(), location))
+        if (thisPlayer.canBuildRoad(turnTracker) && map.canBuildRoadAt(thisPlayer.getPlayerId(), location, turnTracker))
             return true;
         else
             return false;
@@ -94,7 +94,7 @@ public class Game {
 
 
     public boolean canPlayDevCard() {
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[turnTracker.getCurrentTurn()];
         if (thisPlayer.getDevCards().size() == 0) {
             return false;
         } else {
@@ -107,7 +107,7 @@ public class Game {
     }
 
     public boolean canOfferTrade(ResourceList offer) {
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[turnTracker.getCurrentTurn()];
         int brick = offer.getBricks();
         int ore = offer.getOres();
         int sheep = offer.getSheep();
@@ -176,7 +176,7 @@ public class Game {
     }
 
     public boolean canRollDice() {
-        if (Objects.equals(TurnTracker.getInstance().getStatus(), "Rolling")) {
+        if (Objects.equals(turnTracker.getStatus(), "Rolling")) {
             return true;
         } else {
             return false;
@@ -184,7 +184,7 @@ public class Game {
     }
 
     public boolean canBuildSettlement(VertexLocation location) {
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[turnTracker.getCurrentTurn()];
         if (thisPlayer.canBuildSettlement() && map.canBuildSettlementAt(thisPlayer.getPlayerId(), location)) {
             return true;
         } else {
@@ -193,7 +193,7 @@ public class Game {
     }
 
     public boolean canUpgradeToCity(VertexLocation location) {
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[turnTracker.getCurrentTurn()];
         if (thisPlayer.canBuildCity() && map.canUpgradeSettlementAt(thisPlayer.getPlayerId(), location)) {
             return true;
         } else {
@@ -206,7 +206,7 @@ public class Game {
             return false;
         }
 
-        Player thisPlayer = players[TurnTracker.getInstance().getCurrentTurn()];
+        Player thisPlayer = players[turnTracker.getCurrentTurn()];
         if (thisPlayer.canBuyDevCard()) {
             return true;
         } else {
@@ -262,7 +262,7 @@ public class Game {
     }
 
     public boolean canFinishTurn() {
-        if (Objects.equals(TurnTracker.getInstance().getStatus(), "Playing")) {
+        if (Objects.equals(turnTracker.getStatus(), "Playing")) {
             return true;
         } else {
             return false;
@@ -285,10 +285,10 @@ public class Game {
 
     private JsonTurnTracker createJsonTurnTracker() {
         JsonTurnTracker turnTracker = new JsonTurnTracker();
-        turnTracker.setCurrentTurn(TurnTracker.getInstance().getCurrentTurn());
-        turnTracker.setLargestArmy(TurnTracker.getInstance().getLargestArmy());
-        turnTracker.setLongestRoad(TurnTracker.getInstance().getLongestRoad());
-        turnTracker.setStatus(TurnTracker.getInstance().getStatus());
+        turnTracker.setCurrentTurn(turnTracker.getCurrentTurn());
+        turnTracker.setLargestArmy(turnTracker.getLargestArmy());
+        turnTracker.setLongestRoad(turnTracker.getLongestRoad());
+        turnTracker.setStatus(turnTracker.getStatus());
         return turnTracker;
     }
 

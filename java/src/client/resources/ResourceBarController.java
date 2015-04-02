@@ -118,7 +118,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     
     private void updateBuildables() {
     	Game game = CatanModel.getInstance().getGameManager().getGame();
-    	getView().setElementEnabled(ResourceBarElement.ROAD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildRoad());
+    	getView().setElementEnabled(ResourceBarElement.ROAD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildRoad(game.getTurnTracker()));
     	getView().setElementEnabled(ResourceBarElement.SETTLEMENT, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildSettlement());
     	getView().setElementEnabled(ResourceBarElement.CITY, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuildCity());
     	getView().setElementEnabled(ResourceBarElement.BUY_CARD, game.getPlayers()[ServerProxy.getInstance().getlocalPlayer().getPlayerIndex()].canBuyDevCard());
