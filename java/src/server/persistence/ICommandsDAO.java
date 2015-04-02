@@ -3,8 +3,6 @@ package server.persistence;
 import server.command.ICommand;
 import shared.model.IGame;
 
-import java.util.List;
-
 
 public interface ICommandsDAO {
 

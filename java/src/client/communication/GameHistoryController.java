@@ -1,10 +1,10 @@
 package client.communication;
 
-import java.util.*;
-import java.util.logging.Logger;
-
-import client.base.*;
+import client.base.Controller;
 import shared.model.GameModelFacade;
+
+import java.util.Observable;
+import java.util.logging.Logger;
 
 
 

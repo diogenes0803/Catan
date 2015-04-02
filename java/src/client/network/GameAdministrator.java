@@ -1,8 +1,10 @@
 package client.network;
 
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import com.google.gson.stream.JsonReader;
 import shared.definitions.CatanColor;
-import client.data.*;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package client.login;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface ILoginController extends IController

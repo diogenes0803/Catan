@@ -7,10 +7,6 @@ import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
-import shared.locations.*;
-import shared.model.IHex;
-
-import java.util.*;
 
 import static org.junit.Assert.*;
 

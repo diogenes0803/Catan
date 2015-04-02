@@ -1,6 +1,6 @@
 package client.login;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface ILoginView extends IOverlayView

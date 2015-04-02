@@ -1,8 +1,8 @@
 package client.discard;
 
-import shared.definitions.*;
-import client.base.*;
-import client.misc.*;
+import client.base.Controller;
+import client.misc.IWaitView;
+import shared.definitions.ResourceType;
 import shared.model.*;
 
 import java.util.List;

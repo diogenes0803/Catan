@@ -1,6 +1,6 @@
 package client.maritime;
 
-import client.base.*;
+import client.base.IView;
 
 
 public interface IMaritimeTradeView extends IView

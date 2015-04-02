@@ -1,14 +1,14 @@
 package client.join;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.data.PlayerInfo;
+import client.utils.FontUtils;
 
 import javax.swing.*;
-
-import client.base.*;
-import client.data.*;
-import client.utils.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 

@@ -1,11 +1,11 @@
 package server.persistence;
 
 import org.junit.Test;
-import server.plugin.*;
-import shared.model.*;
-
-import java.util.Collection;
-import java.util.Iterator;
+import server.plugin.FolderPersistenceManager;
+import server.plugin.FolderUsersDAO;
+import shared.model.IUser;
+import shared.model.IUserManager;
+import shared.model.User;
 
 import static org.junit.Assert.assertTrue;
 

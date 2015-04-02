@@ -1,8 +1,8 @@
 package client.communication;
 
-import java.util.List;
+import client.base.IView;
 
-import client.base.*;
+import java.util.List;
 
 
 public interface IChatView extends IView

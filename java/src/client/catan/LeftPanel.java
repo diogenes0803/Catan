@@ -1,10 +1,14 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import client.communication.ChatController;
+import client.communication.ChatView;
+import client.communication.GameHistoryController;
+import client.communication.GameHistoryView;
+import client.turntracker.TurnTrackerController;
+import client.turntracker.TurnTrackerView;
 
-import client.communication.*;
-import client.turntracker.*;
+import javax.swing.*;
+import java.awt.*;
 
 
 @SuppressWarnings("serial")

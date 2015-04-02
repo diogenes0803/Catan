@@ -7,7 +7,8 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GameModelFacadeTest {
     private IGameModelFacade facade;

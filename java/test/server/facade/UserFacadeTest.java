@@ -1,8 +1,12 @@
 package server.facade;
 
-import client.network.*;
+import client.network.GameAdministrator;
+import client.network.IGameAdministrator;
+import client.network.NetworkException;
 import com.sun.net.httpserver.HttpServer;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

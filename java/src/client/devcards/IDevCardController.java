@@ -1,7 +1,7 @@
 package client.devcards;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IController;
+import shared.definitions.ResourceType;
 
 
 public interface IDevCardController extends IController

@@ -1,7 +1,7 @@
 package client.devcards;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import shared.definitions.DevCardType;
 
 
 public interface IPlayDevCardView extends IOverlayView

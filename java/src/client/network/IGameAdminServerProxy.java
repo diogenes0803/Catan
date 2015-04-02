@@ -2,8 +2,6 @@ package client.network;
 
 import shared.definitions.CatanColor;
 
-import java.util.List;
-
 
 public interface IGameAdminServerProxy {
 

@@ -4,9 +4,6 @@ import server.command.ICommand;
 import server.persistence.ICommandsDAO;
 import shared.model.IGame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class NoPersistenceCommandsDAO implements ICommandsDAO {
     @Override

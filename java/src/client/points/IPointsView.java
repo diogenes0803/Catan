@@ -1,6 +1,6 @@
 package client.points;
 
-import client.base.*;
+import client.base.IView;
 
 
 public interface IPointsView extends IView

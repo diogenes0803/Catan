@@ -1,6 +1,6 @@
 package client.resources;
 
-import client.base.*;
+import client.base.IView;
 
 
 public interface IResourceBarView extends IView

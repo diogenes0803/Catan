@@ -1,17 +1,22 @@
 package client.map;
 
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import client.base.Controller;
+import client.data.RobPlayerInfo;
 import client.map.state.IMapState;
 import client.map.state.MapState;
 import client.map.state.NotPlayingState;
-import shared.definitions.*;
-import shared.locations.*;
-import client.base.*;
-import client.data.*;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.*;
+
+import java.util.Map;
+import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 

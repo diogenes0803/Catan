@@ -1,8 +1,13 @@
 package client.map;
 
-import shared.definitions.*;
-import shared.locations.*;
-import client.base.*;
+import client.base.IView;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 
 public interface IMapView extends IView

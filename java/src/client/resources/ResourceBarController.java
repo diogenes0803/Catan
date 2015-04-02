@@ -1,9 +1,14 @@
 package client.resources;
 
-import java.util.*;
+import client.base.Controller;
+import client.base.IAction;
+import shared.model.GameModelFacade;
+import shared.model.IPlayer;
+import shared.model.IResourceBank;
 
-import client.base.*;
-import shared.model.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
 
 
 

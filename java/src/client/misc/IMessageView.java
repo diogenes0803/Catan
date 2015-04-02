@@ -1,6 +1,6 @@
 package client.misc;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface IMessageView extends IOverlayView

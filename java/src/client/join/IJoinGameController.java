@@ -1,8 +1,8 @@
 package client.join;
 
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
+import client.base.IController;
+import client.data.GameInfo;
+import shared.definitions.CatanColor;
 
 
 public interface IJoinGameController extends IController

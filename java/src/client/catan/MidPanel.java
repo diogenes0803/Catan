@@ -1,9 +1,12 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import client.map.IMapController;
+import client.map.MapController;
+import client.map.MapView;
+import client.map.RobView;
 
-import client.map.*;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel

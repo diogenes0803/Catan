@@ -1,15 +1,15 @@
 package client.maritime;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import client.base.OverlayView;
+import client.utils.ImageUtils;
+import shared.definitions.ResourceType;
 
 import javax.swing.*;
-
-import shared.definitions.*;
-import client.base.*;
-import client.utils.ImageUtils;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 //TODO Craig: I think one thing that could help layout is to simply add .preferedSize() to the createGet/GivePane
 // Also, I'm not sure if you have moved the folder for the images, but that is just in the starting variables.  :D

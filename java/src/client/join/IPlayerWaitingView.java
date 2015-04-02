@@ -1,7 +1,7 @@
 package client.join;
 
-import client.base.*;
-import client.data.*;
+import client.base.IOverlayView;
+import client.data.PlayerInfo;
 
 
 public interface IPlayerWaitingView extends IOverlayView

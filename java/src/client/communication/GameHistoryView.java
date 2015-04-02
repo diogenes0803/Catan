@@ -1,12 +1,10 @@
 package client.communication;
 
-import java.util.List;
-import java.awt.*;
+import client.base.PanelView;
 
 import javax.swing.*;
-
-import client.base.*;
-import shared.model.Log;
+import java.awt.*;
+import java.util.List;
 
 
 @SuppressWarnings("serial")

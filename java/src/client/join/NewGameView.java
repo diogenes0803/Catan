@@ -1,11 +1,12 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import client.base.OverlayView;
 
-import client.base.*;
+import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 @SuppressWarnings("serial")

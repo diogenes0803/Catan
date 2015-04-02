@@ -1,7 +1,7 @@
 package client.discard;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IController;
+import shared.definitions.ResourceType;
 
 
 public interface IDiscardController extends IController

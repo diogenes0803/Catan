@@ -1,11 +1,11 @@
 package client.misc;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
 
 import javax.swing.*;
-
-import client.base.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 

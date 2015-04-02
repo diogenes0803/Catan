@@ -1,6 +1,6 @@
 package client.roll;
 
-import client.base.*;
+import client.base.Controller;
 import shared.model.GameModelFacade;
 import shared.model.ModelException;
 import shared.model.ServerModelFacade;

@@ -1,20 +1,20 @@
 package client.domestic;
 
+import client.base.OverlayView;
+import client.data.PlayerInfo;
+import shared.definitions.ResourceType;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import shared.definitions.*;
-import client.base.*;
-import client.data.*;
 
 
 

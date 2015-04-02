@@ -1,6 +1,6 @@
 package client.points;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface IGameFinishedView extends IOverlayView

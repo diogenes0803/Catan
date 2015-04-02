@@ -1,14 +1,13 @@
 package client.map;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.data.RobPlayerInfo;
 
 import javax.swing.*;
-
-import java.util.*;
-
-import client.base.*;
-import client.data.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 

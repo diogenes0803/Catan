@@ -1,7 +1,6 @@
 package client.map.state;
 
 import client.data.RobPlayerInfo;
-import client.map.IMapController;
 import client.map.MapController;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;

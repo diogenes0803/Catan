@@ -1,11 +1,11 @@
 package client.domestic;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.PanelView;
 
 import javax.swing.*;
-
-import client.base.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 @SuppressWarnings("serial")

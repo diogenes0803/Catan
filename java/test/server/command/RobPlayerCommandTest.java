@@ -4,9 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import shared.locations.HexLocation;
-import shared.model.*;
+import shared.model.GameModelFacade;
+import shared.model.GameState;
+import shared.model.IGame;
+import shared.model.ModelInitializer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RobPlayerCommandTest {
 

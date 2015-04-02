@@ -1,12 +1,15 @@
 package server.command;
 
-import shared.locations.*;
-import shared.model.*;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.model.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jeffreybacon on 11/16/14.

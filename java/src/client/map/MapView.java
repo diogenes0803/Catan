@@ -1,14 +1,23 @@
 package client.map;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Observable;
-import javax.swing.*;
+import client.base.IController;
+import client.base.IView;
+import client.base.OverlayView;
+import client.base.PanelView;
+import client.data.RobPlayerInfo;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
-import shared.locations.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
 
 
 @SuppressWarnings("serial")

@@ -1,9 +1,7 @@
 package client.custom.cwt;
 
-import javax.swing.JButton;
-import javax.swing.border.Border;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
-
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;

@@ -1,8 +1,9 @@
 package client.devcards;
 
+import client.base.Controller;
+import client.base.IAction;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-import client.base.*;
 import shared.model.*;
 
 import java.util.Observable;

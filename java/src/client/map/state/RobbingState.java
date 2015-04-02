@@ -4,7 +4,10 @@ import client.data.RobPlayerInfo;
 import client.map.MapController;
 import shared.definitions.PieceType;
 import shared.locations.HexLocation;
-import shared.model.*;
+import shared.model.GameModelFacade;
+import shared.model.IPlayer;
+import shared.model.ModelException;
+import shared.model.ServerModelFacade;
 
 import java.util.Collection;
 

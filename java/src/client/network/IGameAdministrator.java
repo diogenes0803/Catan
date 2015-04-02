@@ -1,7 +1,8 @@
 package client.network;
 
-import client.data.*;
+import client.data.GameInfo;
 import shared.definitions.CatanColor;
+
 import java.io.IOException;
 import java.util.List;
 

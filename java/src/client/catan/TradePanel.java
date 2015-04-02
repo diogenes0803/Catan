@@ -1,11 +1,16 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import client.domestic.AcceptTradeOverlay;
+import client.domestic.DomesticTradeController;
+import client.domestic.DomesticTradeOverlay;
+import client.domestic.DomesticTradeView;
+import client.maritime.MaritimeTradeController;
+import client.maritime.MaritimeTradeOverlay;
+import client.maritime.MaritimeTradeView;
+import client.misc.WaitView;
 
-import client.domestic.*;
-import client.maritime.*;
-import client.misc.*;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class TradePanel extends JPanel

@@ -1,6 +1,5 @@
 package client.data;
 
-import shared.definitions.CatanColor;
 import shared.model.IPlayer;
 
 import java.util.ArrayList;

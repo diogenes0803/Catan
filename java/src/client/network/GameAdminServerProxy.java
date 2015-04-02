@@ -3,8 +3,6 @@ package client.network;
 import com.google.gson.JsonObject;
 import shared.definitions.CatanColor;
 
-import java.util.List;
-
 
 public class GameAdminServerProxy implements IGameAdminServerProxy {
 

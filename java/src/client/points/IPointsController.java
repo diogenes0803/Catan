@@ -1,6 +1,6 @@
 package client.points;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface IPointsController extends IController

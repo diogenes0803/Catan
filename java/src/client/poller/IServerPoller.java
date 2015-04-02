@@ -1,8 +1,6 @@
 package client.poller;
 
 import client.network.IServerProxy;
-import shared.model.ModelException;
-import client.network.NetworkException;
 
 
 public interface IServerPoller {

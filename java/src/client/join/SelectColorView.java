@@ -1,11 +1,12 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import client.base.OverlayView;
+import shared.definitions.CatanColor;
 
-import shared.definitions.*;
-import client.base.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 @SuppressWarnings("serial")

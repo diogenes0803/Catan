@@ -1,9 +1,12 @@
 package client.base;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Iterator;
 
 
 @SuppressWarnings("serial")

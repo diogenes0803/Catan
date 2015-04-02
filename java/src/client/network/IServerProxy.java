@@ -1,9 +1,10 @@
 package client.network;
 
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.definitions.*;
-import shared.locations.*;
-import shared.model.*;
+import shared.model.IResourceBank;
 
 
 public interface IServerProxy {

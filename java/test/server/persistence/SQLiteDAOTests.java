@@ -1,12 +1,14 @@
 package server.persistence;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
-import server.plugin.*;
+import server.plugin.SQLitePersistenceManager;
+import server.plugin.SQLiteUsersDAO;
 import shared.model.*;
 
 import java.util.Collection;
 import java.util.Iterator;
+
+import static org.junit.Assert.assertTrue;
 
 public class SQLiteDAOTests {
     @Test

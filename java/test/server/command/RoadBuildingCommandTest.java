@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
-import shared.model.*;
+import shared.model.GameModelFacade;
+import shared.model.IGame;
+import shared.model.IPlayer;
+import shared.model.ModelInitializer;
 
 import static org.junit.Assert.assertTrue;
 

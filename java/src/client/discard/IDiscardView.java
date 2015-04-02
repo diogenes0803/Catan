@@ -1,7 +1,7 @@
 package client.discard;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import shared.definitions.ResourceType;
 
 
 public interface IDiscardView extends IOverlayView

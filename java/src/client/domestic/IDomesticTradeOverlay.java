@@ -1,8 +1,8 @@
 package client.domestic;
 
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import client.data.PlayerInfo;
+import shared.definitions.ResourceType;
 
 
 public interface IDomesticTradeOverlay extends IOverlayView

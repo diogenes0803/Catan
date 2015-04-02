@@ -1,6 +1,6 @@
 package client.roll;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface IRollController extends IController

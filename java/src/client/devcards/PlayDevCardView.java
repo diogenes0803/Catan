@@ -1,18 +1,21 @@
 package client.devcards;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
+import client.base.OverlayView;
+import client.utils.FontUtils;
+import client.utils.ImageUtils;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import shared.definitions.*;
-import client.base.*;
-import client.utils.*;
-
-import java.util.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @SuppressWarnings("serial")

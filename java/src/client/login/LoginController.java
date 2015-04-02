@@ -1,14 +1,17 @@
 package client.login;
 
-import client.base.*;
-import client.misc.*;
-import client.network.*;
+import client.base.Controller;
+import client.base.IAction;
+import client.misc.IMessageView;
+import client.network.GameAdministrator;
+import client.network.IGameAdministrator;
+import client.network.NetworkException;
 
-import java.util.*;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 

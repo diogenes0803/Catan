@@ -1,12 +1,13 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 
 import javax.swing.*;
-
-import client.base.*;
-import client.data.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 @SuppressWarnings("serial")

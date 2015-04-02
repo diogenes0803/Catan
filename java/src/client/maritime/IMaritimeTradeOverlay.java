@@ -1,7 +1,7 @@
 package client.maritime;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import shared.definitions.ResourceType;
 
 
 public interface IMaritimeTradeOverlay extends IOverlayView

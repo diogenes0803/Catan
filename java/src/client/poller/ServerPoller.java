@@ -2,11 +2,10 @@ package client.poller;
 
 import client.network.IServerProxy;
 import client.network.NetworkException;
-import shared.model.IModelInitializer;
 import shared.model.ModelException;
 import shared.model.ModelInitializer;
 
-import javax.swing.Timer;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;

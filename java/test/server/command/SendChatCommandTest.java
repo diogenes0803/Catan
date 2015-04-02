@@ -3,9 +3,13 @@ package server.command;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import shared.model.*;
+import shared.model.GameModelFacade;
+import shared.model.IGame;
+import shared.model.IPlayer;
+import shared.model.ModelInitializer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class SendChatCommandTest {
 

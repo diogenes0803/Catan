@@ -1,7 +1,7 @@
 package client.turntracker;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IView;
+import shared.definitions.CatanColor;
 
 
 public interface ITurnTrackerView extends IView

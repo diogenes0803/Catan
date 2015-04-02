@@ -3,11 +3,7 @@ package server.command;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import shared.model.IGame;
-import shared.model.IPlayer;
-import shared.model.ModelInitializer;
-import shared.model.GameState;
-import shared.model.GameModelFacade;
+import shared.model.*;
 
 import static org.junit.Assert.assertTrue;
 

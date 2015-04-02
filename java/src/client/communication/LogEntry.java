@@ -1,6 +1,6 @@
 package client.communication;
 
-import shared.definitions.*;
+import shared.definitions.CatanColor;
 
 
 public class LogEntry

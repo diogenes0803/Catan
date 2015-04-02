@@ -1,7 +1,7 @@
 package client.domestic;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import shared.definitions.ResourceType;
 
 
 public interface IAcceptTradeOverlay extends IOverlayView

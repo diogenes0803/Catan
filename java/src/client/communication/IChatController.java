@@ -1,6 +1,6 @@
 package client.communication;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface IChatController extends IController

@@ -1,6 +1,6 @@
 package client.turntracker;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface ITurnTrackerController extends IController

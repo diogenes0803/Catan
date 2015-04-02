@@ -1,11 +1,11 @@
 package server.plugin;
 
 import server.persistence.PersistenceException;
-import server.plugin.SQLitePersistenceManager;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.*;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

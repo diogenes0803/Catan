@@ -1,7 +1,7 @@
 package client.map;
 
-import client.base.*;
-import client.data.*;
+import client.base.IOverlayView;
+import client.data.RobPlayerInfo;
 
 
 public interface IRobView extends IOverlayView

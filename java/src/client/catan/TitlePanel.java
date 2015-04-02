@@ -1,10 +1,10 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
+import shared.definitions.CatanColor;
 
-import shared.definitions.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class TitlePanel extends JPanel

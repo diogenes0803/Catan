@@ -1,12 +1,12 @@
 package client.roll;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.utils.ImageUtils;
 
 import javax.swing.*;
-
-import client.base.*;
-import client.utils.ImageUtils;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 

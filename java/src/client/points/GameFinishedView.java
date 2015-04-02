@@ -1,13 +1,13 @@
 package client.points;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
+import client.base.OverlayView;
+import client.utils.ImageUtils;
 
 import javax.swing.*;
-
-import client.base.*;
-import client.utils.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 
 

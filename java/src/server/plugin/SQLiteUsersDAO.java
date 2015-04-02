@@ -4,13 +4,8 @@ import server.persistence.IUsersDAO;
 import server.persistence.PersistenceException;
 import shared.model.IUser;
 import shared.model.IUserManager;
-import shared.model.User;
 import shared.model.UserManager;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.sql.ResultSet;
 import java.util.List;
 
 

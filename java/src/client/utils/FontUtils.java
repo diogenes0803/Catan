@@ -1,7 +1,7 @@
 package client.utils;
 
-import java.awt.Font;
-import javax.swing.JComponent;
+import javax.swing.*;
+import java.awt.*;
 
 public class FontUtils
 {

@@ -1,15 +1,17 @@
 package client.join;
 
-import client.base.*;
+import client.base.Controller;
 import client.data.PlayerInfo;
-import client.network.*;
+import client.network.GameAdministrator;
+import client.network.NetworkException;
 import client.poller.ServerPoller;
-import shared.model.Game;
 import shared.model.GameModelFacade;
 import shared.model.IPlayer;
-import shared.model.ServerModelFacade;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

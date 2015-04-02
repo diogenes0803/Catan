@@ -7,7 +7,10 @@ import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.*;
+import shared.model.GameModelFacade;
+import shared.model.IPlayer;
+import shared.model.ModelException;
+import shared.model.ServerModelFacade;
 
 import java.util.Collection;
 

@@ -1,10 +1,9 @@
 package client.data;
 
-import shared.definitions.*;
+import shared.definitions.CatanColor;
 import shared.model.IPlayer;
 import shared.model.Player;
 
-import javax.imageio.event.IIOReadProgressListener;
 import java.util.ArrayList;
 import java.util.Collection;
 

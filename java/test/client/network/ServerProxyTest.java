@@ -9,7 +9,7 @@ import shared.definitions.ResourceType;
 import shared.locations.*;
 import shared.model.ResourceBank;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class ServerProxyTest {
     private HttpServer m_server;

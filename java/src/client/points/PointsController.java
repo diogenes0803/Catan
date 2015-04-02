@@ -1,7 +1,8 @@
 package client.points;
 
-import client.base.*;
-import shared.model.*;
+import client.base.Controller;
+import shared.model.CatanConstants;
+import shared.model.GameModelFacade;
 
 import java.util.Observable;
 import java.util.logging.Logger;

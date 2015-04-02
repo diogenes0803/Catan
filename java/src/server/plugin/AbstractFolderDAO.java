@@ -2,7 +2,6 @@ package server.plugin;
 
 import server.persistence.AbstractPersistenceManager;
 import server.persistence.PersistenceException;
-import server.plugin.FolderPersistenceManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

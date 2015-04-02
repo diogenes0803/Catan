@@ -1,6 +1,6 @@
 package client.join;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface INewGameView extends IOverlayView

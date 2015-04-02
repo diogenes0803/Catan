@@ -1,18 +1,17 @@
 package client.main;
 
-import javax.swing.*;
-
-import client.catan.*;
-import client.login.*;
+import client.base.IAction;
+import client.catan.CatanPanel;
 import client.join.*;
-import client.misc.*;
-import client.base.*;
+import client.login.LoginController;
+import client.login.LoginView;
+import client.misc.MessageView;
 import client.network.*;
 import client.poller.ServerPoller;
-import shared.model.Game;
 import shared.model.GameModelFacade;
 import shared.model.ServerModelFacade;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

@@ -1,6 +1,6 @@
 package client.domestic;
 
-import client.base.*;
+import client.base.IView;
 
 
 public interface IDomesticTradeView extends IView

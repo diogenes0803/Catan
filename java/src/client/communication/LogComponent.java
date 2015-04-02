@@ -1,15 +1,15 @@
 package client.communication;
 
-import java.util.List;
-import java.util.*;
-import java.awt.*;
-import java.awt.font.*;
-import java.awt.geom.*;
+import client.utils.ImageUtils;
+import shared.definitions.CatanColor;
 
 import javax.swing.*;
-
-import shared.definitions.*;
-import client.utils.*;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 @SuppressWarnings("serial")

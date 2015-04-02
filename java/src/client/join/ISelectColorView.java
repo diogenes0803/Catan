@@ -1,7 +1,7 @@
 package client.join;
 
-import client.base.*;
-import shared.definitions.*;
+import client.base.IOverlayView;
+import shared.definitions.CatanColor;
 
 
 public interface ISelectColorView extends IOverlayView

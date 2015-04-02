@@ -1,8 +1,12 @@
 package client.maritime;
 
-import shared.definitions.*;
-import client.base.*;
-import shared.model.*;
+import client.base.Controller;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.model.GameModelFacade;
+import shared.model.IResourceBank;
+import shared.model.ModelException;
+import shared.model.ServerModelFacade;
 
 import java.util.ArrayList;
 import java.util.List;

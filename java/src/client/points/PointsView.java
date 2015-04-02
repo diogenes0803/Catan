@@ -1,10 +1,10 @@
 package client.points;
 
-import java.awt.*;
-
-import client.base.*;
-import client.utils.*;
+import client.base.ComponentView;
+import client.utils.ImageUtils;
 import shared.model.CatanConstants;
+
+import java.awt.*;
 
 
 @SuppressWarnings("serial")

@@ -1,7 +1,10 @@
 package client.turntracker;
 
-import client.base.*;
-import shared.model.*;
+import client.base.Controller;
+import shared.model.CatanConstants;
+import shared.model.GameModelFacade;
+import shared.model.IPlayer;
+import shared.model.ServerModelFacade;
 
 import java.util.List;
 import java.util.Observable;

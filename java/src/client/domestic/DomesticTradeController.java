@@ -1,9 +1,9 @@
 package client.domestic;
 
+import client.base.Controller;
 import client.data.PlayerInfo;
-import shared.definitions.*;
-import client.base.*;
-import client.misc.*;
+import client.misc.IWaitView;
+import shared.definitions.ResourceType;
 import shared.model.*;
 
 import java.util.HashMap;
@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.lang.String.format;
 
 
 

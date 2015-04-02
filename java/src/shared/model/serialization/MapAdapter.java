@@ -7,8 +7,8 @@ import shared.definitions.HexType;
 import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.model.CatanMap;
-import shared.model.IRoad;
 import shared.model.IHex;
+import shared.model.IRoad;
 import shared.model.ITown;
 
 import java.io.IOException;

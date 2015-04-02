@@ -1,6 +1,6 @@
 package client.resources;
 
-import client.base.*;
+import client.base.IController;
 
 
 public interface IResourceBarController extends IController

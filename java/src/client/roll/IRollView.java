@@ -1,6 +1,6 @@
 package client.roll;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface IRollView extends IOverlayView

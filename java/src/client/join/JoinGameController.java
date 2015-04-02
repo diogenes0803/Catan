@@ -1,21 +1,24 @@
 package client.join;
 
+import client.base.Controller;
+import client.base.IAction;
 import client.data.GameInfo;
-import client.network.*;
+import client.data.PlayerInfo;
+import client.misc.IMessageView;
+import client.network.GameAdministrator;
+import client.network.IGameAdministrator;
+import client.network.NetworkException;
 import shared.definitions.CatanColor;
-import client.base.*;
-import client.data.*;
-import client.misc.*;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.List;
-import javax.swing.Timer;
-import java.util.Arrays;
 
 
 

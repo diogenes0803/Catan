@@ -1,6 +1,6 @@
 package client.devcards;
 
-import client.base.*;
+import client.base.IOverlayView;
 
 
 public interface IBuyDevCardView extends IOverlayView

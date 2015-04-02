@@ -1,12 +1,10 @@
 package shared.model;
 
-import org.junit.*;
-import org.junit.rules.ExpectedException;
-import server.Server;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.lang.reflect.Field;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Wyatt

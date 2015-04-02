@@ -1,22 +1,14 @@
 package client.domestic;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.utils.ImageUtils;
+import shared.definitions.ResourceType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import shared.definitions.*;
-import client.base.*;
-import client.utils.ImageUtils;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 
