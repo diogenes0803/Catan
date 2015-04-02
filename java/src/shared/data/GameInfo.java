@@ -11,8 +11,9 @@ import com.google.gson.annotations.Expose;
  * title (non-empty string)</li> <li>Players: List of players who have joined the game (can be empty)</li> </ul>
  */
 public class GameInfo {
+	
+	@Expose private String title;
     @Expose private int id;
-    @Expose private String title;
     @Expose private List<PlayerInfo> players;
 
     public GameInfo() {

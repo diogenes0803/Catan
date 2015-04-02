@@ -15,10 +15,10 @@ import com.google.gson.annotations.Expose;
  */
 public class PlayerInfo {
 
-    @Expose private int id;
-    @Expose private int playerIndex;
-    @Expose private String name;
+    private int playerIndex;
     @Expose private String color;
+    @Expose private String name;
+    @Expose private int id;
 
     public PlayerInfo() {
         setId(-1);

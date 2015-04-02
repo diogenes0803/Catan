@@ -79,6 +79,7 @@ public class GamesFacade implements Facade {
 		JoinGameResults thisResult = new JoinGameResults();
 		Player player = new Player();
 		player.setColor(CatanColor.getCatanColor(thisParams.getColor()));
+		player.setName(userInfo.getName());
 		ServerModel thisGame = Server.models.get(thisParams.getId());
 
 		if(thisGame != null) {
