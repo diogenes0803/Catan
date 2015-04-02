@@ -41,15 +41,13 @@ public class GameFacade implements IGameFacade {
     public boolean addAI(AddAIRequestParams params) throws ModelException {
         // TODO: this is temporary test code
         IGame game = local_gameManager.getGame(params.getGameId());
-        game.joinGame(new User("Hal 9000", "", 9000), shared.definitions.CatanColor.RED);
-        game.joinGame(new User("GLaDOS", "", 1234567), shared.definitions.CatanColor.BLUE);
-        game.joinGame(new User("The MCP", "", 1980), shared.definitions.CatanColor.WHITE);
+        game.joinGame(new User("LARGEST_ARMY", "", 9001), shared.definitions.CatanColor.WHITE);
         return true;
     }
 
 
     @Override
     public String[] listAI() {
-        return new String[]{"Hal 9000", "The MCP", "GLaDOS"};
+        return new String[]{"LARGEST_ARMY"};
     }
 }
