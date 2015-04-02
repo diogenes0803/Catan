@@ -32,22 +32,19 @@ public class JoinGameHandler implements HttpHandler
 		String[] cookiesArray = cookies.split(";");
 		for(String thisCookie : cookiesArray) {
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(11, thisCookie.length());
-				String decoded = URLDecoder.decode(userCookie);
+				String userCookie = thisCookie.substring(12, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie, "UTF-8");
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
 				//gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
 				//for some reason there's already a catan.game cookie, I'm not sure if that's actually supposed to be there
 			}
-			else
-			{
-
-			}
 				
 		}
 		
 		if(userInfo != null && gameId == -1) {
+			
 			String qry;
 			String encoding = "ISO-8859-1";
 			InputStream in = ex.getRequestBody();
@@ -61,12 +58,18 @@ public class JoinGameHandler implements HttpHandler
 			} finally {
 			    in.close();
 			}
+			
+			System.out.println("first place");
 			JoinGameParams params = gson.fromJson(qry, JoinGameParams.class);
+			System.out.println("Second place");
 			JoinGameResults result = thisFacade.join(params, userInfo);
+			System.out.println("Succes if");
 			
 			ex.getResponseHeaders().add("Content-Type", "text/html");
 			
+			
 			if(result.isSuccess()) {
+				
 				List<String> gameCookies = new ArrayList<String>();
 				gameCookies.add("catan.game="+params.getId()+";Path=/;");
 				ex.getResponseHeaders().put("Set-cookie", gameCookies);
@@ -77,6 +80,7 @@ public class JoinGameHandler implements HttpHandler
 				body = "The player could not be added to the specified game.";
 				ex.sendResponseHeaders(400, body.length());
 			}
+			
 			OutputStream out = ex.getResponseBody();
 			out.write(body.getBytes());
 			out.flush();

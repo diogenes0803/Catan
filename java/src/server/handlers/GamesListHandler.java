@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class GamesListHandler implements HttpHandler 
 {
@@ -19,7 +20,7 @@ public class GamesListHandler implements HttpHandler
 	{
 		ListGamesResults result = thisFacade.list();
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		String gsonObject = gson.toJson(result.getGames());
+		String gsonObject = gson.toJson(result.getGames(), result.getGames().getClass());
 		ex.getResponseHeaders().add("Content-Type", "application/json");
 		ex.sendResponseHeaders(200, gsonObject.length());
 		OutputStream out = ex.getResponseBody();
