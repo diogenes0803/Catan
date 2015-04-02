@@ -85,14 +85,13 @@ public class ServerModel extends Game {
 	public boolean addPlayer(Player thisPlayer) {
 		int currentNumPlayers = this.getNumberOfPlayers();
 		if(currentNumPlayers > 3) {
-			
 			return false;
 		}
 		
 		thisPlayer.setIndex(currentNumPlayers);
 		Player[] tempPlayers = this.getPlayers();
 		for(Player player : tempPlayers) {
-			if (player != null)
+			if (player != null && player.getName() != null)
 			{
 				if(thisPlayer.getName().equals(player.getName())) {
 					return true;
