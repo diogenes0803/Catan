@@ -3,7 +3,6 @@
  */
 package server.facades;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import server.Server;
@@ -26,8 +25,25 @@ import server.commands.RollNumberCommand;
 import server.commands.SendChatCommand;
 import server.commands.YearOfPlentyCommand;
 import server.model.ServerModel;
-import shared.communicator.*;
+import shared.communicator.AcceptTradeParams;
+import shared.communicator.BuildCityParams;
+import shared.communicator.BuildRoadParams;
+import shared.communicator.BuildSettlementParams;
+import shared.communicator.BuyDevCardParams;
+import shared.communicator.DiscardCardsParams;
+import shared.communicator.FinishTurnParams;
+import shared.communicator.MaritimeTradeParams;
+import shared.communicator.MonopolyParams;
+import shared.communicator.MonumentParams;
+import shared.communicator.OfferTradeParams;
+import shared.communicator.PlaySoldierParams;
+import shared.communicator.RoadBuildingParams;
+import shared.communicator.RobPlayerParams;
+import shared.communicator.RollNumberParams;
+import shared.communicator.SendChatParams;
+import shared.communicator.YearOfPlentyParams;
 import shared.models.CatanModel;
+import shared.models.Game;
 import shared.models.GameManager;
 
 /**
@@ -43,23 +59,17 @@ public class MovesFacade implements Facade {
 	 * @param gameId 
 	 * @return CatanModel object containing the updated Game model
 	 */
-	public CatanModel sendChat(SendChatParams params, int gameId) {
+	public void sendChat(SendChatParams params, int gameId) {
 		 
 		SendChatCommand command = new SendChatCommand(params, gameId);
 		
 		//should probably check canDo() stuff here
-		ServerModel game = Server.models.get(gameId);
 		
 		command.execute();
 		
 		//Need to figure how to pass the game stuff and model back
-		CatanModel model = new CatanModel();
-		GameManager manager = new GameManager();
-		manager.setGame(game);
-		model.setGameManager(manager);
 		
-		
-		 return model;
+		 return;
 	}
 	
 	/**

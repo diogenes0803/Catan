@@ -16,17 +16,13 @@ import shared.communicator.UserLoginResults;
  */
 public class UserFacade implements Facade {
 	
-	private int userID = 0;
+	private int userID = 7;
 	 /**
 	 * @param params
 	 * @return
 	 */
 	public UserLoginResults userLogin(UserLoginParams params) {
 		UserLoginResults result = new UserLoginResults();
-		
-		User user = new User("Sam", "sam", addUserID());
-		
-		Server.users.put("Sam", user);
 		//Sees if the user exists, if not returns null
 		if ( Server.users.get(params.getusername()) != null)
 		{
@@ -82,5 +78,7 @@ public class UserFacade implements Facade {
 	        
 	        return result;
 	 }
+	
+	
 
 }

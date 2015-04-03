@@ -60,6 +60,13 @@ public class Server
 	
 	public static void main(String[] args) throws NumberFormatException, FileNotFoundException, ClassNotFoundException, SQLException 
 	{
+		Server.users.put("Sam", new User("Sam", "sam", 0));
+		Server.users.put("Brooke", new User("Brooke", "brooke", 1));
+		Server.users.put("Pete", new User("Pete", "pete", 2));
+		Server.users.put("Mark", new User("Mark", "mark", 3));
+		Server.users.put("Squall", new User("Squall", "squall", 4));
+		Server.users.put("Ken", new User("Ken", "ken", 5));
+		Server.users.put("Miguel", new User("Miguel", "miguel", 6));
 		new Server(SERVER_PORT_NUMBER).run();
 	}
 	

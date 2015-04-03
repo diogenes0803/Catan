@@ -46,7 +46,6 @@ public class GetModelHandler implements HttpHandler {
 			//if(model.getPlayers()[i].getPlayerId() == userInfo.getPlayerID()) {
 				
 				ex.getResponseHeaders().add("Content-Type", "application/json");
-				JsonModelHolder jsonModel = model.toJsonModel();
 				String jsonObject = gson.toJson(model.toJsonModel(), JsonModelHolder.class);
 				int index = jsonObject.indexOf(",\"number\":0");
 				StringBuilder jsonObjectBuilder = new StringBuilder(jsonObject);
