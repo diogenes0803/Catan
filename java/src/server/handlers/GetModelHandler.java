@@ -3,7 +3,6 @@ package server.handlers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
-import java.util.List;
 
 import server.Server;
 import server.data.User;
@@ -27,12 +26,14 @@ public class GetModelHandler implements HttpHandler {
 		for(String thisCookie : cookiesArray) {
 			
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(11, thisCookie.length());
+				int index = thisCookie.indexOf("=");
+				String userCookie = thisCookie.substring(index+1, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
-				String userCookie = thisCookie.substring(12, thisCookie.length());
+				int index = thisCookie.indexOf("=");
+				String userCookie = thisCookie.substring(index+1, thisCookie.length());
 				String decoded = URLDecoder.decode(userCookie);
 				gameId = gson.fromJson(decoded, Integer.class);
 
@@ -45,7 +46,8 @@ public class GetModelHandler implements HttpHandler {
 			//if(model.getPlayers()[i].getPlayerId() == userInfo.getPlayerID()) {
 				
 				ex.getResponseHeaders().add("Content-Type", "application/json");
-				String jsonObject = gson.toJson(model, Game.class);
+				JsonModelHolder jsonModel = model.toJsonModel();
+				String jsonObject = gson.toJson(model.toJsonModel(), JsonModelHolder.class);
 
 				ex.sendResponseHeaders(200, jsonObject.length());
 				

@@ -33,12 +33,6 @@ public class ServerModel extends Game {
 	private void initialization() {
 		this.setBank(createBank());
 		this.setMap(createMap());
-		this.getTurnTracker().setCurrentTurn(0);
-		this.getTurnTracker().setLongestRoad(-1);
-		this.getTurnTracker().setLargestArmy(-1);
-		this.setWinner(-1);
-		this.setVersion(0);
-		
 	}
 	
 	private Bank createBank() {
@@ -116,16 +110,16 @@ public class ServerModel extends Game {
 				new Port(2, PortType.ORE, new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South)));
 		
 		ports.put(new EdgeLocation(new HexLocation(0,3), EdgeDirection.North), 
-				new Port(3, null, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North)));
+				new Port(3, PortType.THREE, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North)));
 		
 		ports.put(new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 
-				new Port(3, null, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest)));
+				new Port(3, PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest)));
 		
 		ports.put(new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 
 				new Port(2, PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest)));
 		
 		ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 
-				new Port(3, null, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast)));
+				new Port(3, PortType.THREE, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast)));
 		
 		ports.put(new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 
 				new Port(2, PortType.WHEAT, new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South)));

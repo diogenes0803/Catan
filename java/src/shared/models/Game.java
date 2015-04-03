@@ -80,7 +80,9 @@ public class Game {
     	gameTitle = "";
     	logs = new ArrayList<MessageLine>();
     	chats = new ArrayList<MessageLine>();
-    	
+    	turnTracker = new TurnTracker();
+		this.setWinner(-1);
+		this.setVersion(0);
     	
     }
 
@@ -284,12 +286,12 @@ public class Game {
     }
 
     private JsonTurnTracker createJsonTurnTracker() {
-        JsonTurnTracker turnTracker = new JsonTurnTracker();
-        turnTracker.setCurrentTurn(turnTracker.getCurrentTurn());
-        turnTracker.setLargestArmy(turnTracker.getLargestArmy());
-        turnTracker.setLongestRoad(turnTracker.getLongestRoad());
-        turnTracker.setStatus(turnTracker.getStatus());
-        return turnTracker;
+        JsonTurnTracker jsonTurnTracker = new JsonTurnTracker();
+        jsonTurnTracker.setCurrentTurn(turnTracker.getCurrentTurn());
+        jsonTurnTracker.setLargestArmy(turnTracker.getLargestArmy());
+        jsonTurnTracker.setLongestRoad(turnTracker.getLongestRoad());
+        jsonTurnTracker.setStatus(turnTracker.getStatus());
+        return jsonTurnTracker;
     }
 
     private JsonBank createJsonBank() {
@@ -561,6 +563,8 @@ public class Game {
     private List<JsonPlayer> createJsonPlayers() {
         List<JsonPlayer> jsonPlayers = new ArrayList<JsonPlayer>();
         for (int i = 0; i < players.length; i++) {
+        	if(players[i] == null)
+        		continue;
             Player thisPlayer = players[i];
             JsonPlayer player = new JsonPlayer();
             int brick = 0;
