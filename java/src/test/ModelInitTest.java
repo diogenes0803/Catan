@@ -30,7 +30,7 @@ public class ModelInitTest {
             Game thisGame = modelHolder.buildCatanGame();
             System.out.println("Comparing JsonModelHolder and GameModel");
             System.out.println("Check if all players are there");
-            assertTrue(modelHolder.getPlayers().size() == thisGame.getPlayers().length);
+            assertTrue(modelHolder.getPlayers().length == thisGame.getPlayers().length);
             System.out.println("Check if bank has correct numbers of resource and development cards");
             assertTrue(modelHolder.getBank().getTotalResNum() == thisGame.getBank().getResCards().size());
             assertTrue(modelHolder.getDeck().getTotalDevNum() == thisGame.getBank().getDevCards().size());

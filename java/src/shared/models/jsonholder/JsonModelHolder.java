@@ -1,20 +1,35 @@
 package shared.models.jsonholder;
 
-import shared.definitions.*;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.models.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.models.Bank;
+import shared.models.CatanMap;
+import shared.models.DevCard;
+import shared.models.Game;
+import shared.models.HexTile;
+import shared.models.MessageLine;
+import shared.models.Piece;
+import shared.models.Player;
+import shared.models.Port;
+import shared.models.ResCard;
+import shared.models.TradeOffer;
+
 public class JsonModelHolder {
     private Deck deck;
     private JsonMap map;
-    private List<JsonPlayer> players;
+    private JsonPlayer[] players = new JsonPlayer[4];
     private Log log;
     private Chat chat;
     private JsonBank bank;
@@ -22,7 +37,6 @@ public class JsonModelHolder {
     private int winner;
     private int version;
     private JsonTradeOffer tradeOffer;
-    private int numberOfPlayers = 0;
 
     public Game buildCatanGame() {
         Game game = new Game();
@@ -31,7 +45,7 @@ public class JsonModelHolder {
 
         game.setMap(createMap());
         game.setPlayers(createPlayerList());
-        game.setNumberOfPlayers(numberOfPlayers);
+        game.setNumberOfPlayers(countPlayers());
         game.setBank(new Bank(createBankResCards(), createBankDevCards()));
         game.setLogs(createLog());
         game.setChats(createChat());
@@ -46,7 +60,17 @@ public class JsonModelHolder {
         game.getTurnTracker().setLargestArmy(turnTracker.getLargestArmy());
         return game;
     }
-
+    
+    private int countPlayers() {
+    	int count = 0;
+    	for(JsonPlayer player : players) {
+    		if(player != null) {
+    			count++;
+    		}
+    	}
+    	return count;
+    }
+    
     private CatanMap createMap() {
         CatanMap mapModel = new CatanMap();
         int radius = map.getRadius();
@@ -257,7 +281,6 @@ public class JsonModelHolder {
 	            player.setResCards(resCards);
 	            player.setAvailablePieces(availablePieces);
 	            players[thisPlayer.getPlayerIndex()] = player;
-	            numberOfPlayers++;
         	}
         }
         return players;
@@ -486,11 +509,11 @@ public class JsonModelHolder {
         this.deck = deck;
     }
 
-    public List<JsonPlayer> getPlayers() {
+    public JsonPlayer[] getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<JsonPlayer> players) {
+    public void setPlayers(JsonPlayer[] players) {
         this.players = players;
     }
 

@@ -1,10 +1,11 @@
 package shared.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-
-import java.util.List;
 
 /**
  * Model for Player. Player is a user who is in game
@@ -29,6 +30,12 @@ public class Player {
     private int sizeLongestRoad;
     private boolean playedDevCard;
     private boolean discarded;
+    
+    public Player() {
+    	resCards = new ArrayList<ResCard>();
+    	devCards = new ArrayList<DevCard>();
+    	availablePieces = new ArrayList<Piece>();
+    }
 
     /**
      * Check if user have enough resources and pieces and is on turn to build a road

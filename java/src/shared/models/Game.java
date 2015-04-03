@@ -364,11 +364,14 @@ public class Game {
                     int y = thisTile.getLocation().getY();
                     if(thisTile.getHexType() != HexType.WATER) {
 	                    Hex hex = new Hex();
-	                    if (thisTile.getHexType() != null) {
+	                    if (thisTile.getHexType() != null && thisTile.getHexType() != HexType.DESERT) {
 	                        hex.setResource(hexTypeToString(thisTile.getHexType()));
 	                    }
 	                    if (thisTile.getToken() != -1) {
 	                        hex.setNumber(thisTile.getToken());
+	                    }
+	                    else {
+	                    	hex.setNumber(-1);
 	                    }
 	                    hex.setLocation(new Location(x, y));
 	                    hexes.add(hex);
@@ -560,8 +563,8 @@ public class Game {
         return thisDeck;
     }
 
-    private List<JsonPlayer> createJsonPlayers() {
-        List<JsonPlayer> jsonPlayers = new ArrayList<JsonPlayer>();
+    private JsonPlayer[] createJsonPlayers() {
+        JsonPlayer[] jsonPlayers = new JsonPlayer[4];
         for (int i = 0; i < players.length; i++) {
         	if(players[i] == null)
         		continue;
@@ -671,7 +674,7 @@ public class Game {
             player.setNewDevCards(newDevCards);
             player.setColor(CatanColor.getStringColor(thisPlayer.getColor()));
             player.setName(thisPlayer.getName());
-            jsonPlayers.add(player);
+            jsonPlayers[i] = player;
         }
         return jsonPlayers;
     }

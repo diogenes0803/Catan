@@ -33,18 +33,21 @@ public class JoinGameHandler implements HttpHandler
 		
 		for(String thisCookie : cookiesArray) {
 			if(thisCookie.contains("catan.user=")) {
-				String userCookie = thisCookie.substring(11, thisCookie.length());
-				String decoded = URLDecoder.decode(userCookie, "UTF-8");
+				int index = thisCookie.indexOf("=");
+				String userCookie = thisCookie.substring(index+1, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
 				userInfo = gson.fromJson(decoded, User.class);
 			}
 			else if(thisCookie.contains("catan.game=")) {
-				//gameId = Integer.parseInt(thisCookie.substring(11, thisCookie.length()));
-				//for some reason there's already a catan.game cookie, I'm not sure if that's actually supposed to be there
+				int index = thisCookie.indexOf("=");
+				String userCookie = thisCookie.substring(index+1, thisCookie.length());
+				String decoded = URLDecoder.decode(userCookie);
+				gameId = gson.fromJson(decoded, Integer.class);
 			}
 				
 		}
 
-		if(userInfo != null && gameId == -1) {
+		if(userInfo != null) {
 			
 			String qry;
 			String encoding = "ISO-8859-1";
@@ -67,6 +70,7 @@ public class JoinGameHandler implements HttpHandler
 				
 				List<String> gameCookies = new ArrayList<String>();
 				gameCookies.add("catan.game="+params.getId()+";Path=/;");
+				body = "Success";
 				ex.getResponseHeaders().put("Set-cookie", gameCookies);
 				ex.sendResponseHeaders(200, body.length());
 			}

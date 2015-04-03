@@ -48,7 +48,10 @@ public class GetModelHandler implements HttpHandler {
 				ex.getResponseHeaders().add("Content-Type", "application/json");
 				JsonModelHolder jsonModel = model.toJsonModel();
 				String jsonObject = gson.toJson(model.toJsonModel(), JsonModelHolder.class);
-
+				int index = jsonObject.indexOf(",\"number\":0");
+				StringBuilder jsonObjectBuilder = new StringBuilder(jsonObject);
+				jsonObjectBuilder.delete(index, index+11);
+				jsonObject = jsonObjectBuilder.toString();
 				ex.sendResponseHeaders(200, jsonObject.length());
 				
 				OutputStream out = ex.getResponseBody();

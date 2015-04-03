@@ -3,6 +3,7 @@ package shared.models;
 public class TurnTracker {
 
     public TurnTracker() {
+    	status = "FirstRound";
     	currentTurn = 0;
     	longestRoad = -1;
     	largestArmy = -1;
