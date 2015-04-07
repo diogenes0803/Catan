@@ -1,7 +1,6 @@
 package server.persistence;
 
-import server.plugin.NoPersistenceManager;
-
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -11,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
+
+import server.plugin.NoPersistenceManager;
 
 
 public class PersistenceManagerLoader implements IPersistenceManagerLoader {
@@ -41,7 +42,6 @@ public class PersistenceManagerLoader implements IPersistenceManagerLoader {
             if (!Files.isRegularFile(jarFile)) {
                 throw new InvalidPluginException("Cannot read the file \"" + jarFile.toAbsolutePath() + "\".");
             }
-
             ClassLoader loader = URLClassLoader.newInstance(new URL[]{jarFile.toUri().toURL()}, getClass().getClassLoader());
             local_persistenceManagerClass = (Class<? extends IPersistenceManager>) loader.loadClass("server.plugin." + option);
 
@@ -60,7 +60,7 @@ public class PersistenceManagerLoader implements IPersistenceManagerLoader {
         assert local_persistenceManagerClass != null;
 
         try {
-            Constructor ctor = local_persistenceManagerClass.getDeclaredConstructor(Integer.TYPE);
+            Constructor<? extends IPersistenceManager> ctor = local_persistenceManagerClass.getDeclaredConstructor(Integer.TYPE);
             return (IPersistenceManager) ctor.newInstance(commandsBetweenCheckpoints);
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
